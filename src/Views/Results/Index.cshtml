@@ -14,7 +14,6 @@
     </div>
 </div>
 <div class="grid-row">
-    <form action='@Url.Action("SortBy", "Filter", Model.FilterModel.ToRouteValues())' method="POST">
     <div class="column-one-third">
         <p>Filter your results:</p>
         @Html.Partial("Filters/Location", Model.FilterModel)
@@ -76,5 +75,4 @@
         </ul>
         @Html.Partial("Pagination", Model)
     </div>
-    </form>
 </div>
