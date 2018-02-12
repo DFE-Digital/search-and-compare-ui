@@ -1,0 +1,68 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout_base.cshtml";
+    ViewData["serviceName"] = "Find postgraduate teacher training";
+    ViewData["pageTitle"] = ViewData["serviceName"] + " - GOV.UK";
+    ViewData["headerClass"] = "with-proposition";    
+}
+
+@section head {
+    <meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-112932657-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-112932657-1');
+    </script>
+    
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MTSC3K4');</script>
+    <!-- End Google Tag Manager -->
+}
+
+@section bodyStart {
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MTSC3K4"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+}
+
+@section propositionHeader {
+    <div class="header-proposition">
+        <div class="content">
+            <a href="#proposition-links" class="js-header-toggle menu">Menu</a>
+            <nav id="proposition-menu">
+            <a href="~/" id="proposition-name">@ViewData["serviceName"]</a>
+            <ul id="proposition-links">
+            </ul>
+            </nav>
+        </div>
+    </div>
+}
+
+@section bodyEnd {
+    <script src="~/javascripts/jquery-3.2.1.min.js"></script>
+    <script src="~/javascripts/govuk/details.polyfill.js"></script>
+    <script src="~/javascripts/govuk/selection-buttons.js"></script>
+    <script src="~/javascripts/govuk/show-hide-content.js"></script>
+    <script src="~/javascripts/application.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-112932657-1"></script>
+}
+
+
+<main id="content" role="main">
+    <div class="phase-banner">
+        <p>
+            <strong class="phase-tag">BETA</strong>
+            <span>This is a new service – your <a href="#">feedback</a> will help us to improve it.</span>
+        </p>
+    </div>
+    @RenderBody()
+</main>

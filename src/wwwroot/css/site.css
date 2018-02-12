@@ -1,0 +1,75 @@
+.bat_searchresult > p {
+    margin-bottom: 0.5em;
+}
+.bat_searchresult {
+    border-bottom: 1px solid lightgrey;
+    padding-bottom: 30px;
+}
+.found-heading {
+    border-bottom: 1px solid lightgrey;
+    position: relative;
+    clear: both;
+    min-height: 48px;
+    margin-bottom: 10px;
+}
+.found-count {
+    float: left;
+}
+.new-search {
+    position: absolute;
+    right: 0;
+}
+.search-results-header .form-group {
+    border-bottom: 1px solid lightgrey;
+    min-height: 48px;
+    clear: both;
+    margin-bottom: 10px;
+    text-align: right;
+}
+.search-results-header select {
+    width: 180px;
+}
+.search-results-header .form-label {
+    display: inline-block;
+}
+
+.filter-change {
+    padding-top: 0.4em;
+    text-align: center;
+}
+
+.filter-apply-button {
+    padding-top: 30px;
+}
+
+dt, dd { 
+    display: inline;
+}
+
+dt {
+    margin-right: 0.25em;
+}
+dt::after {
+    content: ":";
+}
+dd::after {
+    display:block;
+    content:'';
+}
+
+.checkbox-filter .checkbox-container.checkbox-container-noscroll
+{
+    height: auto;
+    scroll-behavior: initial;
+}
+
+table.alt th, table.alt td {
+    padding-left:10px;
+    padding-right:10px;
+}
+table.alt th
+{
+    border: none;
+    background-color: #cccccc;
+    font-weight: bold;
+}

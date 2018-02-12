@@ -1,0 +1,52 @@
+@model ResultsFilterViewModel
+
+@{
+    ViewData["Title"] = "Filter by Location";
+}
+
+<div class="grid-row">
+    <div class="column-full">
+        <h3 class="heading-small">
+        <a href='@Url.Action("Index", "Results", Model.ToRouteValues())'
+            class="link-back">Back</a>
+        </h3>
+    </div>
+</div>
+
+<div class="grid-row">
+    <div class="column-full">
+        <form action='@Url.Action("Location", "Filter", Model.ToRouteValues())' method="POST">
+            <fieldset>
+                <legend>
+                    <h3 class="heading-medium">Search for teacher training courses in England</h3>
+                </legend>
+                
+                <div class="multiple-choice" data-target="location-selector">
+                    <input id="applyFilter-Yes" type="radio" name="applyFilter" value="true">
+                    <label for="applyFilter-Yes">Search by postcode, town or city</label>
+                </div>
+                <div class="panel panel-border-narrow js-hidden" id="location-selector">
+                    <label class="form-label" for="contact-email">Postcode, town or city name</label>
+                    <input class="form-control" name="loc" type="text" id="location">
+                    
+                    <label class="form-label" for="contact-email">Within Radius</label>
+                    <select class="form-control" id="radius" name="rad">
+                        @foreach(var option in Enum.GetValues(typeof(RadiusOption)))
+                        {
+                            <option value="@((int) option)">@((int) option) miles</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="multiple-choice">
+                    <input id="applyFilter-No" type="radio" name="applyFilter" value="false">
+                    <label for="applyFilter-No">Search across England</label>
+                </div>
+            </fieldset>
+            
+            <div class="filter-apply-button">
+                <input class="button" type="submit" value="Find courses">
+            </div>
+        </form>
+    </div>
+</div>

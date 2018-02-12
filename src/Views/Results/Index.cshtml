@@ -1,0 +1,80 @@
+@model ResultsViewModel
+
+@{
+    ViewData["Title"] = "Search Results";
+}
+
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <h1 class="heading-xlarge">
+            Teacher training courses
+        </h1>
+    </div>
+    <div class="column-one-third">
+    </div>
+</div>
+<div class="grid-row">
+    <form action='@Url.Action("SortBy", "Filter", Model.FilterModel.ToRouteValues())' method="POST">
+    <div class="column-one-third">
+        <p>Filter your results:</p>
+        @Html.Partial("Filters/Location", Model.FilterModel)
+        @Html.Partial("Filters/Subject", Model)
+    </div>
+
+    <div class="column-two-thirds">
+        <div class="search-results-header">
+            <div class="found-heading">
+                <p class="found-count">@Model.Courses.TotalCount courses found</p>
+                <p class="new-search"><a href='@Url.Action("Index", "Results")'>New search</a></p>
+            </div>
+            @Html.Partial("SortBy", Model.FilterModel)
+        </div>
+        <ul>
+        @foreach (var item in Model.Courses) {
+            var subjects = @item.CourseSubjects.Select(courseSubject => courseSubject.Subject.Name).ToArray();
+            <li class="bat_searchresult">
+                <h3 class="heading-medium">
+                    <a href='@Url.Action("Index", "Course", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new {courseId = item.Id}))' class="link">@item.Provider.Name</a>
+                </h3>
+                <dl>                
+                    <dt>Provider type</dt>
+                    <dd>@item.Route.Name</dd>
+                    
+                    @if (item.ProviderLocation != null) {
+                        <dt>Address</dt>
+                        <dd>@item.ProviderLocation.Address</dd>
+                    }
+
+                    @if (item.Distance != null) {
+                        <dt>Distance from your postcode</dt>
+                        <dd>@item.FormattedDistance()</dd>
+                    }
+
+                    <dt>Subject@(subjects.Count() == 1 ? "" : "s")</dt>
+                    <dd>@(String.Join(", ", subjects.OrderBy(x=>x)))</dd>
+                    
+                    <dt>Duration</dt>
+                    <dd>1 year</dd>
+
+                    <dt>Study type</dt>
+                    <dd>@String.Join(", ", item.GetStudyTypes())</dd>
+
+                    <dt>Qualification</dt>
+                    <dd>
+                        <a href='@Url.Action("Qualifications", "Results", Model.FilterModel.ToRouteValues())'
+                        class="link">@item.FormattedOutcome()</a>
+                    </dd>
+
+                    <dt>Number of placement schools</dt>
+                    <dd>@item.GetNumberOfPlacementSchools()</dd>
+
+                    <dt>Course start date</dt>
+                    <dd></dd>
+                </dl>
+            </li>
+        }
+        </ul>
+        @Html.Partial("Pagination", Model)
+    </div>
+    </form>
+</div>

@@ -1,0 +1,17 @@
+FROM microsoft/aspnetcore-build:2.0 AS build-env
+WORKDIR /app
+
+# Copy csproj and restore as distinct layers
+COPY *.csproj ./
+RUN dotnet restore
+
+# Copy everything else and build
+COPY . ./
+RUN dotnet publish -c Release -o out -r rhel.7-x64 --self-contained false /p:PublishWithAspNetCoreTargetManifest=false
+
+# Build runtime image
+FROM registry.access.redhat.com/dotnet/dotnet-20-runtime-rhel7
+WORKDIR /app
+COPY --from=build-env /app/out .
+CMD ["dotnet", "SearchAndCompareUi.dll"]
+

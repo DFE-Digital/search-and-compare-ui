@@ -1,0 +1,48 @@
+@model SubjectFilterViewModel
+
+@{
+    ViewData["Title"] = "Filter by Subject";
+    var selected = Model.FilterModel.SelectedSubjects;
+}
+
+<div class="grid-row">
+    <div class="column-full">
+        <h3 class="heading-small">
+        <a href='@Url.Action("Index", "Results", Model.FilterModel.ToRouteValues())'
+            class="link-back">Back</a>
+        </h3>
+    </div>
+</div>
+
+<div class="grid-row">
+    <div class="column-full">
+        <form action='@Url.Action("Subject", "Filter", Model.FilterModel.ToRouteValues())' method="POST">
+            <legend>
+                <h3 class="heading-medium">What subjects would you like to teach?</h3>
+                <span class="body-text">Select all that apply</span>
+            </legend>
+             @foreach (var area in Model.SubjectAreas) {
+                <h4 class="heading-small">
+                    @area.Name
+                </h4>                
+                <fieldset>                
+
+                   @foreach (var subject in area.Subjects.OrderBy(x => x.Name)) {
+                        <div class="multiple-choice">
+                            <input id="@("subject-" + subject.Id)"
+                                name="SelectedSubjects"
+                                type="checkbox"
+                                checked="@selected.Contains(subject.Id)"
+                                value="@(subject.Id)">
+                            <label for="@("subject-" + subject.Id)">@subject.Name</label>
+                        </div>
+                    }
+                
+                </fieldset>
+            }
+                <div class="filter-apply-button">
+                    <input class="button" type="submit" value="Find courses">
+                </div>
+        </form>
+    </div>
+</div>
