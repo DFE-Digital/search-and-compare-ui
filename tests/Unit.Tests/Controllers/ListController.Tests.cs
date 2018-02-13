@@ -94,12 +94,12 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             }
 
             [Test]
-            public async Task GivenOnePageWorthOfCourses_WhenCalledWithNullPageIndex_ThenViewModelHasFirstPageOfResults()
+            public void GivenOnePageWorthOfCourses_WhenCalledWithNullPageIndex_ThenViewModelHasFirstPageOfResults()
             {
                 var mockContext = GetMockContext(_courses4, _subjects);
                 var controller = new ResultsController(mockContext.Object);
 
-                var result = await controller.Index(new ResultsFilterViewModel()) as ViewResult;
+                var result = controller.Index(new ResultsFilterViewModel()) as ViewResult;
                 ViewDataDictionary viewData = result.ViewData;
                 var resultsViewModel = (ResultsViewModel) result.Model;
 
@@ -114,12 +114,12 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             }
 
             [Test]
-            public async Task GivenOnePageWorthOfCourses_WhenCalledWithPageIndex3_ThenViewModelHasFirstPageOfResults()
+            public void GivenOnePageWorthOfCourses_WhenCalledWithPageIndex3_ThenViewModelHasFirstPageOfResults()
             {
                 var mockContext = GetMockContext(_courses4, _subjects);
                 var controller = new ResultsController(mockContext.Object);
 
-                var result = await controller.Index(new ResultsFilterViewModel{page = 3}) as ViewResult;
+                var result = controller.Index(new ResultsFilterViewModel{page = 3}) as ViewResult;
                 ViewDataDictionary viewData = result.ViewData;
                 var resultsViewModel = (ResultsViewModel) result.Model;
 
@@ -131,12 +131,12 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             }
 
             [Test]
-            public async Task GivenTwoPagesWorthOfCourses_WhenCalledWithNullPageIndex_ThenViewModelHasFirstPageOfResults()
+            public void GivenTwoPagesWorthOfCourses_WhenCalledWithNullPageIndex_ThenViewModelHasFirstPageOfResults()
             {
                 var mockContext = GetMockContext(_courses14, _subjects);
                 var controller = new ResultsController(mockContext.Object);
 
-                var result = await controller.Index(new ResultsFilterViewModel()) as ViewResult;
+                var result = controller.Index(new ResultsFilterViewModel()) as ViewResult;
                 ViewDataDictionary viewData = result.ViewData;
                 var resultsViewModel = (ResultsViewModel) result.Model;
 
@@ -148,12 +148,12 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             }
 
             [Test]
-            public async Task GivenTwoPagesWorthOfCourses_WhenCalledWithPageIndex0_ThenViewModelHasFirstPageOfResults()
+            public void GivenTwoPagesWorthOfCourses_WhenCalledWithPageIndex0_ThenViewModelHasFirstPageOfResults()
             {
                 var mockContext = GetMockContext(_courses14, _subjects);
                 var controller = new ResultsController(mockContext.Object);
 
-                var result = await controller.Index(new ResultsFilterViewModel{page = 0}) as ViewResult;
+                var result = controller.Index(new ResultsFilterViewModel{page = 0}) as ViewResult;
                 ViewDataDictionary viewData = result.ViewData;
                 var resultsViewModel = (ResultsViewModel) result.Model;
 
@@ -165,12 +165,12 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             }
 
             [Test]
-            public async Task GivenTwoPagesWorthOfCourses_WhenCalledWithPageIndex1_ThenViewModelHasFirstPageOfResults()
+            public void GivenTwoPagesWorthOfCourses_WhenCalledWithPageIndex1_ThenViewModelHasFirstPageOfResults()
             {
                 var mockContext = GetMockContext(_courses14, _subjects);
                 var controller = new ResultsController(mockContext.Object);
 
-                var result = await controller.Index(new ResultsFilterViewModel{page = 1}) as ViewResult;
+                var result = controller.Index(new ResultsFilterViewModel{page = 1}) as ViewResult;
                 ViewDataDictionary viewData = result.ViewData;
                 var resultsViewModel = (ResultsViewModel) result.Model;
 
@@ -182,12 +182,12 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             }
 
             [Test]
-            public async Task GivenTwoPagesWorthOfCourses_WhenCalledWithPageIndex2_ThenViewModelHasSecondPageOfResults()
+            public void GivenTwoPagesWorthOfCourses_WhenCalledWithPageIndex2_ThenViewModelHasSecondPageOfResults()
             {
                 var mockContext = GetMockContext(_courses14, _subjects);
                 var controller = new ResultsController(mockContext.Object);
 
-                var result = await controller.Index(new ResultsFilterViewModel{page = 2}) as ViewResult;
+                var result = controller.Index(new ResultsFilterViewModel{page = 2}) as ViewResult;
                 ViewDataDictionary viewData = result.ViewData;
                 var resultsViewModel = (ResultsViewModel) result.Model;
 
@@ -199,12 +199,12 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             }
 
             [Test]
-            public async Task GivenTwoPagesWorthOfCourses_WhenCalledWithPageIndex3_ThenViewModelHasSecondPageOfResults()
+            public void GivenTwoPagesWorthOfCourses_WhenCalledWithPageIndex3_ThenViewModelHasSecondPageOfResults()
             {
                 var mockContext = GetMockContext(_courses14, _subjects);
                 var controller = new ResultsController(mockContext.Object);
 
-                var result = await controller.Index(new ResultsFilterViewModel{page = 3}) as ViewResult;
+                var result = controller.Index(new ResultsFilterViewModel{page = 3}) as ViewResult;
                 ViewDataDictionary viewData = result.ViewData;
                 var resultsViewModel = (ResultsViewModel) result.Model;
 

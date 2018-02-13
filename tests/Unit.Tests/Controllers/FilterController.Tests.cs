@@ -85,7 +85,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             }
         };
 
-        public async Task GivenSomeSubjects_WhenCalledWithNullSubjectFilter_ThenViewModelHasAllSubjects()
+        public void GivenSomeSubjects_WhenCalledWithNullSubjectFilter_ThenViewModelHasAllSubjects()
         {
             var inputSubjectFilter = string.Empty;
             var expectedSelected = new List<int>() { 1, 2, 3, 4 };
@@ -93,7 +93,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             var mockContext = GetMockContext(_subjectAreas);
             var controller = new ResultsController(mockContext.Object);
 
-            var result = await controller.Index(new ResultsFilterViewModel{subjects = inputSubjectFilter}) as ViewResult;
+            var result = controller.Index(new ResultsFilterViewModel{subjects = inputSubjectFilter}) as ViewResult;
             ViewDataDictionary viewData = result.ViewData;
             var resultsViewModel = (SubjectFilterViewModel) result.Model;
 
@@ -104,7 +104,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             Assert.That(viewData["SubjectFilter"], Is.EqualTo(inputSubjectFilter));
         }
 
-        public async Task GivenSomeSubjects_WhenCalledWithSubjectFilter_ThenViewModelHasSubjectsSelected()
+        public void GivenSomeSubjects_WhenCalledWithSubjectFilter_ThenViewModelHasSubjectsSelected()
         {
             var inputSubjectFilter = "1,2";
             var expectedSelected = new List<int>() { 1, 2 };
@@ -112,7 +112,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             var mockContext = GetMockContext(_subjectAreas);
             var controller = new ResultsController(mockContext.Object);
 
-            var result = await controller.Index(new ResultsFilterViewModel{subjects = inputSubjectFilter}) as ViewResult;
+            var result = controller.Index(new ResultsFilterViewModel{subjects = inputSubjectFilter}) as ViewResult;
             ViewDataDictionary viewData = result.ViewData;
             var resultsViewModel = (SubjectFilterViewModel) result.Model;
 
@@ -120,7 +120,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             Assert.That(viewData["SubjectFilter"], Is.EqualTo(inputSubjectFilter));
         }
 
-        public async Task GivenSubjectAction_WhenCalledWithPageIndex_ThenViewDataHasPageIndexSet()
+        public void GivenSubjectAction_WhenCalledWithPageIndex_ThenViewDataHasPageIndexSet()
         {
             var inputSubjectFilter = "1,2";
             var expectedSelected = new List<int>() { 1, 2 };
@@ -128,7 +128,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             var mockContext = GetMockContext(_subjectAreas);
             var controller = new ResultsController(mockContext.Object);
 
-            var result = await controller.Index(new ResultsFilterViewModel{subjects = inputSubjectFilter}) as ViewResult;
+            var result = controller.Index(new ResultsFilterViewModel{subjects = inputSubjectFilter}) as ViewResult;
             ViewDataDictionary viewData = result.ViewData;
             var resultsViewModel = (SubjectFilterViewModel) result.Model;
 

@@ -13,7 +13,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests
     public class FilterListTests
     {
         [Test]
-        public async Task CreateAsync_Subject_Filtered()
+        public void CreateAsync_Subject_Filtered()
         {
             var testFilterIds = new List<int> { 1, 2 };
 
@@ -26,7 +26,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests
 
             var testSubjectsMock = testSubjects.AsQueryable().BuildMock();
 
-            var filtered = await FilterList<Subject>.CreateAsync(testSubjectsMock.Object, testFilterIds);
+            var filtered = FilterList<Subject>.Create(testSubjectsMock.Object, testFilterIds);
 
             Assert.That(filtered.Count == 2);
             Assert.That(filtered.TotalCount == 2);
@@ -35,7 +35,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests
         }
 
         [Test]
-        public async Task CreateAsync_Course_Filtered()
+        public void CreateAsync_Course_Filtered()
         {
             var testFilterIds = new List<int> { 2, 3 };
 
@@ -55,7 +55,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests
 
             var testCoursesMock = testCourses.AsQueryable().BuildMock();
 
-            var filtered = await FilterList<Course>.CreateAsync(testCoursesMock.Object, testFilterIds);
+            var filtered = FilterList<Course>.Create(testCoursesMock.Object, testFilterIds);
 
             Assert.That(filtered.Count == 2);
             Assert.That(filtered.TotalCount == 2);

@@ -46,13 +46,13 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests
         [TestCase(20, 10, false, false, 1, 1, 0)]
         [TestCase(-1, 10, false, false, 1, 1, 0)]
         [TestCase(-1, -1, false, false, 1, 1, 0)]
-        public async Task PaginatedListTestCases_WithEmptySource(
+        public void PaginatedListTestCases_WithEmptySource(
             int pageIndex, int pageSize,
             bool expectedHasPrevious, bool expectedHasNext, int expectedTotal, int expectedIdx, int expectedCount)
         {
             var mockedIQueryable = _EmptySource.AsQueryable().BuildMockExtended();
 
-            AssertTestCase(await PaginatedList<string>.CreateAsync(mockedIQueryable.Object, pageIndex, pageSize),
+            AssertTestCase(PaginatedList<string>.Create(mockedIQueryable.Object, pageIndex, pageSize),
                 expectedHasPrevious, expectedHasNext, expectedTotal, expectedIdx, expectedCount);
         }
 
@@ -61,13 +61,13 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests
         [TestCase(20, 10, false, false, 1, 1, 6)]
         [TestCase(-1, 10, false, false, 1, 1, 6)]
         [TestCase(-1, -1, false,  true, 6, 1, 6)]
-        public async Task PaginatedListTestCases_WithSixItemSource(
+        public void PaginatedListTestCases_WithSixItemSource(
             int pageIndex, int pageSize,
             bool expectedHasPrevious, bool expectedHasNext, int expectedTotal, int expectedIdx, int expectedCount)
         {
             var mockedIQueryable = _SixItemSource.AsQueryable().BuildMockExtended();
 
-            AssertTestCase(await PaginatedList<string>.CreateAsync(mockedIQueryable.Object, pageIndex, pageSize),
+            AssertTestCase(PaginatedList<string>.Create(mockedIQueryable.Object, pageIndex, pageSize),
                 expectedHasPrevious, expectedHasNext, expectedTotal, expectedIdx, expectedCount);
         }
 
@@ -79,18 +79,18 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests
         [TestCase(3,  10, true,  false,  2, 2, 12)]
         [TestCase(2,   1, true,   true, 12, 2, 12)]
         [TestCase(2,  -1, true,   true, 12, 2, 12)]
-        public async Task PaginatedListTestCases_WithTwelveItemSource(
+        public void PaginatedListTestCases_WithTwelveItemSource(
             int pageIndex, int pageSize,
             bool expectedHasPrevious, bool expectedHasNext, int expectedTotal, int expectedIdx, int expectedCount)
         {
             var mockedIQueryable = _TwelveItemSource.AsQueryable().BuildMockExtended();
 
-            AssertTestCase(await PaginatedList<string>.CreateAsync(mockedIQueryable.Object, pageIndex, pageSize),
+            AssertTestCase(PaginatedList<string>.Create(mockedIQueryable.Object, pageIndex, pageSize),
                 expectedHasPrevious, expectedHasNext, expectedTotal, expectedIdx, expectedCount);
         }
 
         [Test]
-        public async Task GivenAnEmptySource_WhenCreatingPaginatedList_ThenSkipNotCalledWithNegativeParameter()
+        public void GivenAnEmptySource_WhenCreatingPaginatedList_ThenSkipNotCalledWithNegativeParameter()
         {
             var mockedIQueryable = _EmptySource.AsQueryable().BuildMockExtended();
 
@@ -107,7 +107,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests
             });
 
             // Throws if incorrect
-            var result = await PaginatedList<string>.CreateAsync(mockedIQueryable.Object, 0, 10);
+            var result = PaginatedList<string>.Create(mockedIQueryable.Object, 0, 10);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         }
 
         [HttpGet("results")]
-        public async Task<IActionResult> Index(ResultsFilterViewModel model)
+        public IActionResult Index(ResultsFilterViewModel model)
         {
             var subjectFilterIds = model.SelectedSubjects;
 
@@ -74,10 +74,10 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             }
 
             var viewModel = new ResultsViewModel {
-                Courses = await PaginatedList<Course>
-                    .CreateAsync(courses.AsNoTracking(), model.page ?? 1, pageSize),
-                Subjects = await FilterList<Subject>
-                    .CreateAsync(subjects.AsNoTracking(), subjectFilterIds),
+                Courses = PaginatedList<Course>
+                    .Create(courses.AsNoTracking(), model.page ?? 1, pageSize),
+                Subjects = FilterList<Subject>
+                    .Create(subjects.AsNoTracking(), subjectFilterIds),
                 FilterModel = model
             };
 

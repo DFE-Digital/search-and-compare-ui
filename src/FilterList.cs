@@ -16,15 +16,15 @@ namespace GovUk.Education.SearchAndCompare.UI
             this.AddRange(items);
         }
 
-        public static async Task<FilterList<T>> CreateAsync(IQueryable<T> source)
+        public static FilterList<T> Create(IQueryable<T> source)
         {
-            var count = await source.CountAsync();
-            var items = await source.ToListAsync();
+            var count = source.Count();
+            var items = source.ToList();
 
             return new FilterList<T>(items, count);
         }
 
-        public static async Task<FilterList<Subject>> CreateAsync(IQueryable<Subject> source, List<int> filterIds)
+        public static FilterList<Subject> Create(IQueryable<Subject> source, List<int> filterIds)
         {
             var subjects = source;
 
@@ -32,15 +32,15 @@ namespace GovUk.Education.SearchAndCompare.UI
                 subjects = source.Where(subject => filterIds.Contains(subject.Id));
             }
 
-            return await FilterList<Subject>.CreateAsync(subjects.AsNoTracking());
+            return FilterList<Subject>.Create(subjects.AsNoTracking());
         }
 
-        public static async Task<FilterList<Course>> CreateAsync(IQueryable<Course> source, List<int> filterIds)
+        public static FilterList<Course> Create(IQueryable<Course> source, List<int> filterIds)
         {
             var filteredCourses = source.Where(course => course.CourseSubjects
                 .Any(courseSubject => filterIds.Contains(courseSubject.Subject.Id)));
 
-            return await FilterList<Course>.CreateAsync(filteredCourses.AsNoTracking());
+            return FilterList<Course>.Create(filteredCourses.AsNoTracking());
         }
     }
 }
