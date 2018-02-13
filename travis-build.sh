@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -e
 dotnet restore ./src/SearchAndCompareUi.csproj
 dotnet restore ./tests/Unit.Tests.csproj
 dotnet test ./tests/Unit.Tests.csproj
