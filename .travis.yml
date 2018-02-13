@@ -18,6 +18,11 @@ script:
 - "./travis-build.sh --quiet verify"
 services:
 - postgresql
+branches:
+  only:
+  - master
+  - staging
+  - production
 deploy:
   - provider: script
     script: bash travis-deploy.sh $OC_WEBHOOK_DEV
