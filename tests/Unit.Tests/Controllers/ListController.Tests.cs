@@ -56,28 +56,28 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
 
                 _courses4 = new List<Course>()
                 {
-                    new Course() { Id = 1, CourseSubjects = _courseSubjects12 },
-                    new Course() { Id = 2, CourseSubjects = _courseSubjects12 },
-                    new Course() { Id = 3, CourseSubjects = _courseSubjects12 },
-                    new Course() { Id = 4, CourseSubjects = _courseSubjects34 },
+                    new Course() { Id = 1, CourseSubjects = _courseSubjects12, Provider = new Provider { Name = "" } },
+                    new Course() { Id = 2, CourseSubjects = _courseSubjects12, Provider = new Provider { Name = "" } },
+                    new Course() { Id = 3, CourseSubjects = _courseSubjects12, Provider = new Provider { Name = "" } },
+                    new Course() { Id = 4, CourseSubjects = _courseSubjects34, Provider = new Provider { Name = "" } },
                 };
 
                 _courses14 = new List<Course>()
                 {
-                    new Course() { Id = 1, CourseSubjects = _courseSubjects12 },
-                    new Course() { Id = 2, CourseSubjects = _courseSubjects12 },
-                    new Course() { Id = 3, CourseSubjects = _courseSubjects12 },
-                    new Course() { Id = 4, CourseSubjects = _courseSubjects34 },
-                    new Course() { Id = 5, CourseSubjects = _courseSubjects34 },
-                    new Course() { Id = 6, CourseSubjects = _courseSubjects34 },
-                    new Course() { Id = 7, CourseSubjects = _courseSubjects34 },
-                    new Course() { Id = 8, CourseSubjects = _courseSubjects34 },
-                    new Course() { Id = 9, CourseSubjects = _courseSubjects34 },
-                    new Course() { Id = 10, CourseSubjects = _courseSubjects34 },
-                    new Course() { Id = 11, CourseSubjects = _courseSubjects34 },
-                    new Course() { Id = 12, CourseSubjects = _courseSubjects34 },
-                    new Course() { Id = 13, CourseSubjects = _courseSubjects34 },
-                    new Course() { Id = 14, CourseSubjects = _courseSubjects34 },
+                    new Course() { Id = 1, CourseSubjects = _courseSubjects12, Provider = new Provider { Name = "" } },
+                    new Course() { Id = 2, CourseSubjects = _courseSubjects12, Provider = new Provider { Name = "" } },
+                    new Course() { Id = 3, CourseSubjects = _courseSubjects12, Provider = new Provider { Name = "" } },
+                    new Course() { Id = 4, CourseSubjects = _courseSubjects34, Provider = new Provider { Name = "" } },
+                    new Course() { Id = 5, CourseSubjects = _courseSubjects34, Provider = new Provider { Name = "" } },
+                    new Course() { Id = 6, CourseSubjects = _courseSubjects34, Provider = new Provider { Name = "" } },
+                    new Course() { Id = 7, CourseSubjects = _courseSubjects34, Provider = new Provider { Name = "" } },
+                    new Course() { Id = 8, CourseSubjects = _courseSubjects34, Provider = new Provider { Name = "" } },
+                    new Course() { Id = 9, CourseSubjects = _courseSubjects34, Provider = new Provider { Name = "" } },
+                    new Course() { Id = 10, CourseSubjects = _courseSubjects34, Provider = new Provider { Name = "" } },
+                    new Course() { Id = 11, CourseSubjects = _courseSubjects34, Provider = new Provider { Name = "" } },
+                    new Course() { Id = 12, CourseSubjects = _courseSubjects34, Provider = new Provider { Name = "" } },
+                    new Course() { Id = 13, CourseSubjects = _courseSubjects34, Provider = new Provider { Name = "" } },
+                    new Course() { Id = 14, CourseSubjects = _courseSubjects34, Provider = new Provider { Name = "" } },
                 };
             }
 
