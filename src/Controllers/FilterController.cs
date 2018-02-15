@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using GovUk.Education.SearchAndCompare.UI.DatabaseAccess;
 using GovUk.Education.SearchAndCompare.UI.Models;
 using GovUk.Education.SearchAndCompare.UI;
-using Microsoft.EntityFrameworkCore;
 using GovUk.Education.SearchAndCompare.UI.ViewModels;
 using System.Collections.Generic;
 using GovUk.Education.SearchAndCompare.UI.Services;
@@ -19,27 +18,30 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
     //[Authorize]
     public class FilterController : Controller
     {
-        private readonly ICourseDbContext _context;
+        private readonly ISearchAndCompareApi _api;
+
         private readonly IGeocoder _geocoder;
 
-        public FilterController(ICourseDbContext courseDbContext, IGeocoder geocoder)
+        public FilterController(ISearchAndCompareApi api, IGeocoder geocoder)
         {
-            _context = courseDbContext;
+            _api = api;
             _geocoder = geocoder;
         }
 
         [HttpPost("results/filter/sortby")]
-        public IActionResult SortBy(ResultsFilterViewModel model)
+        public IActionResult SortBy(ResultsFilter model)
         {
             return RedirectToAction("Index", "Results", model.ToRouteValues());
         }
 
         [HttpGet("results/filter/subject")]
         [ActionName("Subject")]
-        public async Task<IActionResult> SubjectGet(ResultsFilterViewModel model)
+        public IActionResult SubjectGet(ResultsFilter model)
         {
+            var subjectAreas = _api.GetSubjectAreas();
+
             var viewModel = new SubjectFilterViewModel {
-                SubjectAreas = await _context.GetOrderedSubjectsByArea().ToListAsync(),
+                SubjectAreas = subjectAreas,
                 FilterModel = model
             };
             
@@ -48,19 +50,19 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
         [HttpPost("results/filter/subject")]
         [ActionName("Subject")]
-        public IActionResult SubjectPost(ResultsFilterViewModel model)
+        public IActionResult SubjectPost(ResultsFilter model)
         {
             return RedirectToAction("Index", "Results", model.ToRouteValues());
         }
 
         [HttpGet("results/filter/location")]
-        public IActionResult Location(ResultsFilterViewModel model)
+        public IActionResult Location(ResultsFilter model)
         {
             return View(model);
         }
 
         [HttpPost("results/filter/location")]
-        public async Task<IActionResult> Location(bool applyFilter, ResultsFilterViewModel model)
+        public async Task<IActionResult> Location(bool applyFilter, ResultsFilter model)
         {
             if (!applyFilter)
             {

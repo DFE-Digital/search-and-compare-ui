@@ -18,74 +18,32 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
     public class ResultsController : Controller
     {
         private int pageSize = 10;
-        private readonly ICourseDbContext _context;
 
-        public ResultsController(ICourseDbContext courseDbContext)
+        private readonly ISearchAndCompareApi _api;
+
+        public ResultsController(ISearchAndCompareApi api)
         {
-            _context = courseDbContext;
+            _api = api;
         }
 
         [HttpGet("results")]
-        public async Task<IActionResult> Index(ResultsFilterViewModel model)
+        public IActionResult Index(ResultsFilter filter)
         {
-            var subjectFilterIds = model.SelectedSubjects;
+            var courses = _api.GetCourses(filter);
 
-            IQueryable<Course> courses;
-            if (model.Coordinates != null && model.RadiusOption != null)
-            {
-                courses = _context.GetLocationFilteredCourses(
-                    model.Coordinates.Latitude,
-                    model.Coordinates.Longitude,
-                    model.RadiusOption.Value.ToMetres());
-            } 
-            else
-            {
-                courses = _context.GetCoursesWithProviderSubjectsRouteAndCampuses(); 
-            }
-
-            var subjects = _context.GetSubjects();
-
-            if (subjectFilterIds.Count() > 0)
-            {
-                courses = courses
-                    .Where(course => course.CourseSubjects
-                    .Any(courseSubject => subjectFilterIds
-                        .Contains(courseSubject.Subject.Id)));
-            }
-
-            switch (model.SortBy)
-            {
-                case (SortByOption.ZtoA):
-                {
-                    courses = courses.OrderByDescending(c => c.Provider.Name);
-                    break;
-                }
-                case (SortByOption.Distance):
-                {
-                    courses = courses.OrderBy(c => c.Distance);
-                    break;
-                }
-                default:
-                case (SortByOption.AtoZ):
-                {
-                    courses = courses.OrderBy(c => c.Provider.Name);
-                    break;
-                }
-            }
+            var subjects = _api.GetSubjects(filter);
 
             var viewModel = new ResultsViewModel {
-                Courses = await PaginatedList<Course>
-                    .CreateAsync(courses.AsNoTracking(), model.page ?? 1, pageSize),
-                Subjects = await FilterList<Subject>
-                    .CreateAsync(subjects.AsNoTracking(), subjectFilterIds),
-                FilterModel = model
+                Courses = courses,
+                Subjects = subjects,
+                FilterModel = filter
             };
 
             return View(viewModel);
         }
 
         [HttpGet("results/qualifications")]
-        public IActionResult Qualifications(ResultsFilterViewModel model)
+        public IActionResult Qualifications(ResultsFilter model)
         {
             ViewData["Filter"] = model;
                         

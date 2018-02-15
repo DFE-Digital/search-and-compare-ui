@@ -33,34 +33,5 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests
             Assert.That(filtered.Contains(testSubjects[1]));
             Assert.That(filtered.Contains(testSubjects[2]));
         }
-
-        [Test]
-        public async Task CreateAsync_Course_Filtered()
-        {
-            var testFilterIds = new List<int> { 2, 3 };
-
-            var testCourseSubjects1 = new List<CourseSubject> {
-                new CourseSubject { Subject = new Subject { Id = 0 }},
-                new CourseSubject { Subject = new Subject { Id = 1 }},
-            };
-            var testCourseSubjects2 = new List<CourseSubject> {
-                new CourseSubject { Subject = new Subject { Id = 2 }},
-                new CourseSubject { Subject = new Subject { Id = 3 }},
-            };
-            var testCourses = new List<Course> {
-                new Course { CourseSubjects = testCourseSubjects1 },
-                new Course { CourseSubjects = testCourseSubjects2 },
-                new Course { CourseSubjects = testCourseSubjects2 }
-            };
-
-            var testCoursesMock = testCourses.AsQueryable().BuildMock();
-
-            var filtered = await FilterList<Course>.CreateAsync(testCoursesMock.Object, testFilterIds);
-
-            Assert.That(filtered.Count == 2);
-            Assert.That(filtered.TotalCount == 2);
-            Assert.That(filtered.Contains(testCourses[1]));
-            Assert.That(filtered.Contains(testCourses[2]));
-        }
     }
 }

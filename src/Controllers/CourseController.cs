@@ -17,25 +17,23 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
     //[Authorize]
     public class CourseController : Controller
     {
-        private readonly ICourseDbContext _context;
+        private readonly ISearchAndCompareApi _api;
 
-        public CourseController(ICourseDbContext courseDbContext)
+        public CourseController(ISearchAndCompareApi api)
         {
-            _context = courseDbContext;
+            _api = api;
         }
 
         [HttpGet("course/{courseId:int}", Name = "Course")]
-        public async Task<IActionResult> Index(int courseId, ResultsFilterViewModel model)
+        public IActionResult Index(int courseId, ResultsFilter filter)
         {
-            var courses = _context.GetCoursesWithProviderSubjectsRouteCampusesAndDescriptions();
-            var fees = _context.GetLatestFees();
-
-            var course = await courses.Where(c => c.Id == courseId).FirstAsync();
+            var course = _api.GetCourse(courseId);
+            var fees = _api.GetLatestFees();
 
             var viewModel = new CourseViewModel()
             {
                 Course = course,
-                FilterModel = model,
+                FilterModel = filter,
                 Fees = FeesViewModel.FromCourseInfo(course.Subjects, course.Route, fees)
             };
 
