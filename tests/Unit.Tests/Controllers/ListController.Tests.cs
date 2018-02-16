@@ -12,6 +12,7 @@ using GovUk.Education.SearchAndCompare.UI.Models.Joins;
 using Microsoft.AspNetCore.Mvc;
 using GovUk.Education.SearchAndCompare.UI.ViewModels;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using GovUk.Education.SearchAndCompare.UI.Services;
 
 namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
 {
@@ -97,7 +98,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             public void GivenOnePageWorthOfCourses_WhenCalledWithNullPageIndex_ThenViewModelHasFirstPageOfResults()
             {
                 var mockContext = GetMockContext(_courses4, _subjects);
-                var controller = new ResultsController(mockContext.Object);
+                var controller = new ResultsController(mockContext.Object, AnalyticsPolicy.No);
 
                 var result = controller.Index(new ResultsFilterViewModel()) as ViewResult;
                 ViewDataDictionary viewData = result.ViewData;
@@ -117,7 +118,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             public void GivenOnePageWorthOfCourses_WhenCalledWithPageIndex3_ThenViewModelHasFirstPageOfResults()
             {
                 var mockContext = GetMockContext(_courses4, _subjects);
-                var controller = new ResultsController(mockContext.Object);
+                var controller = new ResultsController(mockContext.Object, AnalyticsPolicy.No);
 
                 var result = controller.Index(new ResultsFilterViewModel{page = 3}) as ViewResult;
                 ViewDataDictionary viewData = result.ViewData;
@@ -134,7 +135,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             public void GivenTwoPagesWorthOfCourses_WhenCalledWithNullPageIndex_ThenViewModelHasFirstPageOfResults()
             {
                 var mockContext = GetMockContext(_courses14, _subjects);
-                var controller = new ResultsController(mockContext.Object);
+                var controller = new ResultsController(mockContext.Object, AnalyticsPolicy.No);
 
                 var result = controller.Index(new ResultsFilterViewModel()) as ViewResult;
                 ViewDataDictionary viewData = result.ViewData;
@@ -151,7 +152,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             public void GivenTwoPagesWorthOfCourses_WhenCalledWithPageIndex0_ThenViewModelHasFirstPageOfResults()
             {
                 var mockContext = GetMockContext(_courses14, _subjects);
-                var controller = new ResultsController(mockContext.Object);
+                var controller = new ResultsController(mockContext.Object, AnalyticsPolicy.No);
 
                 var result = controller.Index(new ResultsFilterViewModel{page = 0}) as ViewResult;
                 ViewDataDictionary viewData = result.ViewData;
@@ -168,7 +169,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             public void GivenTwoPagesWorthOfCourses_WhenCalledWithPageIndex1_ThenViewModelHasFirstPageOfResults()
             {
                 var mockContext = GetMockContext(_courses14, _subjects);
-                var controller = new ResultsController(mockContext.Object);
+                var controller = new ResultsController(mockContext.Object, AnalyticsPolicy.No);
 
                 var result = controller.Index(new ResultsFilterViewModel{page = 1}) as ViewResult;
                 ViewDataDictionary viewData = result.ViewData;
@@ -185,7 +186,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             public void GivenTwoPagesWorthOfCourses_WhenCalledWithPageIndex2_ThenViewModelHasSecondPageOfResults()
             {
                 var mockContext = GetMockContext(_courses14, _subjects);
-                var controller = new ResultsController(mockContext.Object);
+                var controller = new ResultsController(mockContext.Object, AnalyticsPolicy.No);
 
                 var result = controller.Index(new ResultsFilterViewModel{page = 2}) as ViewResult;
                 ViewDataDictionary viewData = result.ViewData;
@@ -202,7 +203,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             public void GivenTwoPagesWorthOfCourses_WhenCalledWithPageIndex3_ThenViewModelHasSecondPageOfResults()
             {
                 var mockContext = GetMockContext(_courses14, _subjects);
-                var controller = new ResultsController(mockContext.Object);
+                var controller = new ResultsController(mockContext.Object, AnalyticsPolicy.No);
 
                 var result = controller.Index(new ResultsFilterViewModel{page = 3}) as ViewResult;
                 ViewDataDictionary viewData = result.ViewData;

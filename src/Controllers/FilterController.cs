@@ -17,12 +17,12 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
 
     //[Authorize]
-    public class FilterController : Controller
+    public class FilterController : AnalyticsControllerBase
     {
         private readonly ICourseDbContext _context;
         private readonly IGeocoder _geocoder;
 
-        public FilterController(ICourseDbContext courseDbContext, IGeocoder geocoder)
+        public FilterController(ICourseDbContext courseDbContext, IGeocoder geocoder, AnalyticsPolicy analyticsPolicy) : base(analyticsPolicy)
         {
             _context = courseDbContext;
             _geocoder = geocoder;

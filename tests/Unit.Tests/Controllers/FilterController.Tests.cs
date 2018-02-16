@@ -10,6 +10,7 @@ using GovUk.Education.SearchAndCompare.UI.DatabaseAccess;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using GovUk.Education.SearchAndCompare.UI.ViewModels;
+using GovUk.Education.SearchAndCompare.UI.Services;
 
 namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
 {
@@ -91,7 +92,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             var expectedSelected = new List<int>() { 1, 2, 3, 4 };
 
             var mockContext = GetMockContext(_subjectAreas);
-            var controller = new ResultsController(mockContext.Object);
+            var controller = new ResultsController(mockContext.Object, AnalyticsPolicy.No);
 
             var result = controller.Index(new ResultsFilterViewModel{subjects = inputSubjectFilter}) as ViewResult;
             ViewDataDictionary viewData = result.ViewData;
@@ -110,7 +111,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             var expectedSelected = new List<int>() { 1, 2 };
 
             var mockContext = GetMockContext(_subjectAreas);
-            var controller = new ResultsController(mockContext.Object);
+            var controller = new ResultsController(mockContext.Object, AnalyticsPolicy.No);
 
             var result = controller.Index(new ResultsFilterViewModel{subjects = inputSubjectFilter}) as ViewResult;
             ViewDataDictionary viewData = result.ViewData;
@@ -126,7 +127,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             var expectedSelected = new List<int>() { 1, 2 };
 
             var mockContext = GetMockContext(_subjectAreas);
-            var controller = new ResultsController(mockContext.Object);
+            var controller = new ResultsController(mockContext.Object, AnalyticsPolicy.No);
 
             var result = controller.Index(new ResultsFilterViewModel{subjects = inputSubjectFilter}) as ViewResult;
             ViewDataDictionary viewData = result.ViewData;
