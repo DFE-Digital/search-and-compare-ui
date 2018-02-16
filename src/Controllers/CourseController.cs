@@ -10,16 +10,17 @@ using GovUk.Education.SearchAndCompare.UI;
 using Microsoft.EntityFrameworkCore;
 using GovUk.Education.SearchAndCompare.UI.ViewModels;
 using System.Collections.Generic;
+using GovUk.Education.SearchAndCompare.UI.Services;
 
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
 
     //[Authorize]
-    public class CourseController : Controller
+    public class CourseController : AnalyticsControllerBase
     {
         private readonly ICourseDbContext _context;
 
-        public CourseController(ICourseDbContext courseDbContext)
+        public CourseController(ICourseDbContext courseDbContext, AnalyticsPolicy analyticsPolicy) : base(analyticsPolicy)
         {
             _context = courseDbContext;
         }

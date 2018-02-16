@@ -36,6 +36,7 @@ namespace GovUk.Education.SearchAndCompare.UI
                 .UseNpgsql(connectionString));
                 
             services.AddMvc();
+            services.AddScoped<AnalyticsPolicy>(provider => AnalyticsPolicy.FromEnv());
             services.AddScoped<ICourseDbContext>(provider => provider.GetService<CourseDbContext>());
             services.AddScoped<IGeocoder>(provider => new Geocoder(Configuration.GetSection("ApiKeys").GetValue<string>("GoogleMaps")));
         }
