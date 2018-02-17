@@ -1,16 +1,5 @@
-using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using GovUk.Education.SearchAndCompare.UI.DatabaseAccess;
-using GovUk.Education.SearchAndCompare.UI.Models;
-using GovUk.Education.SearchAndCompare.UI;
-using Microsoft.EntityFrameworkCore;
 using GovUk.Education.SearchAndCompare.UI.ViewModels;
-using GovUk.Education.SearchAndCompare.UI.ViewModels.Enums;
-using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
@@ -27,7 +16,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         }
 
         [HttpGet("results")]
-        public IActionResult Index(ResultsFilter filter)
+        public IActionResult Index(QueryFilter filter)
         {
             var courses = _api.GetCourses(filter);
 
@@ -43,7 +32,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         }
 
         [HttpGet("results/qualifications")]
-        public IActionResult Qualifications(ResultsFilter model)
+        public IActionResult Qualifications(QueryFilter model)
         {
             ViewData["Filter"] = model;
                         
