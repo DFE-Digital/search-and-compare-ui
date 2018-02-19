@@ -17,7 +17,7 @@
 <div class="grid-row">
     <div class="column-full">
         <form action='@Url.Action("Subject", "Filter", Model.FilterModel.ToRouteValues())' method="POST">
-            <legend>
+            <legend role="heading">
                 <h3 class="heading-medium">What subjects would you like to teach?</h3>
                 <span class="body-text">Select all that apply</span>
             </legend>
@@ -41,7 +41,7 @@
                 </fieldset>
             }
                 <div class="filter-apply-button">
-                    <input class="button" type="submit" value="Find courses">
+                    <input class="button" type="submit" value="Find courses" role="button">
                 </div>
         </form>
     </div>

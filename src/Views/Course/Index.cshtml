@@ -15,10 +15,10 @@
 
 <div class="grid-row">
     <div class="column-full">
-        <h2 class="heading-large">
+        <h2 class="heading-large" role="heading">
             @Model.Course.Name
         </h2>
-        <dl>
+        <dl role="contentinfo">
             <dt>Provider</dt>
             <dd>@Model.Provider.Name</dd>
 
@@ -48,7 +48,7 @@
 <div class="grid-row">
     <div class="column-one-third">
         <h3 class="heading-small">Contents</h3>
-        <ul>
+        <ul role="navigation">
             @if (Model.HasSection("about this training programme")) {
                 <li><a href="#section-about">About the course</a></li>
             }
@@ -81,7 +81,7 @@
             
         </ul>
     </div>
-    <div class="column-two-thirds">
+    <div class="column-two-thirds" role="article">
 
         @if (Model.HasSection("about this training programme")) {
             <a name="section-about"></a>

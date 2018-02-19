@@ -16,8 +16,8 @@
 <div class="grid-row">
     <div class="column-full">
         <form action='@Url.Action("Location", "Filter", Model.ToRouteValues())' method="POST">
-            <fieldset>
-                <legend>
+            <fieldset role="radiogroup" aria-required="true">
+                <legend role="heading">
                     <h3 class="heading-medium">Search for teacher training courses in England</h3>
                 </legend>
                 
