@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using GovUk.Education.SearchAndCompare.Domain.Client;
 using GovUk.Education.SearchAndCompare.UI.Services;
@@ -30,7 +31,7 @@ namespace GovUk.Education.SearchAndCompare
         public void ConfigureServices(IServiceCollection services)
         {                
             services.AddMvc();
-            services.AddScoped<ISearchAndCompareApi>(provider => new SearchAndCompareApi(Configuration.GetSection("ApiConnection").GetValue<string>("Uri")));
+            services.AddScoped<ISearchAndCompareApi>(provider => new SearchAndCompareApi(new HttpClient(), Configuration.GetSection("ApiConnection").GetValue<string>("Uri")));
             services.AddScoped<IGeocoder>(provider => new Geocoder(Configuration.GetSection("ApiKeys").GetValue<string>("GoogleMaps")));
         }
 

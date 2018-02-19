@@ -13,7 +13,7 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.0.0" />
-    <PackageReference Include="DFE.SearchAndCompare.Domain" Version="0.1.1-beta" />
+    <PackageReference Include="DFE.SearchAndCompare.Domain" Version="0.1.2-beta" />
   </ItemGroup>
 
   <ItemGroup>
