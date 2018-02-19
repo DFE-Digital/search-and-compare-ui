@@ -44,7 +44,7 @@
 
     <div id="skiplink-container">
       <div>
-        <a href="#content" class="skiplink">@ViewData["skipLinkMessage"]</a>
+        <a href="#content" class="skiplink">@(ViewData["skipLinkMessage"] ?? "Skip to main content")</a>
       </div>
     </div>
 

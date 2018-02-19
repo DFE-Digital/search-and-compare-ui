@@ -46,7 +46,7 @@
     outline: none;
 }
 
-.fitler .head, .filter>div:not(.filter-change) {
+.filter .head, .filter>div:not(.filter-change) {
     cursor: default !important;
 }
 

@@ -4,19 +4,15 @@
 
 <div class="filter-form">
     <div class="inner-block">
-        <div class="filter checkbox-filter js-openable-filter" tabindex="0">
-            <div class="head">
-                <span class="legend">Subject</span>
-                @*<div class="controls">
-                    <a class="clear-selected js-hidden">Remove filters</a>
-                    <div class="toggle"></div>
-                </div>*@
+        <div class="filter checkbox-filter js-openable-filter">
+            <div class="head legend" role="term">
+                Subject<span class="visually-hidden">:</span>
             </div>
-            <div class="checkbox-container checkbox-container-noscroll" id="subject-filter">
+            <div class="checkbox-container checkbox-container-noscroll" id="subject-filter" role="definition">
                 @if (Model.Subjects.Count() > 4) {
-                    <span>@string.Join(", ", Model.Subjects.OrderBy(x=>x.Name).Take(4).Select(x => x.Name)) <br>and @(Model.Subjects.Count() - 4) more&hellip;</span>
+                    <text>@string.Join(", ", Model.Subjects.OrderBy(x=>x.Name).Take(4).Select(x => x.Name)) <br>and @(Model.Subjects.Count() - 4) more&hellip;</text>
                 } else {
-                    <span>@string.Join(", ", Model.Subjects.OrderBy(x=>x.Name).Select(x=>x.Name))</span>
+                    <text>@string.Join(", ", Model.Subjects.OrderBy(x=>x.Name).Select(x=>x.Name))</text>
                 }
             </div>
             <div class="filter-change">
@@ -24,9 +20,5 @@
                class="link">Change subjects</a>
             </div>
         </div>
-
-      @*<div class="submit js-live-search-fallback">
-        <button class="pub-c-button">Submit filters</button>
-      </div>*@
     </div>
   </div>
