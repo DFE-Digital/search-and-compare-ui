@@ -1,17 +1,19 @@
 using GovUk.Education.SearchAndCompare.Domain.Client;
 using GovUk.Education.SearchAndCompare.Domain.Filters;
 using GovUk.Education.SearchAndCompare.UI.ViewModels;
+using GovUk.Education.SearchAndCompare.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
 
     //[Authorize]
-    public class CourseController : Controller
+    public class CourseController : AnalyticsControllerBase
     {
         private readonly ISearchAndCompareApi _api;
 
-        public CourseController(ISearchAndCompareApi api)
+        public CourseController(ISearchAndCompareApi api, AnalyticsPolicy analyticsPolicy) : base(analyticsPolicy)
         {
             _api = api;
         }

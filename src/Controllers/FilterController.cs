@@ -11,13 +11,13 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
 
     //[Authorize]
-    public class FilterController : Controller
+    public class FilterController : AnalyticsControllerBase
     {
         private readonly ISearchAndCompareApi _api;
 
         private readonly IGeocoder _geocoder;
 
-        public FilterController(ISearchAndCompareApi api, IGeocoder geocoder)
+        public FilterController(ISearchAndCompareApi api, IGeocoder geocoder, AnalyticsPolicy analyticsPolicy) : base(analyticsPolicy)
         {
             _api = api;
             _geocoder = geocoder;

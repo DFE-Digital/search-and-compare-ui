@@ -91,7 +91,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
 
                 var mockApi = GetMockApi(_subjectAreas);
                 var mockGeocoder = new Mock<IGeocoder>();
-                var controller = new FilterController(mockApi.Object, mockGeocoder.Object);
+                var controller = new FilterController(mockApi.Object, mockGeocoder.Object, AnalyticsPolicy.No);
 
                 var result = controller.SubjectGet(new QueryFilter{subjects = inputSubjectFilter}) as ViewResult;
                 ViewDataDictionary viewData = result.ViewData;
@@ -111,7 +111,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
 
                 var mockApi = GetMockApi(_subjectAreas);
                 var mockGeocoder = new Mock<IGeocoder>();
-                var controller = new FilterController(mockApi.Object, mockGeocoder.Object);
+                var controller = new FilterController(mockApi.Object, mockGeocoder.Object, AnalyticsPolicy.No);
 
                 var result = controller.SubjectGet(new QueryFilter{subjects = inputSubjectFilter}) as ViewResult;
                 ViewDataDictionary viewData = result.ViewData;
@@ -128,7 +128,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
 
                 var mockApi = GetMockApi(_subjectAreas);
                 var mockGeocoder = new Mock<IGeocoder>();
-                var controller = new FilterController(mockApi.Object, mockGeocoder.Object);
+                var controller = new FilterController(mockApi.Object, mockGeocoder.Object, AnalyticsPolicy.No);
 
                 var result = controller.SubjectGet(new QueryFilter{
                     page = inputPage

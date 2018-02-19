@@ -32,6 +32,7 @@ namespace GovUk.Education.SearchAndCompare
         {                
             services.AddMvc();
             services.AddScoped<ISearchAndCompareApi>(provider => new SearchAndCompareApi(new HttpClient(), Configuration.GetSection("ApiConnection").GetValue<string>("Uri")));
+            services.AddScoped<AnalyticsPolicy>(provider => AnalyticsPolicy.FromEnv());
             services.AddScoped<IGeocoder>(provider => new Geocoder(Configuration.GetSection("ApiKeys").GetValue<string>("GoogleMaps")));
         }
 
