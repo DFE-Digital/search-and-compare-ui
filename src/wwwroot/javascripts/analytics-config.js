@@ -26,7 +26,7 @@ function getParameterByName(name, url) {
 gtag('event', 'sac_page_view', {
     'event_category': 'engagement',
     'event_label': location.pathname,
-    'location': getParameterByName('loc') ?? "(none)",
-    'radius': getParameterByName('rad') ?? "(none)",
-    'subjects': getParameterByName('subjects') ?? "(none)"
+    'location': getParameterByName('loc') || "(none)",
+    'radius': getParameterByName('rad') || "(none)",
+    'subjects': getParameterByName('subjects') || "(none)"
 });
