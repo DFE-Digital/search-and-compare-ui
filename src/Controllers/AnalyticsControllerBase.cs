@@ -17,7 +17,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         {
             if (policy == AnalyticsPolicy.Yes) 
             {
-                ViewData["analytics"] = true;
+                ViewData["SEND_ANALYTICS"] = true;
             }
 
             base.OnActionExecuting(context);
