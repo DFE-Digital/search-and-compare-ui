@@ -1,8 +1,6 @@
 using GovUk.Education.SearchAndCompare.UI.Services;
 using NUnit.Framework;
 
-using GovUk.Education.SearchAndCompare.UI.Models;
-
 namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Services
 {
     [Category("APIs")]

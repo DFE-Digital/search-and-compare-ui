@@ -1,6 +1,5 @@
-
-using GovUk.Education.SearchAndCompare.UI.Models;
-using GovUk.Education.SearchAndCompare.UI.Models.Enums;
+using GovUk.Education.SearchAndCompare.Domain.Models;
+using GovUk.Education.SearchAndCompare.Domain.Models.Enums;
 using GovUk.Education.SearchAndCompare.UI.ViewFormatters;
 using NUnit.Framework;
 

@@ -1,8 +1,7 @@
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using GovUk.Education.SearchAndCompare.UI.Models;
+using GovUk.Education.SearchAndCompare.Domain.Models;
 using GovUk.Education.SearchAndCompare.UI.ViewModels;
 using NUnit.Framework;
 
