@@ -42,6 +42,14 @@
     padding-top: 30px;
 }
 
+.filter-form .filter:focus {
+    outline: none;
+}
+
+.fitler .head, .filter>div:not(.filter-change) {
+    cursor: default !important;
+}
+
 dt, dd { 
     display: inline;
 }
