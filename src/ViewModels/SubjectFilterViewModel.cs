@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using GovUk.Education.SearchAndCompare.UI.Models;
+using GovUk.Education.SearchAndCompare.Domain.Filters;
+using GovUk.Education.SearchAndCompare.Domain.Models;
 
 namespace GovUk.Education.SearchAndCompare.UI.ViewModels
 {
@@ -7,6 +8,6 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels
     {
         public List<SubjectArea> SubjectAreas { get; set; }
 
-        public ResultsFilterViewModel FilterModel { get; set; }
+        public QueryFilter FilterModel { get; set; }
     }
 }

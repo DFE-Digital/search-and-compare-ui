@@ -1,4 +1,5 @@
 using System;
+using GovUk.Education.SearchAndCompare.Domain.Filters;
 
 namespace GovUk.Education.SearchAndCompare.UI.Filters
 {

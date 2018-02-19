@@ -1,3 +1,5 @@
+using GovUk.Education.SearchAndCompare.Domain.Filters.Enums;
+
 namespace GovUk.Education.SearchAndCompare.UI.ViewModels.Enums
 {
     public static class SortByOptionExtensions

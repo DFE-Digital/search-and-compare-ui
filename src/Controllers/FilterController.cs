@@ -1,16 +1,11 @@
-using System;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using GovUk.Education.SearchAndCompare.UI.DatabaseAccess;
-using GovUk.Education.SearchAndCompare.UI.Models;
-using GovUk.Education.SearchAndCompare.UI;
-using GovUk.Education.SearchAndCompare.UI.ViewModels;
-using System.Collections.Generic;
+using GovUk.Education.SearchAndCompare.Domain.Client;
+using GovUk.Education.SearchAndCompare.Domain.Filters;
+using GovUk.Education.SearchAndCompare.Domain.Filters.Enums;
+using GovUk.Education.SearchAndCompare.UI.Filters;
 using GovUk.Education.SearchAndCompare.UI.Services;
-using GovUk.Education.SearchAndCompare.UI.ViewModels.Enums;
+using GovUk.Education.SearchAndCompare.UI.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
@@ -29,14 +24,14 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         }
 
         [HttpPost("results/filter/sortby")]
-        public IActionResult SortBy(ResultsFilter model)
+        public IActionResult SortBy(QueryFilter model)
         {
             return RedirectToAction("Index", "Results", model.ToRouteValues());
         }
 
         [HttpGet("results/filter/subject")]
         [ActionName("Subject")]
-        public IActionResult SubjectGet(ResultsFilter model)
+        public IActionResult SubjectGet(QueryFilter model)
         {
             var subjectAreas = _api.GetSubjectAreas();
 
@@ -50,19 +45,19 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
         [HttpPost("results/filter/subject")]
         [ActionName("Subject")]
-        public IActionResult SubjectPost(ResultsFilter model)
+        public IActionResult SubjectPost(QueryFilter model)
         {
             return RedirectToAction("Index", "Results", model.ToRouteValues());
         }
 
         [HttpGet("results/filter/location")]
-        public IActionResult Location(ResultsFilter model)
+        public IActionResult Location(QueryFilter model)
         {
             return View(model);
         }
 
         [HttpPost("results/filter/location")]
-        public async Task<IActionResult> Location(bool applyFilter, ResultsFilter model)
+        public async Task<IActionResult> Location(bool applyFilter, QueryFilter model)
         {
             if (!applyFilter)
             {
