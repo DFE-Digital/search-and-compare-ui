@@ -4,29 +4,36 @@
 
 <div class="filter-form">
     <div class="inner-block">
-        <div class="filter checkbox-filter js-openable-filter" tabindex="0">
-            <div class="head">
-                <span class="legend">Subject</span>
-                @*<div class="controls">
-                    <a class="clear-selected js-hidden">Remove filters</a>
-                    <div class="toggle"></div>
-                </div>*@
+
+        <div class="padded-filter checkbox-filter js-openable-filter">
+            <div class="head legend" role="term">
+                Subjects<span class="visually-hidden">:</span>
             </div>
-            <div class="checkbox-container checkbox-container-noscroll" id="subject-filter">
-                @if (Model.Subjects.Items.Count() > 4) {
-                    <span>@string.Join(", ", Model.Subjects.Items.OrderBy(x=>x.Name).Take(4).Select(x => x.Name)) <br>and @(Model.Subjects.Items.Count() - 4) more&hellip;</span>
+            <div class="filter-options checkbox-container-noscroll" id="subject-filter" role="definition">
+                @if (Model.Subjects.Count() > 5) {
+                    <text>@string.Join(", ", Model.Subjects.Items.OrderBy(x => x.Name).Take(4).Select(x => x.Name)) <br>and @(Model.Subjects.Items.Count() - 4) more&hellip;</text>
                 } else {
-                    <span>@string.Join(", ", Model.Subjects.Items.OrderBy(x=>x.Name).Select(x=>x.Name))</span>
+                    <text>@string.Join(", ", Model.Subjects.Items.OrderBy(x => x.Name).Select(x=>x.Name))</text>
                 }
+                </ul>
+                <!-- <ul>
+                @if (Model.Subjects.Items.Count() > 5) {
+                    @foreach (var name in Model.Subjects.Items.OrderBy(x => x.Name).Take(4).Select(x => x.Name)) {
+                        <li>@name</li>
+                    }
+                    <li class="last">and @(Model.Subjects.Items.Count() - 4) others</li>
+                } else {
+                    @foreach (var name in Model.Subjects.Items.OrderBy(x => x.Name).Select(x => x.Name).Take(Model.Subjects.Items.Count() - 1)) {
+                        <li>@name</li>
+                    }
+                    <li>@Model.Subjects.Items.OrderBy(x => x.Name).LastOrDefault().Name</li>
+                }
+                </ul> -->
             </div>
             <div class="filter-change">
             <a href='@Url.Action("Subject", "Filter", Model.FilterModel.ToRouteValues())'
                class="link">Change subjects</a>
             </div>
         </div>
-
-      @*<div class="submit js-live-search-fallback">
-        <button class="pub-c-button">Submit filters</button>
-      </div>*@
     </div>
   </div>

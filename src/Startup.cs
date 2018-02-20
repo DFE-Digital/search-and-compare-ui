@@ -56,6 +56,8 @@ namespace GovUk.Education.SearchAndCompare
                 app.UseExceptionHandler("/Home/Error");
                 app.UseStaticFiles();
             }
+            
+            app.AddContentLanguageHeaders("en");
 
             app.UseMvc(routes => {});
         }

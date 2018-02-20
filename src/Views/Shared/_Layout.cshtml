@@ -1,7 +1,9 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout_base.cshtml";
     ViewData["serviceName"] = "Find postgraduate teacher training";
-    ViewData["pageTitle"] = ViewData["serviceName"] + " - GOV.UK";
+    
+    ViewBag.Title = (String.IsNullOrEmpty(ViewBag.Title) ? "" : ViewBag.Title + " - ") 
+        + ViewData["serviceName"] + " - GOV.UK";
     ViewData["headerClass"] = "with-proposition";    
 }
 
@@ -18,11 +20,11 @@
 @section propositionHeader {
     <div class="header-proposition">
         <div class="content">
-            <a href="#proposition-links" class="js-header-toggle menu">Menu</a>
+            @*<a href="#proposition-links" class="js-header-toggle menu">Menu</a>*@
             <nav id="proposition-menu">
-            <a href="~/" id="proposition-name">@ViewData["serviceName"]</a>
-            <ul id="proposition-links">
-            </ul>
+            <a href="~/" id="proposition-name" role="link">@ViewData["serviceName"]</a>
+            @* <ul id="proposition-links">
+             </ul>*@
             </nav>
         </div>
     </div>
@@ -38,12 +40,16 @@
 }
 
 
-<main id="content" role="main">
-    <div class="phase-banner">
-        <p>
-            <strong class="phase-tag">BETA</strong>
-            <span>This is a new service – your <a href="#">feedback</a> will help us to improve it.</span>
-        </p>
+<main role="main">
+    <div class="phase-banner-wrapper">
+        <div class="phase-banner">
+            <p>
+                <strong class="phase-tag">BETA</strong>
+                <span>This is a new service – your <a href="#">feedback</a> will help us to improve it.</span>
+            </p>
+        </div>
     </div>
-    @RenderBody()
+    <div id="content">
+        @RenderBody()
+    </div>
 </main>

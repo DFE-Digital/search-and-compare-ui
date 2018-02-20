@@ -1,24 +1,21 @@
 @model CourseViewModel
 
 @{
-    ViewData["Title"] = "Course Details";
+    ViewBag.Title = $"{Model.Course.Name} at {Model.Provider.Name}";
 }
 
-<div class="grid-row">
-    <div class="column-full">
-        <h3 class="heading-small">
-        <a href='@Url.Action("Index", "Results", Model.FilterModel.ToRouteValues())'
-            class="link-back">Back</a>
-        </h3>
-    </div>
-</div>
+@Html.Partial("Back", new BackLinkViewModel {
+    Href = Url.Action("Index", "Results", Model.FilterModel.ToRouteValues()),
+    Title = "Return to course search",
+    AriaLabel = "Return to course search"
+    })
 
 <div class="grid-row">
     <div class="column-full">
-        <h2 class="heading-large">
+        <h2 class="heading-large" role="heading">
             @Model.Course.Name
         </h2>
-        <dl>
+        <dl role="contentinfo">
             <dt>Provider</dt>
             <dd>@Model.Provider.Name</dd>
 
@@ -48,7 +45,7 @@
 <div class="grid-row">
     <div class="column-one-third">
         <h3 class="heading-small">Contents</h3>
-        <ul>
+        <ul role="directory">
             @if (Model.HasSection("about this training programme")) {
                 <li><a href="#section-about">About the course</a></li>
             }
@@ -81,7 +78,7 @@
             
         </ul>
     </div>
-    <div class="column-two-thirds">
+    <div class="column-two-thirds" role="article">
 
         @if (Model.HasSection("about this training programme")) {
             <a name="section-about"></a>
@@ -143,6 +140,14 @@
             @if (Model.Fees.HasFees) {
             <p>The course fees for @Model.Fees.Year are as follows:</p>
                 <table>
+                    <tr class="visually-hidden">
+                        <th>
+                            Student type
+                        </th>
+                        <th>
+                            Fees to pay
+                        </th>
+                    </tr>
                     <tr>
                         <td>
                             UK students
@@ -271,9 +276,9 @@
                 <li>training provider code: @Model.Course.Provider.ProviderCode</li>
                 <li>training programme code: @Model.Course.ProgrammeCode</li>
                 @if (Model.Course.Campuses.Count() == 0) {
-                    <li>training location or campus code: -</li>
+                    <li>training location or campus code: leave empty</li>
                 } else if (Model.Course.Campuses.Count() == 1) {
-                    <li>training location or campus code: @Model.Course.Campuses.Single().CampusCode</li>
+                    <li>training location or campus code: @(String.IsNullOrEmpty(Model.Course.Campuses.Single().CampusCode) ? "leave empty" : Model.Course.Campuses.Single().CampusCode)</li>
                 }
             </ul>
             @if (Model.Course.Campuses.Count() > 1) {
@@ -282,7 +287,7 @@
                 </p>
                 <ul class="list list-bullet">
                     @foreach(var campus in Model.Course.Campuses) {
-                        <li>@campus.CampusCode for @campus.Name</li>
+                        <li>@(String.IsNullOrEmpty(campus.CampusCode) ? "leave empty" : campus.CampusCode) for @campus.Name</li>
                     }
                 </ul>
             }
