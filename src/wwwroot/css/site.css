@@ -77,6 +77,14 @@
     border-bottom: none;
 }
 
+.filter .head, .filter>div:not(.filter-change) {
+    cursor: default !important;
+}
+
+.filter-form .filter:focus {
+    outline: none;
+}
+
 dt, dd { 
     display: inline;
     line-height: 30px;
@@ -109,8 +117,11 @@ table.alt th
     background-color: #cccccc;
     font-weight: bold;
 }
+.sortedby-label {
+    margin-right: 1em;
+}
 
-h1.heading-xlarge {
+.heading-xlarge-bat {
     margin-top: 0.125em;
     margin-bottom: 0.65em;
 }
@@ -119,3 +130,29 @@ h1.heading-xlarge {
     margin-top: 1.075em;
     margin-bottom: 0.58em;
 }
+
+.phase-banner-wrapper
+{
+    max-width: 960px;
+    margin: 0 15px;   
+    padding-bottom: 10px;
+    outline: none;
+}
+
+@media screen and (min-width: 641px)
+{
+    .phase-banner-wrapper 
+    {
+        margin: 0 30px;
+    }
+}
+
+@media screen and (min-width: 1020px)
+{
+    .phase-banner-wrapper 
+    {
+        margin: 0 auto;
+    }
+}
+
+

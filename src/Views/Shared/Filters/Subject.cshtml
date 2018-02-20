@@ -4,12 +4,19 @@
 
 <div class="filter-form">
     <div class="inner-block">
-        <div class="padded-filter checkbox-filter js-openable-filter" tabindex="0">
-            <div class="head">
-                <span class="legend">Subjects</span>
+
+        <div class="padded-filter checkbox-filter js-openable-filter">
+            <div class="head legend" role="term">
+                Subjects<span class="visually-hidden">:</span>
             </div>
-            <div class="filter-options checkbox-container-noscroll" id="subject-filter">
-                <ul>
+            <div class="filter-options checkbox-container-noscroll" id="subject-filter" role="definition">
+                @if (Model.Subjects.Count() > 4) {
+                    <text>@string.Join(", ", Model.Subjects.OrderBy(x => x.Name).Take(4).Select(x => x.Name)) <br>and @(Model.Subjects.Count() - 4) more&hellip;</text>
+                } else {
+                    <text>@string.Join(", ", Model.Subjects.OrderBy(x => x.Name).Select(x=>x.Name))</text>
+                }
+                </ul>
+                <!-- <ul>
                 @if (Model.Subjects.Count() > 4) {
                     @foreach (var name in Model.Subjects.OrderBy(x => x.Name).Take(4).Select(x => x.Name)) {
                         <li>@name</li>
@@ -25,7 +32,7 @@
                     }
                     <li>@Model.Subjects.OrderBy(x => x.Name).LastOrDefault().Name</li>
                 }
-                </ul>
+                </ul> -->
             </div>
             <div class="filter-change">
             <a href='@Url.Action("Subject", "Filter", Model.FilterModel.ToRouteValues())'

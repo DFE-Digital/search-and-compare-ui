@@ -1,8 +1,12 @@
 @{
-    ViewData["Title"] = "About Qualifications";
+    ViewBag.Title = $"About Qualifications";
 }
 
-@Html.Partial("Back", Url.Action("Index", "Results", (ViewData["Filter"] as ResultsFilterViewModel)?.ToRouteValues()))
+@Html.Partial("Back", new {
+    href = Url.Action("Index", "Results", (ViewData["Filter"] as ResultsFilterViewModel)?.ToRouteValues()),
+    title = "Return to course search",
+    aria-label = "Return to course search"
+    })
 
 <div class="grid-row">
     <div class="column-full">

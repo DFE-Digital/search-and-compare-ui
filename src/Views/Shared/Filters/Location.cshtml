@@ -4,17 +4,17 @@
 
 <div class="filter-form">
     <div class="inner-block">
-        <div class="padded-filter checkbox-filter js-openable-filter" tabindex="0">
-            <div class="head">
-                <span class="legend">Location</span>
+
+        <div class="padded-filter checkbox-filter js-openable-filter">
+            <div class="head legend" role="term">
+                Location<span class="visually-hidden">:</span>
             </div>
-            <div class="filter-options checkbox-container-noscroll" id="location-filter">
-                    @if(Model.Coordinates != null && Model.RadiusOption != null) {
-                        <ul><li class="last">@Model.rad miles around @Model.loc</li></ul>
-                    } else {
-                        <ul><li class="last">Across England</li></ul>
-                    }
-                </ul>
+            <div class="filter-options checkbox-container-noscroll" id="location-filter" role="definition">
+                @if(Model.Coordinates != null && Model.RadiusOption != null) {
+                    <text>@Model.rad miles around @Model.loc</text>
+                } else {
+                    <text>Across England</text>
+                }
             </div>
             <div class="filter-change">
             <a href='@Url.Action("Location", "Filter", Model.ToRouteValues())'

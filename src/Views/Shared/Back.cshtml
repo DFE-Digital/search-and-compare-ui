@@ -1,10 +1,12 @@
-@model string
+@model dynamic
 
 <div class="grid-row">
     <div class="column-full">
         <h3 class="heading-small">
-        <a href='@Model'
-            class="link-back">Back</a>
+        <a href='@Model.href'
+            class="link-back"
+            title="@Model.title"
+            aria-label="@Model.aria-label">Back</a>
         </h3>
     </div>
 </div>

@@ -1,14 +1,20 @@
 @model ResultsViewModel
 
 @{
-    ViewData["Title"] = "Search Results";
+    Layout = "~/Views/Shared/_Layout.cshtml";       
+    ViewBag.Title = $"{string.Format("{0:n0}", Model.Courses.TotalCount)} courses";    
 }
 
 @Html.Partial("Back", Url.Action("Index", "Home", (ViewData["Filter"] as ResultsFilterViewModel)?.ToRouteValues()))
+@Html.Partial("Back", new {
+    href = Url.Action("Index", "Home", (ViewData["Filter"] as ResultsFilterViewModel)?.ToRouteValues()),
+    title = "Return to home",
+    aria-label = "Return to home"
+    })
 
 <div class="grid-row">
     <div class="column-two-thirds">
-        <h1 class="heading-xlarge">
+        <h1 class="heading-xlarge" role="heading">
             Teacher training courses
         </h1>
     </div>
@@ -17,22 +23,26 @@
 </div>
 <div class="grid-row">
     <div class="column-one-third">
-        @Html.Partial("Filters/Location", Model.FilterModel)
-        @Html.Partial("Filters/Subject", Model)
+        <nav role="navigation">    
+            <p>Filter your results:</p>
+            @Html.Partial("Filters/Location", Model.FilterModel)
+            @Html.Partial("Filters/Subject", Model)
+        </nav>
     </div>
+    
 
     <div class="column-two-thirds">
         <div class="search-results-header">
-            <div class="found-heading">
+            <div class="found-heading" role="heading">
                 <p class="found-count">@Model.Courses.TotalCount courses found</p>
                 <p class="new-search"><a href='@Url.Action("Index", "Results")'>New search</a></p>
             </div>
             @Html.Partial("SortBy", Model.FilterModel)
         </div>
-        <ul>
+        <ul role="list">
         @foreach (var item in Model.Courses) {
             var subjects = @item.CourseSubjects.Select(courseSubject => courseSubject.Subject.Name).ToArray();
-            <li class="bat_searchresult">
+            <li class="bat_searchresult" role="listitem">
                 <h3 class="heading-medium">
                     <a href='@Url.Action("Index", "Course", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new {courseId = item.Id}))' class="link">@item.Name</a>
                 </h3>

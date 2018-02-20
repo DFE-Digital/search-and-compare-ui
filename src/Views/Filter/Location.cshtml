@@ -1,14 +1,16 @@
 @model ResultsFilterViewModel
 
 @{
-    ViewData["Title"] = "Filter by Location";
+    ViewBag.Title = $"Filter by Location";
 }
 
 <div class="grid-row">
     <div class="column-full">
         <h3 class="heading-small">
         <a href='@Url.Action("Index", "Results", Model.ToRouteValues())'
-            class="link-back">Back</a>
+            class="link-back"
+            title="Return to course search"
+            aria-label="Return to course search">Back</a>
         </h3>
     </div>
 </div>
@@ -16,8 +18,8 @@
 <div class="grid-row">
     <div class="column-full">
         <form action='@Url.Action("Location", "Filter", Model.ToRouteValues())' method="POST">
-            <fieldset>
-                <legend>
+            <fieldset role="radiogroup" aria-required="true">
+                <legend role="heading">
                     <h3 class="heading-medium">Search for teacher training courses in England</h3>
                 </legend>
                 
@@ -26,10 +28,10 @@
                     <label for="applyFilter-Yes">Search by postcode, town or city</label>
                 </div>
                 <div class="panel panel-border-narrow js-hidden" id="location-selector">
-                    <label class="form-label" for="contact-email">Postcode, town or city name</label>
+                    <label class="form-label" for="location">Postcode, town or city name</label>
                     <input class="form-control" name="loc" type="text" id="location">
                     
-                    <label class="form-label" for="contact-email">Within Radius</label>
+                    <label class="form-label" for="radius">Within Radius</label>
                     <select class="form-control" id="radius" name="rad">
                         @foreach(var option in Enum.GetValues(typeof(RadiusOption)))
                         {
