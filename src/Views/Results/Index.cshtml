@@ -4,6 +4,8 @@
     ViewData["Title"] = "Search Results";
 }
 
+@Html.Partial("Back", Url.Action("Index", "Home", (ViewData["Filter"] as ResultsFilterViewModel)?.ToRouteValues()))
+
 <div class="grid-row">
     <div class="column-two-thirds">
         <h1 class="heading-xlarge">
@@ -15,7 +17,6 @@
 </div>
 <div class="grid-row">
     <div class="column-one-third">
-        <p>Filter your results:</p>
         @Html.Partial("Filters/Location", Model.FilterModel)
         @Html.Partial("Filters/Subject", Model)
     </div>

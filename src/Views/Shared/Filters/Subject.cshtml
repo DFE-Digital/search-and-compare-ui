@@ -4,29 +4,31 @@
 
 <div class="filter-form">
     <div class="inner-block">
-        <div class="filter checkbox-filter js-openable-filter" tabindex="0">
+        <div class="padded-filter checkbox-filter js-openable-filter" tabindex="0">
             <div class="head">
-                <span class="legend">Subject</span>
-                @*<div class="controls">
-                    <a class="clear-selected js-hidden">Remove filters</a>
-                    <div class="toggle"></div>
-                </div>*@
+                <span class="legend">Subjects</span>
             </div>
-            <div class="checkbox-container checkbox-container-noscroll" id="subject-filter">
+            <div class="filter-options checkbox-container-noscroll" id="subject-filter">
+                <ul>
                 @if (Model.Subjects.Count() > 4) {
-                    <span>@string.Join(", ", Model.Subjects.OrderBy(x=>x.Name).Take(4).Select(x => x.Name)) <br>and @(Model.Subjects.Count() - 4) more&hellip;</span>
+                    @foreach (var name in Model.Subjects.OrderBy(x => x.Name).Take(4).Select(x => x.Name)) {
+                        <li>@name</li>
+                    }
+                    <li class="last">and @(Model.Subjects.Count() - 4) others</li>
+                    // <span>@string.Join(", ", Model.Subjects.OrderBy(x=>x.Name).Take(4).Select(x => x.Name)) <br>and @(Model.Subjects.Count() - 4) more&hellip;</span>
                 } else {
-                    <span>@string.Join(", ", Model.Subjects.OrderBy(x=>x.Name).Select(x=>x.Name))</span>
+                    @foreach (var name in Model.Subjects.OrderBy(x => x.Name).Select(x => x.Name).Take(Model.Subjects.Count() - 1)) {
+                        <li>@name</li>
+                    }
+                    <li>@Model.Subjects.OrderBy(x => x.Name).LastOrDefault().Name</li>
+                // <span>@string.Join(", ", Model.Subjects.OrderBy(x=>x.Name).Select(x=>x.Name))</span>
                 }
+                </ul>
             </div>
             <div class="filter-change">
             <a href='@Url.Action("Subject", "Filter", Model.FilterModel.ToRouteValues())'
                class="link">Change subjects</a>
             </div>
         </div>
-
-      @*<div class="submit js-live-search-fallback">
-        <button class="pub-c-button">Submit filters</button>
-      </div>*@
     </div>
   </div>

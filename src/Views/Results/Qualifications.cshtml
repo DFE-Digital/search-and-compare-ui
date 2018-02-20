@@ -2,14 +2,7 @@
     ViewData["Title"] = "About Qualifications";
 }
 
-<div class="grid-row">
-    <div class="column-full">
-        <h3 class="heading-small">
-        <a href='@Url.Action("Index", "Results", (ViewData["Filter"] as ResultsFilterViewModel)?.ToRouteValues())'
-            class="link-back">Back</a>
-        </h3>
-    </div>
-</div>
+@Html.Partial("Back", Url.Action("Index", "Results", (ViewData["Filter"] as ResultsFilterViewModel)?.ToRouteValues()))
 
 <div class="grid-row">
     <div class="column-full">
