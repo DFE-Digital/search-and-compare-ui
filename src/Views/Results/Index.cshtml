@@ -29,7 +29,7 @@
             @Html.Partial("SortBy", Model.FilterModel)
         </div>
         <ul>
-        @foreach (var item in Model.Courses) {
+        @foreach (var item in Model.Courses.Items) {
             var subjects = @item.CourseSubjects.Select(courseSubject => courseSubject.Subject.Name).ToArray();
             <li class="bat_searchresult">
                 <h3 class="heading-medium">

@@ -13,10 +13,10 @@
                 </div>*@
             </div>
             <div class="checkbox-container checkbox-container-noscroll" id="subject-filter">
-                @if (Model.Subjects.Count() > 4) {
-                    <span>@string.Join(", ", Model.Subjects.OrderBy(x=>x.Name).Take(4).Select(x => x.Name)) <br>and @(Model.Subjects.Count() - 4) more&hellip;</span>
+                @if (Model.Subjects.Items.Count() > 4) {
+                    <span>@string.Join(", ", Model.Subjects.Items.OrderBy(x=>x.Name).Take(4).Select(x => x.Name)) <br>and @(Model.Subjects.Items.Count() - 4) more&hellip;</span>
                 } else {
-                    <span>@string.Join(", ", Model.Subjects.OrderBy(x=>x.Name).Select(x=>x.Name))</span>
+                    <span>@string.Join(", ", Model.Subjects.Items.OrderBy(x=>x.Name).Select(x=>x.Name))</span>
                 }
             </div>
             <div class="filter-change">
