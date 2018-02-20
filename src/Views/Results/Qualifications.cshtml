@@ -3,7 +3,7 @@
 }
 
 @Html.Partial("Back", new BackLinkViewModel {
-    Href = Url.Action("Index", "Results", (ViewData["Filter"] as ResultsFilterViewModel)?.ToRouteValues()),
+    Href = Url.Action("Index", "Results", Model.FilterModel.ToRouteValues()),
     Title = "Return to course search",
     AriaLabel = "Return to course search"
     })

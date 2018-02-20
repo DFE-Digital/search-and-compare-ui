@@ -62,6 +62,7 @@
 }
 .padded-filter .filter-options {
     padding: 10px;
+    padding-top: 13px;
     position: relative;
     background-color: #fff;
     overflow-y: scroll;
@@ -118,7 +119,7 @@ table.alt th
     font-weight: bold;
 }
 .sortedby-label {
-    margin-right: 1em;
+    margin-right: 0.5em;
 }
 
 .heading-xlarge-bat {
