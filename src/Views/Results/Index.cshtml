@@ -1,7 +1,8 @@
 @model ResultsViewModel
 
 @{
-    ViewData["Title"] = "Search Results";
+    Layout = "~/Views/Shared/_Layout.cshtml";       
+    ViewBag.Title = $"{string.Format("{0:n0}", Model.Courses.TotalCount)} courses";    
 }
 
 <div class="grid-row">

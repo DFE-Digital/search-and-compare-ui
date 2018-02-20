@@ -1,7 +1,7 @@
 @model SubjectFilterViewModel
 
 @{
-    ViewData["Title"] = "Filter by Subject";
+    ViewBag.Title = $"Filter by Subject";
     var selected = Model.FilterModel.SelectedSubjects;
 }
 
@@ -25,8 +25,7 @@
                 <h4 class="heading-small">
                     @area.Name
                 </h4>                
-                <fieldset>                
-
+                <fieldset>
                    @foreach (var subject in area.Subjects.OrderBy(x => x.Name)) {
                         <div class="multiple-choice">
                             <input id="@("subject-" + subject.Id)"
@@ -37,7 +36,6 @@
                             <label for="@("subject-" + subject.Id)">@subject.Name</label>
                         </div>
                     }
-                
                 </fieldset>
             }
                 <div class="filter-apply-button">

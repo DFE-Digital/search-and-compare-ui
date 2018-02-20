@@ -1,7 +1,7 @@
 @model CourseViewModel
 
 @{
-    ViewData["Title"] = "Course Details";
+    ViewBag.Title = $"{Model.Course.Name} at {Model.Provider.Name}";
 }
 
 <div class="grid-row">
@@ -281,7 +281,7 @@
                 @if (Model.Course.Campuses.Count() == 0) {
                     <li>training location or campus code: leave empty</li>
                 } else if (Model.Course.Campuses.Count() == 1) {
-                    <li>training location or campus code: @(String.IsNullOrEmpty(Model.Course.Campuses.Single().CampusCode ? "leave empty" : Model.Course.Campuses.Single().CampusCode)</li>
+                    <li>training location or campus code: @(String.IsNullOrEmpty(Model.Course.Campuses.Single().CampusCode) ? "leave empty" : Model.Course.Campuses.Single().CampusCode)</li>
                 }
             </ul>
             @if (Model.Course.Campuses.Count() > 1) {
