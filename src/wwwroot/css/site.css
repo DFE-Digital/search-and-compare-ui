@@ -38,7 +38,7 @@
 }
 
 .padded-filter {
-    padding: 15px;
+    padding: 12px;
     margin-bottom: 10px;
     background-color: #dee0e2;
 }
@@ -61,7 +61,7 @@
     text-align: left;
 }
 .padded-filter .filter-options {
-    padding: 0;
+    padding: 10px;
     position: relative;
     background-color: #fff;
     overflow-y: scroll;

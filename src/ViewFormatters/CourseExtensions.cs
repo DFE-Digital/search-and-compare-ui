@@ -79,6 +79,11 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewFormatters
             return course.GetNumberOfFullTimeVacancies() + course.GetNumberOfPartTimeVacancies();
         }
 
+        public static string HasVacancies(this Course course)
+        {
+            return course.GetNumberOfVacancies() != 0 ? "Yes" : "No";
+        }
+
         public static string GetNumberOfPlacementSchools(this Course course) 
         {
             return (course.Campuses == null || course.Campuses.Count < 2)

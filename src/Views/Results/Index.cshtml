@@ -23,7 +23,6 @@
 <div class="grid-row">
     <div class="column-one-third">
         <nav role="navigation">    
-            <p>Filter your results:</p>
             @Html.Partial("Filters/Location", Model.FilterModel)
             @Html.Partial("Filters/Subject", Model)
         </nav>
@@ -58,7 +57,7 @@
                     <dd>@String.Join(", ", item.GetStudyTypes())</dd>
 
                     <dt>Vacancies</dt>
-                    <dd>@item.GetNumberOfVacancies()</dd>
+                    <dd>@item.HasVacancies()</dd>
 
                     <dt>Funding</dt>
                     <dd>@item.FundingAvailable()</dd>
