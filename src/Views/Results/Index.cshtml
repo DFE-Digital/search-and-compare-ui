@@ -5,11 +5,10 @@
     ViewBag.Title = $"{string.Format("{0:n0}", Model.Courses.TotalCount)} courses";    
 }
 
-@Html.Partial("Back", Url.Action("Index", "Home", (ViewData["Filter"] as ResultsFilterViewModel)?.ToRouteValues()))
-@Html.Partial("Back", new {
-    href = Url.Action("Index", "Home", (ViewData["Filter"] as ResultsFilterViewModel)?.ToRouteValues()),
-    title = "Return to home",
-    aria-label = "Return to home"
+@Html.Partial("Back", new BackLinkViewModel {
+    Href = Url.Action("Index", "Home", (ViewData["Filter"] as ResultsFilterViewModel)?.ToRouteValues()),
+    Title = "Return to home",
+    AriaLabel = "Return to home"
     })
 
 <div class="grid-row">

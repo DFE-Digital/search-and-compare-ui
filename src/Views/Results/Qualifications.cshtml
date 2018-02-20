@@ -2,10 +2,10 @@
     ViewBag.Title = $"About Qualifications";
 }
 
-@Html.Partial("Back", new {
-    href = Url.Action("Index", "Results", (ViewData["Filter"] as ResultsFilterViewModel)?.ToRouteValues()),
-    title = "Return to course search",
-    aria-label = "Return to course search"
+@Html.Partial("Back", new BackLinkViewModel {
+    Href = Url.Action("Index", "Results", (ViewData["Filter"] as ResultsFilterViewModel)?.ToRouteValues()),
+    Title = "Return to course search",
+    AriaLabel = "Return to course search"
     })
 
 <div class="grid-row">
