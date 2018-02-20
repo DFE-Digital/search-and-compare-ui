@@ -14,14 +14,16 @@
                     @foreach (var name in Model.Subjects.OrderBy(x => x.Name).Take(4).Select(x => x.Name)) {
                         <li>@name</li>
                     }
-                    <li class="last">and @(Model.Subjects.Count() - 4) others</li>
-                    // <span>@string.Join(", ", Model.Subjects.OrderBy(x=>x.Name).Take(4).Select(x => x.Name)) <br>and @(Model.Subjects.Count() - 4) more&hellip;</span>
+                    @if ((Model.Subjects.Count() - 4) == 1) {
+                        <li class="last">and 1 other</li>
+                    } else {
+                        <li class="last">and @(Model.Subjects.Count() - 4) others</li>
+                    }
                 } else {
                     @foreach (var name in Model.Subjects.OrderBy(x => x.Name).Select(x => x.Name).Take(Model.Subjects.Count() - 1)) {
                         <li>@name</li>
                     }
                     <li>@Model.Subjects.OrderBy(x => x.Name).LastOrDefault().Name</li>
-                // <span>@string.Join(", ", Model.Subjects.OrderBy(x=>x.Name).Select(x=>x.Name))</span>
                 }
                 </ul>
             </div>

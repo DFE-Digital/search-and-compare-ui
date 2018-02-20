@@ -34,42 +34,30 @@
             var subjects = @item.CourseSubjects.Select(courseSubject => courseSubject.Subject.Name).ToArray();
             <li class="bat_searchresult">
                 <h3 class="heading-medium">
-                    <a href='@Url.Action("Index", "Course", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new {courseId = item.Id}))' class="link">@item.Provider.Name</a>
+                    <a href='@Url.Action("Index", "Course", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new {courseId = item.Id}))' class="link">@item.Name</a>
                 </h3>
                 <dl>                
-                    <dt>Provider type</dt>
-                    <dd>@item.Route.Name</dd>
+                    <dt>Training provider</dt>
+                    <dd>@item.Provider.Name</dd>
                     
                     @if (item.ProviderLocation != null) {
-                        <dt>Address</dt>
+                        <dt>Training provider&apos;s location</dt>
                         <dd>@item.ProviderLocation.Address</dd>
                     }
+
+                    <dt>Study type</dt>
+                    <dd>@String.Join(", ", item.GetStudyTypes())</dd>
+
+                    <dt>Vacancies</dt>
+                    <dd>@item.GetNumberOfVacancies()</dd>
+
+                    <dt>Funding</dt>
+                    <dd>@item.FundingAvailable()</dd>
 
                     @if (item.Distance != null) {
                         <dt>Distance from your postcode</dt>
                         <dd>@item.FormattedDistance()</dd>
                     }
-
-                    <dt>Subject@(subjects.Count() == 1 ? "" : "s")</dt>
-                    <dd>@(String.Join(", ", subjects.OrderBy(x=>x)))</dd>
-                    
-                    <dt>Duration</dt>
-                    <dd>1 year</dd>
-
-                    <dt>Study type</dt>
-                    <dd>@String.Join(", ", item.GetStudyTypes())</dd>
-
-                    <dt>Qualification</dt>
-                    <dd>
-                        <a href='@Url.Action("Qualifications", "Results", Model.FilterModel.ToRouteValues())'
-                        class="link">@item.FormattedOutcome()</a>
-                    </dd>
-
-                    <dt>Number of placement schools</dt>
-                    <dd>@item.GetNumberOfPlacementSchools()</dd>
-
-                    <dt>Course start date</dt>
-                    <dd></dd>
                 </dl>
             </li>
         }

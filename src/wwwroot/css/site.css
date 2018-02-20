@@ -79,6 +79,7 @@
 
 dt, dd { 
     display: inline;
+    line-height: 30px;
 }
 
 dt {
@@ -112,4 +113,9 @@ table.alt th
 h1.heading-xlarge {
     margin-top: 0.125em;
     margin-bottom: 0.65em;
+}
+
+.bat_searchresult .heading-medium {
+    margin-top: 1.075em;
+    margin-bottom: 0.58em;
 }
