@@ -9,8 +9,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
     //[Authorize]
     public class ResultsController : AnalyticsControllerBase
     {
-        private int pageSize = 10;
-
         private readonly ISearchAndCompareApi _api;
 
         public ResultsController(ISearchAndCompareApi api, AnalyticsPolicy analyticsPolicy) : base(analyticsPolicy)
