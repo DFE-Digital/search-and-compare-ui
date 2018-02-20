@@ -47,10 +47,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
         [HttpGet("results/qualifications")]
         public IActionResult Qualifications(QueryFilter model)
-        {
-            ViewData["Filter"] = model;
-                        
-            return View();
+        {         
+            return View(model);
         }
     }
 }

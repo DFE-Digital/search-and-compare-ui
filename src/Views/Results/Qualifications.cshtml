@@ -1,9 +1,11 @@
+@model QueryFilter
+
 @{
     ViewBag.Title = $"About Qualifications";
 }
 
 @Html.Partial("Back", new BackLinkViewModel {
-    Href = Url.Action("Index", "Results", Model.FilterModel.ToRouteValues()),
+    Href = Url.Action("Index", "Results", Model.ToRouteValues()),
     Title = "Return to course search",
     AriaLabel = "Return to course search"
     })
