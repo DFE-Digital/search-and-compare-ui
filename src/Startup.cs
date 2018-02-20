@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
-using GovUk.Education.SearchAndCompare.UI;
-using GovUk.Education.SearchAndCompare.UI.DatabaseAccess;
+using GovUk.Education.SearchAndCompare.Domain.Client;
 using GovUk.Education.SearchAndCompare.UI.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -29,23 +29,17 @@ namespace GovUk.Education.SearchAndCompare.UI
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
-            var connectionString = new EnvConfigConnectionStringBuilder().GetConnectionString(Configuration);
-            
-            services.AddEntityFrameworkNpgsql().AddDbContext<CourseDbContext>(options => options
-                .UseNpgsql(connectionString));
-                
+        {                
             services.AddMvc();
+            var apiUri = Environment.GetEnvironmentVariable("API_URI") ?? Configuration.GetSection("ApiConnection").GetValue<string>("Uri");
+            services.AddScoped<ISearchAndCompareApi>(provider => new SearchAndCompareApi(new HttpClient(), apiUri));
             services.AddScoped<AnalyticsPolicy>(provider => AnalyticsPolicy.FromEnv());
-            services.AddScoped<ICourseDbContext>(provider => provider.GetService<CourseDbContext>());
             services.AddScoped<IGeocoder>(provider => new Geocoder(Configuration.GetSection("ApiKeys").GetValue<string>("GoogleMaps")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, CourseDbContext dbContext)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.SeedSchema(dbContext);
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

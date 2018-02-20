@@ -2,10 +2,10 @@ using System.Net.Http;
 using System.Web;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using GovUk.Education.SearchAndCompare.UI.Models;
 using Newtonsoft.Json.Linq;
 using System.Linq;
 using System;
+using GovUk.Education.SearchAndCompare.Domain.Models;
 
 namespace GovUk.Education.SearchAndCompare.UI.Services
 {

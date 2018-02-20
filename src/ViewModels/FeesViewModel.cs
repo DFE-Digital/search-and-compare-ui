@@ -1,24 +1,32 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using GovUk.Education.SearchAndCompare.UI.Models;
+using GovUk.Education.SearchAndCompare.Domain.Models;
 
 namespace GovUk.Education.SearchAndCompare.UI.ViewModels
 {
     public class FeesViewModel
     {
         public string Year { get; set; }
+
         public bool HasFees { get; set; }
+
         public long? UkFees { get; set; }
+
         public long? EuFees { get; set; }
+
         public long? InternationalFees { get; set; }
 
         public bool HasFunding { get; set; }
+
         public int? MaxScholarship { get; set; }
+
         public int? MaxBursary { get; set; }
         
         public bool IsSalaried { get; set; }
+
         public long? SalaryMin { get; set; }
+
         public long? SalaryMax { get; set; }
 
         public bool SalaryKnown {

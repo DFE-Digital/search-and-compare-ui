@@ -1,92 +1,52 @@
-using System;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using GovUk.Education.SearchAndCompare.UI.DatabaseAccess;
-using GovUk.Education.SearchAndCompare.UI.Models;
-using GovUk.Education.SearchAndCompare.UI;
-using Microsoft.EntityFrameworkCore;
+using GovUk.Education.SearchAndCompare.Domain.Client;
+using GovUk.Education.SearchAndCompare.Domain.Filters;
 using GovUk.Education.SearchAndCompare.UI.ViewModels;
-using GovUk.Education.SearchAndCompare.UI.ViewModels.Enums;
-using System.Collections.Generic;
 using GovUk.Education.SearchAndCompare.UI.Services;
+using Microsoft.AspNetCore.Mvc;
+using GovUk.Education.SearchAndCompare.Domain.Lists;
+using GovUk.Education.SearchAndCompare.Domain.Models;
+using System.Linq;
 
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
     //[Authorize]
     public class ResultsController : AnalyticsControllerBase
     {
-        private int pageSize = 10;
-        private readonly ICourseDbContext _context;
+        private readonly ISearchAndCompareApi _api;
 
-        public ResultsController(ICourseDbContext courseDbContext, AnalyticsPolicy analyticsPolicy) : base(analyticsPolicy)
+        public ResultsController(ISearchAndCompareApi api, AnalyticsPolicy analyticsPolicy) : base(analyticsPolicy)
         {
-            _context = courseDbContext;
+            _api = api;
         }
 
         [HttpGet("results")]
-        public IActionResult Index(ResultsFilterViewModel model)
+        public IActionResult Index(QueryFilter filter)
         {
-            var subjectFilterIds = model.SelectedSubjects;
+            var courses = _api.GetCourses(filter);
 
-            IQueryable<Course> courses;
-            if (model.Coordinates != null && model.RadiusOption != null)
-            {
-                courses = _context.GetLocationFilteredCourses(
-                    model.Coordinates.Latitude,
-                    model.Coordinates.Longitude,
-                    model.RadiusOption.Value.ToMetres());
-            } 
-            else
-            {
-                courses = _context.GetCoursesWithProviderSubjectsRouteAndCampuses(); 
-            }
+            var subjects = _api.GetSubjects();
 
-            var subjects = _context.GetSubjects();
-
-            if (subjectFilterIds.Count() > 0)
-            {
-                courses = courses
-                    .Where(course => course.CourseSubjects
-                    .Any(courseSubject => subjectFilterIds
-                        .Contains(courseSubject.Subject.Id)));
-            }
-
-            switch (model.SortBy)
-            {
-                case (SortByOption.ZtoA):
-                {
-                    courses = courses.OrderByDescending(c => c.Provider.Name);
-                    break;
-                }
-                case (SortByOption.Distance):
-                {
-                    courses = courses.OrderBy(c => c.Distance);
-                    break;
-                }
-                default:
-                case (SortByOption.AtoZ):
-                {
-                    courses = courses.OrderBy(c => c.Provider.Name);
-                    break;
-                }
+            FilteredList<Subject> filteredSubjects;
+            if (filter.SelectedSubjects.Count > 0) {
+                filteredSubjects = new FilteredList<Subject>(
+                    subjects.Where(subject => filter.SelectedSubjects.Contains(subject.Id)).ToList(),
+                    subjects.Count
+                );
+            } else {
+                filteredSubjects = new FilteredList<Subject>(subjects, subjects.Count);
             }
 
             var viewModel = new ResultsViewModel {
-                Courses = PaginatedList<Course>
-                    .Create(courses.AsNoTracking(), model.page ?? 1, pageSize),
-                Subjects = FilterList<Subject>
-                    .Create(subjects.AsNoTracking(), subjectFilterIds),
-                FilterModel = model
+                Courses = courses,
+                Subjects = filteredSubjects,
+                FilterModel = filter
             };
 
             return View(viewModel);
         }
 
         [HttpGet("results/qualifications")]
-        public IActionResult Qualifications(ResultsFilterViewModel model)
+        public IActionResult Qualifications(QueryFilter model)
         {
             ViewData["Filter"] = model;
                         

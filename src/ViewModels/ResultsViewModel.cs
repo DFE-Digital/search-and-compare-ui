@@ -1,5 +1,6 @@
-using GovUk.Education.SearchAndCompare.UI.Models;
-using GovUk.Education.SearchAndCompare.UI;
+using GovUk.Education.SearchAndCompare.Domain.Lists;
+using GovUk.Education.SearchAndCompare.Domain.Models;
+using GovUk.Education.SearchAndCompare.Domain.Filters;
 
 namespace GovUk.Education.SearchAndCompare.UI.ViewModels
 {
@@ -7,8 +8,8 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels
     {
         public PaginatedList<Course> Courses { get; set; }
 
-        public FilterList<Subject> Subjects { get; set; }
+        public FilteredList<Subject> Subjects { get; set; }
 
-        public ResultsFilterViewModel FilterModel { get; set; } = new ResultsFilterViewModel();   
+        public QueryFilter FilterModel { get; set; } = new QueryFilter();   
     }
 }

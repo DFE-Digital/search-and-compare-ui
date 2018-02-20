@@ -11,22 +11,22 @@
             </div>
             <div class="filter-options checkbox-container-noscroll" id="subject-filter" role="definition">
                 @if (Model.Subjects.Count() > 5) {
-                    <text>@string.Join(", ", Model.Subjects.OrderBy(x => x.Name).Take(4).Select(x => x.Name)) <br>and @(Model.Subjects.Count() - 4) more&hellip;</text>
+                    <text>@string.Join(", ", Model.Subjects.Items.OrderBy(x => x.Name).Take(4).Select(x => x.Name)) <br>and @(Model.Subjects.Items.Count() - 4) more&hellip;</text>
                 } else {
-                    <text>@string.Join(", ", Model.Subjects.OrderBy(x => x.Name).Select(x=>x.Name))</text>
+                    <text>@string.Join(", ", Model.Subjects.Items.OrderBy(x => x.Name).Select(x=>x.Name))</text>
                 }
                 </ul>
                 <!-- <ul>
-                @if (Model.Subjects.Count() > 5) {
-                    @foreach (var name in Model.Subjects.OrderBy(x => x.Name).Take(4).Select(x => x.Name)) {
+                @if (Model.Subjects.Items.Count() > 5) {
+                    @foreach (var name in Model.Subjects.Items.OrderBy(x => x.Name).Take(4).Select(x => x.Name)) {
                         <li>@name</li>
                     }
-                    <li class="last">and @(Model.Subjects.Count() - 4) others</li>
+                    <li class="last">and @(Model.Subjects.Items.Count() - 4) others</li>
                 } else {
-                    @foreach (var name in Model.Subjects.OrderBy(x => x.Name).Select(x => x.Name).Take(Model.Subjects.Count() - 1)) {
+                    @foreach (var name in Model.Subjects.Items.OrderBy(x => x.Name).Select(x => x.Name).Take(Model.Subjects.Items.Count() - 1)) {
                         <li>@name</li>
                     }
-                    <li>@Model.Subjects.OrderBy(x => x.Name).LastOrDefault().Name</li>
+                    <li>@Model.Subjects.Items.OrderBy(x => x.Name).LastOrDefault().Name</li>
                 }
                 </ul> -->
             </div>
