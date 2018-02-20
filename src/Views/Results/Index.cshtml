@@ -54,7 +54,7 @@
                     }
 
                     <dt>Study type</dt>
-                    <dd>@String.Join(", ", item.GetStudyTypes())</dd>
+                    <dd>@item.FormattedStudyInfo()</dd>
 
                     <dt>Vacancies</dt>
                     <dd>@item.HasVacancies()</dd>

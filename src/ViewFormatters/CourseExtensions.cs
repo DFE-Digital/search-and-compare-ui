@@ -32,6 +32,35 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewFormatters
                 : "Unknown";
         }
 
+        public static bool IsUniversityLed(this Course course)
+        {
+            return course.Route.Id == 0;
+        }
+
+        public static string Duration(this Course course)
+        {
+            bool fulltime = course.Campuses.Any(x => x.FullTime != VacancyStatus.NA);
+            bool parttime = course.Campuses.Any(x => x.PartTime != VacancyStatus.NA);
+
+            if (!fulltime)
+            {
+                return "18-24 months";
+            }
+            else if (!parttime)
+            {
+                return "1 year";
+            }
+            return "12-24 months";
+        }
+
+        public static string FormattedStudyInfo(this Course course)
+        {
+            return string.Format("{0}, {1}. {2}.",
+            course.Duration(),
+            course.IsUniversityLed() ? "university-led" : "school-led",
+            string.Join(",", course.GetStudyTypes()));
+        }
+
         public static IEnumerable<string> GetStudyTypes(this Course course) 
         {
             if (course.Campuses == null) yield break;
