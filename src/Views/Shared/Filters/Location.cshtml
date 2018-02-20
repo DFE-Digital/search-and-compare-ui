@@ -4,11 +4,12 @@
 
 <div class="filter-form">
     <div class="inner-block">
-        <div class="filter checkbox-filter js-openable-filter">
+
+        <div class="padded-filter checkbox-filter js-openable-filter">
             <div class="head legend" role="term">
                 Location<span class="visually-hidden">:</span>
             </div>
-            <div class="checkbox-container checkbox-container-noscroll" id="location-filter" role="definition">
+            <div class="filter-options checkbox-container-noscroll" id="location-filter" role="definition">
                 @if(Model.Coordinates != null && Model.RadiusOption != null) {
                     <text>@Model.rad miles around @Model.loc</text>
                 } else {
