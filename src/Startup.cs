@@ -16,7 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
-namespace GovUk.Education.SearchAndCompare
+namespace GovUk.Education.SearchAndCompare.UI
 {
     public class Startup
     {
