@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using GovUk.Education.SearchAndCompare.Domain.Models;
 using GovUk.Education.SearchAndCompare.Domain.Models.Enums;
@@ -82,6 +83,12 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewFormatters
             {
                 yield return "Part time (no vacancies)";
             }
+        }
+
+        public static string FormattedEarliestApplicationDate(this Course course)
+        {
+            return course.Campuses.Select(campus => campus.ApplicationsAcceptedFrom).Min().Value.ToString("d MMMM yyyy", 
+                  CultureInfo.CreateSpecificCulture("en-US"));
         }
 
         public static string FundingAvailable(this Course course)
