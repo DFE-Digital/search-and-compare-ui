@@ -61,7 +61,7 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewFormatters
             string.Join(",", course.GetStudyTypes()));
         }
 
-        public static IEnumerable<string> GetStudyTypes(this Course course) 
+        public static IEnumerable<string> GetStudyTypes(this Course course)
         {
             if (course.Campuses == null) yield break;
 
@@ -113,7 +113,7 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewFormatters
             return course.GetNumberOfVacancies() != 0 ? "Yes" : "No";
         }
 
-        public static string GetNumberOfPlacementSchools(this Course course) 
+        public static string GetNumberOfPlacementSchools(this Course course)
         {
             return (course.Campuses == null || course.Campuses.Count < 2)
                 ? "unknown" : (course.Campuses.Count - 1).ToString();
