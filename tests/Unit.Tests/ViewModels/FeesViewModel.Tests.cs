@@ -30,7 +30,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.ViewModels
         [Test]
         public void HappyPathUnsalaried()
         {
-            var r = FeesViewModel.FromCourseInfo(MakeSubjects(), new Route {IsSalaried = false}, MakeFees());
+            var r = FinanceViewModel.FromCourseInfo(MakeSubjects(), new Route {IsSalaried = false}, MakeFees());
 
             Assert.That(r.Year, Is.EqualTo("2000/2001"));
             
@@ -52,7 +52,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.ViewModels
         [Test]
         public void HappyPathSalaried()
         {
-            var r = FeesViewModel.FromCourseInfo(MakeSubjects(), new Route {IsSalaried = true}, MakeFees());
+            var r = FinanceViewModel.FromCourseInfo(MakeSubjects(), new Route {IsSalaried = true}, MakeFees());
 
             Assert.That(r.Year, Is.EqualTo("2000/2001"));
             
@@ -74,15 +74,15 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.ViewModels
         [Test]
         public void NullArgumnets()
         {
-            Assert.Throws<ArgumentNullException>(() =>  FeesViewModel.FromCourseInfo(null, new Route {IsSalaried = true}, MakeFees()));
-            Assert.Throws<ArgumentNullException>(() =>  FeesViewModel.FromCourseInfo(MakeSubjects(), null, MakeFees()));
-            Assert.Throws<ArgumentNullException>(() =>  FeesViewModel.FromCourseInfo(MakeSubjects(), new Route {IsSalaried = true}, null));
+            Assert.Throws<ArgumentNullException>(() =>  FinanceViewModel.FromCourseInfo(null, new Route {IsSalaried = true}, MakeFees()));
+            Assert.Throws<ArgumentNullException>(() =>  FinanceViewModel.FromCourseInfo(MakeSubjects(), null, MakeFees()));
+            Assert.Throws<ArgumentNullException>(() =>  FinanceViewModel.FromCourseInfo(MakeSubjects(), new Route {IsSalaried = true}, null));
         }
 
         [Test]
         public void DefaultObjects() 
         {
-            var r = FeesViewModel.FromCourseInfo(new List<Subject>(), new Route(), new Fees());
+            var r = FinanceViewModel.FromCourseInfo(new List<Subject>(), new Route(), new Fees());
             
             Assert.That(r.Year, Is.EqualTo("this year"));
             
@@ -107,7 +107,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.ViewModels
             var fees = MakeFees();
             fees.EuFees = 0;
 
-            var r = FeesViewModel.FromCourseInfo(MakeSubjects(), new Route {IsSalaried = false}, fees);
+            var r = FinanceViewModel.FromCourseInfo(MakeSubjects(), new Route {IsSalaried = false}, fees);
 
             Assert.That(r.HasFees, Is.True);
             Assert.That(r.UkFees, Is.EqualTo(3));
@@ -120,7 +120,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.ViewModels
         {
             var s = MakeSubjects().ToList();
             s[0].Funding.BursaryFirst = null;
-            var r = FeesViewModel.FromCourseInfo(s, new Route {IsSalaried = false}, MakeFees());
+            var r = FinanceViewModel.FromCourseInfo(s, new Route {IsSalaried = false}, MakeFees());
 
             Assert.That(r.HasFunding, Is.True);
             Assert.That(r.MaxScholarship, Is.EqualTo(2));
@@ -132,7 +132,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.ViewModels
         {
             var s = MakeSubjects().ToList();
             s[0].Funding.Scholarship = null;
-            var r = FeesViewModel.FromCourseInfo(s, new Route {IsSalaried = false}, MakeFees());
+            var r = FinanceViewModel.FromCourseInfo(s, new Route {IsSalaried = false}, MakeFees());
 
             Assert.That(r.HasFunding, Is.True);
             Assert.That(r.MaxScholarship, Is.Null);
