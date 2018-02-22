@@ -18,8 +18,17 @@
         <div class="course-basicinfo">
             <dl role="contentinfo">
                 <dt>Qualification</dt>
-                <dd>▸ <a href='@Url.Action("Qualifications", "Results", Model.FilterModel.ToRouteValues())'
-                class="link">@Model.Course.FormattedOutcome()</a></dd>               
+                <dd>
+                    <details>
+                        <summary><span class="summary">@Model.Course.FormattedOutcome()</span></summary>
+
+                        <div class="panel panel-border-narrow">
+                            <p>A postgraduate certificate in education (PGCE) with qualified teacher status (QTS) allows you to teach in England, Scotland, Wales and Northern Ireland.</p>
+                            <p>This qualification is also recognised internationally.</p>
+                            <p>Many PGCE courses include credits that count toward a Master's degree.</p>
+                        </div>
+                    </details>
+                </dd>               
 
                 <dt>Training provider</dt>
                 <dd>@Model.Provider.Name</dd>

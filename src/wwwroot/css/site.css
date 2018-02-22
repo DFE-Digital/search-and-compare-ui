@@ -102,6 +102,10 @@ dd::after {
     content: '';
 }
 
+dd > details, dd > details[open] {
+    display: inline;
+}
+
 .course-basicinfo {
     margin-top: 30px;
     margin-bottom: 30px;
@@ -109,12 +113,12 @@ dd::after {
 .course-basicinfo dl dt {
     width: 25%;
     float: left;
+    margin: 0;
+    clear: both;
 }
 .course-basicinfo dl dd {
     width: 75%;
-}
-.course-basicinfo dl dd::after {
-    clear: both;
+    float: right;
 }
 
 
