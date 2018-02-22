@@ -15,70 +15,78 @@
         <h2 class="heading-large" role="heading">
             @Model.Course.Name
         </h2>
-        <dl role="contentinfo">
-            <dt>Provider</dt>
-            <dd>@Model.Provider.Name</dd>
+        <div class="course-basicinfo">
+            <dl role="contentinfo">
+                <dt>Qualification</dt>
+                <dd>
+                    <details>
+                        <summary><span class="summary">@Model.Course.FormattedOutcome()</span></summary>
 
-            <dt>Age group</dt>
-            <dd>@Model.FormattedAgeRange</dd>
+                        <div class="panel panel-border-narrow">
+                            <p>A postgraduate certificate in education (PGCE) with qualified teacher status (QTS) allows you to teach in England, Scotland, Wales and Northern Ireland.</p>
+                            <p>This qualification is also recognised internationally.</p>
+                            <p>Many PGCE courses include credits that count toward a Master's degree.</p>
+                        </div>
+                    </details>
+                </dd>               
 
-            <dt>@(Model.SubjectNames.Count() == 1 ? "Subject" : "Subjects")</dt>
-            <dd>@Model.FormattedSubjects</dd>
+                <dt>Training provider</dt>
+                <dd>@Model.Provider.Name</dd>
 
-            <dt>Study type</dt>
-            <dd>@String.Join(", ", @Model.Course.GetStudyTypes())</dd>
+                <dt>Funding</dt>
+                <dd>@Model.Course.FundingAvailable()</dd>
 
-            <dt>Course start type</dt>
-            <dd></dd>
+                <dt>Study type</dt>
+                <dd>@Model.Course.FormattedStudyInfo()</dd>
 
-            <dt>Date you can apply from</dt>
-            <dd></dd>
+                <dt>Vacancies</dt>
+                <dd>@Model.Course.HasVacancies()</dd>
 
-            <dt>Qualification</dt>
-            <dd><a href='@Url.Action("Qualifications", "Results", Model.FilterModel.ToRouteValues())'
-               class="link">@Model.Course.FormattedOutcome()</a></dd>               
-        </dl>
-    </div>
-    <div class="column-one-third">
+                <dt>Date you can apply from</dt>
+                <dd>@Model.Course.FormattedEarliestApplicationDate()</dd>
+
+                <!-- <dt>Date course starts</dt>
+                <dd></dd> -->
+            </dl>
+        </div>
     </div>
 </div>
 <div class="grid-row">
-    <div class="column-one-third">
-        <h3 class="heading-small">Contents</h3>
-        <ul role="directory">
-            @if (Model.HasSection("about this training programme")) {
-                <li><a href="#section-about">About the course</a></li>
-            }
-            @if (Model.HasSection("entry requirements")) {
-                <li><a href="#section-entry">Entry requirements</a></li>
-            }
-            @if (Model.Course.Campuses.Count() > 0) {
-                <li><a href="#section-schools">Placement schools</a></li>
-            }
-            
-            <li><a href="#section-fees">Fees and funding</a></li>
-            
-            @if (Model.HasSection("what we are looking for")) {
-                <li><a href="#section-looking">What we&#39;re looking for</a></li>
-            }
-            @if (Model.HasSection("how we select our trainees")) {
-                <li><a href="#section-selection">How we select our trainees</a></li>
-            }
-            @if (Model.HasSection("why train with us")) {
-            <li><a href="#section-whyus">Why train with us</a></li>
-            }
-            @if (Model.HasSection("about this training provider")) {
-            <li><a href="#section-about-provider">About this training provider</a></li>
-            }
-            @if (Model.HasSection("contact details")) {
-            <li><a href="#section-contact">Contact details</a></li>
-            }
-            
-            <li><a href="#section-apply">How to apply</a></li>
-            
-        </ul>
-    </div>
-    <div class="column-two-thirds" role="article">
+    <div class="column-full">
+        <div class="course-contents">
+            <h3 class="heading-small">Contents</h3>
+            <ul role="directory">
+                @if (Model.HasSection("about this training programme")) {
+                    <li><a href="#section-about">About the course</a></li>
+                }
+                @if (Model.HasSection("entry requirements")) {
+                    <li><a href="#section-entry">Entry requirements</a></li>
+                }
+                @if (Model.Course.Campuses.Count() > 0) {
+                    <li><a href="#section-schools">Placement schools</a></li>
+                }
+                
+                <li><a href="#section-fees">Fees and funding</a></li>
+                
+                @if (Model.HasSection("what we are looking for")) {
+                    <li><a href="#section-looking">What we&#39;re looking for</a></li>
+                }
+                @if (Model.HasSection("how we select our trainees")) {
+                    <li><a href="#section-selection">How we select our trainees</a></li>
+                }
+                @if (Model.HasSection("why train with us")) {
+                <li><a href="#section-whyus">Why train with us</a></li>
+                }
+                @if (Model.HasSection("about this training provider")) {
+                <li><a href="#section-about-provider">About this training provider</a></li>
+                }
+                @if (Model.HasSection("contact details")) {
+                <li><a href="#section-contact">Contact details</a></li>
+                }
+                
+                <li><a href="#section-apply">How to apply</a></li>
+            </ul>
+        </div>
 
         @if (Model.HasSection("about this training programme")) {
             <a name="section-about"></a>

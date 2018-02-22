@@ -95,11 +95,45 @@ dt {
     margin-right: 0.25em;
 }
 dt::after {
-    content: ":";
+    content: ':';
 }
 dd::after {
-    display:block;
-    content:'';
+    display: block;
+    content: '';
+}
+
+dd > details, dd > details[open] {
+    display: inline;
+}
+
+.course-basicinfo {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.course-basicinfo dl dt {
+    width: 25%;
+    float: left;
+    margin: 0;
+    clear: both;
+}
+.course-basicinfo dl dd {
+    width: 75%;
+    float: right;
+}
+
+
+.course-contents h3::after {
+    content: ':';
+}
+
+.course-contents ul {
+    margin-left: 20px;
+}
+
+.course-contents ul li {
+    list-style-image: url('/images/dash.png');
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .checkbox-filter .checkbox-container.checkbox-container-noscroll
