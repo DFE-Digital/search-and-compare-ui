@@ -19,6 +19,7 @@
             <dl role="contentinfo">
                 <dt>Qualification</dt>
                 <dd>
+                    @if (Model.Course.IncludesPgce != IncludesPgce.No) {
                     <details>
                         <summary><span class="summary">@Model.Course.FormattedOutcome()</span></summary>
 
@@ -28,7 +29,17 @@
                             <p>Many PGCE courses include credits that count toward a Master's degree.</p>
                         </div>
                     </details>
-                </dd>               
+                    } else {
+                    <details>
+                        <summary><span class="summary">@Model.Course.FormattedOutcome()</span></summary>
+
+                        <div class="panel panel-border-narrow">
+                            <p>Qualified teacher status (QTS) allows you to teach in state schools in England.</p>
+                            <p>If you want to teach in the rest of the UK or internationally, consider a course that gives you the qualification &#39;postgraduate certificate in education with qualified teacher status&#39; instead.</p>
+                        </div>
+                    </details>
+                    }
+                </dd>
 
                 <dt>Training provider</dt>
                 <dd>@Model.Provider.Name</dd>
