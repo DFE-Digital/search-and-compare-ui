@@ -169,7 +169,10 @@ table.alt th
 .phase-banner-wrapper
 {
     max-width: 960px;
-    margin: 0 15px;   
+    width: 960px;
+    margin: 0 15px;
+    margin: 0 30px;
+    margin: 0 auto;
     padding-bottom: 10px;
     outline: none;
 }
