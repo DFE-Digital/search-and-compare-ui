@@ -5,16 +5,11 @@
     var selected = Model.FilterModel.SelectedSubjects;
 }
 
-<div class="grid-row">
-    <div class="column-full">
-        <h3 class="heading-small">
-        <a href='@Url.Action("Index", "Results", Model.FilterModel.ToRouteValues())'
-            class="link-back"
-            title="Return to course search"
-            aria-label="Return to course search">Back</a>
-        </h3>
-    </div>
-</div>
+@Html.Partial("Back", new BackLinkViewModel {
+    Href = Url.Action("Index", "Results", Model.ToRouteValues()),
+    Title = "Return to course search",
+    AriaLabel = "Return to course search"
+    })
 
 <div class="grid-row">
     <div class="column-full">
