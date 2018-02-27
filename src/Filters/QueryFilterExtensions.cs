@@ -14,7 +14,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 resultsFilter.rad,
                 resultsFilter.loc,
                 resultsFilter.subjects,
-                resultsFilter.sortby
+                resultsFilter.sortby,
+                resultsFilter.funding
             };
         }
 
@@ -29,7 +30,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 rad = resultsFilter.rad,
                 loc = resultsFilter.loc,
                 subjects = resultsFilter.subjects,
-                sortby = sortby
+                sortby = sortby,
+                funding = resultsFilter.funding
             };
         }
 
@@ -44,7 +46,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 rad = resultsFilter.rad,
                 loc = resultsFilter.loc,
                 subjects = resultsFilter.subjects,
-                sortby = resultsFilter.sortby
+                sortby = resultsFilter.sortby,
+                funding = resultsFilter.funding
             };
         }
     }
