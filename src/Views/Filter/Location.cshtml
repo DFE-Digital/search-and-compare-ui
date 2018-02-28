@@ -2,21 +2,24 @@
 
 @{
     ViewBag.Title = $"Filter by Location";
+    var isInWizard = ViewBag.IsInWizard == true;
 }
 
 <div class="grid-row">
     <div class="column-full">
         <h3 class="heading-small">
-            @if(ViewBag.IsInWizard) {
-                <a href='@Url.Action("Index", "Home")'
-                    class="link-back"
-                    title="Return to start page"
-                    aria-label="Return to start page">Back</a>
+            @if(isInWizard) {
+                @Html.Partial("Back", new BackLinkViewModel {
+                    Href = Url.Action("Index", "Home"),
+                        Title = "Return to start page",
+                        AriaLabel = "Return to start page"
+                    })
             } else {
-                <a href='@Url.Action("Index", "Results", Model.ToRouteValues())'
-                    class="link-back"
-                    title="Return to course search"
-                    aria-label="Return to course search">Back</a>
+                @Html.Partial("Back", new BackLinkViewModel {
+                    Href = Url.Action("Index", "Results", Model.ToRouteValues()),
+                        Title = "Return to start page",
+                        AriaLabel = "Return to start page"
+                    })
             }        
         </h3>
     </div>
@@ -24,7 +27,7 @@
 
 <div class="grid-row">
     <div class="column-full">
-        <form action='@Url.Action(ViewBag.IsInWizard ? "LocationWizard" : "Location", "Filter", Model.ToRouteValues())' method="POST">
+        <form action='@Url.Action(isInWizard ? "LocationWizard" : "Location", "Filter", Model.ToRouteValues())' method="POST">
             <fieldset role="radiogroup" aria-required="true">
                 <legend role="heading">
                     <h3 class="heading-medium">Search for teacher training courses in England</h3>
@@ -54,7 +57,7 @@
             </fieldset>
             
             <div class="filter-apply-button">
-                <input class="button" type="submit" value="@(ViewBag.IsInWizard ? "Next" : "Find courses")">
+                <input class="button" type="submit" value="@(isInWizard ? "Next" : "Find courses")">
             </div>
         </form>
     </div>

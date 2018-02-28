@@ -10,10 +10,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
     //[Authorize]
     public class HomeController : CommonAttributesControllerBase
     {
-        public HomeController(AnalyticsPolicy policy) : base(policy)
-        {
-        }
-
         [HttpGet("")]
         [HttpGet("home")]
         [HttpGet("home/index")]

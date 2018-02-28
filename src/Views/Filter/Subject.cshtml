@@ -3,21 +3,24 @@
 @{
     ViewBag.Title = $"Filter by Subject";
     var selected = Model.FilterModel.SelectedSubjects;
+    var isInWizard = ViewBag.IsInWizard == true;
 }
 
 <div class="grid-row">
     <div class="column-full">
         <h3 class="heading-small">
-        @if(ViewBag.IsInWizard) {
-            <a href='@Url.Action("LocationWizard", "Filter", Model.FilterModel.ToRouteValues())'
-                class="link-back"
-                title="Return to location selection"
-                aria-label="Return to location selection">Back</a>
+        @if(isInWizard) {
+            @Html.Partial("Back", new BackLinkViewModel {
+                    Href = Url.Action("LocationWizard", "Filter", Model.FilterModel.ToRouteValues()),
+                        Title = "Return to start page",
+                        AriaLabel = "Return to start page"
+                    })
         } else { 
-            <a href='@Url.Action("Index", "Results", Model.FilterModel.ToRouteValues())'
-                class="link-back"
-                title="Return to course search"
-                aria-label="Return to course search">Back</a>
+            @Html.Partial("Back", new BackLinkViewModel {
+                    Href = Url.Action("Index", "Results", Model.FilterModel.ToRouteValues()),
+                        Title = "Return to start page",
+                        AriaLabel = "Return to start page"
+                    })
         }
         </h3>
     </div>
@@ -25,7 +28,7 @@
 
 <div class="grid-row">
     <div class="column-full">
-        <form action='@Url.Action(ViewBag.IsInWizard ? "SubjectWizard" : "Subject", "Filter", Model.FilterModel.ToRouteValues())' method="POST">
+        <form action='@Url.Action(isInWizard ? "SubjectWizard" : "Subject", "Filter", Model.FilterModel.ToRouteValues())' method="POST">
             <legend role="heading">
                 <h3 class="heading-medium">What subjects would you like to teach?</h3>
                 <span class="body-text">Select all that apply</span>
@@ -48,7 +51,7 @@
                 </fieldset>
             }
                 <div class="filter-apply-button">
-                    <input class="button" type="submit" value="Find courses" role="button">
+                    <input class="button" type="submit" value="@(isInWizard ? "Next" : "Find courses")" role="button">
                 </div>
         </form>
     </div>

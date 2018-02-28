@@ -17,7 +17,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
         private readonly IGeocoder _geocoder;
 
-        public FilterController(ISearchAndCompareApi api, IGeocoder geocoder, AnalyticsPolicy analyticsPolicy) : base(analyticsPolicy)
+        public FilterController(ISearchAndCompareApi api, IGeocoder geocoder)
         {
             _api = api;
             _geocoder = geocoder;
@@ -41,7 +41,10 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("Subject")]
         public IActionResult SubjectPost(QueryFilter model)
         {
-            return RedirectToAction("Index", "Results", model.ToRouteValues());
+            var isInWizard = ViewBag.IsInWizard == true;
+            return isInWizard
+                ? RedirectToAction("FundingWizard", model.ToRouteValues())
+                : RedirectToAction("Index", "Results", model.ToRouteValues());
         }
 
         [HttpGet("wizard/subject")]
@@ -69,6 +72,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [HttpPost("results/filter/location")]
         public async Task<IActionResult> Location(bool applyFilter, QueryFilter model)
         {
+            var isInWizard = ViewBag.IsInWizard == true;
             if (!applyFilter)
             {
                 model.lat = null;
@@ -76,7 +80,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                 model.loc = null; 
                 model.rad = null;
                 model.page = null;
-                return ViewBag.IsInWizard
+                return isInWizard
                     ? RedirectToAction("SubjectWizard", model.ToRouteValues())
                     : RedirectToAction("Index", "Results", model.ToRouteValues());
             }
@@ -84,7 +88,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             var coords = await _geocoder.ResolvePostCodeAsync(model.loc);
             if (coords == null) 
             {
-                return RedirectToAction(ViewBag.IsInWizard ? nameof(LocationWizard) : nameof(Location));
+                return RedirectToAction(isInWizard ? nameof(LocationWizard) : nameof(Location));
             }
             else
             {
@@ -95,7 +99,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                 model.sortby = (int)SortByOption.Distance;
             }
 
-            return ViewBag.IsInWizard
+            return isInWizard
                 ? RedirectToAction("SubjectWizard", model.ToRouteValues())
                 : RedirectToAction("Index", "Results", model.ToRouteValues());
         }
@@ -117,7 +121,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [HttpGet("results/filter/funding")]
         public IActionResult Funding(QueryFilter model)
         {
-            return View(model);
+            return View("Funding", model);
         }
 
         [HttpPost("results/filter/funding")]
@@ -130,6 +134,21 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             }
             model.funding = applyFilter;
             return RedirectToAction("Index", "Results", model.ToRouteValues());
+        }
+
+        
+        [HttpGet("wizard/funding")]
+        public IActionResult FundingWizard(QueryFilter model)
+        {
+            ViewBag.IsInWizard = true;
+            return Funding(model);
+        }
+
+        [HttpPost("wizard/funding")]
+        public IActionResult FundingWizard(int applyFilter, QueryFilter model)
+        {
+            ViewBag.IsInWizard = true;
+            return Funding(applyFilter, model);
         }
     }
 }

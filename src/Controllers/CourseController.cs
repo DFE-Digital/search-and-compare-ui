@@ -11,11 +11,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
 
     //[Authorize]
-    public class CourseController : AnalyticsControllerBase
+    public class CourseController : CommonAttributesControllerBase
     {
         private readonly ISearchAndCompareApi _api;
 
-        public CourseController(ISearchAndCompareApi api, AnalyticsPolicy analyticsPolicy) : base(analyticsPolicy)
+        public CourseController(ISearchAndCompareApi api)
         {
             _api = api;
         }

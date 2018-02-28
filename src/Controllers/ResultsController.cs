@@ -16,7 +16,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
     {
         private readonly ISearchAndCompareApi _api;
 
-        public ResultsController(ISearchAndCompareApi api, AnalyticsPolicy analyticsPolicy) : base(analyticsPolicy)
+        public ResultsController(ISearchAndCompareApi api)
         {
             _api = api;
         }

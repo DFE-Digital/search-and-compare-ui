@@ -8,12 +8,5 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
     [ServiceFilter(typeof(AnalyticsAttribute))]
     public abstract class CommonAttributesControllerBase : Controller
     {
-        private readonly AnalyticsPolicy policy;
-
-        public CommonAttributesControllerBase(AnalyticsPolicy policy)
-        {
-            this.policy = policy;
-        }
-
     }
 }
