@@ -19,6 +19,7 @@
             <dl role="contentinfo">
                 <dt>Qualification</dt>
                 <dd>
+                    @if (Model.Course.IncludesPgce != IncludesPgce.No) {
                     <details>
                         <summary><span class="summary">@Model.Course.FormattedOutcome()</span></summary>
 
@@ -28,7 +29,17 @@
                             <p>Many PGCE courses include credits that count toward a Master's degree.</p>
                         </div>
                     </details>
-                </dd>               
+                    } else {
+                    <details>
+                        <summary><span class="summary">@Model.Course.FormattedOutcome()</span></summary>
+
+                        <div class="panel panel-border-narrow">
+                            <p>Qualified teacher status (QTS) allows you to teach in state schools in England.</p>
+                            <p>If you want to teach in the rest of the UK or internationally, consider a course that gives you the qualification &#39;postgraduate certificate in education with qualified teacher status&#39; instead.</p>
+                        </div>
+                    </details>
+                    }
+                </dd>
 
                 <dt>Training provider</dt>
                 <dd>@Model.Provider.Name</dd>
@@ -145,71 +156,39 @@
         </h3>
         <div>
             <h4 class="heading-small">Fees</h4>
-            @if (Model.Fees.HasFees) {
-            <p>The course fees for @Model.Fees.Year are as follows:</p>
-                <table>
-                    <tr class="visually-hidden">
-                        <th>
-                            Student type
-                        </th>
-                        <th>
-                            Fees to pay
-                        </th>
-                    </tr>
-                    <tr>
-                        <td>
-                            UK students
-                        </td>
-                        <td>
-                            £@string.Format("{0:n0}", Model.Fees.UkFees)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            EU students
-                        </td>
-                        <td>
-                            £@string.Format("{0:n0}", Model.Fees.EuFees)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            International students
-                        </td>
-                        <td>
-                            £@string.Format("{0:n0}", Model.Fees.InternationalFees)
-                        </td>
-                    </tr>
-                </table>
-            } else {
-                <p>
-                    There are no fees for this course.
-                </p>
-            }
+            <p>The course fees for @Model.Finance.FormattedYear are as follows:</p>
+            <table>
+                <tr class="visually-hidden">
+                    <th>Student type</th><th>Fees to pay</th>
+                </tr>
+                <tr>
+                    <td>UK students</td><td>@Model.Finance.FormattedUkFees</td>
+                </tr>
+                <tr>
+                    <td>EU students</td><td>@Model.Finance.FormattedEuFees</td>
+                </tr>
+                <tr>
+                    <td>International students</td><td>@Model.Finance.FormattedInternationalFees</td>
+                </tr>
+            </table>
 
-            @if (Model.Fees.HasFunding) {
+            @if (Model.Finance.HasFunding) {
                 <h4 class="heading-small">Funding</h4>
-                <p>If you are a UK or EU student, the following financial support might be available for you depending on your qualifications:</p>
+                <p>The following financial support might be available for you depending on your qualifications.</p>
                 <ul class="list list-bullet">
-                    @if (Model.Fees.MaxScholarship.HasValue) {
-                        <li>Up to £@string.Format("{0:n0}", Model.Fees.MaxScholarship) tax free scholarship while you train</li>
+                    @if (Model.Finance.MaxScholarship.HasValue) {
+                        <li>@Model.Finance.FormattedMaxScholarship</li>
                     }
-                    @if (Model.Fees.MaxBursary.HasValue) {
-                        <li>Up to £@string.Format("{0:n0}", Model.Fees.MaxBursary) tax free bursary while you train</li>
+                    @if (Model.Finance.MaxBursary.HasValue) {
+                        <li>@Model.Finance.FormattedMaxBursary</li>
                     }
                 </ul>
-            } else if (Model.Fees.SalaryKnown) {
+            } else if (Model.Finance.IsSalaried) {
                 <h4 class="heading-small">Funding</h4>
-                <p>                    
-                    You can get a salary of between £@string.Format("{0:n0}", Model.Fees.SalaryMin) and £@string.Format("{0:n0}", Model.Fees.SalaryMax) for this course.
-                </p>
-            } else if (Model.Fees.IsSalaried) {
-                <h4 class="heading-small">Funding</h4>
-                <p>                    
-                    A salary is available for this course.
+                <p>
+                    @Model.Finance.FormattedSalary
                 </p>
             }
-            @* else don't render funding section *@    
 
             <p>
                 <a href="https://getintoteaching.education.gov.uk/funding-and-salary">Know more about funding</a>

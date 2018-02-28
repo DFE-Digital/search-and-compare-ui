@@ -12,7 +12,7 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels
     {
         public Course Course { get; set; }
 
-        public FeesViewModel Fees { get; set; }
+        public FinanceViewModel Finance { get; set; }
 
         public QueryFilter FilterModel { get; set; }
 

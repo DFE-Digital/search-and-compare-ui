@@ -1,0 +1,26 @@
+@model QueryFilter
+
+<div class="filter-form">
+    <div class="inner-block">
+
+        <div class="padded-filter checkbox-filter js-openable-filter">
+            <div class="head legend" role="term">
+                Funding
+            </div>
+            <div class="filter-options checkbox-container-noscroll" id="funding-filter" role="definition">
+                
+                @if(Model.SelectedFunding != null && Model.SelectedFunding == FundingOption.BursaryOrScholarship) {
+                    <text>Scholarships and bursaries</text>
+                } else if(Model.SelectedFunding != null && Model.SelectedFunding == FundingOption.Salary) {
+                    <text>Salaried</text>
+                } else {
+                    <text>All</text>
+                }
+            </div>
+            <div class="filter-change">
+            <a href='@Url.Action("Funding", "Filter", Model.ToRouteValues())'
+               class="link">Change funding options</a>
+            </div>
+        </div>
+    </div>
+  </div>

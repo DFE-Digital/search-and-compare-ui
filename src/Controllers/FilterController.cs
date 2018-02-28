@@ -114,5 +114,22 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             return await Location(applyFilter, model);
         }
 
+        [HttpGet("results/filter/funding")]
+        public IActionResult Funding(QueryFilter model)
+        {
+            return View(model);
+        }
+
+        [HttpPost("results/filter/funding")]
+        public IActionResult Funding(int applyFilter, QueryFilter model)
+        {
+            if (applyFilter == 0)
+            {
+                model.funding = null;
+                return RedirectToAction("Index", "Results", model.ToRouteValues());
+            }
+            model.funding = applyFilter;
+            return RedirectToAction("Index", "Results", model.ToRouteValues());
+        }
     }
 }
