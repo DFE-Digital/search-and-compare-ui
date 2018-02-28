@@ -172,7 +172,12 @@
                 </tr>
             </table>
 
-            @if (Model.Finance.HasFunding) {
+            @if (Model.Finance.IsSalaried) {
+                <h4 class="heading-small">Funding</h4>
+                <p>
+                    @Model.Finance.FormattedSalary
+                </p>
+            } else if (Model.Finance.HasFunding) {
                 <h4 class="heading-small">Funding</h4>
                 <p>The following financial support might be available for you depending on your qualifications.</p>
                 <ul class="list list-bullet">
@@ -183,11 +188,6 @@
                         <li>@Model.Finance.FormattedMaxBursary</li>
                     }
                 </ul>
-            } else if (Model.Finance.IsSalaried) {
-                <h4 class="heading-small">Funding</h4>
-                <p>
-                    @Model.Finance.FormattedSalary
-                </p>
             }
 
             <p>
