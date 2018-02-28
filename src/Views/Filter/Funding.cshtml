@@ -1,0 +1,57 @@
+@model QueryFilter
+
+@{
+    ViewBag.Title = $"Filter by Location";
+}
+
+@Html.Partial("Back", new BackLinkViewModel {
+    Href = Url.Action("Index", "Results", Model.ToRouteValues()),
+    Title = "Return to course search",
+    AriaLabel = "Return to course search"
+    })
+
+<div class="grid-row">
+    <div class="column-full">
+        <form action='@Url.Action("Funding", "Filter", Model.ToRouteValues())' method="POST">
+            <fieldset role="radiogroup" aria-required="true">
+                <legend role="heading">
+                    <h3 class="heading-medium">Financial support while you train</h3>
+                </legend>
+                <div>
+                    Based on your qualifications, you may be eligible for financial support.
+                </div>
+                
+                <div class="multiple-choice multiple-radio">
+                    <input id="applyFilter-bursaryscholarship" type="radio" name="applyFilter" value="1">
+                    <label for="applyFilter-bursaryscholarship" class="multi-choice-label">
+                        <span class="bold">Show me courses with a bursary or scholarship</span>
+                        <span>You can get up to £26,000 with a bursary.</span>
+                        <span>Outstanding graduates could get up to £28,000 with a scholarship. Scholarship amounts are greater than bursary amounts.</span>
+                        <span>If you get a scholarship you can't get a bursary.</span>
+                    </label>
+                </div>
+
+                <div class="multiple-choice multiple-radio">
+                    <input id="applyFilter-salary" type="radio" name="applyFilter" value="2">
+                    <label for="applyFilter-salary" class="multi-choice-label">
+                        <span class="bold">Show me courses with a salary</span>
+                        <span>Earn a salary while you train.</span>
+                        <span>If you choose this kind of course, you don't pay any fees.</span>
+                        <span>You can't get a bursary or scholarship with a salaried course.</span>
+                    </label>
+                </div>
+
+                <div class="multiple-choice multiple-radio">
+                    <input id="applyFilter-all" type="radio" name="applyFilter" value="0">
+                    <label for="applyFilter-all" class="multi-choice-label">
+                        <span class="bold">Show me all courses</span>
+                    </label>
+                </div>
+            </fieldset>
+            
+            <div class="filter-apply-button">
+                <input class="button" type="submit" value="Find courses">
+            </div>
+        </form>
+    </div>
+</div>
