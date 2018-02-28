@@ -8,17 +8,24 @@
 <div class="grid-row">
     <div class="column-full">
         <h3 class="heading-small">
-        <a href='@Url.Action("Index", "Results", Model.FilterModel.ToRouteValues())'
-            class="link-back"
-            title="Return to course search"
-            aria-label="Return to course search">Back</a>
+        @if(ViewBag.IsInWizard) {
+            <a href='@Url.Action("LocationWizard", "Filter", Model.FilterModel.ToRouteValues())'
+                class="link-back"
+                title="Return to location selection"
+                aria-label="Return to location selection">Back</a>
+        } else { 
+            <a href='@Url.Action("Index", "Results", Model.FilterModel.ToRouteValues())'
+                class="link-back"
+                title="Return to course search"
+                aria-label="Return to course search">Back</a>
+        }
         </h3>
     </div>
 </div>
 
 <div class="grid-row">
     <div class="column-full">
-        <form action='@Url.Action("Subject", "Filter", Model.FilterModel.ToRouteValues())' method="POST">
+        <form action='@Url.Action(ViewBag.IsInWizard ? "SubjectWizard" : "Subject", "Filter", Model.FilterModel.ToRouteValues())' method="POST">
             <legend role="heading">
                 <h3 class="heading-medium">What subjects would you like to teach?</h3>
                 <span class="body-text">Select all that apply</span>

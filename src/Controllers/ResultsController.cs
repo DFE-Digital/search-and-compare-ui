@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using GovUk.Education.SearchAndCompare.Domain.Lists;
 using GovUk.Education.SearchAndCompare.Domain.Models;
 using System.Linq;
+using GovUk.Education.SearchAndCompare.UI.ActionFilters;
+using GovUk.Education.SearchAndCompare.UI.Filters;
 
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
     //[Authorize]
-    public class ResultsController : AnalyticsControllerBase
+    public class ResultsController : CommonAttributesControllerBase
     {
         private readonly ISearchAndCompareApi _api;
 
@@ -50,5 +52,12 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         {         
             return View(model);
         }
+        
+        [HttpPost("results/sortby")]
+        public IActionResult SortBy(QueryFilter model)
+        {
+            return RedirectToAction("Index", "Results", model.ToRouteValues());
+        }
+
     }
 }

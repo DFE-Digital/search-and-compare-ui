@@ -5,7 +5,7 @@
 }
 
 <div class="form-group">
-    <form action='@Url.Action("SortBy", "Filter", Model.ToRouteValues())' method="POST">
+    <form action='@Url.Action("SortBy", "Results", Model.ToRouteValues())' method="POST">
         <label class="form-label sortedby-label" for="sortby">Sorted by</label>
         <select class="form-control trigger-result-update sortby-selector"
                 onchange="this.form.submit()"

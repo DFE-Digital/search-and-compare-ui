@@ -4,12 +4,13 @@ using GovUk.Education.SearchAndCompare.UI.ViewModels;
 using GovUk.Education.SearchAndCompare.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using GovUk.Education.SearchAndCompare.UI.ActionFilters;
 
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
 
     //[Authorize]
-    public class CourseController : AnalyticsControllerBase
+    public class CourseController : CommonAttributesControllerBase
     {
         private readonly ISearchAndCompareApi _api;
 

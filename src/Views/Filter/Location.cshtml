@@ -7,17 +7,24 @@
 <div class="grid-row">
     <div class="column-full">
         <h3 class="heading-small">
-        <a href='@Url.Action("Index", "Results", Model.ToRouteValues())'
-            class="link-back"
-            title="Return to course search"
-            aria-label="Return to course search">Back</a>
+            @if(ViewBag.IsInWizard) {
+                <a href='@Url.Action("Index", "Home")'
+                    class="link-back"
+                    title="Return to start page"
+                    aria-label="Return to start page">Back</a>
+            } else {
+                <a href='@Url.Action("Index", "Results", Model.ToRouteValues())'
+                    class="link-back"
+                    title="Return to course search"
+                    aria-label="Return to course search">Back</a>
+            }        
         </h3>
     </div>
 </div>
 
 <div class="grid-row">
     <div class="column-full">
-        <form action='@Url.Action("Location", "Filter", Model.ToRouteValues())' method="POST">
+        <form action='@Url.Action(ViewBag.IsInWizard ? "LocationWizard" : "Location", "Filter", Model.ToRouteValues())' method="POST">
             <fieldset role="radiogroup" aria-required="true">
                 <legend role="heading">
                     <h3 class="heading-medium">Search for teacher training courses in England</h3>
@@ -47,7 +54,7 @@
             </fieldset>
             
             <div class="filter-apply-button">
-                <input class="button" type="submit" value="Find courses">
+                <input class="button" type="submit" value="@(ViewBag.IsInWizard ? "Next" : "Find courses")">
             </div>
         </form>
     </div>
