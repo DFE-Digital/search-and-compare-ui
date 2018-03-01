@@ -15,10 +15,10 @@
         <form action='@Url.Action("Location", "Filter", Model.ToRouteValues())' method="POST">
             <fieldset role="radiogroup" aria-required="true">
                 <legend role="heading">
-                    <h3 class="heading-medium">Search for teacher training courses in England</h3>
+                    <h3 class="heading-medium filter-heading">Search for teacher training courses in England</h3>
                 </legend>
                 
-                <div class="multiple-choice" data-target="location-selector">
+                <div class="multiple-choice multiple-radio" data-target="location-selector">
                     @if (string.IsNullOrEmpty(Model.loc)) {
                         <input id="applyFilter-Yes" type="radio" name="applyFilter" value="true">
                     } else {
@@ -39,7 +39,7 @@
                     </select>
                 </div>
 
-                <div class="multiple-choice">
+                <div class="multiple-choice multiple-radio">
                     @if (string.IsNullOrEmpty(Model.loc)) {
                         <input id="applyFilter-No" type="radio" name="applyFilter" value="false" checked>
                     } else {
