@@ -10,14 +10,12 @@
 @if(isInWizard) {
     @Html.Partial("Back", new BackLinkViewModel {
         Href = Url.Action("LocationWizard", "Filter", Model.FilterModel.ToRouteValues()),
-        Title = "Return to start page",
-        AriaLabel = "Return to start page"
+        Title = "Return to location selection"
     })
 } else { 
     @Html.Partial("Back", new BackLinkViewModel {
         Href = Url.Action("Index", "Results", Model.FilterModel.ToRouteValues()),
-        Title = "Return to start page",
-        AriaLabel = "Return to start page"
+        Title = "Return to search results"
     })
 }
 

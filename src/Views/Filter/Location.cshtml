@@ -8,14 +8,12 @@
 @if(isInWizard) {
     @Html.Partial("Back", new BackLinkViewModel {
         Href = Url.Action("Index", "Home"),
-        Title = "Return to start page",
-        AriaLabel = "Return to start page"
+        Title = "Return to start page"
     })
 } else {
     @Html.Partial("Back", new BackLinkViewModel {
         Href = Url.Action("Index", "Results", Model.ToRouteValues()),
-        Title = "Return to start page",
-        AriaLabel = "Return to start page"
+        Title = "Return to search results"
     })
 }     
 

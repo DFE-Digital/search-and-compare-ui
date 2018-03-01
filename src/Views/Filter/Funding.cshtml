@@ -8,14 +8,12 @@
 @if(isInWizard) {
     @Html.Partial("Back", new BackLinkViewModel {
         Href = Url.Action("SubjectWizard", "Filter", Model.ToRouteValues()),
-        Title = "Return to subject selection",
-        AriaLabel = "Return to subject selection"
+        Title = "Return to subject selection"
     })
 } else {
     @Html.Partial("Back", new BackLinkViewModel {
         Href = Url.Action("Index", "Results", Model.ToRouteValues()),
-        Title = "Return to course search",
-        AriaLabel = "Return to course search"
+        Title = "Return to search results"
     })
 }
 
