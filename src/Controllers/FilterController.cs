@@ -66,13 +66,14 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                 model.lat = null;
                 model.lng = null;
                 model.loc = null; 
+                model.lq = null;
                 model.rad = null;
                 model.page = null;
                 model.sortby = null;
                 return RedirectToAction("Index", "Results", model.ToRouteValues());
             }
 
-            var coords = await _geocoder.ResolvePostCodeAsync(model.loc);
+            var coords = await _geocoder.ResolvePostCodeAsync(model.lq);
             if (coords == null) 
             {
                 return RedirectToAction(nameof(Location));

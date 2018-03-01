@@ -62,9 +62,9 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels
         public int? MaxScholarship {
             get
             {
-                return Course.Subjects.Any(x => x.Funding != null && x.Funding.Scholarship.HasValue)
-                    ? (int?) Course.Subjects.Where(x => x.Funding != null && x.Funding.Scholarship.HasValue)
-                                            .Max(x => x.Funding.Scholarship.Value)
+                return Course.CourseSubjects.Any(cs => cs.Subject.Funding != null && cs.Subject.Funding.Scholarship.HasValue)
+                    ? (int?) Course.CourseSubjects.Where(cs => cs.Subject.Funding != null && cs.Subject.Funding.Scholarship.HasValue)
+                                            .Max(cs => cs.Subject.Funding.Scholarship.Value)
                     : null;
             }
         }
@@ -79,9 +79,9 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels
         public int? MaxBursary {
             get
             {
-                return Course.Subjects.Any(x => x.Funding != null && x.Funding.BursaryFirst.HasValue)
-                    ? (int?) Course.Subjects.Where(x => x.Funding != null && x.Funding.BursaryFirst.HasValue)
-                                            .Max(x => x.Funding.BursaryFirst.Value)
+                return Course.CourseSubjects.Any(cs => cs.Subject.Funding != null && cs.Subject.Funding.BursaryFirst.HasValue)
+                    ? (int?) Course.CourseSubjects.Where(cs => cs.Subject.Funding != null && cs.Subject.Funding.BursaryFirst.HasValue)
+                                            .Max(cs => cs.Subject.Funding.BursaryFirst.Value)
                     : null;
             }
         }

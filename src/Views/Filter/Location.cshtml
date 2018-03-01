@@ -19,12 +19,16 @@
                 </legend>
                 
                 <div class="multiple-choice" data-target="location-selector">
-                    <input id="applyFilter-Yes" type="radio" name="applyFilter" value="true">
+                    @if (string.IsNullOrEmpty(Model.loc)) {
+                        <input id="applyFilter-Yes" type="radio" name="applyFilter" value="true">
+                    } else {
+                        <input id="applyFilter-Yes" type="radio" name="applyFilter" value="true" checked>
+                    }
                     <label for="applyFilter-Yes">Search by postcode, town or city</label>
                 </div>
                 <div class="panel panel-border-narrow js-hidden" id="location-selector">
                     <label class="form-label" for="location">Postcode, town or city name</label>
-                    <input class="form-control" name="loc" type="text" id="location">
+                    <input class="form-control" name="lq" type="text" id="location" value="@Model.lq">
                     
                     <label class="form-label" for="radius">Within Radius</label>
                     <select class="form-control" id="radius" name="rad">
@@ -36,7 +40,11 @@
                 </div>
 
                 <div class="multiple-choice">
-                    <input id="applyFilter-No" type="radio" name="applyFilter" value="false">
+                    @if (string.IsNullOrEmpty(Model.loc)) {
+                        <input id="applyFilter-No" type="radio" name="applyFilter" value="false" checked>
+                    } else {
+                        <input id="applyFilter-No" type="radio" name="applyFilter" value="false">
+                    }
                     <label for="applyFilter-No">Search across England</label>
                 </div>
             </fieldset>

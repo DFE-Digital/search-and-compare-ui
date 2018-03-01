@@ -13,7 +13,7 @@
 
 <div class="grid-row">
     <div class="column-full">
-        <form action='@Url.Action("Subject", "Filter", Model.FilterModel.ToRouteValues())' method="POST">
+        <form action='@Url.Action("Subject", "Filter", Model.FilterModel.WithoutSubjects().ToRouteValues())' method="POST">
             <legend role="heading">
                 <h3 class="heading-medium">What subjects would you like to teach?</h3>
                 <span class="body-text">Select all that apply</span>

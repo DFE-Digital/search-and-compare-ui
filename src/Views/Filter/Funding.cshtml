@@ -22,7 +22,11 @@
                 </div>
                 
                 <div class="multiple-choice multiple-radio">
-                    <input id="applyFilter-bursaryscholarship" type="radio" name="applyFilter" value="1">
+                    @if (Model.SelectedFunding == FundingOption.BursaryOrScholarship) {
+                        <input id="applyFilter-bursaryscholarship" type="radio" name="applyFilter" value="1" checked>
+                    } else {
+                        <input id="applyFilter-bursaryscholarship" type="radio" name="applyFilter" value="1">
+                    }
                     <label for="applyFilter-bursaryscholarship" class="multi-choice-label">
                         <span class="bold">Show me courses with a bursary or scholarship</span>
                         <span>You can get up to £26,000 with a bursary.</span>
@@ -32,7 +36,11 @@
                 </div>
 
                 <div class="multiple-choice multiple-radio">
-                    <input id="applyFilter-salary" type="radio" name="applyFilter" value="2">
+                    @if (Model.SelectedFunding == FundingOption.Salary) {
+                        <input id="applyFilter-salary" type="radio" name="applyFilter" value="2" checked>
+                    } else {
+                        <input id="applyFilter-salary" type="radio" name="applyFilter" value="2">
+                    }
                     <label for="applyFilter-salary" class="multi-choice-label">
                         <span class="bold">Show me courses with a salary</span>
                         <span>Earn a salary while you train.</span>
@@ -42,7 +50,11 @@
                 </div>
 
                 <div class="multiple-choice multiple-radio">
-                    <input id="applyFilter-all" type="radio" name="applyFilter" value="0">
+                    @if (Model.SelectedFunding == FundingOption.All) {
+                        <input id="applyFilter-all" type="radio" name="applyFilter" value="0" checked>
+                    } else {
+                        <input id="applyFilter-all" type="radio" name="applyFilter" value="0">
+                    }
                     <label for="applyFilter-all" class="multi-choice-label">
                         <span class="bold">Show me all courses</span>
                     </label>
