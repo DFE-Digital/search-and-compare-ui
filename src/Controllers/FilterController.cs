@@ -68,6 +68,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                 model.loc = null; 
                 model.rad = null;
                 model.page = null;
+                model.sortby = null;
                 return RedirectToAction("Index", "Results", model.ToRouteValues());
             }
 
