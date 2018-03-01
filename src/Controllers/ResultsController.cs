@@ -47,12 +47,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             return View(viewModel);
         }
 
-        [HttpGet("results/qualifications")]
-        public IActionResult Qualifications(QueryFilter model)
-        {         
-            return View(model);
-        }
-        
         [HttpPost("results/sortby")]
         public IActionResult SortBy(QueryFilter model)
         {

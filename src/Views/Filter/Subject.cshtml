@@ -6,25 +6,20 @@
     var isInWizard = ViewBag.IsInWizard == true;
 }
 
-<div class="grid-row">
-    <div class="column-full">
-        <h3 class="heading-small">
-        @if(isInWizard) {
-            @Html.Partial("Back", new BackLinkViewModel {
-                    Href = Url.Action("LocationWizard", "Filter", Model.FilterModel.ToRouteValues()),
-                        Title = "Return to start page",
-                        AriaLabel = "Return to start page"
-                    })
-        } else { 
-            @Html.Partial("Back", new BackLinkViewModel {
-                    Href = Url.Action("Index", "Results", Model.FilterModel.ToRouteValues()),
-                        Title = "Return to start page",
-                        AriaLabel = "Return to start page"
-                    })
-        }
-        </h3>
-    </div>
-</div>
+
+@if(isInWizard) {
+    @Html.Partial("Back", new BackLinkViewModel {
+        Href = Url.Action("LocationWizard", "Filter", Model.FilterModel.ToRouteValues()),
+        Title = "Return to start page",
+        AriaLabel = "Return to start page"
+    })
+} else { 
+    @Html.Partial("Back", new BackLinkViewModel {
+        Href = Url.Action("Index", "Results", Model.FilterModel.ToRouteValues()),
+        Title = "Return to start page",
+        AriaLabel = "Return to start page"
+    })
+}
 
 <div class="grid-row">
     <div class="column-full">

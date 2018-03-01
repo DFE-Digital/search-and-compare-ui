@@ -5,19 +5,19 @@
     var isInWizard = ViewBag.IsInWizard == true;
 }
 
-    @if(isInWizard) {
-        @Html.Partial("Back", new BackLinkViewModel {
-            Href = Url.Action("SubjectWizard", "Filter", Model.ToRouteValues()),
-            Title = "Return to subject selection",
-            AriaLabel = "Return to subject selection"
-        })
-    } else {
-        @Html.Partial("Back", new BackLinkViewModel {
-            Href = Url.Action("Index", "Results", Model.ToRouteValues()),
-            Title = "Return to course search",
-            AriaLabel = "Return to course search"
-        })
-    }
+@if(isInWizard) {
+    @Html.Partial("Back", new BackLinkViewModel {
+        Href = Url.Action("SubjectWizard", "Filter", Model.ToRouteValues()),
+        Title = "Return to subject selection",
+        AriaLabel = "Return to subject selection"
+    })
+} else {
+    @Html.Partial("Back", new BackLinkViewModel {
+        Href = Url.Action("Index", "Results", Model.ToRouteValues()),
+        Title = "Return to course search",
+        AriaLabel = "Return to course search"
+    })
+}
 
 <div class="grid-row">
     <div class="column-full">
