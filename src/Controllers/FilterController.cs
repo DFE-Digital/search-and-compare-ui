@@ -47,6 +47,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("Subject")]
         public IActionResult SubjectPost(QueryFilter model)
         {
+            model.page = null;
+
             return RedirectToAction("Index", "Results", model.ToRouteValues());
         }
 
@@ -95,6 +97,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [HttpPost("results/filter/funding")]
         public IActionResult Funding(int applyFilter, QueryFilter model)
         {
+            model.page = null;
+
             if (applyFilter == 0)
             {
                 model.funding = null;
