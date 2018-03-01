@@ -6,8 +6,27 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
     public static class QueryFilterExtensions
     {
         public static object ToRouteValues(
-            this QueryFilter queryFilter) {
+            this QueryFilter queryFilter)
+        {
             return new {
+                queryFilter.page,
+                queryFilter.lat,
+                queryFilter.lng,
+                queryFilter.rad,
+                queryFilter.loc,
+                queryFilter.lq,
+                queryFilter.subjects,
+                queryFilter.sortby,
+                queryFilter.funding
+            };
+        }
+
+        public static object ToRouteValuesWithError(
+            this QueryFilter queryFilter,
+            string error)
+        {
+            return new {
+                error,
                 queryFilter.page,
                 queryFilter.lat,
                 queryFilter.lng,

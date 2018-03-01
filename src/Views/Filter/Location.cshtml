@@ -1,25 +1,29 @@
-@model QueryFilter
+@model LocationFilterViewModel
 
 @{
     ViewBag.Title = $"Filter by Location";
 }
 
 @Html.Partial("Back", new BackLinkViewModel {
-    Href = Url.Action("Index", "Results", Model.ToRouteValues()),
+    Href = Url.Action("Index", "Results", Model.FilterModel.ToRouteValues()),
     Title = "Return to course search",
     AriaLabel = "Return to course search"
     })
 
 <div class="grid-row">
     <div class="column-full">
-        <form action='@Url.Action("Location", "Filter", Model.ToRouteValues())' method="POST">
+        <form action='@Url.Action("Location", "Filter", Model.FilterModel.ToRouteValues())' method="POST">
             <fieldset role="radiogroup" aria-required="true">
                 <legend role="heading">
                     <h3 class="heading-medium filter-heading">Search for teacher training courses in England</h3>
                 </legend>
+
+                <div class="error-message">
+                    @Model.Error
+                </div>
                 
                 <div class="multiple-choice multiple-radio" data-target="location-selector">
-                    @if (string.IsNullOrEmpty(Model.loc)) {
+                    @if (string.IsNullOrEmpty(Model.Error) && string.IsNullOrEmpty(Model.FilterModel.loc)) {
                         <input id="applyFilter-Yes" type="radio" name="applyFilter" value="true">
                     } else {
                         <input id="applyFilter-Yes" type="radio" name="applyFilter" value="true" checked>
@@ -28,7 +32,7 @@
                 </div>
                 <div class="panel panel-border-narrow js-hidden" id="location-selector">
                     <label class="form-label" for="location">Postcode, town or city name</label>
-                    <input class="form-control" name="lq" type="text" id="location" value="@Model.lq">
+                    <input class="form-control" name="lq" type="text" id="location" value="@Model.FilterModel.lq">
                     
                     <label class="form-label" for="radius">Within Radius</label>
                     <select class="form-control" id="radius" name="rad">
@@ -40,7 +44,7 @@
                 </div>
 
                 <div class="multiple-choice multiple-radio">
-                    @if (string.IsNullOrEmpty(Model.loc)) {
+                    @if (string.IsNullOrEmpty(Model.Error) && string.IsNullOrEmpty(Model.FilterModel.loc)) {
                         <input id="applyFilter-No" type="radio" name="applyFilter" value="false" checked>
                     } else {
                         <input id="applyFilter-No" type="radio" name="applyFilter" value="false">

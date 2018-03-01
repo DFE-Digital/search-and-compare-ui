@@ -53,9 +53,14 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         }
 
         [HttpGet("results/filter/location")]
-        public IActionResult Location(QueryFilter model)
+        public IActionResult Location(QueryFilter model, string error)
         {
-            return View(model);
+            var viewModel = new LocationFilterViewModel {
+                FilterModel = model,
+                Error = error
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost("results/filter/location")]
@@ -76,7 +81,10 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             var coords = await _geocoder.ResolvePostCodeAsync(model.lq);
             if (coords == null) 
             {
-                return RedirectToAction(nameof(Location));
+                object redirectModel = model.ToRouteValuesWithError(
+                    "Sorry, we couldn't find your location, please check your input and try again."
+                );
+                return RedirectToAction(nameof(Location), redirectModel);
             }
             else
             {
