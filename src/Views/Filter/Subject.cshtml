@@ -13,17 +13,22 @@
 
 <div class="grid-row">
     <div class="column-full">
+        <legend role="heading">
+            <h3 class="heading-medium">What subjects would you like to teach?</h3>
+            <span class="body-text">Select all that apply</span>
+        </legend>
+
+        <div>
+            <a href="@Url.Action("Subject", "Filter", Model.FilterModel.WithoutSubjects().ToRouteValues())">Clear selection</a>
+        </div>
+
         <form action='@Url.Action("Subject", "Filter", Model.FilterModel.WithoutSubjects().ToRouteValues())' method="POST">
-            <legend role="heading">
-                <h3 class="heading-medium">What subjects would you like to teach?</h3>
-                <span class="body-text">Select all that apply</span>
-            </legend>
-             @foreach (var area in Model.SubjectAreas) {
+            @foreach (var area in Model.SubjectAreas) {
                 <h4 class="heading-small">
                     @area.Name
                 </h4>                
                 <fieldset>
-                   @foreach (var subject in area.Subjects.OrderBy(x => x.Name)) {
+                    @foreach (var subject in area.Subjects.OrderBy(x => x.Name)) {
                         <div class="multiple-choice">
                             <input id="@("subject-" + subject.Id)"
                                 name="SelectedSubjects"
@@ -35,9 +40,10 @@
                     }
                 </fieldset>
             }
-                <div class="filter-apply-button">
-                    <input class="button" type="submit" value="Find courses" role="button">
-                </div>
+
+            <div class="filter-apply-button">
+                <input class="button" type="submit" value="Find courses" role="button">
+            </div>
         </form>
     </div>
 </div>
