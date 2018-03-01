@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using GovUk.Education.SearchAndCompare.Domain.Models;
 
@@ -16,15 +17,15 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels
         }
 
         public string FormattedEuFees {
-            get { return string.Format("£{0:n0}", Course.Fees.Eu); }
+            get { return string.Format(CultureInfo.InvariantCulture, "£{0:n0}", Course.Fees.Eu); }
         }
 
         public string FormattedUkFees {
-            get { return string.Format("£{0:n0}", Course.Fees.Uk); }
+            get { return string.Format(CultureInfo.InvariantCulture, "£{0:n0}", Course.Fees.Uk); }
         }
 
         public string FormattedInternationalFees {
-            get { return string.Format("£{0:n0}", Course.Fees.International); }
+            get { return string.Format(CultureInfo.InvariantCulture, "£{0:n0}", Course.Fees.International); }
         }
 
         public string FormattedSalary {
@@ -32,15 +33,15 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels
             {
                 if (Course.Salary.Minimum.HasValue && Course.Salary.Maximum.HasValue)
                 {
-                    return string.Format("A salary of between £{0:n0} and £{1:n0} may be available depending on your experience.", Course.Salary.Minimum, Course.Salary.Maximum);
+                    return string.Format(CultureInfo.InvariantCulture, "A salary of between £{0:n0} and £{1:n0} may be available depending on your experience.", Course.Salary.Minimum, Course.Salary.Maximum);
                 }
                 else if (Course.Salary.Minimum.HasValue)
                 {
-                    return string.Format("A salary of at least £{0:n0} may be available depending on your experience.", Course.Salary.Minimum);
+                    return string.Format(CultureInfo.InvariantCulture, "A salary of at least £{0:n0} may be available depending on your experience.", Course.Salary.Minimum);
                 }
                 else if (Course.Salary.Maximum.HasValue)
                 {
-                    return string.Format("A salary of up to £{0:n0} may be available depending on your experience.", Course.Salary.Maximum);
+                    return string.Format(CultureInfo.InvariantCulture, "A salary of up to £{0:n0} may be available depending on your experience.", Course.Salary.Maximum);
                 }
                 return "A salary may be available for this course depending on your experience.";
             }
@@ -72,7 +73,7 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels
         public string FormattedMaxScholarship {
             get
             {
-                return string.Format("Up to £{0:n0} tax free scholarship while you train", MaxScholarship);
+                return string.Format(CultureInfo.InvariantCulture, "Up to £{0:n0} tax free scholarship while you train", MaxScholarship);
             }
         }
 
@@ -89,7 +90,7 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels
         public string FormattedMaxBursary {
             get
             {
-                return string.Format("Up to £{0:n0} tax free bursary while you train", MaxBursary);
+                return string.Format(CultureInfo.InvariantCulture, "Up to £{0:n0} tax free bursary while you train", MaxBursary);
             }
         }
 
