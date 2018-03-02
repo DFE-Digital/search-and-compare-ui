@@ -206,3 +206,15 @@ table.alt th
 }
 
 
+h3.back-link {
+    margin-top: 5px;
+}
+a.back-link {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+h3.filter-heading {
+    margin-top: 1.6em;
+    margin-bottom: 1.6em;
+}

@@ -41,6 +41,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("Subject")]
         public IActionResult SubjectPost(QueryFilter model)
         {
+            model.page = null;
+
             var isInWizard = ViewBag.IsInWizard == true;
             return isInWizard
                 ? RedirectToAction("FundingWizard", model.ToRouteValues())
@@ -64,9 +66,14 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         }
 
         [HttpGet("results/filter/location")]
-        public IActionResult Location(QueryFilter model)
+        public IActionResult Location(QueryFilter model, string error)
         {
-            return View("Location", model);
+            var viewModel = new LocationFilterViewModel {
+                FilterModel = model,
+                Error = error
+            };
+
+            return View("Location", viewModel);
         }
 
         [HttpPost("results/filter/location")]
@@ -78,17 +85,22 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                 model.lat = null;
                 model.lng = null;
                 model.loc = null; 
+                model.lq = null;
                 model.rad = null;
                 model.page = null;
+                model.sortby = null;
                 return isInWizard
                     ? RedirectToAction("SubjectWizard", model.ToRouteValues())
                     : RedirectToAction("Index", "Results", model.ToRouteValues());
             }
 
-            var coords = await _geocoder.ResolvePostCodeAsync(model.loc);
+            var coords = await _geocoder.ResolvePostCodeAsync(model.lq);
             if (coords == null) 
             {
-                return RedirectToAction(isInWizard ? nameof(LocationWizard) : nameof(Location));
+                object redirectModel = model.ToRouteValuesWithError(
+                    "Sorry, we couldn't find your location, please check your input and try again."
+                );
+                return RedirectToAction(isInWizard ? nameof(LocationWizard) : nameof(Location), redirectModel);
             }
             else
             {
@@ -108,7 +120,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         public IActionResult LocationWizard(QueryFilter model)
         {
             ViewBag.IsInWizard = true;
-            return Location(model);
+            return Location(model, string.Empty);
         }
         
         [HttpPost("wizard/location")]
@@ -127,6 +139,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [HttpPost("results/filter/funding")]
         public IActionResult Funding(int applyFilter, QueryFilter model)
         {
+            model.page = null;
+
             if (applyFilter == 0)
             {
                 model.funding = null;

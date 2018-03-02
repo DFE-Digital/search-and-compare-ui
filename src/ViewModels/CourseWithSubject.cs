@@ -12,6 +12,7 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels
         {
             this.Course = course;
             this.Subject = subject;
+            string.IsNullOrEmpty("");
         }
     }
 }

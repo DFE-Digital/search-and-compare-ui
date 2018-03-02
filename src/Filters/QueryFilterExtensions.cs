@@ -6,48 +6,87 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
     public static class QueryFilterExtensions
     {
         public static object ToRouteValues(
-            this QueryFilter resultsFilter) {
+            this QueryFilter queryFilter)
+        {
             return new {
-                resultsFilter.page,
-                resultsFilter.lat,
-                resultsFilter.lng,
-                resultsFilter.rad,
-                resultsFilter.loc,
-                resultsFilter.subjects,
-                resultsFilter.sortby,
-                resultsFilter.funding
+                queryFilter.page,
+                queryFilter.lat,
+                queryFilter.lng,
+                queryFilter.rad,
+                queryFilter.loc,
+                queryFilter.lq,
+                queryFilter.subjects,
+                queryFilter.sortby,
+                queryFilter.funding
+            };
+        }
+
+        public static object ToRouteValuesWithError(
+            this QueryFilter queryFilter,
+            string error)
+        {
+            return new {
+                error,
+                queryFilter.page,
+                queryFilter.lat,
+                queryFilter.lng,
+                queryFilter.rad,
+                queryFilter.loc,
+                queryFilter.lq,
+                queryFilter.subjects,
+                queryFilter.sortby,
+                queryFilter.funding
             };
         }
 
         public static QueryFilter WithSortBy(
-            this QueryFilter resultsFilter, int? sortby)
+            this QueryFilter queryFilter, int? sortby)
         {
             return new QueryFilter
             {
-                page = resultsFilter.page,
-                lat = resultsFilter.lat,
-                lng = resultsFilter.lng,
-                rad = resultsFilter.rad,
-                loc = resultsFilter.loc,
-                subjects = resultsFilter.subjects,
+                page = queryFilter.page,
+                lat = queryFilter.lat,
+                lng = queryFilter.lng,
+                rad = queryFilter.rad,
+                loc = queryFilter.loc,
+                lq = queryFilter.lq,
+                subjects = queryFilter.subjects,
                 sortby = sortby,
-                funding = resultsFilter.funding
+                funding = queryFilter.funding
             };
         }
 
         public static QueryFilter WithPage(
-            this QueryFilter resultsFilter, int? page)
+            this QueryFilter queryFilter, int? page)
         {
             return new QueryFilter
             {
                 page = page,
-                lat = resultsFilter.lat,
-                lng = resultsFilter.lng,
-                rad = resultsFilter.rad,
-                loc = resultsFilter.loc,
-                subjects = resultsFilter.subjects,
-                sortby = resultsFilter.sortby,
-                funding = resultsFilter.funding
+                lat = queryFilter.lat,
+                lng = queryFilter.lng,
+                rad = queryFilter.rad,
+                loc = queryFilter.loc,
+                lq = queryFilter.lq,
+                subjects = queryFilter.subjects,
+                sortby = queryFilter.sortby,
+                funding = queryFilter.funding
+            };
+        }
+
+        public static QueryFilter WithoutSubjects(
+            this QueryFilter queryFilter)
+        {
+            return new QueryFilter
+            {
+                page = queryFilter.page,
+                lat = queryFilter.lat,
+                lng = queryFilter.lng,
+                rad = queryFilter.rad,
+                loc = queryFilter.loc,
+                lq = queryFilter.lq,
+                subjects = null,
+                sortby = queryFilter.sortby,
+                funding = queryFilter.funding
             };
         }
     }

@@ -93,7 +93,7 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewFormatters
 
         public static string FundingAvailable(this Course course)
         {
-            return course.Route.IsSalaried || course.Subjects.Any(subject => subject.Funding != null) ? "Yes" : "No";
+            return course.Route.IsSalaried || course.CourseSubjects.Any(cs => cs.Subject.Funding != null) ? "Yes" : "No";
         }
 
         public static int GetNumberOfFullTimeVacancies(this Course course)
