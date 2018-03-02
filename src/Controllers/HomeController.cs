@@ -3,16 +3,13 @@ using GovUk.Education.SearchAndCompare.UI.ViewModels;
 using GovUk.Education.SearchAndCompare.UI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using GovUk.Education.SearchAndCompare.UI.ActionFilters;
 
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
     //[Authorize]
-    public class HomeController : AnalyticsControllerBase
+    public class HomeController : CommonAttributesControllerBase
     {
-        public HomeController(AnalyticsPolicy policy) : base(policy)
-        {
-        }
-
         [HttpGet("")]
         [HttpGet("home")]
         [HttpGet("home/index")]

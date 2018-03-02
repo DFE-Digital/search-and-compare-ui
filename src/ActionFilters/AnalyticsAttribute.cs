@@ -2,13 +2,13 @@ using GovUk.Education.SearchAndCompare.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace GovUk.Education.SearchAndCompare.UI.Controllers
+namespace GovUk.Education.SearchAndCompare.UI.ActionFilters
 {
-    public abstract class AnalyticsControllerBase : Controller
+    public class AnalyticsAttribute : ActionFilterAttribute
     {
         private readonly AnalyticsPolicy policy;
 
-        public AnalyticsControllerBase(AnalyticsPolicy policy)
+        public AnalyticsAttribute(AnalyticsPolicy policy)
         {
             this.policy = policy;
         }
@@ -17,7 +17,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         {
             if (policy == AnalyticsPolicy.Yes) 
             {
-                ViewData["SEND_ANALYTICS"] = true;
+                ((Controller) context.Controller).ViewData["SEND_ANALYTICS"] = true;
             }
 
             base.OnActionExecuting(context);

@@ -3,13 +3,21 @@
 @{
     ViewBag.Title = $"Filter by Subject";
     var selected = Model.FilterModel.SelectedSubjects;
+    var isInWizard = ViewBag.IsInWizard == true;
 }
 
-@Html.Partial("Back", new BackLinkViewModel {
-    Href = Url.Action("Index", "Results", Model.FilterModel.ToRouteValues()),
-    Title = "Return to course search",
-    AriaLabel = "Return to course search"
+
+@if(isInWizard) {
+    @Html.Partial("Back", new BackLinkViewModel {
+        Href = Url.Action("LocationWizard", "Filter", Model.FilterModel.ToRouteValues()),
+        Title = "Return to location selection"
     })
+} else { 
+    @Html.Partial("Back", new BackLinkViewModel {
+        Href = Url.Action("Index", "Results", Model.FilterModel.ToRouteValues()),
+        Title = "Return to search results"
+    })
+}
 
 <div class="grid-row">
     <div class="column-full">
@@ -18,11 +26,11 @@
             <span class="body-text">Select all that apply</span>
         </legend>
 
-        <div>
-            <a href="@Url.Action("Subject", "Filter", Model.FilterModel.WithoutSubjects().ToRouteValues())">Clear selection</a>
-        </div>
+        <!-- <div>
+            <a href="@Url.Action(isInWizard ? "SubjectWizard" : "Subject", "Filter", Model.FilterModel.WithoutSubjects().ToRouteValues())">Clear selection</a>
+        </div> -->
 
-        <form action='@Url.Action("Subject", "Filter", Model.FilterModel.WithoutSubjects().ToRouteValues())' method="POST">
+        <form action='@Url.Action(isInWizard ? "SubjectWizard" : "Subject", "Filter", Model.FilterModel.WithoutSubjects().ToRouteValues())' method="POST">
             @foreach (var area in Model.SubjectAreas) {
                 <h4 class="heading-small">
                     @area.Name
@@ -42,7 +50,7 @@
             }
 
             <div class="filter-apply-button">
-                <input class="button" type="submit" value="Find courses" role="button">
+                <input class="button" type="submit" value="@(isInWizard ? "Next" : "Find courses")" role="button">
             </div>
         </form>
     </div>

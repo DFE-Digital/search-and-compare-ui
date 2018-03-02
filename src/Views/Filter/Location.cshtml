@@ -2,17 +2,24 @@
 
 @{
     ViewBag.Title = $"Filter by Location";
+    var isInWizard = ViewBag.IsInWizard == true;
 }
 
-@Html.Partial("Back", new BackLinkViewModel {
-    Href = Url.Action("Index", "Results", Model.FilterModel.ToRouteValues()),
-    Title = "Return to course search",
-    AriaLabel = "Return to course search"
+@if (isInWizard) {
+    @Html.Partial("Back", new BackLinkViewModel {
+        Href = Url.Action("Index", "Home"),
+        Title = "Return to start page"
     })
+} else {
+    @Html.Partial("Back", new BackLinkViewModel {
+        Href = Url.Action("Index", "Results", Model.FilterModel.ToRouteValues()),
+        Title = "Return to search results"
+    })
+}     
 
 <div class="grid-row">
     <div class="column-full">
-        <form action='@Url.Action("Location", "Filter", Model.FilterModel.ToRouteValues())' method="POST">
+        <form action='@Url.Action(isInWizard ? "LocationWizard" : "Location", "Filter", Model.FilterModel.ToRouteValues())' method="POST">
             <fieldset role="radiogroup" aria-required="true">
                 <legend role="heading">
                     <h3 class="heading-medium filter-heading">Search for teacher training courses in England</h3>
@@ -54,7 +61,7 @@
             </fieldset>
             
             <div class="filter-apply-button">
-                <input class="button" type="submit" value="Find courses">
+                <input class="button" type="submit" value="@(isInWizard ? "Next" : "Find courses")">
             </div>
         </form>
     </div>
