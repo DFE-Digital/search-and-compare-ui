@@ -66,3 +66,27 @@
         </form>
     </div>
 </div>
+
+<div class="grid-row">
+    <div class="column-full">
+        <p>Or</p>
+        <details open="@(string.IsNullOrWhiteSpace(Model.FilterModel.query) == false)">
+
+            <summary><span class="summary">Search by provider name</span></summary>
+
+            <div class="panel panel-border-narrow">
+
+                <form action='@Url.Action(isInWizard ? "FullTextWizard" : "FullText", "Filter", Model.FilterModel.ToRouteValues())' method="POST">
+                    <fieldset aria-required="true">
+                        <label class="form-label" for="query">Provider name</label>
+                        <input class="form-control" name="query" type="text" id="query" value="@Model.FilterModel.query">                        
+                    </fieldset>
+                    
+                    <div class="filter-apply-button">
+                        <input class="button button-secondary" type="submit" value="@(isInWizard ? "Next" : "Search")">
+                    </div>
+                </form>
+            </div>
+        </details>
+    </div>
+</div> 

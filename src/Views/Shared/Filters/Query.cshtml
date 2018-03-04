@@ -1,0 +1,25 @@
+@model QueryFilter
+
+@* https://www.gov.uk/search *@
+
+<div class="filter-form">
+    <div class="inner-block">
+
+        <form action='@Url.Action("FullText", "Filter", Model.ToRouteValues())' method="POST">
+            <div class="padded-filter checkbox-filter js-openable-filter">
+                <label class="head legend" for="query"role="term">
+                    Provider name<span class="visually-hidden">:</span>
+                </label>
+                <div class="filter-options checkbox-container-noscroll" id="location-filter" role="definition">
+                    <input class="form-control" name="query" type="text" id="query" value="@Model.query">                        
+                    
+                    <div class="filter-apply-button-inline">
+                        <input class="button" type="submit" value="Update results">
+                    </div>
+                </div>
+                <div class="filter-change">
+                </div>
+            </div>
+        </form>
+    </div>
+  </div>

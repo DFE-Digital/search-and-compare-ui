@@ -21,8 +21,12 @@
 </div>
 <div class="grid-row">
     <div class="column-one-third">
-        <nav role="navigation">    
-            @Html.Partial("Filters/Location", Model.FilterModel)
+        <nav role="navigation">
+            @if (!string.IsNullOrWhiteSpace(Model.FilterModel.query)) {
+                @Html.Partial("Filters/Query", Model.FilterModel)
+            } else {
+                @Html.Partial("Filters/Location", Model.FilterModel)
+            }
             @Html.Partial("Filters/Subject", Model)
             @Html.Partial("Filters/Funding", Model.FilterModel)
         </nav>
