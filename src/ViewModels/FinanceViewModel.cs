@@ -101,5 +101,9 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels
             Course = course;
             FeeCaps = feeCaps;
         }
+
+        public FinanceViewModel()
+        {
+        }
     }
 }

@@ -1,0 +1,244 @@
+@model CourseViewModel
+
+@{
+    ViewBag.Title = $"Spike";
+}
+
+@Html.Partial("Back", new BackLinkViewModel {
+    Href = Url.Action("Index", "Results", Model.FilterModel.ToRouteValues()),
+    Title = "Return to course search",
+    AriaLabel = "Return to course search"
+    })
+
+<div class="grid-row">
+    <div class="column-full">
+        <h2 class="heading-large" role="heading">
+            @Model.Course.Name
+        </h2>
+        <div class="course-basicinfo">
+            <dl role="contentinfo">
+                <dt>Qualification</dt>
+                <dd>
+                    @if (Model.Course.IncludesPgce != IncludesPgce.No) {
+                    <details>
+                        <summary><span class="summary">@Model.Course.FormattedOutcome()</span></summary>
+
+                        <div class="panel panel-border-narrow">
+                            <p>A postgraduate certificate in education (PGCE) with qualified teacher status (QTS) allows you to teach in England, Scotland, Wales and Northern Ireland.</p>
+                            <p>This qualification is also recognised internationally.</p>
+                            <p>Many PGCE courses include credits that count toward a Masters degree.</p>
+                        </div>
+                    </details>
+                    } else {
+                    <details>
+                        <summary><span class="summary">@Model.Course.FormattedOutcome()</span></summary>
+
+                        <div class="panel panel-border-narrow">
+                            <p>Qualified teacher status (QTS) allows you to teach in state schools in England.</p>
+                            <p>If you want to teach in the rest of the UK or internationally, consider a course that gives you the qualification &#39;postgraduate certificate in education with qualified teacher status&#39; instead.</p>
+                        </div>
+                    </details>
+                    }
+                </dd>
+
+                <dt>Training provider</dt>
+                <dd>@Model.Provider.Name</dd>
+
+                <dt>Funding</dt>
+                <dd>@Model.Course.FundingAvailable()</dd>
+
+                <dt>Study type</dt>
+                <dd>@Model.Course.FormattedStudyInfo()</dd>
+
+                <dt>Vacancies</dt>
+                <dd>@Model.Course.HasVacancies()</dd>
+
+                <dt>Date you can apply from</dt>
+                <dd>@Model.Course.FormattedEarliestApplicationDate()</dd>
+
+                <!-- <dt>Date course starts</dt>
+                <dd></dd> -->
+            </dl>
+        </div>
+    </div>
+</div>
+<div class="grid-row">
+    <div class="column-two-thirds  ">
+        <div class="course-contents">
+            <h3 class="heading-small">Contents</h3>
+            <ul role="directory">
+                @if (Model.HasSection("about this training programme")) {
+                    <li><a href="#section-about">About the course</a></li>
+                }
+                @if (Model.HasSection("entry requirements")) {
+                    <li><a href="#section-entry">Requirements</a></li>
+                }
+                @if (Model.Course.Campuses.Count() > 0) {
+                    <li><a href="#section-schools">Placement schools</a></li>
+                }
+                
+                <li><a href="#section-fees">Fees and funding</a></li>
+                
+                @if (Model.HasSection("about this training provider")) {
+                    <li><a href="#section-about-provider">About thr training provider</a></li>
+                }
+                @if (Model.HasSection("contact details")) {
+                    <li><a href="#section-contact">Contact details</a></li>
+                }
+                
+                <li><a href="#section-apply">Apply</a></li>
+            </ul>
+        </div>
+
+        @if (Model.HasSection("about this training programme")) {
+            <a name="section-about"></a>
+            <h3 class="heading-medium">
+                About the course
+            </h3>
+            <div>
+                @Html.Raw(Model.GetHtmlForSection("about this training programme"))
+            </div>
+        }
+
+        @if (Model.HasSection("entry requirements")) {
+            <a name="section-entry"></a>
+            <h3 class="heading-medium">
+                Requirements
+            </h3>
+            <div>
+                @Html.Raw(Model.GetHtmlForSection("entry requirements"))
+            </div>
+        }
+
+        @if (Model.Course.Campuses.Count() > 0) {        
+            <a name="section-schools"></a>
+            <h3 class="heading-medium">
+                Placement schools
+            </h3>
+            <div>
+                <p>
+                    Placement schools are also known as partner schools.
+                </p>
+                <table class="alt">
+                    <tr>
+                        <th>Name</th>                    
+                        <th>Address</th>                    
+                        <th>Code</th>                    
+                        <th>Vacancies</th>                    
+                        <th>Study type</th>                    
+                    </tr>
+                    @foreach(var campus in Model.Course.Campuses) {
+                        <tr>
+                            <td>@campus.Name</td>
+                            <td>@campus.Location?.Address</td>
+                            <td>@campus.CampusCode</td>
+                            <td>@campus.VacanciesUiString()</td>
+                            <td>@campus.StudyTypeUiString()</td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        }
+
+        <a name="section-fees"></a>
+        <h3 class="heading-medium">
+            Fees and funding
+        </h3>
+        <div>
+            <h4 class="heading-small">Fees</h4>
+            <p>The course fees for @Model.Finance.FormattedYear are as follows:</p>
+            <table>
+                <tr class="visually-hidden">
+                    <th>Student type</th><th>Fees to pay</th>
+                </tr>
+                <tr>
+                    <td>UK students</td><td>@Model.Finance.FormattedUkFees</td>
+                </tr>
+                <tr>
+                    <td>EU students</td><td>@Model.Finance.FormattedEuFees</td>
+                </tr>
+                <tr>
+                    <td>International students</td><td>@Model.Finance.FormattedInternationalFees</td>
+                </tr>
+            </table>
+
+            @if (Model.Finance.HasFunding) {
+                <h4 class="heading-small">Funding</h4>
+                <p>The following financial support might be available for you depending on your qualifications.</p>
+                <ul class="list list-bullet">
+                    @if (Model.Finance.MaxScholarship.HasValue) {
+                        <li>@Model.Finance.FormattedMaxScholarship</li>
+                    }
+                    @if (Model.Finance.MaxBursary.HasValue) {
+                        <li>@Model.Finance.FormattedMaxBursary</li>
+                    }
+                </ul>
+            } else if (Model.Finance.IsSalaried) {
+                <h4 class="heading-small">Funding</h4>
+                <p>
+                    @Model.Finance.FormattedSalary
+                </p>
+            }
+
+            <p>
+                <a href="https://getintoteaching.education.gov.uk/funding-and-salary">Know more about funding</a>
+            </p>
+
+        </div>
+
+        @if (Model.HasSection("about this training provider")) {        
+            <a name="section-about-provider"></a>
+            <h3 class="heading-medium">
+                About the training provider
+            </h3>
+            <div>
+                @Html.Raw(Model.GetHtmlForSection("about this training provider"))
+            </div>
+        }
+        
+        @if (Model.HasSection("contact details")) {
+            <a name="section-contact"></a>
+            <h3 class="heading-medium">
+                Contact details
+            </h3>
+            <div>
+                @Html.Raw(Model.GetHtmlForSection("contact details"))
+            </div>
+        }
+
+        
+        <a name="section-apply"></a>
+        <h3 class="heading-medium">
+            Apply
+        </h3>
+        <div>
+            <p>
+                <a href="https://www.ucas.com/ucas/teacher-training/ucas-teacher-training-apply-and-track">Apply on the UCAS website</a>. You'll need to register before you can apply.
+            </p>
+            <p>
+                You'll need these codes for the Choices section of the application form:
+            </p>
+            <ul class="list list-bullet">
+                <li>training provider code name: @Model.Course.ProviderCodeName</li>
+                <li>training provider code: @Model.Course.Provider.ProviderCode</li>
+                <li>training programme code: @Model.Course.ProgrammeCode</li>
+                @if (Model.Course.Campuses.Count() == 0) {
+                    <li>training location or campus code: leave empty</li>
+                } else if (Model.Course.Campuses.Count() == 1) {
+                    <li>training location or campus code: @(String.IsNullOrEmpty(Model.Course.Campuses.Single().CampusCode) ? "leave empty" : Model.Course.Campuses.Single().CampusCode)</li>
+                }
+            </ul>
+            @if (Model.Course.Campuses.Count() > 1) {
+                <p>
+                    When asked for the training location or campus code, use:
+                </p>
+                <ul class="list list-bullet">
+                    @foreach(var campus in Model.Course.Campuses) {
+                        <li>@(String.IsNullOrEmpty(campus.CampusCode) ? "leave empty" : campus.CampusCode) for @campus.Name</li>
+                    }
+                </ul>
+            }
+        </div>
+    </div>
+</div>
