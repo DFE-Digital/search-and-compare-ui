@@ -259,47 +259,47 @@
                 </h3>
                 <div class="course-basicinfo">
                     <dl role="contentinfo">
-                        @if (!String.IsNullOrEmpty(Model.Course.ContactDetails.Email)) {
+                        @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Email)) {
                             <dt class="bold">Email</dt>
                             <dd>@Model.Course.ContactDetails.Email</dd>
                         }
-                        @if (!String.IsNullOrEmpty(Model.Course.ContactDetails.Phone)) {
+                        @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Phone)) {
                             <dt class="bold">Telephone</dt>
                             <dd>@Model.Course.ContactDetails.Phone</dd>
                         }
-                        @if (!String.IsNullOrEmpty(Model.Course.ContactDetails.Fax)) {
+                        @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Fax)) {
                             <dt class="bold">Fax</dt>
                             <dd>@Model.Course.ContactDetails.Fax</dd>
                         }
-                        @if (!String.IsNullOrEmpty(Model.Course.ContactDetails.Website)) {
+                        @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Website)) {
                             <dt class="bold">Website</dt>
                             <dd>@Model.Course.ContactDetails.Website</dd>
                         }
                         @if (Model.HasAddress()) {
                             <dt class="bold">Address</dt>
                             <dd>
-                            @if(!String.IsNullOrEmpty(Model.Course.ContactDetails.Address.Line1)) {
+                            @if(!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address.Line1)) {
                                 @Model.Course.ContactDetails.Address.Line1<br/>
                             }
-                            @if(!String.IsNullOrEmpty(Model.Course.ContactDetails.Address.Line2)) {
+                            @if(!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address.Line2)) {
                                 @Model.Course.ContactDetails.Address.Line2<br/>
                             }
-                            @if(!String.IsNullOrEmpty(Model.Course.ContactDetails.Address.Line3)) {
+                            @if(!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address.Line3)) {
                                 @Model.Course.ContactDetails.Address.Line3<br/>
                             }
-                            @if(!String.IsNullOrEmpty(Model.Course.ContactDetails.Address.Line4)) {
+                            @if(!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address.Line4)) {
                                 @Model.Course.ContactDetails.Address.Line4<br/>
                             }
-                            @if(!String.IsNullOrEmpty(Model.Course.ContactDetails.Address.Line5)) {
+                            @if(!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address.Line5)) {
                                 @Model.Course.ContactDetails.Address.Line5<br/>
                             }
-                            @if(!String.IsNullOrEmpty(Model.Course.ContactDetails.Address.Line6)) {
+                            @if(!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address.Line6)) {
                                 @Model.Course.ContactDetails.Address.Line6<br/>
                             }
-                            @if(!String.IsNullOrEmpty(Model.Course.ContactDetails.Address.County)) {
+                            @if(!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address.County)) {
                                 @Model.Course.ContactDetails.Address.County<br/>
                             }
-                            @if(!String.IsNullOrEmpty(Model.Course.ContactDetails.Address.PostCode)) {
+                            @if(!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address.PostCode)) {
                                 @Model.Course.ContactDetails.Address.PostCode<br/>
                             }
                             </dd>

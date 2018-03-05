@@ -34,10 +34,10 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels
         public bool HasContactDetails()
         {
             return Course != null && Course.ContactDetails != null
-                && (!string.IsNullOrEmpty(Course.ContactDetails.Email)
-                    || !string.IsNullOrEmpty(Course.ContactDetails.Phone)
-                    || !string.IsNullOrEmpty(Course.ContactDetails.Fax)
-                    || !string.IsNullOrEmpty(Course.ContactDetails.Website)
+                && (!string.IsNullOrWhiteSpace(Course.ContactDetails.Email)
+                    || !string.IsNullOrWhiteSpace(Course.ContactDetails.Phone)
+                    || !string.IsNullOrWhiteSpace(Course.ContactDetails.Fax)
+                    || !string.IsNullOrWhiteSpace(Course.ContactDetails.Website)
                     || HasAddress());
         }
 
@@ -45,14 +45,14 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels
         {
             var a = Course;
             return Course != null && Course.ContactDetails != null && Course.ContactDetails.Address != null
-                && (!string.IsNullOrEmpty(Course.ContactDetails.Address.Line1)
-                    || !string.IsNullOrEmpty(Course.ContactDetails.Address.Line2)
-                    || !string.IsNullOrEmpty(Course.ContactDetails.Address.Line3)
-                    || !string.IsNullOrEmpty(Course.ContactDetails.Address.Line4)
-                    || !string.IsNullOrEmpty(Course.ContactDetails.Address.Line5)
-                    || !string.IsNullOrEmpty(Course.ContactDetails.Address.Line6))
-                && !string.IsNullOrEmpty(Course.ContactDetails.Address.County)
-                && !string.IsNullOrEmpty(Course.ContactDetails.Address.PostCode);
+                && (!string.IsNullOrWhiteSpace(Course.ContactDetails.Address.Line1)
+                    || !string.IsNullOrWhiteSpace(Course.ContactDetails.Address.Line2)
+                    || !string.IsNullOrWhiteSpace(Course.ContactDetails.Address.Line3)
+                    || !string.IsNullOrWhiteSpace(Course.ContactDetails.Address.Line4)
+                    || !string.IsNullOrWhiteSpace(Course.ContactDetails.Address.Line5)
+                    || !string.IsNullOrWhiteSpace(Course.ContactDetails.Address.Line6))
+                && !string.IsNullOrWhiteSpace(Course.ContactDetails.Address.County)
+                && !string.IsNullOrWhiteSpace(Course.ContactDetails.Address.PostCode);
         }
         
         public HtmlString GetHtmlForSection(string name)
