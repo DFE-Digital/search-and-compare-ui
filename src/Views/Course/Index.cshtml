@@ -90,7 +90,7 @@
                 @if (Model.HasSection("about this training provider")) {
                 <li><a href="#section-about-provider">About this training provider</a></li>
                 }
-                @if (Model.HasSection("contact details")) {
+                @if (Model.HasContactDetails()) {
                 <li><a href="#section-contact">Contact details</a></li>
                 }
                 
@@ -235,14 +235,58 @@
             </div>
         }
         
-        @if (Model.HasSection("contact details")) {
+        @if (Model.HasContactDetails()) {
             <a name="section-contact"></a>
             <h3 class="heading-medium">
                 Contact details
             </h3>
-            <div>
-                @Html.Raw(Model.GetHtmlForSection("contact details"))
-            </div>
+            <dl role="contentinfo">
+                @if (!String.IsNullOrEmpty(Model.Course.ContactDetails.Email)) {
+                    <dt>Email</dt>
+                    <dd>@Model.Course.ContactDetails.Email</dd>
+                }
+                @if (!String.IsNullOrEmpty(Model.Course.ContactDetails.Phone)) {
+                    <dt>Telephone</dt>
+                    <dd>@Model.Course.ContactDetails.Phone</dd>
+                }
+                @if (!String.IsNullOrEmpty(Model.Course.ContactDetails.Fax)) {
+                    <dt>Fax</dt>
+                    <dd>@Model.Course.ContactDetails.Fax</dd>
+                }
+                @if (!String.IsNullOrEmpty(Model.Course.ContactDetails.Website)) {
+                    <dt>Website</dt>
+                    <dd>@Model.Course.ContactDetails.Website</dd>
+                }
+                @if (Model.HasAddress()) {
+                    <dt>Address</dt>
+                    <dd>
+                    @if(!String.IsNullOrEmpty(Model.Course.ContactDetails.Address.Line1)) {
+                        @Model.Course.ContactDetails.Address.Line1<br/>
+                    }
+                    @if(!String.IsNullOrEmpty(Model.Course.ContactDetails.Address.Line2)) {
+                        @Model.Course.ContactDetails.Address.Line2<br/>
+                    }
+                    @if(!String.IsNullOrEmpty(Model.Course.ContactDetails.Address.Line3)) {
+                        @Model.Course.ContactDetails.Address.Line3<br/>
+                    }
+                    @if(!String.IsNullOrEmpty(Model.Course.ContactDetails.Address.Line4)) {
+                        @Model.Course.ContactDetails.Address.Line4<br/>
+                    }
+                    @if(!String.IsNullOrEmpty(Model.Course.ContactDetails.Address.Line5)) {
+                        @Model.Course.ContactDetails.Address.Line5<br/>
+                    }
+                    @if(!String.IsNullOrEmpty(Model.Course.ContactDetails.Address.Line6)) {
+                        @Model.Course.ContactDetails.Address.Line6<br/>
+                    }
+                    @if(!String.IsNullOrEmpty(Model.Course.ContactDetails.Address.County)) {
+                        @Model.Course.ContactDetails.Address.County<br/>
+                    }
+                    @if(!String.IsNullOrEmpty(Model.Course.ContactDetails.Address.PostCode)) {
+                        @Model.Course.ContactDetails.Address.PostCode<br/>
+                    }
+                    </dd>
+                }
+            </dl>
         }
 
         
