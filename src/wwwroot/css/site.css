@@ -1,3 +1,7 @@
+.button.button-secondary {
+    background-color:#cccccc;
+    color:black;
+}
 .bat_searchresult > p {
     margin-bottom: 0.5em;
 }
@@ -35,6 +39,15 @@
 
 .filter-apply-button {
     padding-top: 30px;
+    padding-bottom: 20px;
+}
+
+.filter-apply-button-inline {
+    padding-top: 15px;
+}
+
+.panel .filter-apply-button {
+    padding-bottom: 0;
 }
 
 .padded-filter {

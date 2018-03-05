@@ -17,7 +17,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 queryFilter.lq,
                 queryFilter.subjects,
                 queryFilter.sortby,
-                queryFilter.funding
+                queryFilter.funding,
+                queryFilter.query
             };
         }
 
@@ -35,8 +36,20 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 queryFilter.lq,
                 queryFilter.subjects,
                 queryFilter.sortby,
-                queryFilter.funding
+                queryFilter.funding,
+                queryFilter.query
             };
+        }
+
+        public static QueryFilter WithoutLocation(this QueryFilter queryFilter)
+        {
+            return new QueryFilter
+            {
+                //page = queryFilter.page,
+                subjects = queryFilter.subjects,
+                funding = queryFilter.funding,
+                query = queryFilter.query
+            }; 
         }
 
         public static QueryFilter WithSortBy(
@@ -52,7 +65,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 lq = queryFilter.lq,
                 subjects = queryFilter.subjects,
                 sortby = sortby,
-                funding = queryFilter.funding
+                funding = queryFilter.funding,
+                query = queryFilter.query
             };
         }
 
@@ -69,7 +83,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 lq = queryFilter.lq,
                 subjects = queryFilter.subjects,
                 sortby = queryFilter.sortby,
-                funding = queryFilter.funding
+                funding = queryFilter.funding,
+                query = queryFilter.query
             };
         }
 
@@ -86,7 +101,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 lq = queryFilter.lq,
                 subjects = null,
                 sortby = queryFilter.sortby,
-                funding = queryFilter.funding
+                funding = queryFilter.funding,
+                query = queryFilter.query
             };
         }
     }

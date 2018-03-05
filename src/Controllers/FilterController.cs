@@ -65,6 +65,24 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             return SubjectPost(model);
         }
 
+        [HttpPost("results/filter/fulltext")]
+        [ActionName("FullText")]
+        public IActionResult FullTextPost(QueryFilter model)
+        {
+            return !string.IsNullOrWhiteSpace(model.query)
+                ? RedirectToAction("Index", "Results", model.WithoutLocation().ToRouteValues())
+                : RedirectToAction("Location", model.ToRouteValuesWithError("Provider name is required"));
+        }
+
+        [HttpPost("wizard/fulltext")]
+        [ActionName("FullTextWizard")]
+        public IActionResult FullTextWizardPost(QueryFilter model)
+        {
+            return !string.IsNullOrWhiteSpace(model.query)
+                ? RedirectToAction("SubjectWizard", model.WithoutLocation().ToRouteValues())
+                : RedirectToAction("LocationWizard", model.ToRouteValuesWithError("Provider name is required"));
+        }
+
         [HttpGet("results/filter/location")]
         public IActionResult Location(QueryFilter model, string error)
         {
@@ -80,18 +98,13 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         public async Task<IActionResult> Location(bool applyFilter, QueryFilter model)
         {
             var isInWizard = ViewBag.IsInWizard == true;
+            model.query = null;
+
             if (!applyFilter)
             {
-                model.lat = null;
-                model.lng = null;
-                model.loc = null; 
-                model.lq = null;
-                model.rad = null;
-                model.page = null;
-                model.sortby = null;
                 return isInWizard
-                    ? RedirectToAction("SubjectWizard", model.ToRouteValues())
-                    : RedirectToAction("Index", "Results", model.ToRouteValues());
+                    ? RedirectToAction("SubjectWizard", model.WithoutLocation().ToRouteValues())
+                    : RedirectToAction("Index", "Results", model.WithoutLocation().ToRouteValues());
             }
 
             var coords = await _geocoder.ResolvePostCodeAsync(model.lq);
