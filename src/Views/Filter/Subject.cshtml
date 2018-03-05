@@ -32,21 +32,43 @@
 
         <form action='@Url.Action(isInWizard ? "SubjectWizard" : "Subject", "Filter", Model.FilterModel.WithoutSubjects().ToRouteValues())' method="POST">
             @foreach (var area in Model.SubjectAreas) {
-                <h4 class="heading-small">
-                    @area.Name
-                </h4>                
-                <fieldset>
-                    @foreach (var subject in area.Subjects.OrderBy(x => x.Name)) {
-                        <div class="multiple-choice">
-                            <input id="@("subject-" + subject.Id)"
-                                name="SelectedSubjects"
-                                type="checkbox"
-                                checked="@selected.Contains(subject.Id)"
-                                value="@(subject.Id)">
-                            <label for="@("subject-" + subject.Id)">@subject.Name</label>
-                        </div>
-                    }
-                </fieldset>
+                <details>
+                <summary><span class="summary">@area.Name</span></summary>  
+                <div class="panel panel-border-narrow">          
+                    <fieldset>
+                        @foreach (var subject in area.Subjects.OrderBy(x => x.Name)) {
+                            <div class="multiple-choice multiple-choice-subject">
+                                <input id="@("subject-" + subject.Id)"
+                                    name="SelectedSubjects"
+                                    type="checkbox"
+                                    checked="@selected.Contains(subject.Id)"
+                                    value="@(subject.Id)">
+                                <label for="@("subject-" + subject.Id)">@subject.Name</label>
+                                @if (subject.IsSubjectKnowledgeEnhancementAvailable) {
+                                    <div class="subject-details-wrapper">
+                                        <details>
+                                            <summary><span class="summary">Is your degree in a different subject?</span></summary>
+                                            <div class="panel panel-border-narrow">
+                                                <p>
+                                                    You can complete a course to give you the knowledge you need to begin teacher training in this subject.
+                                                    This type of course is known as subject knowledge enhancement (SKE). To be eligible for it, you'll need a degree in a subject related to the one you want to teach.
+                                                    If you have a degree that isn't related, you'll need a related A-Level or work experience.
+                                                </p>
+                                                <p>
+                                                    SKE courses come with a bursary of up to £5,600. They last up to 28 weeks.
+                                                </p>
+                                                <p>
+                                                    The training provider for the teacher training course can tell you more about SKE.
+                                                </p>
+                                            </div>
+                                        </details>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </fieldset>
+                </div>
+                </details>
             }
 
             <div class="filter-apply-button">

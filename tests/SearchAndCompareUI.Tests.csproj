@@ -10,7 +10,7 @@
     <PackageReference Include="Moq" Version="4.8.0" />
     <PackageReference Include="nunit" Version="3.9.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.9.0" />
-    <PackageReference Include="DFE.SearchAndCompare.Domain" Version="0.1.12-beta" />
+    <PackageReference Include="DFE.SearchAndCompare.Domain" Version="0.1.15-beta" />
   </ItemGroup>
 
   <ItemGroup>

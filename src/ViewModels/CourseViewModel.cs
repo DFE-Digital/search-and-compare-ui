@@ -30,6 +30,30 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels
             return !string.IsNullOrWhiteSpace(
                 Course.DescriptionSections.Where(x => x.Name == name).SingleOrDefault()?.Text);
         }
+
+        public bool HasContactDetails()
+        {
+            return Course != null && Course.ContactDetails != null
+                && (!string.IsNullOrWhiteSpace(Course.ContactDetails.Email)
+                    || !string.IsNullOrWhiteSpace(Course.ContactDetails.Phone)
+                    || !string.IsNullOrWhiteSpace(Course.ContactDetails.Fax)
+                    || !string.IsNullOrWhiteSpace(Course.ContactDetails.Website)
+                    || HasAddress());
+        }
+
+        public bool HasAddress()
+        {
+            var a = Course;
+            return Course != null && Course.ContactDetails != null && Course.ContactDetails.Address != null
+                && (!string.IsNullOrWhiteSpace(Course.ContactDetails.Address.Line1)
+                    || !string.IsNullOrWhiteSpace(Course.ContactDetails.Address.Line2)
+                    || !string.IsNullOrWhiteSpace(Course.ContactDetails.Address.Line3)
+                    || !string.IsNullOrWhiteSpace(Course.ContactDetails.Address.Line4)
+                    || !string.IsNullOrWhiteSpace(Course.ContactDetails.Address.Line5)
+                    || !string.IsNullOrWhiteSpace(Course.ContactDetails.Address.Line6))
+                && !string.IsNullOrWhiteSpace(Course.ContactDetails.Address.County)
+                && !string.IsNullOrWhiteSpace(Course.ContactDetails.Address.PostCode);
+        }
         
         public HtmlString GetHtmlForSection(string name)
         {
