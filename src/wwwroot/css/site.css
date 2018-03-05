@@ -231,3 +231,27 @@ h3.filter-heading {
     margin-top: 1.6em;
     margin-bottom: 1.6em;
 }
+
+.twitter-typeahead
+{
+    width:100%;
+}
+.tt-suggestion{    
+    padding: 7.5px;
+    cursor: pointer;
+}
+.tt-suggestion:hover, .tt-cursor {
+    background-color: #d5e8f3;
+}
+.tt-menu {
+    width:100%;
+    background-color: white;
+    border: #bfc1c3 2px solid;
+    box-shadow: 0 3px 2px #bfc1c3;
+}
+
+@media screen and (min-width:641px) {
+    .tt-menu {
+        width: 50%;
+    }
+}
