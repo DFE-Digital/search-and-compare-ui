@@ -17,7 +17,7 @@ if (!!$) {
         // Details/summary polyfill from frontend toolkit
         GOVUK.details.init()
 
-        $('.typeahead').typeahead({
+        $('.provider-typeahead').typeahead({
             minLength: 3,
             highlight: true
           },
