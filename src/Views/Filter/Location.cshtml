@@ -79,7 +79,7 @@
                 <form action='@Url.Action(isInWizard ? "FullTextWizard" : "FullText", "Filter", Model.FilterModel.ToRouteValues())' method="POST">
                     <fieldset aria-required="true">
                         <label class="form-label" for="query">Provider name</label>
-                        <input class="form-control" name="query" type="text" id="query" value="@Model.FilterModel.query">                        
+                        <input class="form-control provider-typeahead" name="query" type="text" id="query" value="@Model.FilterModel.query">                        
                     </fieldset>
                     
                     <div class="filter-apply-button">

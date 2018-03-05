@@ -10,9 +10,25 @@ if (!!$) {
 
         // Use GOV.UK shim-links-with-button-role.js to trigger a link styled to look like a button,
         // with role="button" when the space key is pressed.
-        GOVUK.shimLinksWithButtonRole.init()
+        if (GOVUK.shimLinksWithButtonRole) {
+            GOVUK.shimLinksWithButtonRole.init();
+        }
 
         // Details/summary polyfill from frontend toolkit
         GOVUK.details.init()
+
+        $('.provider-typeahead').typeahead({
+            minLength: 3,
+            highlight: true
+          },
+          {
+            name: 'my-dataset',
+            source: function(query, cbSync, cbAsync){
+                $.get("/dynamic/providersuggest", {query: query}, function(res){
+                    cbAsync(res);
+                });
+            },
+            limit:10
+          });
     })
 }
