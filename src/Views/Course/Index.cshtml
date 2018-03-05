@@ -90,7 +90,7 @@
                 @if (Model.HasSection("about this training provider")) {
                 <li><a href="#section-about-provider">About this training provider</a></li>
                 }
-                @if (Model.HasSection("contact details")) {
+                @if (Model.HasContactDetails()) {
                 <li><a href="#section-contact">Contact details</a></li>
                 }
                 
@@ -99,184 +99,250 @@
         </div>
 
         @if (Model.HasSection("about this training programme")) {
-            <a name="section-about"></a>
-            <h3 class="heading-medium">
-                About the course
-            </h3>
-            <div>
-                @Html.Raw(Model.GetHtmlForSection("about this training programme"))
+            <div class="course-details-section">
+                <a name="section-about"></a>
+                <h3 class="heading-medium">
+                    About the course
+                </h3>
+                <div>
+                    @Html.Raw(Model.GetHtmlForSection("about this training programme"))
+                </div>
             </div>
         }
 
         @if (Model.HasSection("entry requirements")) {
-            <a name="section-entry"></a>
-            <h3 class="heading-medium">
-                Entry requirements
-            </h3>
-            <div>
-                @Html.Raw(Model.GetHtmlForSection("entry requirements"))
+            <div class="course-details-section">
+                <a name="section-entry"></a>
+                <h3 class="heading-medium">
+                    Entry requirements
+                </h3>
+                <div>
+                    @Html.Raw(Model.GetHtmlForSection("entry requirements"))
+                </div>
             </div>
         }
 
         @if (Model.Course.Campuses.Count() > 0) {        
-            <a name="section-schools"></a>
-            <h3 class="heading-medium">
-                Placement schools
-            </h3>
-            <div>
-                <p>
-                    Placement schools are also known as partner schools.
-                </p>
-                <table class="alt">
-                    <tr>
-                        <th>Name</th>                    
-                        <th>Address</th>                    
-                        <th>Code</th>                    
-                        <th>Vacancies</th>                    
-                        <th>Study type</th>                    
-                    </tr>
-                    @foreach(var campus in Model.Course.Campuses) {
+            <div class="course-details-section">
+                <a name="section-schools"></a>
+                <h3 class="heading-medium">
+                    Placement schools
+                </h3>
+                <div>
+                    <p>
+                        Placement schools are also known as partner schools.
+                    </p>
+                    <table class="alt">
                         <tr>
-                            <td>@campus.Name</td>
-                            <td>@campus.Location?.Address</td>
-                            <td>@campus.CampusCode</td>
-                            <td>@campus.VacanciesUiString()</td>
-                            <td>@campus.StudyTypeUiString()</td>
+                            <th>Name</th>                    
+                            <th>Address</th>                    
+                            <th>Code</th>                    
+                            <th>Vacancies</th>                    
+                            <th>Study type</th>                    
                         </tr>
-                    }
+                        @foreach(var campus in Model.Course.Campuses) {
+                            <tr>
+                                <td>@campus.Name</td>
+                                <td>@campus.Location?.Address</td>
+                                <td>@campus.CampusCode</td>
+                                <td>@campus.VacanciesUiString()</td>
+                                <td>@campus.StudyTypeUiString()</td>
+                            </tr>
+                        }
 
-                </table>
+                    </table>
+                </div>
             </div>
         }
 
-        <a name="section-fees"></a>
-        <h3 class="heading-medium">
-            Fees and funding
-        </h3>
-        <div>
-            <h4 class="heading-small">Fees</h4>
-            <p>The course fees for @Model.Finance.FormattedYear are as follows:</p>
-            <table>
-                <tr class="visually-hidden">
-                    <th>Student type</th><th>Fees to pay</th>
-                </tr>
-                <tr>
-                    <td>UK students</td><td>@Model.Finance.FormattedUkFees</td>
-                </tr>
-                <tr>
-                    <td>EU students</td><td>@Model.Finance.FormattedEuFees</td>
-                </tr>
-                <tr>
-                    <td>International students</td><td>@Model.Finance.FormattedInternationalFees</td>
-                </tr>
-            </table>
+        <div class="course-details-section">
+            <a name="section-fees"></a>
+            <h3 class="heading-medium">
+                Fees and funding
+            </h3>
+            <div>
+                <h4 class="heading-small">Fees</h4>
+                <p>The course fees for @Model.Finance.FormattedYear are as follows:</p>
+                <table>
+                    <tr class="visually-hidden">
+                        <th>Student type</th><th>Fees to pay</th>
+                    </tr>
+                    <tr>
+                        <td>UK students</td><td>@Model.Finance.FormattedUkFees</td>
+                    </tr>
+                    <tr>
+                        <td>EU students</td><td>@Model.Finance.FormattedEuFees</td>
+                    </tr>
+                    <tr>
+                        <td>International students</td><td>@Model.Finance.FormattedInternationalFees</td>
+                    </tr>
+                </table>
 
-            @if (Model.Finance.IsSalaried) {
-                <h4 class="heading-small">Funding</h4>
+                @if (Model.Finance.IsSalaried) {
+                    <h4 class="heading-small">Funding</h4>
+                    <p>
+                        @Model.Finance.FormattedSalary
+                    </p>
+                } else if (Model.Finance.HasFunding) {
+                    <h4 class="heading-small">Funding</h4>
+                    <p>The following financial support might be available for you depending on your qualifications.</p>
+                    <ul class="list list-bullet">
+                        @if (Model.Finance.MaxScholarship.HasValue) {
+                            <li>@Model.Finance.FormattedMaxScholarship</li>
+                        }
+                        @if (Model.Finance.MaxBursary.HasValue) {
+                            <li>@Model.Finance.FormattedMaxBursary</li>
+                        }
+                    </ul>
+                }
+
                 <p>
-                    @Model.Finance.FormattedSalary
+                    <a href="https://getintoteaching.education.gov.uk/funding-and-salary">Know more about funding</a>
                 </p>
-            } else if (Model.Finance.HasFunding) {
-                <h4 class="heading-small">Funding</h4>
-                <p>The following financial support might be available for you depending on your qualifications.</p>
-                <ul class="list list-bullet">
-                    @if (Model.Finance.MaxScholarship.HasValue) {
-                        <li>@Model.Finance.FormattedMaxScholarship</li>
-                    }
-                    @if (Model.Finance.MaxBursary.HasValue) {
-                        <li>@Model.Finance.FormattedMaxBursary</li>
-                    }
-                </ul>
-            }
 
-            <p>
-                <a href="https://getintoteaching.education.gov.uk/funding-and-salary">Know more about funding</a>
-            </p>
-
+            </div>
         </div>
 
         @if (Model.HasSection("what we are looking for")) {
-            <a name="section-looking"></a>
-            <h3 class="heading-medium">
-                What we&#39;re looking for
-            </h3>
-            <div>
-                @Html.Raw(Model.GetHtmlForSection("what we are looking for"))
+            <div class="course-details-section">
+                <a name="section-looking"></a>
+                <h3 class="heading-medium">
+                    What we&#39;re looking for
+                </h3>
+                <div>
+                    @Html.Raw(Model.GetHtmlForSection("what we are looking for"))
+                </div>
             </div>
         }
 
         @if (Model.HasSection("how we select our trainees")) {            
-            <a name="section-selection"></a>
-            <h3 class="heading-medium">
-                How we select our trainees
-            </h3>
-            <div>
-                @Html.Raw(Model.GetHtmlForSection("how we select our trainees"))
+            <div class="course-details-section">
+                <a name="section-selection"></a>
+                <h3 class="heading-medium">
+                    How we select our trainees
+                </h3>
+                <div>
+                    @Html.Raw(Model.GetHtmlForSection("how we select our trainees"))
+                </div>
             </div>
         }
 
         @if (Model.HasSection("why train with us")) {            
-            <a name="section-whyus"></a>
-            <h3 class="heading-medium">
-                Why train with us
-            </h3>
-            <div>
-                @Html.Raw(Model.GetHtmlForSection("why train with us?"))
+            <div class="course-details-section">
+                <a name="section-whyus"></a>
+                <h3 class="heading-medium">
+                    Why train with us
+                </h3>
+                <div>
+                    @Html.Raw(Model.GetHtmlForSection("why train with us?"))
+                </div>
             </div>
         }
 
         @if (Model.HasSection("about this training provider")) {        
-            <a name="section-about-provider"></a>
-            <h3 class="heading-medium">
-                About this training provider
-            </h3>
-            <div>
-                @Html.Raw(Model.GetHtmlForSection("about this training provider"))
+            <div class="course-details-section">
+                <a name="section-about-provider"></a>
+                <h3 class="heading-medium">
+                    About this training provider
+                </h3>
+                <div>
+                    @Html.Raw(Model.GetHtmlForSection("about this training provider"))
+                </div>
             </div>
         }
         
-        @if (Model.HasSection("contact details")) {
-            <a name="section-contact"></a>
-            <h3 class="heading-medium">
-                Contact details
-            </h3>
-            <div>
-                @Html.Raw(Model.GetHtmlForSection("contact details"))
+        @if (Model.HasContactDetails()) {
+            <div class="course-details-section">
+                <a name="section-contact"></a>
+                <h3 class="heading-medium">
+                    Contact details
+                </h3>
+                <div class="course-basicinfo">
+                    <dl role="contentinfo">
+                        @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Email)) {
+                            <dt class="bold">Email</dt>
+                            <dd>@Model.Course.ContactDetails.Email</dd>
+                        }
+                        @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Phone)) {
+                            <dt class="bold">Telephone</dt>
+                            <dd>@Model.Course.ContactDetails.Phone</dd>
+                        }
+                        @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Fax)) {
+                            <dt class="bold">Fax</dt>
+                            <dd>@Model.Course.ContactDetails.Fax</dd>
+                        }
+                        @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Website)) {
+                            <dt class="bold">Website</dt>
+                            <dd>@Model.Course.ContactDetails.Website</dd>
+                        }
+                        @if (Model.HasAddress()) {
+                            <dt class="bold">Address</dt>
+                            <dd>
+                            @if(!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address.Line1)) {
+                                @Model.Course.ContactDetails.Address.Line1<br/>
+                            }
+                            @if(!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address.Line2)) {
+                                @Model.Course.ContactDetails.Address.Line2<br/>
+                            }
+                            @if(!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address.Line3)) {
+                                @Model.Course.ContactDetails.Address.Line3<br/>
+                            }
+                            @if(!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address.Line4)) {
+                                @Model.Course.ContactDetails.Address.Line4<br/>
+                            }
+                            @if(!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address.Line5)) {
+                                @Model.Course.ContactDetails.Address.Line5<br/>
+                            }
+                            @if(!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address.Line6)) {
+                                @Model.Course.ContactDetails.Address.Line6<br/>
+                            }
+                            @if(!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address.County)) {
+                                @Model.Course.ContactDetails.Address.County<br/>
+                            }
+                            @if(!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address.PostCode)) {
+                                @Model.Course.ContactDetails.Address.PostCode<br/>
+                            }
+                            </dd>
+                        }
+                    </dl>
+                </div>
             </div>
         }
 
         
-        <a name="section-apply"></a>
-        <h3 class="heading-medium">
-            How to apply
-        </h3>
-        <div>
-            <p>
-                <a href="https://www.ucas.com/ucas/teacher-training/ucas-teacher-training-apply-and-track">Apply on the UCAS website</a>. You'll need to register before you can apply.
-            </p>
-            <p>
-                You'll need these codes for the Choices section of the application form:
-            </p>
-            <ul class="list list-bullet">
-                <li>training provider code name: @Model.Course.ProviderCodeName</li>
-                <li>training provider code: @Model.Course.Provider.ProviderCode</li>
-                <li>training programme code: @Model.Course.ProgrammeCode</li>
-                @if (Model.Course.Campuses.Count() == 0) {
-                    <li>training location or campus code: leave empty</li>
-                } else if (Model.Course.Campuses.Count() == 1) {
-                    <li>training location or campus code: @(String.IsNullOrEmpty(Model.Course.Campuses.Single().CampusCode) ? "leave empty" : Model.Course.Campuses.Single().CampusCode)</li>
-                }
-            </ul>
-            @if (Model.Course.Campuses.Count() > 1) {
+        <div class="course-details-section">
+            <a name="section-apply"></a>
+            <h3 class="heading-medium">
+                How to apply
+            </h3>
+            <div>
                 <p>
-                    When asked for the training location or campus code, use:
+                    <a href="https://www.ucas.com/ucas/teacher-training/ucas-teacher-training-apply-and-track">Apply on the UCAS website</a>. You'll need to register before you can apply.
+                </p>
+                <p>
+                    You'll need these codes for the Choices section of the application form:
                 </p>
                 <ul class="list list-bullet">
-                    @foreach(var campus in Model.Course.Campuses) {
-                        <li>@(String.IsNullOrEmpty(campus.CampusCode) ? "leave empty" : campus.CampusCode) for @campus.Name</li>
+                    <li>training provider code name: @Model.Course.ProviderCodeName</li>
+                    <li>training provider code: @Model.Course.Provider.ProviderCode</li>
+                    <li>training programme code: @Model.Course.ProgrammeCode</li>
+                    @if (Model.Course.Campuses.Count() == 0) {
+                        <li>training location or campus code: leave empty</li>
+                    } else if (Model.Course.Campuses.Count() == 1) {
+                        <li>training location or campus code: @(String.IsNullOrEmpty(Model.Course.Campuses.Single().CampusCode) ? "leave empty" : Model.Course.Campuses.Single().CampusCode)</li>
                     }
                 </ul>
-            }
+                @if (Model.Course.Campuses.Count() > 1) {
+                    <p>
+                        When asked for the training location or campus code, use:
+                    </p>
+                    <ul class="list list-bullet">
+                        @foreach(var campus in Model.Course.Campuses) {
+                            <li>@(String.IsNullOrEmpty(campus.CampusCode) ? "leave empty" : campus.CampusCode) for @campus.Name</li>
+                        }
+                    </ul>
+                }
+            </div>
         </div>
     </div>
 </div>
