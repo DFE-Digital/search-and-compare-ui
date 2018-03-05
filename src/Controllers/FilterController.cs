@@ -49,7 +49,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                 : RedirectToAction("Index", "Results", model.ToRouteValues());
         }
 
-        [HttpGet("wizard/subject")]
+        [HttpGet("start/subject")]
         [ActionName("SubjectWizard")]
         public IActionResult SubjectWizardGet(QueryFilter model)
         {
@@ -57,7 +57,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             return SubjectGet(model);
         }
 
-        [HttpPost("wizard/subject")]
+        [HttpPost("start/subject")]
         [ActionName("SubjectWizard")]
         public IActionResult SubjectWizardPost(QueryFilter model)
         {
@@ -72,15 +72,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             return !string.IsNullOrWhiteSpace(model.query)
                 ? RedirectToAction("Index", "Results", model.WithoutLocation().ToRouteValues())
                 : RedirectToAction("Location", model.ToRouteValuesWithError("Provider name is required"));
-        }
-
-        [HttpPost("wizard/fulltext")]
-        [ActionName("FullTextWizard")]
-        public IActionResult FullTextWizardPost(QueryFilter model)
-        {
-            return !string.IsNullOrWhiteSpace(model.query)
-                ? RedirectToAction("SubjectWizard", model.WithoutLocation().ToRouteValues())
-                : RedirectToAction("LocationWizard", model.ToRouteValuesWithError("Provider name is required"));
         }
 
         [HttpGet("results/filter/location")]
@@ -129,14 +120,14 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                 : RedirectToAction("Index", "Results", model.ToRouteValues());
         }
 
-        [HttpGet("wizard/location")]
+        [HttpGet("start/location")]
         public IActionResult LocationWizard(QueryFilter model)
         {
             ViewBag.IsInWizard = true;
             return Location(model, string.Empty);
         }
         
-        [HttpPost("wizard/location")]
+        [HttpPost("start/location")]
         public async Task<IActionResult> LocationWizard(bool applyFilter, QueryFilter model)
         {
             ViewBag.IsInWizard = true;
@@ -164,14 +155,14 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         }
 
         
-        [HttpGet("wizard/funding")]
+        [HttpGet("start/funding")]
         public IActionResult FundingWizard(QueryFilter model)
         {
             ViewBag.IsInWizard = true;
             return Funding(model);
         }
 
-        [HttpPost("wizard/funding")]
+        [HttpPost("start/funding")]
         public IActionResult FundingWizard(int applyFilter, QueryFilter model)
         {
             ViewBag.IsInWizard = true;
