@@ -78,9 +78,13 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         public IActionResult Location(QueryFilter model, string error)
         {
             var viewModel = new LocationFilterViewModel {
-                FilterModel = model,
-                Error = error
+                FilterModel = model
             };
+            if (!string.IsNullOrWhiteSpace(error))
+            {
+                viewModel.Error = new ErrorViewModel(error);
+            }
+
 
             return View("Location", viewModel);
         }
@@ -121,10 +125,10 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         }
 
         [HttpGet("start/location")]
-        public IActionResult LocationWizard(QueryFilter model)
+        public IActionResult LocationWizard(QueryFilter model, string error)
         {
             ViewBag.IsInWizard = true;
-            return Location(model, string.Empty);
+            return Location(model, error);
         }
         
         [HttpPost("start/location")]

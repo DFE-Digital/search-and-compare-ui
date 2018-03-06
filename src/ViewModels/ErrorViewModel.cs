@@ -1,11 +1,15 @@
 using System;
+using System.Collections.Generic;
 
 namespace GovUk.Education.SearchAndCompare.UI.ViewModels
 {
     public class ErrorViewModel
     {
-        public string RequestId { get; set; }
+        public IEnumerable<string> Messages {get;}
 
-        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+        public ErrorViewModel(string error)
+        {
+            Messages = new List<string>{error};
+        }
     }
 }

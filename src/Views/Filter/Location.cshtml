@@ -19,18 +19,19 @@
 
 <div class="grid-row">
     <div class="column-full">
+        @Html.Partial("Error", Model.Error)                
+                
         <form action='@Url.Action(isInWizard ? "LocationWizard" : "Location", "Filter", Model.FilterModel.ToRouteValues())' method="POST">
             <fieldset role="radiogroup" aria-required="true">
                 <legend role="heading">
-                    <h3 class="heading-medium filter-heading">Search for teacher training courses in England</h3>
+                    <h2 class="heading-large filter-heading">Find postgraduate teacher training</h2>
                 </legend>
+                <p>
+                    Answer some questions to find the most relevant courses.
+                </p>
 
-                <div class="error-message">
-                    @Model.Error
-                </div>
-                
                 <div class="multiple-choice multiple-radio" data-target="location-selector">
-                    @if (string.IsNullOrEmpty(Model.Error) && string.IsNullOrEmpty(Model.FilterModel.loc)) {
+                    @if (Model.Error == null && string.IsNullOrEmpty(Model.FilterModel.loc)) {
                         <input id="applyFilter-Yes" type="radio" name="applyFilter" value="true">
                     } else {
                         <input id="applyFilter-Yes" type="radio" name="applyFilter" value="true" checked>
@@ -51,7 +52,7 @@
                 </div>
 
                 <div class="multiple-choice multiple-radio">
-                    @if (string.IsNullOrEmpty(Model.Error) && string.IsNullOrEmpty(Model.FilterModel.loc)) {
+                    @if (Model.Error == null && string.IsNullOrEmpty(Model.FilterModel.loc)) {
                         <input id="applyFilter-No" type="radio" name="applyFilter" value="false" checked>
                     } else {
                         <input id="applyFilter-No" type="radio" name="applyFilter" value="false">
