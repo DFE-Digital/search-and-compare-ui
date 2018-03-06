@@ -87,8 +87,13 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewFormatters
 
         public static string FormattedEarliestApplicationDate(this Course course)
         {
-            return course.Campuses.Select(campus => campus.ApplicationsAcceptedFrom).Min().Value.ToString("d MMMM yyyy", 
-                  CultureInfo.CreateSpecificCulture("en-US"));
+            if (course.Campuses == null) { return string.Empty; }
+
+            var earliestDate = course.Campuses.Select(campus => campus.ApplicationsAcceptedFrom).Min();
+            
+            if (!earliestDate.HasValue) { return string.Empty; }
+
+            return earliestDate.Value.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"));
         }
 
         public static string FundingAvailable(this Course course)
