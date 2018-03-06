@@ -261,7 +261,10 @@
                     <dl role="contentinfo">
                         @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Email)) {
                             <dt class="bold">Email</dt>
-                            <dd><a href="mailto:@Model.Course.ContactDetails.Email">@Model.Course.ContactDetails.Email</a></dd>
+                            <dd><a href="mailto:@Model.Course.ContactDetails.Email"
+                                   title="Send email to course contact"
+                                   aria-label="Send email to course contact">
+                                    @Model.Course.ContactDetails.Email</a></dd>
                         }
                         @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Phone)) {
                             <dt class="bold">Telephone</dt>
@@ -273,7 +276,10 @@
                         }
                         @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Website)) {
                             <dt class="bold">Website</dt>
-                            <dd><a href="@Model.Course.ContactDetails.Website">@Model.Course.ContactDetails.Website</a></dd>
+                            <dd><a href="@Model.Course.ContactDetails.Website"
+                                   title="Go to course website"
+                                   aria-label="Go to course website">
+                                   @Model.Course.ContactDetails.Website</a></dd>
                         }
                         @if (Model.HasAddress()) {
                             <dt class="bold">Address</dt>
