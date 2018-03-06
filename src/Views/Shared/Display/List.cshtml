@@ -1,0 +1,44 @@
+@model ResultsViewModel
+
+<div class="search-results-header">
+    <div class="found-heading" role="heading">
+        <p class="found-count">@Model.Courses.TotalCount courses found</p>
+        <p class="new-search"><a href='@Url.Action("LocationWizard", "Filter")'>New search</a></p>
+    </div>
+    @Html.Partial("SortBy", Model.FilterModel)
+</div>
+
+<ul role="list">
+@foreach (var item in Model.Courses.Items) {
+    var subjects = @item.CourseSubjects.Select(courseSubject => courseSubject.Subject.Name).ToArray();
+    <li class="bat_searchresult" role="listitem">
+        <h3 class="heading-medium">
+            <a href='@Url.Action("Index", "Course", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new {courseId = item.Id}))' class="link">@item.Name</a>
+        </h3>
+        <dl>                
+            <dt>Training provider</dt>
+            <dd>@item.Provider.Name</dd>
+            
+            @if (item.ProviderLocation != null) {
+                <dt>Training provider&apos;s location</dt>
+                <dd>@item.ProviderLocation.Address</dd>
+            }
+
+            <dt>Study type</dt>
+            <dd>@item.FormattedStudyInfo()</dd>
+
+            <dt>Vacancies</dt>
+            <dd>@item.HasVacancies()</dd>
+
+            <dt>Funding</dt>
+            <dd>@item.FundingAvailable()</dd>
+
+            @if (item.Distance != null) {
+                <dt>Distance</dt>
+                <dd>@item.FormattedDistance()</dd>
+            }
+        </dl>
+    </li>
+}
+</ul>
+@Html.Partial("Pagination", Model)
