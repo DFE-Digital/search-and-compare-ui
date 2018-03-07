@@ -12,7 +12,7 @@
 
 <div class="grid-row">
     <div class="column-full">
-        <form action='@Url.Action("Qualification", "Filter", Model.ToRouteValues())' method="POST">
+        <form action='@Url.Action("StudyType", "Filter", Model.ToRouteValues())' method="POST">
             <fieldset role="radiogroup" aria-required="true">
                 <legend role="heading">
                     <h3 class="heading-medium filter-heading">Which qualification do you want?</h3>
@@ -31,7 +31,7 @@
                 <div class="multiple-choice multiple-radio">
                     <input id="applyFilter-includeparttime" type="checkbox" name="parttime" value="true" checked="@Model.parttime">
                     <label for="applyFilter-includeparttime" class="multi-choice-label">
-                        <span class="bold">Part time (18 @ndash; 24 months)</span>
+                        <span class="bold">Part time (18 &ndash; 24 months)</span>
                         <span>
                             You'll usually spend 3 days a week on a part-time course.
                         </span>
