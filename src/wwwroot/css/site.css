@@ -364,3 +364,39 @@ h3.filter-heading {
     background-color: rgb(230, 230, 230);
     top: 0px;
 }
+
+.view-list-link, .view-map-link {
+    position: relative;
+    background: transparent;
+    display: inline-block;
+    line-height: 35px;
+    margin-left: 30px;
+}
+.view-list-link::before {
+    position: absolute;
+    content: "";
+    background: transparent url("/images/maps/icon-burger.png") no-repeat 0 0;
+    width: 71px;
+    height: 56px;
+    background-size: 30%;
+    left: -30px;
+    top: 6px;
+}
+.view-map-link::before {
+    position: absolute;
+    content: "";
+    background: transparent url("/images/maps/icon-map.png") no-repeat 0 0;
+    width: 75px;
+    height: 56px;
+    background-size: 30%;
+    left: -30px;
+    top: 0
+}
+
+.left {
+    float: left;
+}
+.right {
+    float: right;
+    background: transparent;
+}

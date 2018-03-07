@@ -125,5 +125,10 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 offlat = queryFilter.offlat
             };
         }
+
+        public static bool LocationFilterActive(this QueryFilter queryFilter)
+        {
+            return queryFilter.RadiusOption != null;
+        }
     }
 }
