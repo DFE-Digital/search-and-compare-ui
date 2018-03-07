@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using GovUk.Education.SearchAndCompare.UI.Utils;
 using Microsoft.AspNetCore.Html;
 using GovUk.Education.SearchAndCompare.Domain.Models;
-using GovUk.Education.SearchAndCompare.Domain.Filters;
 using GovUk.Education.SearchAndCompare.Domain.Models.Enums;
+using GovUk.Education.SearchAndCompare.UI.Filters;
 
 namespace GovUk.Education.SearchAndCompare.UI.ViewModels
 {
@@ -14,7 +14,7 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels
 
         public FinanceViewModel Finance { get; set; }
 
-        public QueryFilter FilterModel { get; set; }
+        public ResultsFilter FilterModel { get; set; }
 
         private MarkdownFormatter markdownFormatter = new MarkdownFormatter();
 

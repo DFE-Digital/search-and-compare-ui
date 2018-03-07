@@ -2,6 +2,7 @@ using GovUk.Education.SearchAndCompare.Domain.Lists;
 using GovUk.Education.SearchAndCompare.Domain.Models;
 using GovUk.Education.SearchAndCompare.Domain.Filters;
 using GovUk.Education.SearchAndCompare.ViewModels;
+using GovUk.Education.SearchAndCompare.UI.Filters;
 
 namespace GovUk.Education.SearchAndCompare.UI.ViewModels
 {
@@ -15,6 +16,6 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels
 
         public FilteredList<Subject> Subjects { get; set; }
 
-        public QueryFilter FilterModel { get; set; } = new QueryFilter();   
+        public ResultsFilter FilterModel { get; set; } = new ResultsFilter();   
     }
 }

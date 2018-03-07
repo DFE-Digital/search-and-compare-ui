@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using GovUk.Education.SearchAndCompare.Domain.Client;
-using GovUk.Education.SearchAndCompare.Domain.Filters;
 using GovUk.Education.SearchAndCompare.Domain.Filters.Enums;
 using GovUk.Education.SearchAndCompare.UI.Filters;
+using GovUk.Education.SearchAndCompare.UI.Filters.Enums;
 using GovUk.Education.SearchAndCompare.UI.Services;
 using GovUk.Education.SearchAndCompare.UI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -25,13 +25,13 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         
         [HttpGet("results/filter/subject")]
         [ActionName("Subject")]
-        public IActionResult SubjectGet(QueryFilter model)
+        public IActionResult SubjectGet(ResultsFilter filter)
         {
             var subjectAreas = _api.GetSubjectAreas();
 
             var viewModel = new SubjectFilterViewModel {
                 SubjectAreas = subjectAreas,
-                FilterModel = model
+                FilterModel = filter
             };
             
             return View("Subject", viewModel);
@@ -39,46 +39,46 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
         [HttpPost("results/filter/subject")]
         [ActionName("Subject")]
-        public IActionResult SubjectPost(QueryFilter model)
+        public IActionResult SubjectPost(ResultsFilter filter)
         {
-            model.page = null;
+            filter.page = null;
 
             var isInWizard = ViewBag.IsInWizard == true;
             return isInWizard
-                ? RedirectToAction("FundingWizard", model.ToRouteValues())
-                : RedirectToAction("Index", "Results", model.ToRouteValues());
+                ? RedirectToAction("FundingWizard", filter.ToRouteValues())
+                : RedirectToAction("Index", "Results", filter.ToRouteValues());
         }
 
         [HttpGet("start/subject")]
         [ActionName("SubjectWizard")]
-        public IActionResult SubjectWizardGet(QueryFilter model)
+        public IActionResult SubjectWizardGet(ResultsFilter filter)
         {
             ViewBag.IsInWizard = true;
-            return SubjectGet(model);
+            return SubjectGet(filter);
         }
 
         [HttpPost("start/subject")]
         [ActionName("SubjectWizard")]
-        public IActionResult SubjectWizardPost(QueryFilter model)
+        public IActionResult SubjectWizardPost(ResultsFilter filter)
         {
             ViewBag.IsInWizard = true;
-            return SubjectPost(model);
+            return SubjectPost(filter);
         }
 
         [HttpPost("results/filter/fulltext")]
         [ActionName("FullText")]
-        public IActionResult FullTextPost(QueryFilter model)
+        public IActionResult FullTextPost(ResultsFilter filter)
         {
-            return !string.IsNullOrWhiteSpace(model.query)
-                ? RedirectToAction("Index", "Results", model.WithoutLocation().ToRouteValues())
-                : RedirectToAction("Location", model.ToRouteValuesWithError("Provider name is required"));
+            return !string.IsNullOrWhiteSpace(filter.query)
+                ? RedirectToAction("Index", "Results", filter.WithoutLocation().ToRouteValues())
+                : RedirectToAction("Location", filter.ToRouteValuesWithError("Provider name is required"));
         }
 
         [HttpGet("results/filter/location")]
-        public IActionResult Location(QueryFilter model, string error)
+        public IActionResult Location(ResultsFilter filter, string error)
         {
             var viewModel = new LocationFilterViewModel {
-                FilterModel = model
+                FilterModel = filter
             };
             if (!string.IsNullOrWhiteSpace(error))
             {
@@ -90,87 +90,96 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         }
 
         [HttpPost("results/filter/location")]
-        public async Task<IActionResult> Location(bool applyFilter, QueryFilter model)
+        public async Task<IActionResult> Location(ResultsFilter filter)
         {
             var isInWizard = ViewBag.IsInWizard == true;
-            model.query = null;
+            filter.query = null;
 
-            if (!applyFilter)
+            if (filter.LocationOption == LocationOption.Unset)
             {
                 return isInWizard
-                    ? RedirectToAction("SubjectWizard", model.WithoutLocation().ToRouteValues())
-                    : RedirectToAction("Index", "Results", model.WithoutLocation().ToRouteValues());
+                    ? RedirectToAction("LocationWizard",
+                        filter.WithoutLocation().ToRouteValuesWithError("Please make a selection."))
+                    : RedirectToAction("Location", "Filter",
+                        filter.WithoutLocation().ToRouteValuesWithError("Please make a selection."));
             }
 
-            var coords = await _geocoder.ResolvePostCodeAsync(model.lq);
+            if (filter.LocationOption == LocationOption.No)
+            {
+                return isInWizard
+                    ? RedirectToAction("SubjectWizard", filter.WithoutLocation().ToRouteValues())
+                    : RedirectToAction("Index", "Results", filter.WithoutLocation().ToRouteValues());
+            }
+
+            var coords = await _geocoder.ResolvePostCodeAsync(filter.lq);
             if (coords == null) 
             {
-                object redirectModel = model.ToRouteValuesWithError(
+                object redirectModel = filter.ToRouteValuesWithError(
                     "Sorry, we couldn't find your location, please check your input and try again."
                 );
                 return RedirectToAction(isInWizard ? nameof(LocationWizard) : nameof(Location), redirectModel);
             }
             else
             {
-                model.lat = coords.Latitude;
-                model.lng = coords.Longitude;
-                model.loc = coords.FormattedLocation;
-                model.page = null;
-                model.sortby = (int)SortByOption.Distance;
+                filter.lat = coords.Latitude;
+                filter.lng = coords.Longitude;
+                filter.loc = coords.FormattedLocation;
+                filter.page = null;
+                filter.sortby = (int)SortByOption.Distance;
             }
 
             return isInWizard
-                ? RedirectToAction("SubjectWizard", model.ToRouteValues())
-                : RedirectToAction("Index", "Results", model.ToRouteValues());
+                ? RedirectToAction("SubjectWizard", filter.ToRouteValues())
+                : RedirectToAction("Index", "Results", filter.ToRouteValues());
         }
 
         [HttpGet("start/location")]
-        public IActionResult LocationWizard(QueryFilter model, string error)
+        public IActionResult LocationWizard(ResultsFilter filter, string error)
         {
             ViewBag.IsInWizard = true;
-            return Location(model, error);
+            return Location(filter, error);
         }
         
         [HttpPost("start/location")]
-        public async Task<IActionResult> LocationWizard(bool applyFilter, QueryFilter model)
+        public async Task<IActionResult> LocationWizard(ResultsFilter filter)
         {
             ViewBag.IsInWizard = true;
-            return await Location(applyFilter, model);
+            return await Location(filter);
         }
 
         [HttpGet("results/filter/funding")]
-        public IActionResult Funding(QueryFilter model)
+        public IActionResult Funding(ResultsFilter filter)
         {
-            return View("Funding", model);
+            return View("Funding", filter);
         }
 
         [HttpPost("results/filter/funding")]
-        public IActionResult Funding(int applyFilter, QueryFilter model)
+        public IActionResult Funding(int applyFilter, ResultsFilter filter)
         {
-            model.page = null;
+            filter.page = null;
 
             if (applyFilter == 0)
             {
-                model.funding = null;
-                return RedirectToAction("Index", "Results", model.ToRouteValues());
+                filter.funding = null;
+                return RedirectToAction("Index", "Results", filter.ToRouteValues());
             }
-            model.funding = applyFilter;
-            return RedirectToAction("Index", "Results", model.ToRouteValues());
+            filter.funding = applyFilter;
+            return RedirectToAction("Index", "Results", filter.ToRouteValues());
         }
 
         
         [HttpGet("start/funding")]
-        public IActionResult FundingWizard(QueryFilter model)
+        public IActionResult FundingWizard(ResultsFilter filter)
         {
             ViewBag.IsInWizard = true;
-            return Funding(model);
+            return Funding(filter);
         }
 
         [HttpPost("start/funding")]
-        public IActionResult FundingWizard(int applyFilter, QueryFilter model)
+        public IActionResult FundingWizard(int applyFilter, ResultsFilter filter)
         {
             ViewBag.IsInWizard = true;
-            return Funding(applyFilter, model);
+            return Funding(applyFilter, filter);
         }
     }
 }

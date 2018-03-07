@@ -1,4 +1,4 @@
-using GovUk.Education.SearchAndCompare.Domain.Filters;
+using GovUk.Education.SearchAndCompare.UI.Filters;
 
 namespace GovUk.Education.SearchAndCompare.UI.ViewModels
 {
@@ -6,6 +6,6 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels
     {
         public ErrorViewModel Error { get; set; }
 
-        public QueryFilter FilterModel { get; set; }
+        public ResultsFilter FilterModel { get; set; }
     }
 }
