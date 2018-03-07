@@ -1,0 +1,51 @@
+@model QueryFilter
+
+@{
+    ViewBag.Title = $"Filter by qualification";
+}
+
+
+@Html.Partial("Back", new BackLinkViewModel {
+    Href = Url.Action("Index", "Results", Model.ToRouteValues()),
+    Title = "Return to search results"
+})
+
+<div class="grid-row">
+    <div class="column-full">
+        <form action='@Url.Action("Qualification", "Filter", Model.ToRouteValues())' method="POST">
+            <fieldset role="radiogroup" aria-required="true">
+                <legend role="heading">
+                    <h3 class="heading-medium filter-heading">Which qualification do you want?</h3>
+                </legend>
+                
+                <div class="multiple-choice multiple-radio">
+                    <input id="applyFilter-includefulltime" type="checkbox" name="fulltime" value="true" checked="@Model.fulltime">
+                    <label for="applyFilter-includefulltime" class="multi-choice-label">
+                        <span class="bold">Full time (12 months)</span>
+                        <span>
+                            You'll usuall spend 5 days a week on a full-time course.
+                        </span>
+                    </label>
+                </div>
+
+                <div class="multiple-choice multiple-radio">
+                    <input id="applyFilter-includeparttime" type="checkbox" name="parttime" value="true" checked="@Model.parttime">
+                    <label for="applyFilter-includeparttime" class="multi-choice-label">
+                        <span class="bold">Part time (18 @ndash; 24 months)</span>
+                        <span>
+                            You'll usually spend 3 days a week on a part-time course.
+                        </span>
+                    </label>
+                </div>
+
+            </fieldset>
+
+            <input type="hidden" name="fulltime" value="false">
+            <input type="hidden" name="parttime" value="false">
+            
+            <div class="filter-apply-button">
+                <input class="button" type="submit" value="Find courses">
+            </div>
+        </form>
+    </div>
+</div>

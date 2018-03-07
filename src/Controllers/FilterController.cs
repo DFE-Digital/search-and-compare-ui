@@ -186,5 +186,19 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         {
             return RedirectToAction("Index", "Results", model.ToRouteValues());
         }
+
+        [HttpGet("results/filter/studytype")]
+        [ActionName("StudyType")]
+        public IActionResult StudyType(QueryFilter model)
+        {
+            return View(model);
+        }
+        
+        [HttpPost("results/filter/studytype")]
+        [ActionName("StudyType")]
+        public IActionResult StudyTypePost(QueryFilter model)
+        {
+            return RedirectToAction("Index", "Results", model.ToRouteValues());
+        }
     }
 }

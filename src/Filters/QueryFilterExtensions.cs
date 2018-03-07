@@ -143,5 +143,18 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 yield return "Qualified Teacher Status";
             }
         }
+
+        public static IEnumerable<string> GetStudyTypeStrings(this QueryFilter queryFilter)
+        {
+            if (queryFilter.fulltime) 
+            {
+                yield return "Full time (12 months)";
+            }            
+            if (queryFilter.parttime)
+            {
+                yield return "Part time (18 - 24 months)";
+            }
+        }
+        
     }
 }

@@ -1,7 +1,7 @@
 @model QueryFilter
 
 @{
-    ViewBag.Title = $"Filter by Qualification";
+    ViewBag.Title = $"Filter by study type";
 }
 
 
@@ -12,17 +12,17 @@
 
 <div class="grid-row">
     <div class="column-full">
-        <form action='@Url.Action("Qualification", "Filter", Model.ToRouteValues())' method="POST">
+        <form action='@Url.Action("StudyType", "Filter", Model.ToRouteValues())' method="POST">
             <fieldset role="radiogroup" aria-required="true">
                 <legend role="heading">
-                    <h3 class="heading-medium filter-heading">Which qualification do you want?</h3>
+                    <h3 class="heading-medium filter-heading">Study type</h3>
                 </legend>
                 <div>
                     Based on your qualifications, you may be eligible for financial support.
                 </div>
                 
                 <div class="multiple-choice multiple-radio">
-                    <input id="applyFilter-includepgce" type="radio" name="pgce" value="true" checked="@Model.pgce">
+                    <input id="applyFilter-includepgce" type="checkbox" name="pgce" value="true" checked="@Model.pgce">
                     <label for="applyFilter-includepgce" class="multi-choice-label">
                         <span class="bold">Postgraduate certificate in education with qualified teacher status</span>
                         <span>
@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="multiple-choice multiple-radio">
-                    <input id="applyFilter-includeqts" type="radio" name="qts" value="true" checked="@Model.qts">
+                    <input id="applyFilter-includeqts" type="checkbox" name="qts" value="true" checked="@Model.qts">
                     <label for="applyFilter-includeqts" class="multi-choice-label">
                         <span class="bold">Qualified teacher status</span>
                         <span>
@@ -49,6 +49,8 @@
 
             </fieldset>
             
+            <input type="hidden" name="pgce" value="false">
+            <input type="hidden" name="qts" value="false">
             <div class="filter-apply-button">
                 <input class="button" type="submit" value="Find courses">
             </div>
