@@ -43,6 +43,14 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
 
         public double? offlat { get; set; }
 
+        public bool pgce { get; set; }
+
+        public bool qts { get; set; }
+
+        public bool fulltime { get; set; }
+
+        public bool parttime { get; set; }
+
         public List<int> SelectedSubjects { 
             get {            
                 List<int> subjectFilterIds = new List<int> ();
@@ -266,6 +274,31 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 offlng = this.offlng,
                 offlat = this.offlat
             };
+        }
+
+        
+        public IEnumerable<string> GetQualificationStrings()
+        {
+            if (!qts || pgce) 
+            {
+                yield return "Postgraduate Certificate in Education with Qualified Teacher Status";
+            }            
+            if (!pgce || qts)
+            {
+                yield return "Qualified Teacher Status";
+            }
+        }
+
+        public IEnumerable<string> GetStudyTypeStrings()
+        {
+            if (!parttime || fulltime) 
+            {
+                yield return "Full time (12 months)";
+            }            
+            if (!fulltime || parttime)
+            {
+                yield return "Part time (18 - 24 months)";
+            }
         }
     }
 }
