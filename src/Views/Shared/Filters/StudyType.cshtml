@@ -8,7 +8,7 @@
                 Study type
             </div>
             <div class="filter-options checkbox-container-noscroll" id="funding-filter" role="definition">
-                @string.Join(", ", Model.GetStudyTypeStrings())                
+                @Html.Raw(string.Join(",<br>", Model.GetStudyTypeStrings()))                
             </div>
             <div class="filter-change">
             <a href='@Url.Action("StudyType", "Filter", Model.ToRouteValues())'

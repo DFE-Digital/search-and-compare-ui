@@ -11,9 +11,9 @@
             </div>
             <div class="filter-options checkbox-container-noscroll" id="subject-filter" role="definition">
                 @if (Model.Subjects.Items.Count() > 5) {
-                    <text>@string.Join(", ", Model.Subjects.Items.OrderBy(x => x.Name).Take(4).Select(x => x.Name)) <br>and @(Model.Subjects.Items.Count() - 4) more&hellip;</text>
+                    <text>@Html.Raw(string.Join(",<br>", Model.Subjects.Items.OrderBy(x => x.Name).Take(4).Select(x => x.Name))),<br>and @(Model.Subjects.Items.Count() - 4) more&hellip;</text>
                 } else {
-                    <text>@string.Join(", ", Model.Subjects.Items.OrderBy(x => x.Name).Select(x=>x.Name))</text>
+                    @Html.Raw(string.Join(", ", Model.Subjects.Items.OrderBy(x => x.Name).Select(x=>x.Name)))
                 }
                 </ul>
                 <!-- <ul>

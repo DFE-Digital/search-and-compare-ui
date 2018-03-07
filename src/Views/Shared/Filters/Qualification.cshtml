@@ -8,7 +8,7 @@
                 Qualifications
             </div>
             <div class="filter-options checkbox-container-noscroll" id="funding-filter" role="definition">
-                @string.Join(", ", Model.GetQualificationStrings())                
+                @Html.Raw(string.Join(",<br>", Model.GetQualificationStrings()))                
             </div>
             <div class="filter-change">
             <a href='@Url.Action("Qualification", "Filter", Model.ToRouteValues())'
