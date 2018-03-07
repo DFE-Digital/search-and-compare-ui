@@ -184,28 +184,28 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
         [HttpGet("results/filter/qualification")]
         [ActionName("Qualification")]
-        public IActionResult QualificationGet(QueryFilter model)
+        public IActionResult QualificationGet(ResultsFilter model)
         {
             return View(model);
         }
         
         [HttpPost("results/filter/qualification")]
         [ActionName("Qualification")]
-        public IActionResult QualificationPost(QueryFilter model)
+        public IActionResult QualificationPost(ResultsFilter model)
         {
             return RedirectToAction("Index", "Results", model.ToRouteValues());
         }
 
         [HttpGet("results/filter/studytype")]
         [ActionName("StudyType")]
-        public IActionResult StudyType(QueryFilter model)
+        public IActionResult StudyType(ResultsFilter model)
         {
             return View(model);
         }
         
         [HttpPost("results/filter/studytype")]
         [ActionName("StudyType")]
-        public IActionResult StudyTypePost(QueryFilter model)
+        public IActionResult StudyTypePost(ResultsFilter model)
         {
             return RedirectToAction("Index", "Results", model.ToRouteValues());
         }
