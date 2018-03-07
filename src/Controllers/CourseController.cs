@@ -1,11 +1,11 @@
 using GovUk.Education.SearchAndCompare.Domain.Client;
-using GovUk.Education.SearchAndCompare.Domain.Filters;
 using GovUk.Education.SearchAndCompare.UI.ViewModels;
 using GovUk.Education.SearchAndCompare.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using GovUk.Education.SearchAndCompare.UI.ActionFilters;
 using System.Linq;
+using GovUk.Education.SearchAndCompare.UI.Filters;
 
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
@@ -21,7 +21,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         }
 
         [HttpGet("course/{courseId:int}", Name = "Course")]
-        public IActionResult Index(int courseId, QueryFilter filter)
+        public IActionResult Index(int courseId, ResultsFilter filter)
         {
             var course = _api.GetCourse(courseId);
             var feeCaps = _api.GetFeeCaps();

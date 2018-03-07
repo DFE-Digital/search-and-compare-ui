@@ -31,7 +31,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         }
 
         [HttpPost("results/map")]
-        public IActionResult Map(QueryFilter filter)
+        public IActionResult Map(ResultsFilter filter)
         {
             return RedirectToAction("Index", "Results", filter.ToRouteValues());
         }
@@ -49,9 +49,9 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         }
 
         [HttpGet("results/mapimage")]
-        public async Task<IActionResult> MapImage(QueryFilter filter)
+        public async Task<IActionResult> MapImage(ResultsFilter filter)
         {
-            var courses = api.GetCourses(filter);
+            var courses = api.GetCourses(filter.ToQueryFilter());
             var courseGroups = GroupByProvider(courses);
 
             var mapProjection = mapProvider.GetMapProjection<CourseGroup>(
@@ -63,9 +63,9 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         }
 
         [HttpGet("results")]
-        public IActionResult Index(QueryFilter filter)
+        public IActionResult Index(ResultsFilter filter)
         {
-            var courses = api.GetCourses(filter);
+            var courses = api.GetCourses(filter.ToQueryFilter());
 
             var subjects = api.GetSubjects();
 
@@ -107,9 +107,9 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         }
 
         [HttpPost("results/sortby")]
-        public IActionResult SortBy(QueryFilter model)
+        public IActionResult SortBy(ResultsFilter filter)
         {
-            return RedirectToAction("Index", "Results", model.ToRouteValues());
+            return RedirectToAction("Index", "Results", filter.ToRouteValues());
         }
 
     }
