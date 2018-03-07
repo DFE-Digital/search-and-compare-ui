@@ -106,7 +106,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
 
         public bool LocationFilterActive
         {
-            get { return RadiusOption != null; }
+            get { return LocationOption == LocationOption.Yes; }
         }
 
         public LocationOption LocationOption
