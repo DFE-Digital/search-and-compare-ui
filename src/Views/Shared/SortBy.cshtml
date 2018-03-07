@@ -10,7 +10,7 @@
         @if (Model.FilterModel.DisplayAsMap){
             <a href="@Url.Action("Index", "Results", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new { display = "list" }))"
             class="view-list-link">View as a list</a>
-        } else if (Model.FilterModel.LocationFilterActive()) {
+        } else if (Model.FilterModel.LocationFilterActive) {
             <a href="@Url.Action("Index", "Results", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new { display = "map" }))"
             class="view-map-link">View on a map</a>
         }

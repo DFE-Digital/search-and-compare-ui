@@ -3,6 +3,7 @@ using GovUk.Education.SearchAndCompare.Domain.Client;
 using GovUk.Education.SearchAndCompare.Domain.Filters;
 using GovUk.Education.SearchAndCompare.Domain.Models;
 using GovUk.Education.SearchAndCompare.UI.Controllers;
+using GovUk.Education.SearchAndCompare.UI.Filters;
 using GovUk.Education.SearchAndCompare.UI.Services;
 using GovUk.Education.SearchAndCompare.UI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -93,7 +94,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
                 var mockGeocoder = new Mock<IGeocoder>();
                 var controller = new FilterController(mockApi.Object, mockGeocoder.Object);
 
-                var result = controller.SubjectGet(new QueryFilter{subjects = inputSubjectFilter}) as ViewResult;
+                var result = controller.SubjectGet(new ResultsFilter{subjects = inputSubjectFilter}) as ViewResult;
                 ViewDataDictionary viewData = result.ViewData;
                 var resultsViewModel = (SubjectFilterViewModel) result.Model;
 
@@ -113,7 +114,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
                 var mockGeocoder = new Mock<IGeocoder>();
                 var controller = new FilterController(mockApi.Object, mockGeocoder.Object);
 
-                var result = controller.SubjectGet(new QueryFilter{subjects = inputSubjectFilter}) as ViewResult;
+                var result = controller.SubjectGet(new ResultsFilter{subjects = inputSubjectFilter}) as ViewResult;
                 ViewDataDictionary viewData = result.ViewData;
                 var resultsViewModel = (SubjectFilterViewModel) result.Model;
 
@@ -130,7 +131,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
                 var mockGeocoder = new Mock<IGeocoder>();
                 var controller = new FilterController(mockApi.Object, mockGeocoder.Object);
 
-                var result = controller.SubjectGet(new QueryFilter{
+                var result = controller.SubjectGet(new ResultsFilter{
                     page = inputPage
                     }) as ViewResult;
                 ViewDataDictionary viewData = result.ViewData;

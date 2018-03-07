@@ -31,12 +31,12 @@
                 </p>
 
                 <div class="multiple-choice multiple-radio" data-target="location-selector">
-                    @if (Model.Error == null && string.IsNullOrEmpty(Model.FilterModel.loc)) {
-                        <input id="applyFilter-Yes" type="radio" name="applyFilter" value="true">
+                    @if (Model.FilterModel.LocationOption == LocationOption.Yes) {
+                        <input id="location-Set" type="radio" name="l" value="@((int)LocationOption.Yes)" checked>
                     } else {
-                        <input id="applyFilter-Yes" type="radio" name="applyFilter" value="true" checked>
+                        <input id="location-Set" type="radio" name="l" value="@((int)LocationOption.Yes)">
                     }
-                    <label for="applyFilter-Yes">Search by postcode, town or city</label>
+                    <label for="location-Set">Search by postcode, town or city</label>
                 </div>
                 <div class="panel panel-border-narrow js-hidden" id="location-selector">
                     <label class="form-label" for="location">Postcode, town or city name</label>
@@ -52,12 +52,12 @@
                 </div>
 
                 <div class="multiple-choice multiple-radio">
-                    @if (Model.Error == null && string.IsNullOrEmpty(Model.FilterModel.loc)) {
-                        <input id="applyFilter-No" type="radio" name="applyFilter" value="false" checked>
+                    @if (Model.FilterModel.LocationOption == LocationOption.No) {
+                        <input id="location-Unset" type="radio" name="l" value="@((int)LocationOption.No)" checked>
                     } else {
-                        <input id="applyFilter-No" type="radio" name="applyFilter" value="false">
+                        <input id="location-Unset" type="radio" name="l" value="@((int)LocationOption.No)">
                     }
-                    <label for="applyFilter-No">Search across England</label>
+                    <label for="location-Unset">Search across England</label>
                 </div>
             </fieldset>
             
