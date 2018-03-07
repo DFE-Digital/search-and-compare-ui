@@ -7,6 +7,8 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels
 {
     public class ResultsViewModel
     {
+        public bool MapsEnabled { get; set; }
+
         public MapViewModel Map { get; set; }
 
         public PaginatedList<Course> Courses { get; set; }

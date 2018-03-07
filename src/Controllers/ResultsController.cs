@@ -14,6 +14,7 @@ using GovUk.Education.SearchAndCompare.UI.Services.Maps.Models;
 using System.Collections.Generic;
 using GovUk.Education.SearchAndCompare.UI.Services.Maps;
 using GovUk.Education.SearchAndCompare.ViewModels;
+using System;
 
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
@@ -78,13 +79,16 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                 filteredSubjects = new FilteredList<Subject>(subjects, subjects.Count);
             }
 
+            var mapsEnabled = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("FEATURE_MAPS"));
+
             var viewModel = new ResultsViewModel {
                 Subjects = filteredSubjects,
                 FilterModel = filter,
-                Courses = courses
+                Courses = courses,
+                MapsEnabled = mapsEnabled
             };
 
-            if (filter.DisplayAsMap)
+            if (mapsEnabled && filter.DisplayAsMap)
             {
                 var courseGroups = GroupByProvider(courses);
 

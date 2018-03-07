@@ -5,7 +5,7 @@
         <p class="found-count">@Model.Courses.TotalCount courses found</p>
         <p class="new-search"><a href='@Url.Action("LocationWizard", "Filter")'>New search</a></p>
     </div>
-    @Html.Partial("SortBy", Model.FilterModel)
+    @Html.Partial("SortBy", Model)
 </div>
 
 <ul role="list">

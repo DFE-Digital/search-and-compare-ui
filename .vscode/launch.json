@@ -30,7 +30,8 @@
                 }
             },
             "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "FEATURE_MAPS": "yes"
             },
             "sourceFileMap": {
                 "/Views": "${workspaceFolder}/Views"
