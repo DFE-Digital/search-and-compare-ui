@@ -1,0 +1,59 @@
+@model QueryFilter
+
+@{
+    ViewBag.Title = $"Filter by study type";
+}
+
+
+@Html.Partial("Back", new BackLinkViewModel {
+    Href = Url.Action("Index", "Results", Model.ToRouteValues()),
+    Title = "Return to search results"
+})
+
+<div class="grid-row">
+    <div class="column-full">
+        <form action='@Url.Action("StudyType", "Filter", Model.ToRouteValues())' method="POST">
+            <fieldset role="radiogroup" aria-required="true">
+                <legend role="heading">
+                    <h3 class="heading-medium filter-heading">Study type</h3>
+                </legend>
+                <div>
+                    Based on your qualifications, you may be eligible for financial support.
+                </div>
+                
+                <div class="multiple-choice multiple-radio">
+                    <input id="applyFilter-includepgce" type="checkbox" name="pgce" value="true" checked="@Model.pgce">
+                    <label for="applyFilter-includepgce" class="multi-choice-label">
+                        <span class="bold">Postgraduate certificate in education with qualified teacher status</span>
+                        <span>
+                            A postgraduate certificate in education (PGCE) with qualified teacher status (QTS)
+                            allows you to teach in England Scotland, Wales and Northern Ireland.
+                            This qualification is also recognised internationally.
+                            Many PGCE courss include credits that count towards a Master's degree.
+                        </span>
+                    </label>
+                </div>
+
+                <div class="multiple-choice multiple-radio">
+                    <input id="applyFilter-includeqts" type="checkbox" name="qts" value="true" checked="@Model.qts">
+                    <label for="applyFilter-includeqts" class="multi-choice-label">
+                        <span class="bold">Qualified teacher status</span>
+                        <span>
+                            Qualified teacher status (QTS) allows you to teach in state schools in England.                           
+                        </span>
+                        <span>
+                            If you want to teach in the rest of the UK or internationally, consider a 'PGCE with QTS' qualification instead.
+                        </span>
+                    </label>
+                </div>
+
+            </fieldset>
+            
+            <input type="hidden" name="pgce" value="false">
+            <input type="hidden" name="qts" value="false">
+            <div class="filter-apply-button">
+                <input class="button" type="submit" value="Find courses">
+            </div>
+        </form>
+    </div>
+</div>

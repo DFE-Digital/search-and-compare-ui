@@ -172,5 +172,33 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             ViewBag.IsInWizard = true;
             return Funding(applyFilter, model);
         }
+
+        [HttpGet("results/filter/qualification")]
+        [ActionName("Qualification")]
+        public IActionResult QualificationGet(QueryFilter model)
+        {
+            return View(model);
+        }
+        
+        [HttpPost("results/filter/qualification")]
+        [ActionName("Qualification")]
+        public IActionResult QualificationPost(QueryFilter model)
+        {
+            return RedirectToAction("Index", "Results", model.ToRouteValues());
+        }
+
+        [HttpGet("results/filter/studytype")]
+        [ActionName("StudyType")]
+        public IActionResult StudyType(QueryFilter model)
+        {
+            return View(model);
+        }
+        
+        [HttpPost("results/filter/studytype")]
+        [ActionName("StudyType")]
+        public IActionResult StudyTypePost(QueryFilter model)
+        {
+            return RedirectToAction("Index", "Results", model.ToRouteValues());
+        }
     }
 }
