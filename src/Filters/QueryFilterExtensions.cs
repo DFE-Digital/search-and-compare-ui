@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using GovUk.Education.SearchAndCompare.Domain.Filters;
 
 namespace GovUk.Education.SearchAndCompare.UI.Filters
@@ -129,6 +130,18 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
         public static bool LocationFilterActive(this QueryFilter queryFilter)
         {
             return queryFilter.RadiusOption != null;
+        }
+
+        public static IEnumerable<string> GetQualificationStrings(this QueryFilter queryFilter)
+        {
+            if (queryFilter.pgce) 
+            {
+                yield return "Postgraduate Certificate in Education with Qualified Teacher Status";
+            }            
+            if (queryFilter.qts)
+            {
+                yield return "Qualified Teacher Status";
+            }
         }
     }
 }
