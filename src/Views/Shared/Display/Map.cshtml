@@ -1,0 +1,130 @@
+@model ResultsViewModel
+
+@{
+    var mapModel = Model.Map;
+}
+
+<div class="search-results-header">
+    <div class="found-heading" role="heading">
+        <p class="found-count">@mapModel.CourseGroups.Count() course locations found</p>
+        <p class="new-search"><a href='@Url.Action("LocationWizard", "Filter")'>New search</a></p>
+    </div>
+    @Html.Partial("SortBy", Model)
+</div>
+
+<div class="resultsmap" style="position: relative;">
+    <div style="height: @(mapModel.Map.Height)px; display: none;"
+         id="map"></div>
+    <script>
+        var map;
+        function initMap() {
+            function createClickableMarker(map, label, position, href, icon) {
+                var marker = new google.maps.Marker({
+                    map: map,
+                    label: label,
+                    position: position,
+                    icon: icon
+                });
+                marker.addListener('click', function () { window.location = href; });
+                return marker;   
+            }
+            var mapElement = document.getElementById('map');
+            mapElement.style.display = "block";
+            map = new google.maps.Map(mapElement, {
+                center: {
+                    lat: @(mapModel.Map.Centre.Latitude),
+                    lng: @(mapModel.Map.Centre.Longitude)
+                },
+                zoom: @(mapModel.Map.ZoomLevel),
+                mapTypeControl: false,
+                scaleControl: false,
+                streetViewControl: false,
+                rotateControl: false,
+                fullscreenControl: false
+            });
+            var meMarker = createClickableMarker(
+                map,
+                '',
+                {
+                    lat: @(mapModel.Map.MyLocation.Latitude),
+                    lng: @(mapModel.Map.MyLocation.Longitude)
+                },
+                '@Html.Raw(@Url.Action("Location", "Filter", Model.FilterModel.ToRouteValues()))',
+                '/images/maps/green_Marker_dot.png'
+            );
+            var markers = [
+                @foreach (var courseGroup in Model.Map.CourseGroups) {
+                    <text>
+                    createClickableMarker(
+                        map,
+                        '@(courseGroup.Area.Label)',
+                        {
+                            lat: @(courseGroup.Coordinates.Latitude),
+                            lng: @(courseGroup.Coordinates.Longitude)
+                        },
+                        '#@(courseGroup.Area.Href)'
+                    ),
+                    </text>
+                }
+            ];
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDu77ygF-I0m6ya86NO5Dl0KG2J_C6O6Gg&callback=initMap"
+        async defer></script>
+
+    <noscript>
+        <map name="resultsmap">
+            <area shape="@mapModel.Map.MyLocationArea.Shape" coords="@mapModel.Map.MyLocationArea.Coords"
+                href="@Url.Action("Location", "Filter", Model.FilterModel.ToRouteValues())" alt="@mapModel.Map.MyLocationArea.Alt">
+            @foreach (var courseGroup in Model.Map.CourseGroups) {
+                <area shape="@courseGroup.Area.Shape" coords="@courseGroup.Area.Coords"
+                    href="#@courseGroup.Area.Href" alt="@courseGroup.Area.Alt">
+            }
+        </map>
+        <div class="mapimage">
+            <img width="@(mapModel.Map.Width)" height="@(mapModel.Map.Height)" usemap="#resultsmap"
+                src='@Url.Action("MapImage", "Results", Model.FilterModel.ToRouteValues())'/>
+        </div>
+        <div class="mapcontrols">
+            <form action='@Url.Action("Map", "Results", Model.FilterModel.ToRouteValues())' method="POST">
+                <input type="image" name="zoomlevel" class="mapzoombutton"
+                    src='@(mapModel.Map.HasNextZoomLevel ? "/images/maps/map_plus.png" : "/images/maps/map_plus_disabled.png")'
+                    value="@mapModel.Map.NextZoomLevel" disabled="@(!mapModel.Map.HasNextZoomLevel)">
+            </form>
+            <div class="mapzoomdivider"></div>
+            <form action='@Url.Action("Map", "Results", Model.FilterModel.ToRouteValues())' method="POST">
+                <input type="image" name="zoomlevel" class="mapzoombutton"
+                    src='@(mapModel.Map.HasPreviousZoomLevel ? "/images/maps/map_minus.png" : "/images/maps/map_minus_disabled.png")'
+                    value="@mapModel.Map.PreviousZoomLevel" disabled="@(!mapModel.Map.HasPreviousZoomLevel)">
+            </form>
+        </div>
+    </noscript>
+</div>
+<ul class="map-results-list">
+@foreach (var courseGroup in mapModel.CourseGroups) {
+    <a name="@(courseGroup.Area.Href)"></a>
+    <li class="bat_searchresult"
+        style="list-style-image: url('/images/maps/red_Marker@(courseGroup.Area.Label).png')">
+        <h3 class="heading-medium">
+            @courseGroup.Courses.First().Provider.Name
+        </h3>
+        @if (@courseGroup.Courses.First().ProviderLocation != null) {
+            <dt>Address</dt>
+            <dd>@courseGroup.Courses.First().ProviderLocation.Address</dd>
+        }
+
+        @if (@courseGroup.Courses.First().Distance != null) {
+            <dt>Distance from your postcode</dt>
+            <dd>@courseGroup.Courses.First().FormattedDistance()</dd>
+        }
+        <ul>
+            @foreach (var course in courseGroup.Courses) {
+                <dl>
+                    <dt>Course Name</dt>
+                    <dd><a href='@Url.Action("Index", "Course", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new {courseId = course.Id}))' class="link">@course.Name</a></dd>
+                </dl>
+            }
+        </ul>
+    </li>
+}
+</ul>

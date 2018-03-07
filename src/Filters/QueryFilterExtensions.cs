@@ -18,7 +18,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 queryFilter.subjects,
                 queryFilter.sortby,
                 queryFilter.funding,
-                queryFilter.query
+                queryFilter.query,
+                queryFilter.display,
+                queryFilter.zoomlevel,
+                queryFilter.offlng,
+                queryFilter.offlat
             };
         }
 
@@ -37,7 +41,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 queryFilter.subjects,
                 queryFilter.sortby,
                 queryFilter.funding,
-                queryFilter.query
+                queryFilter.query,
+                queryFilter.display,
+                queryFilter.zoomlevel,
+                queryFilter.offlng,
+                queryFilter.offlat
             };
         }
 
@@ -66,7 +74,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 subjects = queryFilter.subjects,
                 sortby = sortby,
                 funding = queryFilter.funding,
-                query = queryFilter.query
+                query = queryFilter.query,
+                display = queryFilter.display,
+                zoomlevel = queryFilter.zoomlevel,
+                offlng = queryFilter.offlng,
+                offlat = queryFilter.offlat
             };
         }
 
@@ -84,7 +96,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 subjects = queryFilter.subjects,
                 sortby = queryFilter.sortby,
                 funding = queryFilter.funding,
-                query = queryFilter.query
+                query = queryFilter.query,
+                display = queryFilter.display,
+                zoomlevel = queryFilter.zoomlevel,
+                offlng = queryFilter.offlng,
+                offlat = queryFilter.offlat
             };
         }
 
@@ -102,8 +118,17 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 subjects = null,
                 sortby = queryFilter.sortby,
                 funding = queryFilter.funding,
-                query = queryFilter.query
+                query = queryFilter.query,
+                display = queryFilter.display,
+                zoomlevel = queryFilter.zoomlevel,
+                offlng = queryFilter.offlng,
+                offlat = queryFilter.offlat
             };
+        }
+
+        public static bool LocationFilterActive(this QueryFilter queryFilter)
+        {
+            return queryFilter.RadiusOption != null;
         }
     }
 }

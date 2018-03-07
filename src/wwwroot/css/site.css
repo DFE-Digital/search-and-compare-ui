@@ -284,3 +284,119 @@ h3.filter-heading {
         width:50%;
     }
 }
+
+
+.map-results-list {
+    margin-left: 30px;
+}
+
+.resultsmap {
+    position: relative;
+    text-align: center;
+}
+
+.mapimage::before {
+    content: "Loading...";
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 0;
+    right: 0;
+    font-size: 18px;
+    margin-top: -9px;
+}
+
+.mapimage {
+    z-index: 2;
+    position: relative;
+}
+.mapimage img {
+    z-index: 2;
+    position: relative;
+}
+
+.mapcontrols {
+    z-index: 3;
+    position: absolute;
+    right: 10px;
+    bottom: 38px; 
+    width: 28px;
+    height: 55px;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
+    box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    cursor: pointer;
+    background-color: rgb(255, 255, 255);
+    width: 28px;
+    height: 55px;
+}
+
+.mapzoombutton {
+    background-color: transparent;
+    background-image: none;
+    display: block;
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    width: 27px;
+    height: 27px;
+    top: 0px;
+    left: 0px;
+    background-position: initial initial;
+    background-repeat: initial initial;
+}
+
+.mapzoomdivider {
+    position: relative;
+    overflow: hidden;
+    width: 67%;
+    height: 1px;
+    left: 16%;
+    background-color: rgb(230, 230, 230);
+    top: 0px;
+}
+
+.view-list-link, .view-map-link {
+    position: relative;
+    background: transparent;
+    display: inline-block;
+    line-height: 35px;
+    margin-left: 30px;
+}
+.view-list-link::before {
+    position: absolute;
+    content: "";
+    background: transparent url("/images/maps/icon-burger.png") no-repeat 0 0;
+    width: 71px;
+    height: 56px;
+    background-size: 30%;
+    left: -30px;
+    top: 6px;
+}
+.view-map-link::before {
+    position: absolute;
+    content: "";
+    background: transparent url("/images/maps/icon-map.png") no-repeat 0 0;
+    width: 75px;
+    height: 56px;
+    background-size: 30%;
+    left: -30px;
+    top: 0
+}
+
+.left {
+    float: left;
+}
+.right {
+    float: right;
+    background: transparent;
+}

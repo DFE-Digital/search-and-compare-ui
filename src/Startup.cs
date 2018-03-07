@@ -4,8 +4,11 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using GovUk.Education.SearchAndCompare.Domain.Client;
+using GovUk.Education.SearchAndCompare.Services.Http;
 using GovUk.Education.SearchAndCompare.UI.ActionFilters;
 using GovUk.Education.SearchAndCompare.UI.Services;
+using GovUk.Education.SearchAndCompare.UI.Services.Http;
+using GovUk.Education.SearchAndCompare.UI.Services.Maps;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -37,6 +40,7 @@ namespace GovUk.Education.SearchAndCompare.UI
             services.AddScoped<AnalyticsPolicy>(provider => AnalyticsPolicy.FromEnv());
             services.AddScoped<AnalyticsAttribute>();
             services.AddScoped<IGeocoder>(provider => new Geocoder(Configuration.GetSection("ApiKeys").GetValue<string>("GoogleMaps")));
+            services.AddScoped<IMapProvider>(provider => new MapProvider(new HttpClientProvider(), Configuration.GetSection("ApiKeys").GetValue<string>("GoogleMapsStatic")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
