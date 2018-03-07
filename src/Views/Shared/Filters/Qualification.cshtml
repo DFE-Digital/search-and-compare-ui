@@ -1,0 +1,19 @@
+@model QueryFilter
+
+<div class="filter-form">
+    <div class="inner-block">
+
+        <div class="padded-filter checkbox-filter js-openable-filter">
+            <div class="head legend" role="term">
+                Qualifications
+            </div>
+            <div class="filter-options checkbox-container-noscroll" id="funding-filter" role="definition">
+                @string.Join(", ", Model.GetQualificationStrings())                
+            </div>
+            <div class="filter-change">
+            <a href='@Url.Action("Qualification", "Filter", Model.ToRouteValues())'
+               class="link">Change qualifications</a>
+            </div>
+        </div>
+    </div>
+  </div>
