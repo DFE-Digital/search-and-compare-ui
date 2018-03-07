@@ -144,7 +144,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 subjects = this.subjects,
                 sortby = this.sortby,
                 funding = this.funding,
-                query = this.query
+                query = this.query,
+                pgce = this.pgce,
+                qts = this.qts,
+                fulltime = this.fulltime,
+                parttime = this.parttime
             };
         }
 
@@ -166,7 +170,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 display,
                 zoomlevel,
                 offlng,
-                offlat
+                offlat,
+                pgce,
+                qts,
+                fulltime,
+                parttime
             };
         }
 
@@ -189,7 +197,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 display,
                 zoomlevel,
                 offlng,
-                offlat
+                offlat,
+                pgce,
+                qts,
+                fulltime,
+                parttime
             };
         }
 
@@ -206,7 +218,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 display = this.display,
                 zoomlevel = this.zoomlevel,
                 offlng = this.offlng,
-                offlat = this.offlat
+                offlat = this.offlat,
+                pgce = this.pgce,
+                qts = this.qts,
+                fulltime = this.fulltime,
+                parttime = this.parttime
             }; 
         }
 
@@ -228,7 +244,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 display = this.display,
                 zoomlevel = this.zoomlevel,
                 offlng = this.offlng,
-                offlat = this.offlat
+                offlat = this.offlat,
+                pgce = this.pgce,
+                qts = this.qts,
+                fulltime = this.fulltime,
+                parttime = this.parttime
             };
         }
 
@@ -250,7 +270,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 display = this.display,
                 zoomlevel = this.zoomlevel,
                 offlng = this.offlng,
-                offlat = this.offlat
+                offlat = this.offlat,
+                pgce = this.pgce,
+                qts = this.qts,
+                fulltime = this.fulltime,
+                parttime = this.parttime
             };
         }
 
@@ -272,7 +296,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 display = this.display,
                 zoomlevel = this.zoomlevel,
                 offlng = this.offlng,
-                offlat = this.offlat
+                offlat = this.offlat,
+                pgce = this.pgce,
+                qts = this.qts,
+                fulltime = this.fulltime,
+                parttime = this.parttime
             };
         }
 
