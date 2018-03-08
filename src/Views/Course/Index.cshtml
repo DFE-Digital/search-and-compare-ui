@@ -10,7 +10,7 @@
 })
 
 <div class="grid-row">
-    <div class="column-full">
+    <div class="column-two-thirds">
         <h2 class="heading-large" role="heading">
             @Model.Course.Name
         </h2>
@@ -25,7 +25,7 @@
                         <div class="panel panel-border-narrow">
                             <p>A postgraduate certificate in education (PGCE) with qualified teacher status (QTS) allows you to teach in England, Scotland, Wales and Northern Ireland.</p>
                             <p>This qualification is also recognised internationally.</p>
-                            <p>Many PGCE courses include credits that count toward a Master's degree.</p>
+                            <p>Many PGCE courses include credits that count toward a Master&#8217;s degree.</p>
                         </div>
                     </details>
                     } else {
@@ -55,8 +55,8 @@
                 <dt>Date you can apply from</dt>
                 <dd>@Model.Course.FormattedEarliestApplicationDate()</dd>
 
-                <!-- <dt>Date course starts</dt>
-                <dd></dd> -->
+                <dt>Date course starts</dt>
+                <dd></dd>
             </dl>
         </div>
     </div>
@@ -70,7 +70,7 @@
                     <li><a href="#section-about">About the course</a></li>
                 }
                 @if (Model.HasSection("entry requirements")) {
-                    <li><a href="#section-entry">Entry requirements</a></li>
+                    <li><a href="#section-entry">Requirements</a></li>
                 }
                 @if (Model.Course.Campuses.Count() > 0) {
                     <li><a href="#section-schools">Placement schools</a></li>
@@ -78,23 +78,15 @@
                 
                 <li><a href="#section-fees">Fees and funding</a></li>
                 
-                @if (Model.HasSection("what we are looking for")) {
-                    <li><a href="#section-looking">What we&#39;re looking for</a></li>
-                }
-                @if (Model.HasSection("how we select our trainees")) {
-                    <li><a href="#section-selection">How we select our trainees</a></li>
-                }
-                @if (Model.HasSection("why train with us")) {
-                <li><a href="#section-whyus">Why train with us</a></li>
-                }
                 @if (Model.HasSection("about this training provider")) {
-                <li><a href="#section-about-provider">About this training provider</a></li>
+                <li><a href="#section-about-provider">About the training provider</a></li>
                 }
+
                 @if (Model.HasContactDetails()) {
                 <li><a href="#section-contact">Contact details</a></li>
                 }
                 
-                <li><a href="#section-apply">How to apply</a></li>
+                <li><a href="#section-apply">Apply</a></li>
             </ul>
         </div>
 
@@ -114,7 +106,7 @@
             <div class="course-details-section">
                 <a name="section-entry"></a>
                 <h3 class="heading-medium">
-                    Entry requirements
+                    Requirements
                 </h3>
                 <div>
                     @Html.Raw(Model.GetHtmlForSection("entry requirements"))
@@ -203,47 +195,11 @@
             </div>
         </div>
 
-        @if (Model.HasSection("what we are looking for")) {
-            <div class="course-details-section">
-                <a name="section-looking"></a>
-                <h3 class="heading-medium">
-                    What we&#39;re looking for
-                </h3>
-                <div>
-                    @Html.Raw(Model.GetHtmlForSection("what we are looking for"))
-                </div>
-            </div>
-        }
-
-        @if (Model.HasSection("how we select our trainees")) {            
-            <div class="course-details-section">
-                <a name="section-selection"></a>
-                <h3 class="heading-medium">
-                    How we select our trainees
-                </h3>
-                <div>
-                    @Html.Raw(Model.GetHtmlForSection("how we select our trainees"))
-                </div>
-            </div>
-        }
-
-        @if (Model.HasSection("why train with us")) {            
-            <div class="course-details-section">
-                <a name="section-whyus"></a>
-                <h3 class="heading-medium">
-                    Why train with us
-                </h3>
-                <div>
-                    @Html.Raw(Model.GetHtmlForSection("why train with us?"))
-                </div>
-            </div>
-        }
-
         @if (Model.HasSection("about this training provider")) {        
             <div class="course-details-section">
                 <a name="section-about-provider"></a>
                 <h3 class="heading-medium">
-                    About this training provider
+                    About the training provider
                 </h3>
                 <div>
                     @Html.Raw(Model.GetHtmlForSection("about this training provider"))
@@ -319,7 +275,7 @@
         <div class="course-details-section">
             <a name="section-apply"></a>
             <h3 class="heading-medium">
-                How to apply
+                Apply
             </h3>
             <div>
                 <p>
