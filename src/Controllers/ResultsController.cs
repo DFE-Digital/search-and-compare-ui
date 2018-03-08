@@ -65,8 +65,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [HttpGet("results")]
         public IActionResult Index(ResultsFilter filter)
         {
-            var courses = api.GetCourses(filter.ToQueryFilter());
-
             var subjects = api.GetSubjects();
 
             FilteredList<Subject> filteredSubjects;
@@ -81,15 +79,19 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
             var mapsEnabled = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("FEATURE_MAPS"));
 
+            PaginatedList<Course> courses;
+            var queryFilter = filter.ToQueryFilter();
+
             var viewModel = new ResultsViewModel {
                 Subjects = filteredSubjects,
                 FilterModel = filter,
-                Courses = courses,
                 MapsEnabled = mapsEnabled
             };
 
             if (mapsEnabled && filter.DisplayAsMap)
             {
+                queryFilter.pageSize = 0;
+                courses = api.GetCourses(queryFilter);
                 var courseGroups = GroupByProvider(courses);
 
                 var mapProjection = mapProvider.GetMapProjection<CourseGroup>(
@@ -101,6 +103,13 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                     Map = mapProjection,
                     MapsApiKey = mapProvider.ApiKey
                 };
+                viewModel.Courses = courses;
+            }
+            else
+            {
+                queryFilter.pageSize = 10;
+
+                viewModel.Courses = api.GetCourses(queryFilter);
             }
 
             return View(viewModel);
