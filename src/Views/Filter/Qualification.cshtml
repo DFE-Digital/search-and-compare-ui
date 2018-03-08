@@ -22,7 +22,7 @@
                 </div>
                 
                 <div class="multiple-choice multiple-radio">
-                    <input id="applyFilter-includepgce" type="checkbox" name="pgce" value="true" checked="@Model.pgce">
+                    <input id="applyFilter-includepgce" type="checkbox" name="pgce" value="true" checked="@(Model.pgce || !Model.qts)">
                     <label for="applyFilter-includepgce" class="multi-choice-label">
                         <span class="bold">Postgraduate certificate in education with qualified teacher status</span>
                         <span>
@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="multiple-choice multiple-radio">
-                    <input id="applyFilter-includeqts" type="checkbox" name="qts" value="true" checked="@Model.qts">
+                    <input id="applyFilter-includeqts" type="checkbox" name="qts" value="true" checked="@(Model.qts || !Model.pgce)">
                     <label for="applyFilter-includeqts" class="multi-choice-label">
                         <span class="bold">Qualified teacher status</span>
                         <span>

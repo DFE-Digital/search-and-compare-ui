@@ -19,7 +19,7 @@
                 </legend>
                 
                 <div class="multiple-choice multiple-radio">
-                    <input id="applyFilter-includefulltime" type="checkbox" name="fulltime" value="true" checked="@Model.fulltime">
+                    <input id="applyFilter-includefulltime" type="checkbox" name="fulltime" value="true" checked="@(Model.fulltime || !Model.parttime)">
                     <label for="applyFilter-includefulltime" class="multi-choice-label">
                         <span class="bold">Full time (12 months)</span>
                         <span>
@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="multiple-choice multiple-radio">
-                    <input id="applyFilter-includeparttime" type="checkbox" name="parttime" value="true" checked="@Model.parttime">
+                    <input id="applyFilter-includeparttime" type="checkbox" name="parttime" value="true" checked="@(Model.parttime || !Model.fulltime)">
                     <label for="applyFilter-includeparttime" class="multi-choice-label">
                         <span class="bold">Part time (18 &ndash; 24 months)</span>
                         <span>
