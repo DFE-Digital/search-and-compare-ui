@@ -23,7 +23,6 @@
     <div class="column-two-thirds">
         <legend role="heading">
             <h3 class="heading-medium filter-heading">What subjects would you like to teach?</h3>
-            <span class="body-text">Select all that apply</span>
         </legend>
 
         <!-- <div>
@@ -44,24 +43,32 @@
                                     checked="@selected.Contains(subject.Id)"
                                     value="@(subject.Id)">
                                 <label for="@("subject-" + subject.Id)">@subject.Name</label>
-                                @if (subject.IsSubjectKnowledgeEnhancementAvailable) {
+
+                                @if (subject.IsSubjectKnowledgeEnhancementAvailable || subject.FundingId.HasValue) {
                                     <div class="subject-details-wrapper">
-                                        <details>
-                                            <summary><span class="summary">Is your degree in a different subject?</span></summary>
-                                            <div class="panel panel-border-narrow">
-                                                <p>
-                                                    You can complete a course to give you the knowledge you need to begin teacher training in this subject.
-                                                    This type of course is known as subject knowledge enhancement (SKE). To be eligible for it, you'll need a degree in a subject related to the one you want to teach.
-                                                    If you have a degree that isn't related, you'll need a related A-Level or work experience.
-                                                </p>
-                                                <p>
-                                                    SKE courses come with a bursary of up to £5,600. They last up to 28 weeks.
-                                                </p>
-                                                <p>
-                                                    The training provider for the teacher training course can tell you more about SKE.
-                                                </p>
-                                            </div>
-                                        </details>
+                                        @if(subject.FundingId.HasValue) {
+                                            <p>
+                                                Financial support might be available if you qualify
+                                            </p>
+                                        }
+                                        @if(subject.IsSubjectKnowledgeEnhanementAvailable) {
+                                            <details>
+                                                <summary><span class="summary">Is your degree in a different subject?</span></summary>
+                                                <div class="panel panel-border-narrow">
+                                                    <p>
+                                                        You can complete a course to give you the knowledge you need to begin teacher training in this subject.
+                                                        This type of course is known as subject knowledge enhancement (SKE). To be eligible for it, you'll need a degree in a subject related to the one you want to teach.
+                                                        If you have a degree that isn't related, you'll need a related A-Level or work experience.
+                                                    </p>
+                                                    <p>
+                                                        SKE courses come with a bursary of up to £5,600. They last up to 28 weeks.
+                                                    </p>
+                                                    <p>
+                                                        The training provider for the teacher training course can tell you more about SKE.
+                                                    </p>
+                                                </div>
+                                            </details>
+                                        }
                                     </div>
                                 }
                             </div>
