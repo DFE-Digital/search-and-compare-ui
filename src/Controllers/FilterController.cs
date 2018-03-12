@@ -94,6 +94,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         {
             var isInWizard = ViewBag.IsInWizard == true;
             filter.query = null;
+            filter.page = null;
+
 
             if (filter.LocationOption == LocationOption.Unset)
             {
@@ -193,6 +195,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("Qualification")]
         public IActionResult QualificationPost(ResultsFilter model)
         {
+            model.page = null;
             return RedirectToAction("Index", "Results", model.ToRouteValues());
         }
 
@@ -207,6 +210,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("StudyType")]
         public IActionResult StudyTypePost(ResultsFilter model)
         {
+            model.page = null;
             return RedirectToAction("Index", "Results", model.ToRouteValues());
         }
     }

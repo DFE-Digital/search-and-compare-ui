@@ -247,6 +247,15 @@ h3.filter-heading {
     width: 100%;
 }
 
+.subject-details-wrapper {
+    clear:both;
+    padding-left: 12px;
+}
+
+.subject-details-wrapper p {
+    margin-bottom: 10px;
+}
+
 .multiple-choice-subject {
     width: 100%;
     border-bottom: solid 1px #cccccc;
@@ -255,7 +264,7 @@ h3.filter-heading {
 }
 
 .multiple-choice-subject label {    
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 .twitter-typeahead

@@ -209,10 +209,9 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
         {
             return new ResultsFilter
             {
-                page = this.page,
+                //drop page and sortby
                 l = this.l,
                 subjects = this.subjects,
-                sortby = sortby,
                 funding = this.funding,
                 query = this.query,
                 display = this.display,
