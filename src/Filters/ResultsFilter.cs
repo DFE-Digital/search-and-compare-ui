@@ -178,33 +178,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
             };
         }
 
-        public object ToRouteValuesWithError(string error)
-        {
-            return new 
-            {
-                error,
-                page,
-                lat,
-                lng,
-                rad,
-                loc,
-                lq,
-                l,
-                subjects,
-                sortby,
-                funding,
-                query,
-                display,
-                zoomlevel,
-                offlng,
-                offlat,
-                pgce,
-                qts,
-                fulltime,
-                parttime
-            };
-        }
-
         public ResultsFilter WithoutLocation()
         {
             return new ResultsFilter

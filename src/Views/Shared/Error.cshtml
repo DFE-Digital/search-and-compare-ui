@@ -1,19 +1,15 @@
 ﻿@model ErrorViewModel
 
-@if(Model != null) {
+@if(Model != null && Model.Messages.Any()) {
     <div class="error-summary" role="alert" aria-labelledby="error-summary-heading" tabindex="-1">
 
         <h2 class="heading-medium error-summary-heading" id="error-summary-heading">
-            There is a problem with the information you provided.
+            You&#8217;ll need to correct some information.
         </h2>
 
-        <p>
-            Please change your answers below.
-        </p>
-
-        <ul class="list list-bullet">
+        <ul class="error-summary-list">
             @foreach(var message in Model.Messages) {
-                <li>@message</li>
+                <li><a href="#@message.Id-container">@message.Name</a></li>
             }
         </ul>
     </div>

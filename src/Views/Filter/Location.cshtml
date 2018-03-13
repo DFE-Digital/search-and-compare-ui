@@ -19,7 +19,7 @@
 
 <div class="grid-row">
     <div class="column-full">
-        @Html.Partial("Error", Model.Error)                
+        @Html.Partial("Error", Model.Errors)                
                 
         <form action='@Url.Action(isInWizard ? "LocationWizard" : "Location", "Filter", Model.FilterModel.ToRouteValues())' method="POST">
             <fieldset role="radiogroup" aria-required="true">
@@ -30,34 +30,42 @@
                     Answer some questions to find the most relevant courses.
                 </p>
 
-                <div class="multiple-choice multiple-radio" data-target="location-selector">
-                    @if (Model.FilterModel.LocationOption == LocationOption.Yes) {
-                        <input id="location-Set" type="radio" name="l" value="@((int)LocationOption.Yes)" checked>
-                    } else {
-                        <input id="location-Set" type="radio" name="l" value="@((int)LocationOption.Yes)">
-                    }
-                    <label for="location-Set">Search by postcode, town or city</label>
-                </div>
-                <div class="panel panel-border-narrow js-hidden" id="location-selector">
-                    <label class="form-label" for="location">Postcode, town or city name</label>
-                    <input class="form-control" name="lq" type="text" id="location" value="@Model.FilterModel.lq">
-                    
-                    <label class="form-label" for="radius">Within Radius</label>
-                    <select class="form-control" id="radius" name="rad">
-                        @foreach(var option in Enum.GetValues(typeof(RadiusOption)))
-                        {
-                            <option value="@((int) option)">@((int) option) miles</option>
+                <div class="form-group @(Model.Errors.HasError("l") ? "form-group-error" : "")" id="l-container">
+                    <span class="error-message">@Model.Errors.GetError("l").Message</span>
+                    <div class="multiple-choice multiple-radio" data-target="lq-container">
+                        @if (Model.FilterModel.LocationOption == LocationOption.Yes) {
+                            <input id="location-Set" type="radio" name="l" value="@((int)LocationOption.Yes)" checked>
+                        } else {
+                            <input id="location-Set" type="radio" name="l" value="@((int)LocationOption.Yes)">
                         }
-                    </select>
-                </div>
+                        <label for="location-Set">
+                            Search by postcode, town or city
+                        </label>
+                    </div>
+                    <div class="panel panel-border-narrow js-hidden @(Model.Errors.HasError("lq") ? "form-group-error" : "")" id="lq-container">
+                        <label class="form-label" for="location">
+                            Postcode, town or city name
+                            <span class="error-message">@Model.Errors.GetError("lq").Message</span>                            
+                        </label>
+                        <input class="form-control" name="lq" type="text" id="location" value="@Model.FilterModel.lq">
+                        
+                        <label class="form-label" for="radius">Within Radius</label>
+                        <select class="form-control" id="radius" name="rad">
+                            @foreach(var option in Enum.GetValues(typeof(RadiusOption)))
+                            {
+                                <option value="@((int) option)">@((int) option) miles</option>
+                            }
+                        </select>
+                    </div>
 
-                <div class="multiple-choice multiple-radio">
-                    @if (Model.FilterModel.LocationOption == LocationOption.No) {
-                        <input id="location-Unset" type="radio" name="l" value="@((int)LocationOption.No)" checked>
-                    } else {
-                        <input id="location-Unset" type="radio" name="l" value="@((int)LocationOption.No)">
-                    }
-                    <label for="location-Unset">Search across England</label>
+                    <div class="multiple-choice multiple-radio">
+                        @if (Model.FilterModel.LocationOption == LocationOption.No) {
+                            <input id="location-Unset" type="radio" name="l" value="@((int)LocationOption.No)" checked>
+                        } else {
+                            <input id="location-Unset" type="radio" name="l" value="@((int)LocationOption.No)">
+                        }
+                        <label for="location-Unset">Search across England</label>
+                    </div>
                 </div>
             </fieldset>
             
@@ -71,15 +79,18 @@
 <div class="grid-row">
     <div class="column-full">
         <p>Or</p>
-        <details open="@(string.IsNullOrWhiteSpace(Model.FilterModel.query) == false)">
+        <details open="@(string.IsNullOrWhiteSpace(Model.FilterModel.query) == false || Model.Errors.HasError("query"))" id="query-container">
 
             <summary><span class="summary">Search by provider name</span></summary>
 
-            <div class="panel panel-border-narrow">
+            <div class="panel panel-border-narrow @(Model.Errors.HasError("query") ? "form-group-error" : "")">
 
                 <form action='@Url.Action("FullText", "Filter", Model.FilterModel.ToRouteValues())' method="POST">
                     <fieldset aria-required="true">
-                        <label class="form-label" for="query">Provider name</label>
+                        <label class="form-label" for="query">
+                            Provider name
+                            <span class="error-message">@Model.Errors.GetError("query").Message</span>
+                        </label>
                         <input class="form-control provider-typeahead" name="query" type="text" id="query" value="@Model.FilterModel.query">                        
                     </fieldset>
                     
