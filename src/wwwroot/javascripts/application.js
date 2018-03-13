@@ -17,18 +17,22 @@ if (!!$) {
         // Details/summary polyfill from frontend toolkit
         GOVUK.details.init()
 
-        $('.provider-typeahead').typeahead({
-            minLength: 3,
-            highlight: true
-          },
-          {
-            name: 'my-dataset',
-            source: function(query, cbSync, cbAsync){
-                $.get("/dynamic/providersuggest", {query: query}, function(res){
-                    cbAsync(res);
+        $('.typeahead').each(function() {
+            var $this = $(this);
+            var url = $this.data("url");
+            $this.typeahead({
+                minLength: 3,
+                highlight: true
+                },
+                {
+                    name: url.replace(/\//g,"-"),
+                    source: function(query, cbSync, cbAsync){
+                        $.get(url, {query: query}, function(res){
+                            cbAsync(res);
+                        });
+                    },
+                    limit:10
                 });
-            },
-            limit:10
-          });
+        });
     })
 }

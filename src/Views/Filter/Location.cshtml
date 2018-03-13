@@ -47,7 +47,7 @@
                             Postcode, town or city name
                             <span class="error-message">@Model.Errors.GetError("lq").Message</span>                            
                         </label>
-                        <input class="form-control" name="lq" type="text" id="location" value="@Model.FilterModel.lq">
+                        <input class="form-control typeahead" data-url="@Url.Action("LocationSuggest", "Dynamic")" name="lq" type="text" id="location" value="@Model.FilterModel.lq">
                         
                         <label class="form-label" for="radius">Within Radius</label>
                         <select class="form-control" id="radius" name="rad">
@@ -91,7 +91,7 @@
                             Provider name
                             <span class="error-message">@Model.Errors.GetError("query").Message</span>
                         </label>
-                        <input class="form-control provider-typeahead" name="query" type="text" id="query" value="@Model.FilterModel.query">                        
+                        <input class="form-control typeahead" data-url="@Url.Action("ProviderSuggest", "Dynamic")" name="query" type="text" id="query" value="@Model.FilterModel.query">                        
                     </fieldset>
                     
                     <div class="filter-apply-button">
