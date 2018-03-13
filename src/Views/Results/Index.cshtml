@@ -2,7 +2,7 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";       
-    ViewBag.Title = $"{string.Format(CultureInfo.InvariantCulture, "{0:n0}", Model.Courses.TotalCount)} courses";    
+    ViewBag.Title = $"{string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:n0}", Model.Courses.TotalCount)} courses";    
 }
 
 @Html.Partial("Back", new BackLinkViewModel {
