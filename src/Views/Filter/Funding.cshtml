@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = $"Filter by funding options";
     var isInWizard = ViewBag.IsInWizard == true;
+    var errors = ViewBag.Errors as ErrorViewModel;
 }
 
 @if(isInWizard) {
@@ -19,6 +20,7 @@
 
 <div class="grid-row">
     <div class="column-full">
+        @Html.Partial("Error", errors)
         <form action='@Url.Action(isInWizard ? "FundingWizard": "Funding", "Filter", Model.ToRouteValues())' method="POST">
             <fieldset role="radiogroup" aria-required="true">
                 <legend role="heading">
@@ -28,65 +30,68 @@
                     Some courses come with financial support to help you with the cost of teacher training.
                 </div>
                 
-                <div class="multiple-choice multiple-radio">
-                    <input id="applyFilter-all" type="radio" name="applyFilter" value="false" checked="@(Model.SelectedFunding == FundingOption.All)">
-                    <label for="applyFilter-all" class="multi-choice-label">
-                        <span class="bold">Show courses with and without financial support</span>
-                    </label>
-                </div>
-
-                <div class="multiple-choice multiple-radio" data-target="funding-type-selector">
-                    <input id="applyFilter-some" type="radio" name="applyFilter" value="true" checked="@(Model.SelectedFunding != null && Model.SelectedFunding != FundingOption.All)">
-                    <label for="applyFilter-some" class="multi-choice-label">
-                        <span class="bold">Only show me courses that come with financial support</span>
-                        
-                    </label>
-                </div>                
-                <div class="panel panel-border-narrow js-hidden" id="funding-type-selector">
-                    <p>
-                        Show me courses that come with a:
-                    </p>
-
+                <div class="form-group @(errors.HasError("applyFilter") ? "form-group-error" : "")" id="applyFilter-container">
                     <div class="multiple-choice multiple-radio">
-                        <input id="includeBursary" type="checkbox" name="includeBursary" value="true" checked="@(Model.SelectedFunding == null || Model.SelectedFunding.Value.HasFlag(FundingOption.Bursary))">
-                        <label for="includeBursary" class="multi-choice-label">
-                            <span class="bold">bursary</span>
-                            <p>Up to £26,000 tax free.</p>
-                            <p>You&#8217;ll usually need a 2:2 degree or higher.</p>
+                        <input id="applyFilter-all" type="radio" name="applyFilter" value="false" checked="@(Model.SelectedFunding == FundingOption.All)">
+                        <label for="applyFilter-all" class="multi-choice-label">
+                            <span class="bold">Show courses with and without financial support</span>
                         </label>
                     </div>
 
-                    <div class="multiple-choice multiple-radio">
-                        <input id="includeScholarship" type="checkbox" name="includeScholarship" value="true" checked="@(Model.SelectedFunding == null || Model.SelectedFunding.Value.HasFlag(FundingOption.Scholarship))">
-                        <label for="includeScholarship" class="multi-choice-label">
-                            <span class="bold">scholarship</span>
-                            <p>Up to £28,000 tax free.</p>
-                            <p>
-                                Scholarships are only available to outstanding graduates &ndash; you&#8217;ll 
-                                usually need a 2:1 or higher, and provide evidence that you&#8217;re passionate about the subject.
-                                Scholarships also give you access to networking events, training resources and other support.
-                            </p>
-                            <p>If you do get a scholarship, you can&#8217;t get a bursary.</p>
+                    <div class="multiple-choice multiple-radio" data-target="funding-container">
+                        <input id="applyFilter-some" type="radio" name="applyFilter" value="true" checked="@(errors.HasError("funding") || (Model.SelectedFunding != null && Model.SelectedFunding != FundingOption.All))">
+                        <label for="applyFilter-some" class="multi-choice-label">
+                            <span class="bold">Only show me courses that come with financial support</span>
+                            
                         </label>
-                    </div>
+                    </div>                
+                    <div class="panel panel-border-narrow js-hidden @(errors.HasError("funding") ? "form-group-error" : "")" id="funding-container">
+                        <span class="error-message">@errors.GetError("funding").Message</span>
+                        <p>
+                            Show me courses that come with a:
+                        </p>
 
-                    <div class="multiple-choice multiple-radio">
-                        <input id="includeSalary" type="checkbox" name="includeSalary" value="true" checked="@(Model.SelectedFunding == null || Model.SelectedFunding.Value.HasFlag(FundingOption.Salary))">
-                        <label for="includeSalary" class="multi-choice-label">
-                            <span class="bold">salary</span>
-                            <p>
-                                Earn a salary while you train. If you choose this type of course, you don&#8217;t pay any fees.
-                                Salaries vary and aren&#8217;t tax free.
-                            </p>
-                            <p>
-                                If you choose a salaried cours, you can&#8217;t get a bursary or scholarship.
-                            </p>
-                        </label>
-                    </div>
+                        <div class="multiple-choice multiple-radio">
+                            <input id="includeBursary" type="checkbox" name="includeBursary" value="true" checked="@(Model.SelectedFunding == null || Model.SelectedFunding.Value.HasFlag(FundingOption.Bursary))">
+                            <label for="includeBursary" class="multi-choice-label">
+                                <span class="bold">bursary</span>
+                                <p>Up to £26,000 tax free.</p>
+                                <p>You&#8217;ll usually need a 2:2 degree or higher.</p>
+                            </label>
+                        </div>
 
-                    <input type="hidden" name="includeBursary" value="false">
-                    <input type="hidden" name="includeScholarship" value="false">
-                    <input type="hidden" name="includeSalary" value="false">
+                        <div class="multiple-choice multiple-radio">
+                            <input id="includeScholarship" type="checkbox" name="includeScholarship" value="true" checked="@(Model.SelectedFunding == null || Model.SelectedFunding.Value.HasFlag(FundingOption.Scholarship))">
+                            <label for="includeScholarship" class="multi-choice-label">
+                                <span class="bold">scholarship</span>
+                                <p>Up to £28,000 tax free.</p>
+                                <p>
+                                    Scholarships are only available to outstanding graduates &ndash; you&#8217;ll 
+                                    usually need a 2:1 or higher, and provide evidence that you&#8217;re passionate about the subject.
+                                    Scholarships also give you access to networking events, training resources and other support.
+                                </p>
+                                <p>If you do get a scholarship, you can&#8217;t get a bursary.</p>
+                            </label>
+                        </div>
+
+                        <div class="multiple-choice multiple-radio">
+                            <input id="includeSalary" type="checkbox" name="includeSalary" value="true" checked="@(Model.SelectedFunding == null || Model.SelectedFunding.Value.HasFlag(FundingOption.Salary))">
+                            <label for="includeSalary" class="multi-choice-label">
+                                <span class="bold">salary</span>
+                                <p>
+                                    Earn a salary while you train. If you choose this type of course, you don&#8217;t pay any fees.
+                                    Salaries vary and aren&#8217;t tax free.
+                                </p>
+                                <p>
+                                    If you choose a salaried cours, you can&#8217;t get a bursary or scholarship.
+                                </p>
+                            </label>
+                        </div>
+
+                        <input type="hidden" name="includeBursary" value="false">
+                        <input type="hidden" name="includeScholarship" value="false">
+                        <input type="hidden" name="includeSalary" value="false">
+                    </div>
                 </div>
             </fieldset>
             

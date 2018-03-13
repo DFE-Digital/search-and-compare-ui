@@ -79,7 +79,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             }
             else if (false == _api.GetProviderSuggestions(filter.query).Any(x => string.Compare(filter.query, x.Name, CultureInfo.InvariantCulture, CompareOptions.IgnoreCase) != 0))
             {
-                TempData.Put("Errors", new ErrorViewModel("query", "Provider name", "We couldn't find this training provider, please check your input and try again."));
+                TempData.Put("Errors", new ErrorViewModel("query", "Provider name", "We couldn't find this training provider, please check your input and try again.", Url.Action("Location")));
                 return RedirectToAction("Location", filter.ToRouteValues());
             }
 
@@ -165,15 +165,29 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [HttpGet("results/filter/funding")]
         public IActionResult Funding(ResultsFilter filter)
         {
+            ViewBag.Errors = TempData.Get<ErrorViewModel>("Errors") ?? new ErrorViewModel();
             return View("Funding", filter);
         }
 
         [HttpPost("results/filter/funding")]
-        public IActionResult Funding(bool applyFilter, bool includeBursary, bool includeScholarship, bool includeSalary, ResultsFilter filter)
+        public IActionResult Funding(bool? applyFilter, bool includeBursary, bool includeScholarship, bool includeSalary, ResultsFilter filter)
         {
+            var isInWizard = ViewBag.IsInWizard == true;
+            
             filter.page = null;
 
-            if (applyFilter) 
+            if (!applyFilter.HasValue)
+            {
+                TempData.Put("Errors", new ErrorViewModel("applyFilter", "Please make a selection", null, Url.Action("Funding")));
+                return RedirectToAction(isInWizard ? "FundingWizard" : "Funding", filter.ToRouteValues());
+            }
+
+            else if (applyFilter == true && !includeBursary && !includeScholarship && !includeSalary)
+            {
+                TempData.Put("Errors", new ErrorViewModel("funding", "Funding options", "Please choose at least one funding option", Url.Action("Funding")));
+                return RedirectToAction(isInWizard ? "FundingWizard" : "Funding", filter.ToRouteValues());
+            }
+            else if (applyFilter == true)
             {
                 filter.SelectedFunding = FundingOption.AnyFunding;
                 if (!includeBursary) filter.SelectedFunding = filter.SelectedFunding & ~FundingOption.Bursary;
@@ -197,7 +211,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         }
 
         [HttpPost("start/funding")]
-        public IActionResult FundingWizard(bool applyFilter, bool includeBursary, bool includeScholarship, bool includeSalary, ResultsFilter filter)
+        public IActionResult FundingWizard(bool? applyFilter, bool includeBursary, bool includeScholarship, bool includeSalary, ResultsFilter filter)
         {
             ViewBag.IsInWizard = true;
             return Funding(applyFilter, includeBursary, includeScholarship, includeSalary, filter);
