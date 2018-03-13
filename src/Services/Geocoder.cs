@@ -6,6 +6,7 @@ using Newtonsoft.Json.Linq;
 using System.Linq;
 using System;
 using GovUk.Education.SearchAndCompare.Domain.Models;
+using System.Collections.Generic;
 
 namespace GovUk.Education.SearchAndCompare.UI.Services
 {
@@ -51,6 +52,36 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
                 return new Coordinates(lat, lng, postCode, formatted);
             }
 
+        }
+
+        public async Task<IEnumerable<string>> SuggestLocationsAsync(string input)
+        {
+            using(var client = new HttpClient())
+            {
+            
+                var query = HttpUtility.ParseQueryString(string.Empty);
+                query["key"] = apiKey;
+                query["language"] = "en";
+                query["input"] = input;
+                query["components"] = "country:uk";
+                query["types"]="geocode";
+
+                var response = await client.GetAsync("https://maps.googleapis.com/maps/api/place/autocomplete/json?" + query.ToString());
+
+                dynamic json = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
+
+                if ("OK" != (string)json.status)
+                {
+                    return null;
+                }
+
+                var res = new List<string>();
+                foreach(var prediction in json.predictions)
+                {
+                    res.Add((string)prediction.description);
+                }
+                return res;
+            }
         }
 
         private static bool IsIndicativeOfUk(JToken addressComponent)
