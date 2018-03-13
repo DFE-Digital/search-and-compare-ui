@@ -4,6 +4,7 @@ using GovUk.Education.SearchAndCompare.Domain.Filters.Enums;
 using GovUk.Education.SearchAndCompare.UI.Filters;
 using GovUk.Education.SearchAndCompare.UI.Filters.Enums;
 using GovUk.Education.SearchAndCompare.UI.Services;
+using GovUk.Education.SearchAndCompare.UI.Utils;
 using GovUk.Education.SearchAndCompare.UI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -69,28 +70,36 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("FullText")]
         public IActionResult FullTextPost(ResultsFilter filter)
         {
-            return !string.IsNullOrWhiteSpace(filter.query)
-                ? RedirectToAction("Index", "Results", filter.WithoutLocation().ToRouteValues())
-                : RedirectToAction("Location", filter.ToRouteValuesWithError("Provider name is required"));
+            if(!string.IsNullOrWhiteSpace(filter.query))
+            {
+                return RedirectToAction("Index", "Results", filter.WithoutLocation().ToRouteValues());
+            }
+            else
+            {
+                TempData.Put("Errors", new ErrorViewModel("query", "Provider name", "Provider name is required", Url.Action("Location")));
+                return RedirectToAction("Location", filter.ToRouteValues());
+            }
         }
 
         [HttpGet("results/filter/location")]
-        public IActionResult Location(ResultsFilter filter, string error)
+        [ActionName("LocationGet")]
+        public IActionResult LocationGet(ResultsFilter filter)
         {
             var viewModel = new LocationFilterViewModel {
                 FilterModel = filter
             };
-            if (!string.IsNullOrWhiteSpace(error))
+            var errors = TempData.Get<ErrorViewModel>("Errors");
+            if (errors != null && errors.AppliesToUrl(Url.Action("Location")))
             {
-                viewModel.Error = new ErrorViewModel(error);
+                viewModel.Errors = errors;
             }
-
 
             return View("Location", viewModel);
         }
 
         [HttpPost("results/filter/location")]
-        public async Task<IActionResult> Location(ResultsFilter filter)
+        [ActionName("Location")]
+        public async Task<IActionResult> LocationPost(ResultsFilter filter)
         {
             var isInWizard = ViewBag.IsInWizard == true;
             filter.query = null;
@@ -99,11 +108,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
             if (filter.LocationOption == LocationOption.Unset)
             {
-                return isInWizard
-                    ? RedirectToAction("LocationWizard",
-                        filter.WithoutLocation().ToRouteValuesWithError("Please make a selection."))
-                    : RedirectToAction("Location", "Filter",
-                        filter.WithoutLocation().ToRouteValuesWithError("Please make a selection."));
+                TempData.Put("Errors", new ErrorViewModel("l", "Please make a selection", null, Url.Action("Location")));
+                return RedirectToAction(isInWizard ? "LocationWizard" : "Location", filter.WithoutLocation().ToRouteValues());
             }
 
             if (filter.LocationOption == LocationOption.No)
@@ -116,10 +122,9 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             var coords = await _geocoder.ResolvePostCodeAsync(filter.lq);
             if (coords == null) 
             {
-                object redirectModel = filter.ToRouteValuesWithError(
-                    "Sorry, we couldn't find your location, please check your input and try again."
-                );
-                return RedirectToAction(isInWizard ? nameof(LocationWizard) : nameof(Location), redirectModel);
+                TempData.Put("Errors", new ErrorViewModel("lq", "Postcode, town or city name", "Sorry, we couldn't find your location, please check your input and try again.", Url.Action("Location")));
+                
+                return RedirectToAction(isInWizard ? "LocationWizard" : "Location", filter.ToRouteValues());
             }
             else
             {
@@ -136,17 +141,19 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         }
 
         [HttpGet("start/location")]
-        public IActionResult LocationWizard(ResultsFilter filter, string error)
+        [ActionName("LocationWizard")]
+        public IActionResult LocationWizardGet(ResultsFilter filter)
         {
             ViewBag.IsInWizard = true;
-            return Location(filter, error);
+            return LocationGet(filter);
         }
         
         [HttpPost("start/location")]
-        public async Task<IActionResult> LocationWizard(ResultsFilter filter)
+        [ActionName("LocationWizard")]
+        public async Task<IActionResult> LocationWizardPost(ResultsFilter filter)
         {
             ViewBag.IsInWizard = true;
-            return await Location(filter);
+            return await LocationPost(filter);
         }
 
         [HttpGet("results/filter/funding")]
