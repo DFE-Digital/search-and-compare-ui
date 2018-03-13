@@ -66,22 +66,14 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewFormatters
         {
             if (course.Campuses == null) yield break;
 
-            if (course.Campuses.Any(x => x.FullTime == VacancyStatus.Vacancies))
+            if (course.Campuses.Any(x => x.FullTime != VacancyStatus.NA))
             {
                 yield return "Full time";
             }
-            else if (course.Campuses.Any(x => x.FullTime == VacancyStatus.NoVacancies))
-            {
-                yield return "Full time (no vacancies)";
-            }
 
-            if (course.Campuses.Any(x => x.PartTime == VacancyStatus.Vacancies))
+            if (course.Campuses.Any(x => x.PartTime != VacancyStatus.NA))
             {
                 yield return "Part time";
-            }
-            else if (course.Campuses.Any(x => x.PartTime == VacancyStatus.NoVacancies))
-            {
-                yield return "Part time (no vacancies)";
             }
         }
 
