@@ -8,12 +8,12 @@
 @if (isInWizard) {
     @Html.Partial("Back", new BackLinkViewModel {
         Href = Url.Action("Index", "Home"),
-        Title = "Return to start page"
+        Title = "Back to start"
     })
 } else {
     @Html.Partial("Back", new BackLinkViewModel {
         Href = Url.Action("Index", "Results", Model.FilterModel.ToRouteValues()),
-        Title = "Return to search results"
+        Title = "Back to search results"
     })
 }     
 
