@@ -4,7 +4,7 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels
 {
     public class LocationFilterViewModel
     {
-        public ErrorViewModel Error { get; set; }
+        public ErrorViewModel Errors { get; set; } = ErrorViewModel.NewEmpty();
 
         public ResultsFilter FilterModel { get; set; }
     }
