@@ -77,7 +77,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                 TempData.Put("Errors", new ErrorViewModel("query", "Provider name", "Provider name is required", Url.Action("Location")));
                 return RedirectToAction("Location", filter.ToRouteValues());
             }
-            else if (false == _api.GetProviderSuggestions(filter.query).Any(x => string.Compare(filter.query, x.Name, CultureInfo.InvariantCulture, CompareOptions.IgnoreCase) != 0))
+            else if (false == _api.GetProviderSuggestions(filter.query).Any(x => string.Compare(filter.query, x.Name, CultureInfo.InvariantCulture, CompareOptions.IgnoreCase) == 0))
             {
                 TempData.Put("Errors", new ErrorViewModel("query", "Provider name", "We couldn't find this training provider, please check your input and try again.", Url.Action("Location")));
                 return RedirectToAction("Location", filter.ToRouteValues());
@@ -123,6 +123,12 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                 return isInWizard
                     ? RedirectToAction("SubjectWizard", filter.WithoutLocation().ToRouteValues())
                     : RedirectToAction("Index", "Results", filter.WithoutLocation().ToRouteValues());
+            }
+
+            if (string.IsNullOrWhiteSpace(filter.lq)) 
+            {
+                TempData.Put("Errors", new ErrorViewModel("lq", "Postcode, town or city name", "Please enter a postcode, city or town in England", Url.Action("Location")));
+                return RedirectToAction(isInWizard ? "LocationWizard" : "Location", filter.ToRouteValues());            
             }
 
             var coords = await _geocoder.ResolvePostCodeAsync(filter.lq);
