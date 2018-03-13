@@ -1,7 +1,7 @@
 @model ResultsFilter
 
 @{
-    ViewBag.Title = $"Filter by qualification";
+    ViewBag.Title = $"Filter by study type";
 }
 
 
@@ -15,7 +15,7 @@
         <form action='@Url.Action("StudyType", "Filter", Model.ToRouteValues())' method="POST">
             <fieldset role="radiogroup" aria-required="true">
                 <legend role="heading">
-                    <h3 class="heading-medium filter-heading">Which qualification do you want?</h3>
+                    <h3 class="heading-medium filter-heading">Study type</h3>
                 </legend>
                 
                 <div class="multiple-choice multiple-radio">
