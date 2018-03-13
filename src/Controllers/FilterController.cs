@@ -1,3 +1,5 @@
+using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 using GovUk.Education.SearchAndCompare.Domain.Client;
 using GovUk.Education.SearchAndCompare.Domain.Filters.Enums;
@@ -70,16 +72,20 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("FullText")]
         public IActionResult FullTextPost(ResultsFilter filter)
         {
-            if(!string.IsNullOrWhiteSpace(filter.query))
-            {
-                return RedirectToAction("Index", "Results", filter.WithoutLocation().ToRouteValues());
-            }
-            else
+            if(string.IsNullOrWhiteSpace(filter.query))
             {
                 TempData.Put("Errors", new ErrorViewModel("query", "Provider name", "Provider name is required", Url.Action("Location")));
                 return RedirectToAction("Location", filter.ToRouteValues());
             }
+            else if (false == _api.GetProviderSuggestions(filter.query).Any(x => string.Compare(filter.query, x.Name, CultureInfo.InvariantCulture, CompareOptions.IgnoreCase) != 0))
+            {
+                TempData.Put("Errors", new ErrorViewModel("query", "Provider name", "We couldn't find this training provider, please check your input and try again."));
+                return RedirectToAction("Location", filter.ToRouteValues());
+            }
+
+            return RedirectToAction("Index", "Results", filter.WithoutLocation().ToRouteValues());
         }
+
 
         [HttpGet("results/filter/location")]
         [ActionName("LocationGet")]
@@ -122,7 +128,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             var coords = await _geocoder.ResolvePostCodeAsync(filter.lq);
             if (coords == null) 
             {
-                TempData.Put("Errors", new ErrorViewModel("lq", "Postcode, town or city name", "Sorry, we couldn't find your location, please check your input and try again.", Url.Action("Location")));
+                TempData.Put("Errors", new ErrorViewModel("lq", "Postcode, town or city name", "We couldn't find this location, please check your input and try again.", Url.Action("Location")));
                 
                 return RedirectToAction(isInWizard ? "LocationWizard" : "Location", filter.ToRouteValues());
             }
