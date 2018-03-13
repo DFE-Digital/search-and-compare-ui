@@ -72,6 +72,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("FullText")]
         public IActionResult FullTextPost(ResultsFilter filter)
         {
+            filter = filter.WithoutLocation();
+
             if(string.IsNullOrWhiteSpace(filter.query))
             {
                 TempData.Put("Errors", new ErrorViewModel("query", "Provider name", "Provider name is required", Url.Action("Location")));
@@ -83,7 +85,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                 return RedirectToAction("Location", filter.ToRouteValues());
             }
 
-            return RedirectToAction("Index", "Results", filter.WithoutLocation().ToRouteValues());
+            return RedirectToAction("Index", "Results", filter.ToRouteValues());
         }
 
 
