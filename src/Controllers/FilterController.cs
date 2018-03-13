@@ -156,16 +156,22 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         }
 
         [HttpPost("results/filter/funding")]
-        public IActionResult Funding(int applyFilter, ResultsFilter filter)
+        public IActionResult Funding(bool applyFilter, bool includeBursary, bool includeScholarship, bool includeSalary, ResultsFilter filter)
         {
             filter.page = null;
 
-            if (applyFilter == 0)
+            if (applyFilter) 
             {
-                filter.funding = null;
-                return RedirectToAction("Index", "Results", filter.ToRouteValues());
+                filter.SelectedFunding = FundingOption.AnyFunding;
+                if (!includeBursary) filter.SelectedFunding = filter.SelectedFunding & ~FundingOption.Bursary;
+                if (!includeScholarship) filter.SelectedFunding = filter.SelectedFunding & ~FundingOption.Scholarship;
+                if (!includeSalary) filter.SelectedFunding = filter.SelectedFunding & ~FundingOption.Salary;
             }
-            filter.funding = applyFilter;
+            else 
+            {
+                filter.SelectedFunding = FundingOption.All;
+            }
+            
             return RedirectToAction("Index", "Results", filter.ToRouteValues());
         }
 
@@ -178,10 +184,10 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         }
 
         [HttpPost("start/funding")]
-        public IActionResult FundingWizard(int applyFilter, ResultsFilter filter)
+        public IActionResult FundingWizard(bool applyFilter, bool includeBursary, bool includeScholarship, bool includeSalary, ResultsFilter filter)
         {
             ViewBag.IsInWizard = true;
-            return Funding(applyFilter, filter);
+            return Funding(applyFilter, includeBursary, includeScholarship, includeSalary, filter);
         }
 
         [HttpGet("results/filter/qualification")]

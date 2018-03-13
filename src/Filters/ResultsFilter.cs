@@ -327,5 +327,29 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 yield return "Part time (18 - 24 months)";
             }
         }
+
+        public IEnumerable<string> GetFundingTypes()
+        {
+            if (SelectedFunding == null || SelectedFunding == FundingOption.All)
+            {
+                yield return "All";
+                yield break;
+            }
+
+            if (SelectedFunding.Value.HasFlag(FundingOption.Bursary))
+            {
+                yield return "Bursaries";
+            }
+
+            if (SelectedFunding.Value.HasFlag(FundingOption.Scholarship))
+            {
+                yield return "Scholarships";
+            }
+
+            if (SelectedFunding.Value.HasFlag(FundingOption.Salary))
+            {
+                yield return "Salaries";
+            }
+        }
     }
 }
