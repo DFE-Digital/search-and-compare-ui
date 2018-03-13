@@ -40,7 +40,7 @@
                 </div>
                 <div class="panel panel-border-narrow js-hidden" id="location-selector">
                     <label class="form-label" for="location">Postcode, town or city name</label>
-                    <input class="form-control" name="lq" type="text" id="location" value="@Model.FilterModel.lq">
+                    <input class="form-control typeahead" data-url="@Url.Action("LocationSuggest", "Dynamic")" name="lq" type="text" id="location" value="@Model.FilterModel.lq">
                     
                     <label class="form-label" for="radius">Within Radius</label>
                     <select class="form-control" id="radius" name="rad">
@@ -80,7 +80,7 @@
                 <form action='@Url.Action("FullText", "Filter", Model.FilterModel.ToRouteValues())' method="POST">
                     <fieldset aria-required="true">
                         <label class="form-label" for="query">Provider name</label>
-                        <input class="form-control provider-typeahead" name="query" type="text" id="query" value="@Model.FilterModel.query">                        
+                        <input class="form-control typeahead" data-url="@Url.Action("ProviderSuggest", "Dynamic")" name="query" type="text" id="query" value="@Model.FilterModel.query">                        
                     </fieldset>
                     
                     <div class="filter-apply-button">

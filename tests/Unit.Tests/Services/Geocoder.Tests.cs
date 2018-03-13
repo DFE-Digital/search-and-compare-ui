@@ -1,3 +1,4 @@
+using System.Linq;
 using GovUk.Education.SearchAndCompare.UI.Services;
 using NUnit.Framework;
 
@@ -62,6 +63,18 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Services
             var res = geocoder.ResolvePostCodeAsync("Sweden");
             res.Wait();
             Assert.IsNull(res.Result);
+        }
+
+        [Test]
+        public void Autocomplete()
+        {
+            var res = geocoder.SuggestLocationsAsync("Cambr");
+            res.Wait();
+            
+            var suggestions = res.Result;
+            
+            Assert.Greater(suggestions.Count(), 0, "Cambr should give suggestions");
+            Assert.That(suggestions.First(), Is.EqualTo("Cambridge, UK"), "Cambr should give Cambridge, UK");
         }
     }
 }

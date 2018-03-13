@@ -285,6 +285,9 @@ h3.filter-heading {
     border: #bfc1c3 2px solid;
     box-shadow: 0 3px 2px #bfc1c3;
 }
+.tt-hint {
+    visibility: hidden !important;
+}
 
 @media screen and (min-width: 641px)
 {
