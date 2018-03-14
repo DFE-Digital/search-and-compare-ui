@@ -36,6 +36,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                 SubjectAreas = subjectAreas,
                 FilterModel = filter
             };
+
+            ViewBag.Errors = TempData.Get<ErrorViewModel>("Errors");
             
             return View("Subject", viewModel);
         }
@@ -47,6 +49,12 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             filter.page = null;
 
             var isInWizard = ViewBag.IsInWizard == true;
+            if (!filter.SelectedSubjects.Any())
+            {
+                TempData.Put("Errors", new ErrorViewModel("subjects", "Please choose at least one subject", null, Url.Action("Subject")));
+                return RedirectToAction(isInWizard ? "SubjectWizard" : "Subject", filter.ToRouteValues());
+            }
+            
             return isInWizard
                 ? RedirectToAction("FundingWizard", filter.ToRouteValues())
                 : RedirectToAction("Index", "Results", filter.ToRouteValues());

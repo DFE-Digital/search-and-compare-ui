@@ -3,7 +3,8 @@
 @{
     ViewBag.Title = $"Filter by subject";
     var selected = Model.FilterModel.SelectedSubjects;
-    var isInWizard = ViewBag.IsInWizard == true;
+    var isInWizard = ViewBag.IsInWizard == true;    
+    var errors = ViewBag.Errors as ErrorViewModel;
 }
 
 
@@ -21,6 +22,8 @@
 
 <div class="grid-row">
     <div class="column-two-thirds">
+        @Html.Partial("Error", errors)
+        
         <legend role="heading">
             <h3 class="heading-medium filter-heading">What subjects would you like to teach?</h3>
         </legend>
@@ -29,7 +32,7 @@
             <a href="@Url.Action(isInWizard ? "SubjectWizard" : "Subject", "Filter", Model.FilterModel.WithoutSubjects().ToRouteValues())">Clear selection</a>
         </div> -->
 
-        <form action='@Url.Action(isInWizard ? "SubjectWizard" : "Subject", "Filter", Model.FilterModel.WithoutSubjects().ToRouteValues())' method="POST">
+        <form action='@Url.Action(isInWizard ? "SubjectWizard" : "Subject", "Filter", Model.FilterModel.WithoutSubjects().ToRouteValues())' method="POST" id="subjects-container">
             @foreach (var area in Model.SubjectAreas) {
                 <details>
                 <summary><span class="summary">@area.Name</span></summary>  
