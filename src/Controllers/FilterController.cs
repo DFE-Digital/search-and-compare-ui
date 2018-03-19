@@ -124,7 +124,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
             if (filter.LocationOption == LocationOption.Unset)
             {
-                TempData.Put("Errors", new ErrorViewModel("l", "Please make a selection", null, Url.Action("Location")));
+                TempData.Put("Errors", new ErrorViewModel("l", "Please choose an option", null, Url.Action("Location")));
                 return RedirectToAction(isInWizard ? "LocationWizard" : "Location", filter.WithoutLocation().ToRouteValues());
             }
 
@@ -194,7 +194,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
             if (!applyFilter.HasValue)
             {
-                TempData.Put("Errors", new ErrorViewModel("applyFilter", "Please make a selection", null, Url.Action("Funding")));
+                TempData.Put("Errors", new ErrorViewModel("applyFilter", "Please choose an option", null, Url.Action("Funding")));
                 return RedirectToAction(isInWizard ? "FundingWizard" : "Funding", filter.ToRouteValues());
             }
 
