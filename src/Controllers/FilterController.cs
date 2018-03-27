@@ -76,20 +76,18 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             return SubjectPost(filter);
         }
 
-        [HttpPost("results/filter/fulltext")]
-        [ActionName("FullText")]
-        public IActionResult FullTextPost(ResultsFilter filter)
+        private IActionResult FullTextPost(ResultsFilter filter)
         {
             filter = filter.WithoutLocation();
 
             if(string.IsNullOrWhiteSpace(filter.query))
             {
-                TempData.Put("Errors", new ErrorViewModel("query", "Provider name", "Please enter the name of a training provider", Url.Action("Location")));
+                TempData.Put("Errors", new ErrorViewModel("query", "University, school or SCITT name", "Please enter the name of a university, school or SCITT", Url.Action("Location")));
                 return RedirectToAction("Location", filter.ToRouteValues());
             }
             else if (false == _api.GetProviderSuggestions(filter.query).Any(x => string.Compare(filter.query, x.Name, CultureInfo.InvariantCulture, CompareOptions.IgnoreCase) == 0))
             {
-                TempData.Put("Errors", new ErrorViewModel("query", "Provider name", "Please enter the name of a training provider", Url.Action("Location")));
+                TempData.Put("Errors", new ErrorViewModel("query", "University, school or SCITT name", "Please enter the name of a university, school or SCITT", Url.Action("Location")));
                 return RedirectToAction("Location", filter.ToRouteValues());
             }
 
@@ -117,10 +115,15 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("Location")]
         public async Task<IActionResult> LocationPost(ResultsFilter filter)
         {
+            filter.page = null;
+   
+            if (filter.LocationOption == LocationOption.Specific)
+            {
+                return FullTextPost(filter);
+            }
+            
             var isInWizard = ViewBag.IsInWizard == true;
             filter.query = null;
-            filter.page = null;
-
 
             if (filter.LocationOption == LocationOption.Unset)
             {

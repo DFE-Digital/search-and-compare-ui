@@ -193,7 +193,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 pgce = this.pgce,
                 qts = this.qts,
                 fulltime = this.fulltime,
-                parttime = this.parttime
+                parttime = this.parttime,
+                l = this.l
             }; 
         }
 

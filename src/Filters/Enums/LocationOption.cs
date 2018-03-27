@@ -4,6 +4,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters.Enums
     {
         Unset = 0,
         Yes = 1,
-        No = 2
+        No = 2,
+        Specific = 3
     }
 }
