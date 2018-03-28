@@ -19,7 +19,7 @@
 }
 
 <div class="grid-row">
-    <div class="column-full">
+    <div class="column-two-thirds">
         @Html.Partial("Error", errors)
         <form action='@Url.Action(isInWizard ? "FundingWizard": "Funding", "Filter", Model.ToRouteValues())' method="POST">
             <fieldset role="radiogroup" aria-required="true">
@@ -50,6 +50,56 @@
                         <p>
                             Show me courses that come with a:
                         </p>
+                        <p class="bold-small">
+                            Salary
+                        </p>
+                        <p>
+                            Earn a salary while you train. If you choose this type of course 
+                            you don&#8217;t pay any fees.
+                        </p>
+                        <p>
+                            Salaries are taxed. The precise amount you get varies &ndash;
+                            it depends on the training provider and subject.    
+                        </p>
+                        <h4 class="heading-small">
+                            Financial support for other subjects
+                        </h4>
+                        <p>
+                            Other subjects offer other types of financial support, besides 
+                            salaries.
+                        </p>
+                        <p>
+                            With a bursary you could get up to £26,000 tax free. You&#8217;ll
+                            need a 2:2 degree or higher to be eligible.
+                        </p>
+                        <p>
+                             With a scholarship you could get up to £28,000 tax free. However, 
+                             these are only available to outstanding graduates &ndash; 
+                             you&#8217;ll usually need a 2:1 or higher, 
+                             and to provide evidence that you&#8217;re passionate about 
+                             the subject. Scholarships also give you access to networking, 
+                             training resources and other support.
+                        </p>
+                        <p>
+                            If you do get a scholarship you can&#8217;t get a bursary.
+                        </p>
+                        <p>
+                            Find out
+                            <a href="#">
+                                more about financial support
+                            </a>
+                            on the Get into Teaching website. 
+                        </p>
+
+                        
+                        <input type="hidden" name="includeBursary" value="true">
+                        <input type="hidden" name="includeScholarship" value="true">
+                        <input type="hidden" name="includeSalary" value="true">
+
+
+                        @* PRIVATE_BETA_HACK *@
+
+                        @*
 
                         <div class="multiple-choice multiple-radio">
                             <input id="includeBursary" type="checkbox" name="includeBursary" value="true" checked="@(Model.SelectedFunding == null || Model.SelectedFunding.Value.HasFlag(FundingOption.Bursary))">
@@ -91,6 +141,7 @@
                         <input type="hidden" name="includeBursary" value="false">
                         <input type="hidden" name="includeScholarship" value="false">
                         <input type="hidden" name="includeSalary" value="false">
+                        *@
                     </div>
                 </div>
             </fieldset>

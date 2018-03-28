@@ -309,6 +309,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 yield break;
             }
 
+            /* PRIVATE_BETA_HACK */
+            /*
             if (SelectedFunding.Value.HasFlag(FundingOption.Bursary))
             {
                 yield return "Bursaries";
@@ -317,7 +319,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
             if (SelectedFunding.Value.HasFlag(FundingOption.Scholarship))
             {
                 yield return "Scholarships";
-            }
+            } */
 
             if (SelectedFunding.Value.HasFlag(FundingOption.Salary))
             {

@@ -18,29 +18,26 @@
 }     
 
 <div class="grid-row">
-    <div class="column-full">
+    <div class="column-two-thirds">
         @Html.Partial("Error", Model.Errors)                
                 
         <form action='@Url.Action(isInWizard ? "LocationWizard" : "Location", "Filter", Model.FilterModel.ToRouteValues())' method="POST">
             <fieldset role="radiogroup" aria-required="true">
                 <legend role="heading">
-                    <h2 class="heading-large filter-heading">Find postgraduate teacher training</h2>
+                    <h2 class="heading-large filter-heading">Choose your search</h2>
                 </legend>
-                <p>
-                    Answer some questions to find the most relevant courses.
-                </p>
 
                 <div class="form-group @(Model.Errors.HasError("l") ? "form-group-error" : "")" id="l-container">
                     <span class="error-message">@Model.Errors.GetError("l").Message</span>
                     <div class="multiple-choice multiple-radio" data-target="lq-container">
                         <input id="location-Set" type="radio" name="l" value="@((int)LocationOption.Yes)" checked="@(Model.FilterModel.LocationOption == LocationOption.Yes)">
                         <label for="location-Set">
-                            Search by postcode, town or city
+                            By postcode, town or city
                         </label>
                     </div>
                     <div class="panel panel-border-narrow js-hidden @(Model.Errors.HasError("lq") ? "form-group-error" : "")" id="lq-container">
                         <label class="form-label" for="location">
-                            Postcode, town or city name
+                            Postcode, town or city
                             <span class="error-message">@Model.Errors.GetError("lq").Message</span>                            
                         </label>
                         <input class="form-control typeahead" data-url="@Url.Action("LocationSuggest", "Dynamic")" name="lq" type="text" id="location" value="@Model.FilterModel.lq">
@@ -56,18 +53,18 @@
 
                     <div class="multiple-choice multiple-radio">
                         <input id="location-Unset" type="radio" name="l" value="@((int)LocationOption.No)" checked="@(Model.FilterModel.LocationOption == LocationOption.No)">
-                        <label for="location-Unset">Search across England</label>
+                        <label for="location-Unset">Across England</label>
                     </div>
                     
                     <div class="multiple-choice multiple-radio" data-target="query-container">
                         <input id="location-Specific" type="radio" name="l" value="@((int)LocationOption.Specific)" checked="@(Model.FilterModel.LocationOption == LocationOption.Specific)">
-                        <label for="location-Specific">Search by university, school or SCITT name</label>
+                        <label for="location-Specific">By training provider</label>
                     </div>
 
                     <div class="panel panel-border-narrow js-hidden @(Model.Errors.HasError("query") ? "form-group-error" : "")" id="query-container">
                         <fieldset aria-required="true">
                             <label class="form-label" for="query">
-                                University, school or SCITT name
+                                Training provider
                                 <span class="error-message">@Model.Errors.GetError("query").Message</span>
                             </label>
                             <input class="form-control typeahead" data-url="@Url.Action("ProviderSuggest", "Dynamic")" name="query" type="text" id="query" value="@Model.FilterModel.query">                        
