@@ -10,7 +10,7 @@
 <div class="grid-row">
     <div class="column-two-thirds">
         <h1 class="heading-xlarge" role="heading">
-            Teacher training courses
+            Business studies teacher training courses
         </h1>
     </div>
     <div class="column-one-third">
@@ -24,7 +24,8 @@
             } else {
                 @Html.Partial("Filters/Location", Model.FilterModel)
             }
-            @Html.Partial("Filters/Subject", Model)
+            @* PRIVATE_BETA_HACK *@
+            @* @Html.Partial("Filters/Subject", Model) *@
             @Html.Partial("Filters/Funding", Model.FilterModel)
             @Html.Partial("Filters/StudyType", Model.FilterModel)
             @Html.Partial("Filters/Qualification", Model.FilterModel)

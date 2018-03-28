@@ -80,18 +80,23 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         {
             filter = filter.WithoutLocation();
 
+            var isInWizard = ViewBag.IsInWizard == true;
+            
+
             if(string.IsNullOrWhiteSpace(filter.query))
             {
-                TempData.Put("Errors", new ErrorViewModel("query", "University, school or SCITT name", "Please enter the name of a university, school or SCITT", Url.Action("Location")));
+                TempData.Put("Errors", new ErrorViewModel("query", "Training provider", "Please enter the name of a training provider", Url.Action("Location")));
                 return RedirectToAction("Location", filter.ToRouteValues());
             }
             else if (false == _api.GetProviderSuggestions(filter.query).Any(x => string.Compare(filter.query, x.Name, CultureInfo.InvariantCulture, CompareOptions.IgnoreCase) == 0))
             {
-                TempData.Put("Errors", new ErrorViewModel("query", "University, school or SCITT name", "Please enter the name of a university, school or SCITT", Url.Action("Location")));
+                TempData.Put("Errors", new ErrorViewModel("query", "Training provider", "Please enter the name of a training provider", Url.Action("Location")));
                 return RedirectToAction("Location", filter.ToRouteValues());
             }
 
-            return RedirectToAction("Index", "Results", filter.ToRouteValues());
+            return isInWizard
+                ? RedirectToAction("FundingWizard", filter.ToRouteValues())
+                : RedirectToAction("Index", "Results", filter.ToRouteValues());
         }
 
 
@@ -133,21 +138,22 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
             if (filter.LocationOption == LocationOption.No)
             {
+                /* PRIVATE_BETA_HACK */
                 return isInWizard
-                    ? RedirectToAction("SubjectWizard", filter.WithoutLocation().ToRouteValues())
+                    ? RedirectToAction("FundingWizard", filter.WithoutLocation().ToRouteValues())
                     : RedirectToAction("Index", "Results", filter.WithoutLocation().ToRouteValues());
             }
 
             if (string.IsNullOrWhiteSpace(filter.lq)) 
             {
-                TempData.Put("Errors", new ErrorViewModel("lq", "Postcode, town or city name", "Please enter a postcode, city or town in England", Url.Action("Location")));
+                TempData.Put("Errors", new ErrorViewModel("lq", "Postcode, town or city", "Please enter a postcode, city or town in England", Url.Action("Location")));
                 return RedirectToAction(isInWizard ? "LocationWizard" : "Location", filter.ToRouteValues());            
             }
 
             var coords = await _geocoder.ResolvePostCodeAsync(filter.lq);
             if (coords == null) 
             {
-                TempData.Put("Errors", new ErrorViewModel("lq", "Postcode, town or city name", "We couldn't find this location, please check your input and try again.", Url.Action("Location")));
+                TempData.Put("Errors", new ErrorViewModel("lq", "Postcode, town or city", "We couldn't find this location, please check your input and try again.", Url.Action("Location")));
                 
                 return RedirectToAction(isInWizard ? "LocationWizard" : "Location", filter.ToRouteValues());
             }
@@ -160,8 +166,9 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                 filter.sortby = (int)SortByOption.Distance;
             }
 
+            /* PRIVATE_BETA_HACK */
             return isInWizard
-                ? RedirectToAction("SubjectWizard", filter.ToRouteValues())
+                ? RedirectToAction("FundingWizard", filter.ToRouteValues())
                 : RedirectToAction("Index", "Results", filter.ToRouteValues());
         }
 

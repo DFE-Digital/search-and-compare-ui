@@ -415,3 +415,10 @@ h3.filter-heading {
     float: right;
     background: transparent;
 }
+
+/* BELOW: PRIVATE_BETA_HACK */
+#private-beta-warning {
+    padding: 10px 10px 15px;
+    background-color: #fff8c4;
+
+}
