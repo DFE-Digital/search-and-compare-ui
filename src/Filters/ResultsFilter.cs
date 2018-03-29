@@ -13,6 +13,12 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
 {
     public class ResultsFilter
     { 
+        public ResultsFilter() 
+        {
+            /* PRIVATE_BETA_HACK */
+            SelectedSubjects = new List<int>() {2};
+        }
+        
         public int? page { get; set; }
 
         public double? lng { get; set; }
