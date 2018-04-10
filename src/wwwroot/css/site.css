@@ -124,7 +124,7 @@
     margin-bottom: 10px;
 }
 
-dt, dd { 
+dt, dd {
     display: inline;
     line-height: 30px;
 }
@@ -216,7 +216,7 @@ table.alt th
 
 @media screen and (min-width: 641px)
 {
-    .phase-banner-wrapper 
+    .phase-banner-wrapper
     {
         margin: 0 30px;
         padding: 0 0 10px;
@@ -225,7 +225,7 @@ table.alt th
 
 @media screen and (min-width: 1020px)
 {
-    .phase-banner-wrapper 
+    .phase-banner-wrapper
     {
         margin: 0 auto;
         width: 960px;
@@ -267,7 +267,7 @@ h3.filter-heading {
     margin-bottom: 10px;
 }
 
-.multiple-choice-subject label {    
+.multiple-choice-subject label {
     margin-bottom: 10px;
 }
 
@@ -276,7 +276,7 @@ h3.filter-heading {
     width:100%;
 }
 
-.tt-suggestion{    
+.tt-suggestion{
     padding: 7.5px;
     cursor: pointer;
 }
@@ -335,7 +335,7 @@ h3.filter-heading {
     z-index: 3;
     position: absolute;
     right: 10px;
-    bottom: 38px; 
+    bottom: 38px;
     width: 28px;
     height: 55px;
     user-select: none;
