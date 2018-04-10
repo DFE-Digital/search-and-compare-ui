@@ -24,7 +24,7 @@
         <form action='@Url.Action(isInWizard ? "LocationWizard" : "Location", "Filter", Model.FilterModel.ToRouteValues())' method="POST">
             <fieldset role="radiogroup" aria-required="true">
                 <legend role="heading">
-                    <h2 class="heading-large filter-heading">Choose your search</h2>
+                    <h1 class="heading-xlarge">Choose your search</h1>
                 </legend>
 
                 <div class="form-group @(Model.Errors.HasError("l") ? "form-group-error" : "")" id="l-container">
