@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = $"Filter by subject";
     var selected = Model.FilterModel.SelectedSubjects;
-    var isInWizard = ViewBag.IsInWizard == true;    
+    var isInWizard = ViewBag.IsInWizard == true;
     var errors = ViewBag.Errors as ErrorViewModel;
 }
 
@@ -13,7 +13,7 @@
         Href = Url.Action("LocationWizard", "Filter", Model.FilterModel.ToRouteValues()),
         Title = "Back to location"
     })
-} else { 
+} else {
     @Html.Partial("Back", new BackLinkViewModel {
         Href = Url.Action("Index", "Results", Model.FilterModel.ToRouteValues()),
         Title = "Back to search results"
@@ -23,9 +23,9 @@
 <div class="grid-row">
     <div class="column-two-thirds">
         @Html.Partial("Error", errors)
-        
+
         <legend role="heading">
-            <h3 class="heading-medium filter-heading">What subjects would you like to teach?</h3>
+            <h1 class="heading-xlarge">What subjects would you like to&nbsp;teach?</h1>
         </legend>
 
         <!-- <div>
@@ -35,8 +35,8 @@
         <form action='@Url.Action(isInWizard ? "SubjectWizard" : "Subject", "Filter", Model.FilterModel.WithoutSubjects().ToRouteValues())' method="POST" id="subjects-container">
             @foreach (var area in Model.SubjectAreas) {
                 <details>
-                <summary><span class="summary">@area.Name</span></summary>  
-                <div class="panel panel-border-narrow">          
+                <summary><span class="summary">@area.Name</span></summary>
+                <div class="panel panel-border-narrow">
                     <fieldset>
                         @foreach (var subject in area.Subjects.OrderBy(x => x.Name)) {
                             <div class="multiple-choice multiple-choice-subject">

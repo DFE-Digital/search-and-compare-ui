@@ -15,10 +15,10 @@
         <form action='@Url.Action("StudyType", "Filter", Model.ToRouteValues())' method="POST">
             <fieldset role="radiogroup" aria-required="true">
                 <legend role="heading">
-                    <h3 class="heading-medium filter-heading">What qualification do you want?</h3>
+                    <h1 class="heading-xlarge">What qualification do you&nbsp;want?</h1>
                 </legend>
-                
-                <div class="multiple-choice multiple-radio">
+
+                <div class="multiple-choice">
                     <input id="applyFilter-includepgce" type="checkbox" name="pgce" value="true" checked="@(Model.pgce || !Model.qts)">
                     <label for="applyFilter-includepgce" class="multi-choice-label">
                         <span class="bold">Postgraduate certificate in education with qualified teacher status</span>
@@ -36,7 +36,7 @@
                     <label for="applyFilter-includeqts" class="multi-choice-label">
                         <span class="bold">Qualified teacher status</span>
                         <span>
-                            Qualified teacher status (QTS) allows you to teach in state schools in England.                           
+                            Qualified teacher status (QTS) allows you to teach in state schools in England.
                         </span>
                         <span>
                             If you want to teach in the rest of the UK or internationally, consider a 'PGCE with QTS' qualification instead.
@@ -45,7 +45,7 @@
                 </div>
 
             </fieldset>
-            
+
             <input type="hidden" name="pgce" value="false">
             <input type="hidden" name="qts" value="false">
             <div class="filter-apply-button">

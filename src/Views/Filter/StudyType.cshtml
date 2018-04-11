@@ -15,10 +15,10 @@
         <form action='@Url.Action("StudyType", "Filter", Model.ToRouteValues())' method="POST">
             <fieldset role="radiogroup" aria-required="true">
                 <legend role="heading">
-                    <h3 class="heading-medium filter-heading">Study type</h3>
+                    <h1 class="heading-xlarge">Study type</h1>
                 </legend>
-                
-                <div class="multiple-choice multiple-radio">
+
+                <div class="multiple-choice">
                     <input id="applyFilter-includefulltime" type="checkbox" name="fulltime" value="true" checked="@(Model.fulltime || !Model.parttime)">
                     <label for="applyFilter-includefulltime" class="multi-choice-label">
                         <span class="bold">Full time (12 months)</span>
@@ -42,7 +42,7 @@
 
             <input type="hidden" name="fulltime" value="false">
             <input type="hidden" name="parttime" value="false">
-            
+
             <div class="filter-apply-button">
                 <input class="button" type="submit" value="Find courses">
             </div>
