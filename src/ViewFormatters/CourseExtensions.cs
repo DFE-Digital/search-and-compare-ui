@@ -40,18 +40,11 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewFormatters
 
         public static string Duration(this Course course)
         {
-            bool fulltime = course.Campuses.Any(x => x.FullTime != VacancyStatus.NA);
-            bool parttime = course.Campuses.Any(x => x.PartTime != VacancyStatus.NA);
-
-            if (!fulltime)
+            if (string.IsNullOrWhiteSpace(course.Duration))
             {
-                return "18-24 months";
+                return "unknown";
             }
-            else if (!parttime)
-            {
-                return "1 year";
-            }
-            return "12-24 months";
+            return course.Duration;
         }
 
         public static string FormattedStudyInfo(this Course course)
@@ -59,19 +52,17 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewFormatters
             return string.Format("{0}, {1}, {2}",
             course.Duration(),
             course.IsUniversityLed() ? "university-led" : "school-led",
-            string.Join(",", course.GetStudyTypes()).ToLower());
+            string.Join(", ", course.GetStudyTypes()).ToLower());
         }
 
         public static IEnumerable<string> GetStudyTypes(this Course course)
         {
-            if (course.Campuses == null) yield break;
-
-            if (course.Campuses.Any(x => x.FullTime != VacancyStatus.NA))
+            if (course.FullTime != VacancyStatus.NA)
             {
                 yield return "Full time";
             }
 
-            if (course.Campuses.Any(x => x.PartTime != VacancyStatus.NA))
+            if (course.PartTime != VacancyStatus.NA)
             {
                 yield return "Part time";
             }
@@ -79,13 +70,19 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewFormatters
 
         public static string FormattedEarliestApplicationDate(this Course course)
         {
-            if (course.Campuses == null) { return string.Empty; }
+            var date = course.ApplicationsAcceptedFrom;
 
-            var earliestDate = course.Campuses.Select(campus => campus.ApplicationsAcceptedFrom).Min();
-            
-            if (!earliestDate.HasValue) { return string.Empty; }
+            if (!date.HasValue) { return string.Empty; }
 
-            return earliestDate.Value.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"));
+            return date.Value.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"));
+        }
+        public static string FormattedStartDate(this Course course)
+        {
+            var date = course.StartDate;
+
+            if (!date.HasValue) { return string.Empty; }
+
+            return date.Value.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"));
         }
 
         public static string FundingAvailable(this Course course)
@@ -95,16 +92,12 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewFormatters
 
         public static int GetNumberOfFullTimeVacancies(this Course course)
         {
-            if (course.Campuses == null) return 0;
-
-            return course.Campuses.Where(campus => campus.FullTime == VacancyStatus.Vacancies).Count();
+            return course.FullTime == VacancyStatus.Vacancies ? 1 : 0;
         }
 
         public static int GetNumberOfPartTimeVacancies(this Course course)
         {
-            if (course.Campuses == null) return 0;
-
-            return course.Campuses.Where(campus => campus.PartTime == VacancyStatus.Vacancies).Count();
+            return course.PartTime == VacancyStatus.Vacancies ? 1 : 0;
         }
 
         public static int GetNumberOfVacancies(this Course course)
@@ -121,6 +114,22 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewFormatters
         {
             return (course.Campuses == null || course.Campuses.Count < 2)
                 ? "unknown" : (course.Campuses.Count - 1).ToString();
+        }
+        
+        public static string VacanciesUiString(this Course course)
+        {
+            return course.FullTime == VacancyStatus.Vacancies || course.PartTime == VacancyStatus.Vacancies
+                ? "Yes"
+                : "No";
+        }
+
+        public static string StudyTypeUiString(this Course course)
+        {
+            var res = new List<string>();
+            if (course.FullTime != VacancyStatus.NA) res.Add("Full time"); 
+            if (course.PartTime != VacancyStatus.NA) res.Add("Part time");
+
+            return string.Join(", ", res);
         }
     }
 }

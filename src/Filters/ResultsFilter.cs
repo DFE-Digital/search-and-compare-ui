@@ -192,7 +192,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 subjects = this.subjects,
                 funding = this.funding,
                 query = this.query,
-                display = this.display,
                 zoomlevel = this.zoomlevel,
                 offlng = this.offlng,
                 offlat = this.offlat,

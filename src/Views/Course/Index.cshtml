@@ -56,7 +56,7 @@
                 <dd>@Model.Course.FormattedEarliestApplicationDate()</dd>
 
                 <dt>Date course starts</dt>
-                <dd></dd>
+                <dd>@Model.Course.FormattedStartDate()</dd>
             </dl>
         </div>
     </div>
@@ -137,8 +137,8 @@
                                 <td>@campus.Name</td>
                                 <td>@campus.Location?.Address</td>
                                 <td>@campus.CampusCode</td>
-                                <td>@campus.VacanciesUiString()</td>
-                                <td>@campus.StudyTypeUiString()</td>
+                                <td>@Model.Course.VacanciesUiString()</td>
+                                <td>@Model.Course.StudyTypeUiString()</td>
                             </tr>
                         }
 
@@ -240,29 +240,11 @@
                         @if (Model.HasAddress()) {
                             <dt class="bold">Address</dt>
                             <dd>
-                            @if(!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address.Line1)) {
-                                @Model.Course.ContactDetails.Address.Line1<br/>
-                            }
-                            @if(!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address.Line2)) {
-                                @Model.Course.ContactDetails.Address.Line2<br/>
-                            }
-                            @if(!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address.Line3)) {
-                                @Model.Course.ContactDetails.Address.Line3<br/>
-                            }
-                            @if(!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address.Line4)) {
-                                @Model.Course.ContactDetails.Address.Line4<br/>
-                            }
-                            @if(!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address.Line5)) {
-                                @Model.Course.ContactDetails.Address.Line5<br/>
-                            }
-                            @if(!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address.Line6)) {
-                                @Model.Course.ContactDetails.Address.Line6<br/>
-                            }
-                            @if(!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address.County)) {
-                                @Model.Course.ContactDetails.Address.County<br/>
-                            }
-                            @if(!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address.PostCode)) {
-                                @Model.Course.ContactDetails.Address.PostCode<br/>
+                            @if(!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address)) {
+                                @foreach(var line in Model.Course.ContactDetails.Address.Split("\n")) {
+                                    @line
+                                    <br>
+                                }
                             }
                             </dd>
                         }
