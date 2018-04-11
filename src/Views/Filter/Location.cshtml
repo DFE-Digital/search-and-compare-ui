@@ -29,7 +29,7 @@
 
                 <div class="form-group @(Model.Errors.HasError("l") ? "form-group-error" : "")" id="l-container">
                     <span class="error-message">@Model.Errors.GetError("l").Message</span>
-                    <div class="multiple-choice multiple-radio" data-target="lq-container">
+                    <div class="multiple-choice" data-target="lq-container">
                         <input id="location-Set" type="radio" name="l" value="@((int)LocationOption.Yes)" checked="@(Model.FilterModel.LocationOption == LocationOption.Yes)">
                         <label for="location-Set">
                             By postcode, town or city
