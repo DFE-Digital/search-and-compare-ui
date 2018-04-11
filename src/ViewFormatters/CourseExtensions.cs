@@ -94,7 +94,7 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewFormatters
             else if (course.CourseSubjects.Any(cs => cs.Subject.Funding != null && cs.Subject.Funding.Scholarship != null)) {
                 return "Scholarship, bursary";
             }
-            else if (course.CourseSubjects.Any(cs => cs.Subject.Funding != null)
+            else if (course.CourseSubjects.Any(cs => cs.Subject.Funding != null))
             {
                 return "Bursary";
             }
