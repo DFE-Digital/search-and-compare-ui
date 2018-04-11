@@ -85,9 +85,23 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewFormatters
             return date.Value.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"));
         }
 
-        public static string FundingAvailable(this Course course)
+        public static string FundingOptions(this Course course)
         {
-            return course.Route.IsSalaried || course.CourseSubjects.Any(cs => cs.Subject.Funding != null) ? "Yes" : "No";
+            if (course.Route.IsSalaried) 
+            {
+                return "Salary";
+            }
+            else if (course.CourseSubjects.Any(cs => cs.Subject.Funding != null && cs.Subject.Funding.Scholarship != null)) {
+                return "Scholarship, bursary";
+            }
+            else if (course.CourseSubjects.Any(cs => cs.Subject.Funding != null))
+            {
+                return "Bursary";
+            }
+            else
+            {
+                return "None";
+            }
         }
 
         public static int GetNumberOfFullTimeVacancies(this Course course)
