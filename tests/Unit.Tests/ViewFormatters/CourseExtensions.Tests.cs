@@ -26,28 +26,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.ViewFormatters
         {
             var sut = new Course
             {
-                Campuses = new List<Campus>
-                {
-                    new Campus { ApplicationsAcceptedFrom = null }
-                }
-            };
-
-            var result = sut.FormattedEarliestApplicationDate();
-
-            Assert.That(result, Is.EqualTo(string.Empty));
-        }
-
-        [Test]
-        public void FormattedEarliestApplicationDate_WorksWithCampusesWithAllNullApplicationsAcceptedFrom()
-        {
-            var sut = new Course
-            {
-                Campuses = new List<Campus>
-                {
-                    new Campus { ApplicationsAcceptedFrom = null },
-                    new Campus { ApplicationsAcceptedFrom = null },
-                    new Campus { ApplicationsAcceptedFrom = null }
-                }
+                ApplicationsAcceptedFrom = null                
             };
 
             var result = sut.FormattedEarliestApplicationDate();
