@@ -72,7 +72,7 @@
                 @if (Model.HasSection("entry requirements")) {
                     <li><a href="#section-entry">Requirements</a></li>
                 }
-                @if (Model.Course.Campuses.Count() > 0) {
+                @if (Model.HasSection("about placement schools")) {
                     <li><a href="#section-schools">Placement schools</a></li>
                 }
                 
@@ -114,12 +114,16 @@
             </div>
         }
 
-        @if (Model.Course.Campuses.Count() > 0) {        
+        @if (Model.HasSection("about placement schools")) {        
             <div class="course-details-section">
                 <a name="section-schools"></a>
                 <h3 class="heading-medium">
                     Placement schools
                 </h3>
+                <div>
+                    @Html.Raw(Model.GetHtmlForSection("about placement schools"))
+                </div>
+                @* PRIVATE_BETA_HACK
                 <div>
                     <p>
                         Placement schools are also known as partner schools.
@@ -143,7 +147,7 @@
                         }
 
                     </table>
-                </div>
+                </div> *@
             </div>
         }
 
