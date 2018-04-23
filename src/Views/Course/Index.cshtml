@@ -16,6 +16,10 @@
         </h1>
         <div class="course-basicinfo">
             <dl role="contentinfo">
+                @if (Model.Course.ProviderLocation != null) {
+                    <dt>Location</dt>
+                    <dd>@Model.Course.ProviderLocation.Address</dd>
+                }
                 <dt>Qualification</dt>
                 <dd>
                     @if (Model.Course.IncludesPgce != IncludesPgce.No) {
