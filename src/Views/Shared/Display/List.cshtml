@@ -9,16 +9,32 @@
 </div>
 
 <ul role="list">
+@{
+  var within5Shown = false;
+  var within10Shown = false;
+  var within20Shown = false;
+}
 @foreach (var item in Model.Courses.Items) {
     var subjects = @item.CourseSubjects.Select(courseSubject => courseSubject.Subject.Name).ToArray();
     <li class="bat_searchresult" role="listitem">
+        @if (item.Distance < 8046 && !within5Shown) {
+            <h2 class="heading-medium">1 course within 5 miles</h2>
+            within5Shown = true;
+        } else if (item.Distance < 16093 && !within10Shown) {
+            <h2 class="heading-medium">1 course between 5 and 10 miles</h2>
+            within10Shown = true;
+        } else if (item.Distance < 32186 && !within20Shown) {
+            <h2 class="heading-medium">20 courses between 10 and 20 miles</h2>
+            within20Shown = true;
+        }
+
         <h3 class="heading-medium">
             <a href='@Url.Action("Index", "Course", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new {courseId = item.Id}))' class="link">@item.Name</a>
         </h3>
-        <dl>                
+        <dl>
             <dt>Training provider</dt>
             <dd>@item.Provider.Name</dd>
-            
+
             @if (item.ProviderLocation != null) {
                 <dt>Training provider&apos;s location</dt>
                 <dd>@item.ProviderLocation.Address</dd>
