@@ -11,11 +11,15 @@
 
 <div class="grid-row">
     <div class="column-full">
-        <h2 class="heading-large" role="heading">
-            @Model.Course.Name
-        </h2>
+        <h1 class="heading-xlarge" role="heading">
+            @Model.Course.Name at @Model.Provider.Name
+        </h1>
         <div class="course-basicinfo">
             <dl role="contentinfo">
+                @if (Model.Course.ProviderLocation != null) {
+                    <dt>Location</dt>
+                    <dd>@Model.Course.ProviderLocation.Address</dd>
+                }
                 <dt>Qualification</dt>
                 <dd>
                     @if (Model.Course.IncludesPgce != IncludesPgce.No) {
@@ -39,9 +43,6 @@
                     </details>
                     }
                 </dd>
-
-                <dt>Training provider</dt>
-                <dd>@Model.Provider.Name</dd>
 
                 <dt>Financial support</dt>
                 <dd>@Model.Course.FundingOptions()</dd>
@@ -75,9 +76,9 @@
                 @if (Model.HasSection("about placement schools")) {
                     <li><a href="#section-schools">Placement schools</a></li>
                 }
-                
+
                 <li><a href="#section-fees">Fees and funding</a></li>
-                
+
                 @if (Model.HasSection("about this training provider")) {
                 <li><a href="#section-about-provider">About the training provider</a></li>
                 }
@@ -85,7 +86,7 @@
                 @if (Model.HasContactDetails()) {
                 <li><a href="#section-contact">Contact details</a></li>
                 }
-                
+
                 <li><a href="#section-apply">Apply</a></li>
             </ul>
         </div>
@@ -114,7 +115,7 @@
             </div>
         }
 
-        @if (Model.HasSection("about placement schools")) {        
+        @if (Model.HasSection("about placement schools")) {
             <div class="course-details-section">
                 <a name="section-schools"></a>
                 <h3 class="heading-medium">
@@ -130,11 +131,11 @@
                     </p>
                     <table class="alt">
                         <tr>
-                            <th>Name</th>                    
-                            <th>Address</th>                    
-                            <th>Code</th>                    
-                            <th>Vacancies</th>                    
-                            <th>Study type</th>                    
+                            <th>Name</th>
+                            <th>Address</th>
+                            <th>Code</th>
+                            <th>Vacancies</th>
+                            <th>Study type</th>
                         </tr>
                         @foreach(var campus in Model.Course.Campuses) {
                             <tr>
@@ -199,7 +200,7 @@
             </div>
         </div>
 
-        @if (Model.HasSection("about this training provider")) {        
+        @if (Model.HasSection("about this training provider")) {
             <div class="course-details-section">
                 <a name="section-about-provider"></a>
                 <h3 class="heading-medium">
@@ -210,7 +211,7 @@
                 </div>
             </div>
         }
-        
+
         @if (Model.HasContactDetails()) {
             <div class="course-details-section">
                 <a name="section-contact"></a>
@@ -257,7 +258,7 @@
             </div>
         }
 
-        
+
         <div class="course-details-section">
             <a name="section-apply"></a>
             <h3 class="heading-medium">

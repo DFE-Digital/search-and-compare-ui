@@ -13,17 +13,13 @@
     var subjects = @item.CourseSubjects.Select(courseSubject => courseSubject.Subject.Name).ToArray();
     <li class="bat_searchresult" role="listitem">
         <h3 class="heading-medium">
-            <a href='@Url.Action("Index", "Course", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new {courseId = item.Id}))' class="link">@item.Name</a>
+            <a href='@Url.Action("Index", "Course", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new {courseId = item.Id}))' class="link">@item.Name at @item.Provider.Name</a>
         </h3>
-        <dl>                
-            <dt>Training provider</dt>
-            <dd>@item.Provider.Name</dd>
-            
+        <dl>
             @if (item.ProviderLocation != null) {
-                <dt>Training provider&apos;s location</dt>
+                <dt>Location</dt>
                 <dd>@item.ProviderLocation.Address</dd>
             }
-
             <dt>Study type</dt>
             <dd>@item.FormattedStudyInfo()</dd>
 
