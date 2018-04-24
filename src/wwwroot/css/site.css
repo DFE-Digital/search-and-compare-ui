@@ -404,8 +404,8 @@ table.alt th
 }
 
 /* BELOW: PRIVATE_BETA_HACK */
-#private-beta-warning {
-    padding: 10px 10px 15px;
+.private-beta-warning {
+    padding: 10px;
     background-color: #fff8c4;
-
+    border-bottom: 1px solid #bfc1c3;
 }
