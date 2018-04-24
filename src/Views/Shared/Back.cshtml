@@ -1,10 +1,2 @@
 @model BackLinkViewModel
-
-<div class="grid-row">
-    <div class="column-full">
-        <h3 class="heading-small back-link">
-        <a href='@Model.Href'
-            class="link-back back-link">@Model.Title</a>
-        </h3>
-    </div>
-</div>
+<a href='@Model.Href' class="link-back">@Model.Title</a>
