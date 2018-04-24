@@ -27,23 +27,22 @@
                 <legend role="heading">
                     <h1 class="heading-xlarge">Financial support while you&nbsp;train</h1>
                 </legend>
-                <div>
+                <p>
                     Some courses come with financial support to help you with the cost of teacher training.
-                </div>
+                </p>
 
                 <div class="form-group @(errors.HasError("applyFilter") ? "form-group-error" : "")" id="applyFilter-container">
                     <div class="multiple-choice multiple-radio">
                         <input id="applyFilter-all" type="radio" name="applyFilter" value="false" checked="@(Model.SelectedFunding == FundingOption.All)">
                         <label for="applyFilter-all" class="multi-choice-label">
-                            <span class="bold">Show courses with and without financial support</span>
+                            Show courses with and without financial support
                         </label>
                     </div>
 
                     <div class="multiple-choice multiple-radio" data-target="funding-container">
                         <input id="applyFilter-some" type="radio" name="applyFilter" value="true" checked="@(errors.HasError("funding") || (Model.SelectedFunding != null && Model.SelectedFunding != FundingOption.All))">
                         <label for="applyFilter-some" class="multi-choice-label">
-                            <span class="bold">Only show me courses that come with financial support</span>
-
+                            Only show me courses that come with financial support
                         </label>
                     </div>
                     <div class="panel panel-border-narrow js-hidden @(errors.HasError("funding") ? "form-group-error" : "")" id="funding-container">
