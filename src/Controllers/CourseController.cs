@@ -38,10 +38,13 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             return View(viewModel);
         }
 
-        [HttpGet("course/ucas-redirect/{courseId:int}", Name = "RedirectToUcasCourse")]
-        public RedirectResult RedirectToUcasCourse(int courseId, ResultsFilter filter)
+        [HttpGet("course/ucas-redirect", Name = "RedirectToUcasCourse")]
+        public RedirectResult RedirectToUcasCourse(string programmeCode, string providerCode)
         {
-            return new RedirectResult("http://search.gttr.ac.uk/cgi-bin/hsrun.hse/General/2018_gttr_search/gttr_search.hjx;start=gttr_search.HsForm.run");
+            var url = "some url";
+            // var url = _api.GetUcasCourseUrl(programmeCode, providerCode);
+
+            return new RedirectResult(url);
         }
     }
 }
