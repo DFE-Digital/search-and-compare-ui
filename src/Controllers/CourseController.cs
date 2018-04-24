@@ -37,5 +37,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
             return View(viewModel);
         }
+
+        [HttpGet("course/ucas-redirect/{courseId:int}", Name = "RedirectToUcasCourse")]
+        public RedirectResult RedirectToUcasCourse(int courseId, ResultsFilter filter)
+        {
+            return new RedirectResult("http://search.gttr.ac.uk/cgi-bin/hsrun.hse/General/2018_gttr_search/gttr_search.hjx;start=gttr_search.HsForm.run");
+        }
     }
 }
