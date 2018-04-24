@@ -155,20 +155,22 @@
             <div>
                 <h4 class="heading-small">Fees</h4>
                 <p>The course fees for @Model.Finance.FormattedYear are as follows:</p>
-                <table>
-                    <tr class="visually-hidden">
-                        <th>Student type</th><th>Fees to pay</th>
-                    </tr>
-                    <tr>
-                        <td>UK students</td><td>@Model.Finance.FormattedUkFees</td>
-                    </tr>
-                    <tr>
-                        <td>EU students</td><td>@Model.Finance.FormattedEuFees</td>
-                    </tr>
-                    <tr>
-                        <td>International students</td><td>@Model.Finance.FormattedInternationalFees</td>
-                    </tr>
-                </table>
+                <div class="body-text">
+                  <table>
+                      <tr class="visually-hidden">
+                          <th>Student type</th><th>Fees to pay</th>
+                      </tr>
+                      <tr>
+                          <td>UK students</td><td>@Model.Finance.FormattedUkFees</td>
+                      </tr>
+                      <tr>
+                          <td>EU students</td><td>@Model.Finance.FormattedEuFees</td>
+                      </tr>
+                      <tr>
+                          <td>International students</td><td>@Model.Finance.FormattedInternationalFees</td>
+                      </tr>
+                  </table>
+                </div>
 
                 @if (Model.Finance.IsSalaried) {
                     <h4 class="heading-small">Funding</h4>
