@@ -1,10 +1,10 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout_base.cshtml";
     ViewData["serviceName"] = "Find postgraduate teacher training";
-    
-    ViewBag.Title = (String.IsNullOrEmpty(ViewBag.Title) ? "" : ViewBag.Title + " - ") 
+
+    ViewBag.Title = (String.IsNullOrEmpty(ViewBag.Title) ? "" : ViewBag.Title + " - ")
         + ViewData["serviceName"] + " - GOV.UK";
-    ViewData["headerClass"] = "with-proposition";    
+    ViewData["headerClass"] = "with-proposition";
 }
 
 @section head {
@@ -33,7 +33,7 @@
 @section bodyEnd {
     <script src="~/javascripts/jquery-3.2.1.min.js"></script>
     <script src="~/javascripts/vendor/typeahead.jquery.js"></script>
-    
+
     <script src="~/javascripts/govuk/details.polyfill.js"></script>
     <script src="~/javascripts/govuk/selection-buttons.js"></script>
     <script src="~/javascripts/govuk/show-hide-content.js"></script>
@@ -53,7 +53,7 @@
         @* PRIVATE_BETA_HACK *@
         <div id="private-beta-warning">
             <span class="font-xsmall">
-                You can 
+                You can
                 <a href="https://www.ucas.com/ucas/teacher-training/ucas-teacher-training-search-training-programmes">
                     search for other teacher training courses
                 </a>
@@ -61,7 +61,7 @@
             </span>
         </div>
     </div>
-    
+
     <div id="content">
         @RenderBody()
     </div>
