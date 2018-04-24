@@ -5,14 +5,14 @@
 
         <div class="padded-filter checkbox-filter js-openable-filter">
             <div class="head legend" role="term">
-                Funding
+                Financial support
             </div>
             <div class="filter-options checkbox-container-noscroll" id="funding-filter" role="definition">
                 @Html.Raw(string.Join(",<br>", Model.GetFundingTypes()))
             </div>
             <div class="filter-change">
             <a href='@Url.Action("Funding", "Filter", Model.ToRouteValues())'
-               class="link">Change funding options</a>
+               class="link">Change financial support options</a>
             </div>
         </div>
     </div>
