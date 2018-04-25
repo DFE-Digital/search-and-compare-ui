@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = $"{Model.Course.Name} at {Model.Provider.Name}";
+    var showMinimal = !Model.HasSection("about this training programme");
 }
 
 @Html.Partial("Back", new BackLinkViewModel {
@@ -62,166 +63,168 @@
         </div>
     </div>
 </div>
-<br />
-<div class="grid-row">
-    <div class="column-full">
-        <div class="course-contents">
-            <div class="panel panel-border-narrow">
 
-            <a href="@Url.Action("RedirectToUcasCourse", "Course", new {
-                courseId = Model.Course.Id
-            })">Full details of this course are available on UCAS</a>
-            </div>
-        </div>
-    </div>
-</div>
+
 <div class="grid-row">
+
     <div class="column-two-thirds">
-        <div class="course-contents">
-            <h3 class="heading-small">Contents</h3>
-            <ul role="directory">
-                @if (Model.HasSection("about this training programme")) {
-                    <li><a href="#section-about">About the course</a></li>
-                }
-                @if (Model.HasSection("entry requirements")) {
-                    <li><a href="#section-entry">Requirements</a></li>
-                }
-                @if (Model.HasSection("about placement schools")) {
-                    <li><a href="#section-schools">Placement schools</a></li>
-                }
 
-                <li><a href="#section-fees">Fees and funding</a></li>
-
-                @if (Model.HasSection("about this training provider")) {
-                <li><a href="#section-about-provider">About the training provider</a></li>
-                }
-
-                @if (Model.HasContactDetails()) {
-                <li><a href="#section-contact">Contact details</a></li>
-                }
-
-                <li><a href="#section-apply">Apply</a></li>
-            </ul>
-        </div>
-
-        @if (Model.HasSection("about this training programme")) {
-            <div class="course-details-section">
-                <h3 class="heading-medium" id="section-about">
-                    About the course
-                </h3>
-                <div>
-                    @Html.Raw(Model.GetHtmlForSection("about this training programme"))
-                </div>
+        @if(showMinimal) {
+            <div class="panel panel-border-wide">
+                <a href="@Url.Action("RedirectToUcasCourse", "Course", new {
+                courseId = Model.Course.Id
+                })">Full details of this course are available on UCAS</a>
             </div>
         }
 
-        @if (Model.HasSection("entry requirements")) {
-            <div class="course-details-section">
-                <h3 class="heading-medium" id="section-entry">
-                    Requirements
-                </h3>
-                <div>
-                    @Html.Raw(Model.GetHtmlForSection("entry requirements"))
-                </div>
-            </div>
-        }
+        @if(!showMinimal) {
+            <div class="course-contents">
+                <h3 class="heading-small">Contents</h3>
+                <ul role="directory">
+                    @if (Model.HasSection("about this training programme")) {
+                        <li><a href="#section-about">About the course</a></li>
+                    }
+                    @if (Model.HasSection("entry requirements")) {
+                        <li><a href="#section-entry">Requirements</a></li>
+                    }
+                    @if (Model.HasSection("about placement schools")) {
+                        <li><a href="#section-schools">Placement schools</a></li>
+                    }
 
-        @if (Model.HasSection("about placement schools")) {
-            <div class="course-details-section">
-                <h3 class="heading-medium" id="section-schools">
-                    Placement schools
-                </h3>
-                <div>
-                    @Html.Raw(Model.GetHtmlForSection("about placement schools"))
+                    <li><a href="#section-fees">Fees and funding</a></li>
+
+                    @if (Model.HasSection("about this training provider")) {
+                    <li><a href="#section-about-provider">About the training provider</a></li>
+                    }
+
+                    @if (Model.HasContactDetails()) {
+                    <li><a href="#section-contact">Contact details</a></li>
+                    }
+
+                    <li><a href="#section-apply">Apply</a></li>
+                </ul>
+            </div>
+
+
+            @if (Model.HasSection("about this training programme")) {
+                <div class="course-details-section">
+                    <h3 class="heading-medium" id="section-about">
+                        About the course
+                    </h3>
+                    <div>
+                        @Html.Raw(Model.GetHtmlForSection("about this training programme"))
+                    </div>
                 </div>
-                @* PRIVATE_BETA_HACK
-                <div>
-                    <p>
-                        Placement schools are also known as partner schools.
-                    </p>
-                    <table class="alt">
-                        <tr>
-                            <th>Name</th>
-                            <th>Address</th>
-                            <th>Code</th>
-                            <th>Vacancies</th>
-                            <th>Study type</th>
-                        </tr>
-                        @foreach(var campus in Model.Course.Campuses) {
+            }
+
+            @if (Model.HasSection("entry requirements")) {
+                <div class="course-details-section">
+                    <h3 class="heading-medium" id="section-entry">
+                        Requirements
+                    </h3>
+                    <div>
+                        @Html.Raw(Model.GetHtmlForSection("entry requirements"))
+                    </div>
+                </div>
+            }
+
+            @if (Model.HasSection("about placement schools")) {
+                <div class="course-details-section">
+                    <h3 class="heading-medium" id="section-schools">
+                        Placement schools
+                    </h3>
+                    <div>
+                        @Html.Raw(Model.GetHtmlForSection("about placement schools"))
+                    </div>
+                    @* PRIVATE_BETA_HACK
+                    <div>
+                        <p>
+                            Placement schools are also known as partner schools.
+                        </p>
+                        <table class="alt">
                             <tr>
-                                <td>@campus.Name</td>
-                                <td>@campus.Location?.Address</td>
-                                <td>@campus.CampusCode</td>
-                                <td>@Model.Course.VacanciesUiString()</td>
-                                <td>@Model.Course.StudyTypeUiString()</td>
+                                <th>Name</th>
+                                <th>Address</th>
+                                <th>Code</th>
+                                <th>Vacancies</th>
+                                <th>Study type</th>
                             </tr>
-                        }
+                            @foreach(var campus in Model.Course.Campuses) {
+                                <tr>
+                                    <td>@campus.Name</td>
+                                    <td>@campus.Location?.Address</td>
+                                    <td>@campus.CampusCode</td>
+                                    <td>@Model.Course.VacanciesUiString()</td>
+                                    <td>@Model.Course.StudyTypeUiString()</td>
+                                </tr>
+                            }
 
-                    </table>
-                </div> *@
-            </div>
-        }
-
-        <div class="course-details-section">
-            <h3 class="heading-medium" id="section-fees">
-                Fees and funding
-            </h3>
-            <div>
-                <h4 class="heading-small">Fees</h4>
-                <p>The course fees for @Model.Finance.FormattedYear are as follows:</p>
-                <div class="body-text">
-                  <table>
-                      <tr class="visually-hidden">
-                          <th>Student type</th><th>Fees to pay</th>
-                      </tr>
-                      <tr>
-                          <td>UK students</td><td>@Model.Finance.FormattedUkFees</td>
-                      </tr>
-                      <tr>
-                          <td>EU students</td><td>@Model.Finance.FormattedEuFees</td>
-                      </tr>
-                      <tr>
-                          <td>International students</td><td>@Model.Finance.FormattedInternationalFees</td>
-                      </tr>
-                  </table>
+                        </table>
+                    </div> *@
                 </div>
+            }
 
-                @if (Model.Finance.IsSalaried) {
-                    <h4 class="heading-small">Funding</h4>
-                    <p>
-                        @Model.Finance.FormattedSalary
-                    </p>
-                } else if (Model.Finance.HasFunding) {
-                    <h4 class="heading-small">Funding</h4>
-                    <p>The following financial support might be available for you depending on your qualifications.</p>
-                    <ul class="list list-bullet">
-                        @if (Model.Finance.MaxScholarship.HasValue) {
-                            <li>@Model.Finance.FormattedMaxScholarship</li>
-                        }
-                        @if (Model.Finance.MaxBursary.HasValue) {
-                            <li>@Model.Finance.FormattedMaxBursary</li>
-                        }
-                    </ul>
-                }
-
-                <p>
-                    <a href="https://getintoteaching.education.gov.uk/funding-and-salary">Know more about funding</a>
-                </p>
-
-            </div>
-        </div>
-
-        @if (Model.HasSection("about this training provider")) {
             <div class="course-details-section">
-                <h3 class="heading-medium" id="section-about-provider">
-                    About the training provider
+                <h3 class="heading-medium" id="section-fees">
+                    Fees and funding
                 </h3>
                 <div>
-                    @Html.Raw(Model.GetHtmlForSection("about this training provider"))
+                    <h4 class="heading-small">Fees</h4>
+                    <p>The course fees for @Model.Finance.FormattedYear are as follows:</p>
+                    <div class="body-text">
+                    <table>
+                        <tr class="visually-hidden">
+                            <th>Student type</th><th>Fees to pay</th>
+                        </tr>
+                        <tr>
+                            <td>UK students</td><td>@Model.Finance.FormattedUkFees</td>
+                        </tr>
+                        <tr>
+                            <td>EU students</td><td>@Model.Finance.FormattedEuFees</td>
+                        </tr>
+                        <tr>
+                            <td>International students</td><td>@Model.Finance.FormattedInternationalFees</td>
+                        </tr>
+                    </table>
+                    </div>
+
+                    @if (Model.Finance.IsSalaried) {
+                        <h4 class="heading-small">Funding</h4>
+                        <p>
+                            @Model.Finance.FormattedSalary
+                        </p>
+                    } else if (Model.Finance.HasFunding) {
+                        <h4 class="heading-small">Funding</h4>
+                        <p>The following financial support might be available for you depending on your qualifications.</p>
+                        <ul class="list list-bullet">
+                            @if (Model.Finance.MaxScholarship.HasValue) {
+                                <li>@Model.Finance.FormattedMaxScholarship</li>
+                            }
+                            @if (Model.Finance.MaxBursary.HasValue) {
+                                <li>@Model.Finance.FormattedMaxBursary</li>
+                            }
+                        </ul>
+                    }
+
+                    <p>
+                        <a href="https://getintoteaching.education.gov.uk/funding-and-salary">Know more about funding</a>
+                    </p>
+
                 </div>
             </div>
-        }
 
+            @if (Model.HasSection("about this training provider")) {
+                <div class="course-details-section">
+                    <h3 class="heading-medium" id="section-about-provider">
+                        About the training provider
+                    </h3>
+                    <div>
+                        @Html.Raw(Model.GetHtmlForSection("about this training provider"))
+                    </div>
+                </div>
+            }
+
+        }
         @if (Model.HasContactDetails()) {
             <div class="course-details-section">
                 <h3 class="heading-medium" id="section-contact">

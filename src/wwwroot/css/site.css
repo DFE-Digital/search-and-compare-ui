@@ -147,6 +147,7 @@ dd > details, dd > details[open] {
 .course-basicinfo {
     margin-top: 30px;
     margin-bottom: 30px;
+    overflow: hidden;
 }
 .course-basicinfo dl dt {
     width: 25%;
