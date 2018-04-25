@@ -44,7 +44,7 @@
                             <input class="form-control typeahead" data-url="@Url.Action("LocationSuggest", "Dynamic")" name="lq" type="text" id="location" value="@Model.FilterModel.lq">
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="radius">Within Radius</label>
+                            <label class="form-label" for="radius">Within</label>
                             <select class="form-control" id="radius" name="rad">
                                 @foreach(var option in Enum.GetValues(typeof(RadiusOption)))
                                 {
