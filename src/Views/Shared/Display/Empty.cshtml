@@ -1,17 +1,22 @@
 @model ResultsViewModel
 
-<div class="search-results-header">
-    <div class="found-heading" role="heading">
-        <p class="found-count">No courses found</p>
-        <p class="new-search"><a href='@Url.Action("LocationWizard", "Filter")'>New search</a></p>
-    </div>
-</div>
+<div>
+  <h2 class="heading-large" style="margin-top: 0">
+    There are no courses matching your&nbsp;search
+  </h2>
 
-<div id="noresults">
-    <p>
-        There are currently no courses that match your search.
-    </p>
-    <p>
-        You can <a href='@Url.Action("LocationWizard", "Filter")'>try again</a>, for example by changing subject and location. 
-    </p>
+  <p>
+    You can <a href='@Url.Action("LocationWizard", "Filter")'>try another search</a>, for example by changing subject or location.
+  </p>
+
+  <h3 class="heading-medium">Suggested searches</h3>
+  <p>For business studies there are:</p>
+  <ul class="list list-bullet">
+    <li><a href="#">8 courses within 10 miles</a></li>
+    <li><a href="#">2 courses with funding options available in England</a></li>
+  </ul>
+
+  <p>
+    You can <a href="#">search for courses in other subjects</a> on the UCAS website.
+  </p>
 </div>

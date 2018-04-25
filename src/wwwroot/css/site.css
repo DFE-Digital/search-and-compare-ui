@@ -14,8 +14,7 @@
     margin-bottom: 0.5em;
 }
 .bat_searchresult {
-    border-bottom: 1px solid lightgrey;
-    padding-bottom: 30px;
+    margin-bottom: 30px;
 }
 .found-heading {
     border-bottom: 1px solid lightgrey;

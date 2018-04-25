@@ -37,4 +37,17 @@
     </li>
 }
 </ul>
+
+@if (Model.Courses.TotalCount < 3) {
+<h3 class="heading-medium">Suggested searches</h3>
+<p>For business studies there are:</p>
+<ul class="list list-bullet">
+  <li><a href="#">8 courses within 10 miles</a></li>
+  <li><a href="#">2 courses with funding options available in England</a></li>
+</ul>
+
+<p>
+  You can <a href="#">search for courses in other subjects</a> on the UCAS website.
+</p>
+}
 @Html.Partial("Pagination", Model)
