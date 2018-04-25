@@ -65,7 +65,7 @@
 <div class="grid-row">
     <div class="column-two-thirds">
         <div class="course-contents">
-            <h3 class="heading-small">Contents</h3>
+            <h2 class="heading-small">Contents</h2>
             <ul role="directory">
                 @if (Model.HasSection("about this training programme")) {
                     <li><a href="#section-about">About the course</a></li>
@@ -93,9 +93,9 @@
 
         @if (Model.HasSection("about this training programme")) {
             <div class="course-details-section">
-                <h3 class="heading-medium" id="section-about">
+                <h2 class="heading-medium" id="section-about">
                     About the course
-                </h3>
+                </h2>
                 <div>
                     @Html.Raw(Model.GetHtmlForSection("about this training programme"))
                 </div>
@@ -104,9 +104,9 @@
 
         @if (Model.HasSection("entry requirements")) {
             <div class="course-details-section">
-                <h3 class="heading-medium" id="section-entry">
+                <h2 class="heading-medium" id="section-entry">
                     Requirements
-                </h3>
+                </h2>
                 <div>
                     @Html.Raw(Model.GetHtmlForSection("entry requirements"))
                 </div>
@@ -115,9 +115,9 @@
 
         @if (Model.HasSection("about placement schools")) {
             <div class="course-details-section">
-                <h3 class="heading-medium" id="section-schools">
+                <h2 class="heading-medium" id="section-schools">
                     Placement schools
-                </h3>
+                </h2>
                 <div>
                     @Html.Raw(Model.GetHtmlForSection("about placement schools"))
                 </div>
@@ -150,11 +150,11 @@
         }
 
         <div class="course-details-section">
-            <h3 class="heading-medium" id="section-fees">
+            <h2 class="heading-medium" id="section-fees">
                 Fees and funding
-            </h3>
+            </h2>
             <div>
-                <h4 class="heading-small">Fees</h4>
+                <h3 class="heading-small">Fees</h3>
                 <p>The course fees for @Model.Finance.FormattedYear are as follows:</p>
                 <div class="body-text">
                   <table>
@@ -174,12 +174,12 @@
                 </div>
 
                 @if (Model.Finance.IsSalaried) {
-                    <h4 class="heading-small">Funding</h4>
+                    <h3 class="heading-small">Funding</h3>
                     <p>
                         @Model.Finance.FormattedSalary
                     </p>
                 } else if (Model.Finance.HasFunding) {
-                    <h4 class="heading-small">Funding</h4>
+                    <h3 class="heading-small">Funding</h3>
                     <p>The following financial support might be available for you depending on your qualifications.</p>
                     <ul class="list list-bullet">
                         @if (Model.Finance.MaxScholarship.HasValue) {
@@ -200,9 +200,9 @@
 
         @if (Model.HasSection("about this training provider")) {
             <div class="course-details-section">
-                <h3 class="heading-medium" id="section-about-provider">
+                <h2 class="heading-medium" id="section-about-provider">
                     About the training provider
-                </h3>
+                </h2>
                 <div>
                     @Html.Raw(Model.GetHtmlForSection("about this training provider"))
                 </div>
@@ -211,9 +211,9 @@
 
         @if (Model.HasContactDetails()) {
             <div class="course-details-section">
-                <h3 class="heading-medium" id="section-contact">
+                <h2 class="heading-medium" id="section-contact">
                     Contact details
-                </h3>
+                </h2>
                 <div class="course-basicinfo">
                     <dl role="contentinfo">
                         @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Email)) {
@@ -256,9 +256,9 @@
 
 
         <div class="course-details-section">
-            <h3 class="heading-medium" id="section-apply">
+            <h2 class="heading-medium" id="section-apply">
                 Apply
-            </h3>
+            </h2>
             <div>
                 <p>
                     <a href="https://2018.teachertraining.apply.ucas.com/apply/student/login.do">Apply on the UCAS website</a>. You'll need to register before you can apply.
