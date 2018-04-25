@@ -286,11 +286,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
         {
             if (!qts || pgce) 
             {
-                yield return "Postgraduate Certificate in Education with Qualified Teacher Status";
-            }            
+                yield return "Postgraduate certificate in education with qualified teacher status";
+            }
             if (!pgce || qts)
             {
-                yield return "Qualified Teacher Status";
+                yield return "Qualified teacher status";
             }
         }
 
