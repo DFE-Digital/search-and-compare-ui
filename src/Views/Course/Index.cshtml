@@ -79,9 +79,7 @@
 
                 <li><a href="#section-fees">Fees</a></li>
 
-                @if (Model.Finance.IsSalaried || Model.Finance.HasFunding) {
-                  <li><a href="#section-financial-support">Financial support</a></li>
-                }
+                <li><a href="#section-financial-support">Financial support</a></li>
 
                 @if (Model.HasSection("about this training provider")) {
                 <li><a href="#section-about-provider">About the training provider</a></li>
@@ -171,13 +169,12 @@
                   </table>
                 </div>
 
+                <h2 class="heading-medium" id="section-financial-support">Financial support</h2>
                 @if (Model.Finance.IsSalaried) {
-                    <h2 class="heading-medium" id="section-financial-support">Financial support</h2>
                     <p>
                         @Model.Finance.FormattedSalary
                     </p>
                 } else if (Model.Finance.HasFunding) {
-                    <h2 class="heading-medium" id="section-financial-support">Financial support</h2>
                     <p>The following financial support might be available for you depending on your qualifications.</p>
                     <ul class="list list-bullet">
                         @if (Model.Finance.MaxScholarship.HasValue) {
@@ -190,8 +187,16 @@
                 }
 
                 <p>
-                    <a href="https://getintoteaching.education.gov.uk/funding-and-salary">Know more about funding</a>
+                    Find out more about:
                 </p>
+                <ul class="list list-bullet">
+                    <li>
+                      <a href="https://www.gov.uk/student-finance">financial support for students</a>
+                    </li>
+                    <li>
+                      <a href="https://getintoteaching.education.gov.uk/explore-my-options/overseas-graduates">financial support if you’re from outside of the UK</a>
+                    </li>
+                </ul>
 
             </div>
         </div>
