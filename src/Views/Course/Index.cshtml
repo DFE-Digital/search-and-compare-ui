@@ -69,8 +69,7 @@
             <div class="panel panel-border-narrow">
 
             <a href="@Url.Action("RedirectToUcasCourse", "Course", new {
-                ProgrammeCode = Model.Course.ProgrammeCode,
-                ProviderCode = Model.Course.Provider.ProviderCode
+                courseId = Model.Course.Id
             })">Full details of this course are available on UCAS</a>
             </div>
         </div>

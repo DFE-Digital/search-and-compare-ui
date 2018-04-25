@@ -38,11 +38,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             return View(viewModel);
         }
 
-        [HttpGet("course/ucas-redirect", Name = "RedirectToUcasCourse")]
-        public RedirectResult RedirectToUcasCourse(string programmeCode, string providerCode)
+        [HttpGet("course/{courseId:int}/ucas-redirect", Name = "RedirectToUcasCourse")]
+        public RedirectResult RedirectToUcasCourse(int courseId)
         {
             var url = "some url";
-            // var url = _api.GetUcasCourseUrl(programmeCode, providerCode);
+            // var url = _api.GetUcasCourseUrl(courseId);
 
             return new RedirectResult(url);
         }
