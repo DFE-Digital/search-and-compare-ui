@@ -28,127 +28,43 @@
                     <h1 class="heading-xlarge">Financial support while you&nbsp;train</h1>
                 </legend>
                 <p>
-                    Some courses come with financial support to help you with the cost of teacher training.
+                    Some business studies teacher training courses offer you a salary.
                 </p>
 
                 <div class="form-group @(errors.HasError("applyFilter") ? "form-group-error" : "")" id="applyFilter-container">
                     <div class="multiple-choice multiple-radio">
                         <input id="applyFilter-all" type="radio" name="applyFilter" value="false" checked="@(Model.SelectedFunding == FundingOption.All)">
                         <label for="applyFilter-all" class="multi-choice-label">
-                            Show courses with and without financial support
+                            Show courses with and without a salary
                         </label>
                     </div>
 
-                    <div class="multiple-choice multiple-radio" data-target="funding-container">
+                    <div class="multiple-choice multiple-radio">
                         <input id="applyFilter-some" type="radio" name="applyFilter" value="true" checked="@(errors.HasError("funding") || (Model.SelectedFunding != null && Model.SelectedFunding != FundingOption.All))">
                         <label for="applyFilter-some" class="multi-choice-label">
-                            Only show me courses that come with financial support
+                            Only show courses that come with a salary
                         </label>
                     </div>
-                    <div class="panel panel-border-narrow js-hidden @(errors.HasError("funding") ? "form-group-error" : "")" id="funding-container">
-                        <span class="error-message">@errors.GetError("funding").Message</span>
-                        <p>
-                            Show me courses that come with a:
-                        </p>
-                        <p class="bold-small">
-                            Salary
-                        </p>
-                        <p>
-                            Earn a salary while you train. If you choose this type of course
-                            you don&#8217;t pay any fees.
-                        </p>
-                        <p>
-                            Salaries are taxed. The precise amount you get varies &ndash;
-                            it depends on the training provider and subject.
-                        </p>
-                        <h4 class="heading-small">
-                            Financial support for other subjects
-                        </h4>
-                        <p>
-                            Other subjects offer other types of financial support, besides
-                            salaries.
-                        </p>
-                        <p>
-                            With a bursary you could get up to £26,000 tax free. You&#8217;ll
-                            need a 2:2 degree or higher to be eligible.
-                        </p>
-                        <p>
-                             With a scholarship you could get up to £28,000 tax free. However,
-                             these are only available to outstanding graduates &ndash;
-                             you&#8217;ll usually need a 2:1 or higher,
-                             and to provide evidence that you&#8217;re passionate about
-                             the subject. Scholarships also give you access to networking,
-                             training resources and other support.
-                        </p>
-                        <p>
-                            If you do get a scholarship you can&#8217;t get a bursary.
-                        </p>
-                        <p>
-                            Find out
-                            <a href="#">
-                                more about financial support
-                            </a>
-                            on the Get into Teaching website.
-                        </p>
 
-
-                        <input type="hidden" name="includeBursary" value="true">
-                        <input type="hidden" name="includeScholarship" value="true">
-                        <input type="hidden" name="includeSalary" value="true">
-
-
-                        @* PRIVATE_BETA_HACK *@
-
-                        @*
-
-                        <div class="multiple-choice multiple-radio">
-                            <input id="includeBursary" type="checkbox" name="includeBursary" value="true" checked="@(Model.SelectedFunding == null || Model.SelectedFunding.Value.HasFlag(FundingOption.Bursary))">
-                            <label for="includeBursary" class="multi-choice-label">
-                                <span class="bold">bursary</span>
-                                <p>Up to £26,000 tax free.</p>
-                                <p>You&#8217;ll usually need a 2:2 degree or higher.</p>
-                            </label>
-                        </div>
-
-                        <div class="multiple-choice multiple-radio">
-                            <input id="includeScholarship" type="checkbox" name="includeScholarship" value="true" checked="@(Model.SelectedFunding == null || Model.SelectedFunding.Value.HasFlag(FundingOption.Scholarship))">
-                            <label for="includeScholarship" class="multi-choice-label">
-                                <span class="bold">scholarship</span>
-                                <p>Up to £28,000 tax free.</p>
-                                <p>
-                                    Scholarships are only available to outstanding graduates &ndash; you&#8217;ll
-                                    usually need a 2:1 or higher, and provide evidence that you&#8217;re passionate about the subject.
-                                    Scholarships also give you access to networking events, training resources and other support.
-                                </p>
-                                <p>If you do get a scholarship, you can&#8217;t get a bursary.</p>
-                            </label>
-                        </div>
-
-                        <div class="multiple-choice multiple-radio">
-                            <input id="includeSalary" type="checkbox" name="includeSalary" value="true" checked="@(Model.SelectedFunding == null || Model.SelectedFunding.Value.HasFlag(FundingOption.Salary))">
-                            <label for="includeSalary" class="multi-choice-label">
-                                <span class="bold">salary</span>
-                                <p>
-                                    Earn a salary while you train. If you choose this type of course, you don&#8217;t pay any fees.
-                                    Salaries vary and aren&#8217;t tax free.
-                                </p>
-                                <p>
-                                    If you choose a salaried cours, you can&#8217;t get a bursary or scholarship.
-                                </p>
-                            </label>
-                        </div>
-
-                        <input type="hidden" name="includeBursary" value="false">
-                        <input type="hidden" name="includeScholarship" value="false">
-                        <input type="hidden" name="includeSalary" value="false">
-                        *@
-                    </div>
+                    <input type="hidden" name="includeBursary" value="true">
+                    <input type="hidden" name="includeScholarship" value="true">
+                    <input type="hidden" name="includeSalary" value="true">
                 </div>
             </fieldset>
 
             <div class="filter-apply-button">
                 <input class="button" type="submit" value="Find courses">
             </div>
+
+            <h2 class="heading-medium">
+                Other financial support
+            </h2>
+            <p>
+                Some other subjects offer different types of financial support for trainee teachers. You can find out more about <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview/funding-by-subject">financial support for trainee teachers</a> on the Get into Teaching website.
+            </p>
+            <p>
+                You may also be eligible for <a href="https://www.gov.uk/student-finance">financial support for students</a>.
+            </p>
         </form>
     </div>
 </div>
