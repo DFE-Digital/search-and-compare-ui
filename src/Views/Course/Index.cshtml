@@ -10,10 +10,12 @@
 })
 
 <div class="grid-row">
-    <div class="column-full">
-        <h1 class="heading-xlarge" role="heading">
+    <div class="column-two-thirds">
+        <h1 class="heading-large" role="heading">
             @Model.Course.Name at @Model.Provider.Name
         </h1>
+    </div>
+    <div class="column-full">
         <div class="course-basicinfo">
             <dl role="contentinfo">
                 @if (Model.Course.ProviderLocation != null) {
