@@ -77,7 +77,11 @@
                     <li><a href="#section-schools">Placement schools</a></li>
                 }
 
-                <li><a href="#section-fees">Fees and funding</a></li>
+                <li><a href="#section-fees">Fees</a></li>
+
+                @if (Model.Finance.IsSalaried || Model.Finance.HasFunding) {
+                  <li><a href="#section-financial-support">Financial support</a></li>
+                }
 
                 @if (Model.HasSection("about this training provider")) {
                 <li><a href="#section-about-provider">About the training provider</a></li>
@@ -150,11 +154,8 @@
         }
 
         <div class="course-details-section">
-            <h2 class="heading-medium" id="section-fees">
-                Fees and funding
-            </h2>
             <div>
-                <h3 class="heading-small">Fees</h3>
+                <h2 class="heading-medium" id="section-fees">Fees</h2>
                 <p>The course fees for @Model.Finance.FormattedYear are as follows:</p>
                 <div class="body-text">
                   <table>
@@ -174,12 +175,12 @@
                 </div>
 
                 @if (Model.Finance.IsSalaried) {
-                    <h3 class="heading-small">Funding</h3>
+                    <h2 class="heading-medium" id="section-financial-support">Financial support</h2>
                     <p>
                         @Model.Finance.FormattedSalary
                     </p>
                 } else if (Model.Finance.HasFunding) {
-                    <h3 class="heading-small">Funding</h3>
+                    <h2 class="heading-medium" id="section-financial-support">Financial support</h2>
                     <p>The following financial support might be available for you depending on your qualifications.</p>
                     <ul class="list list-bullet">
                         @if (Model.Finance.MaxScholarship.HasValue) {
