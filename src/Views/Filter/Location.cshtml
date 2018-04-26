@@ -44,7 +44,7 @@
                             <input class="form-control typeahead" data-url="@Url.Action("LocationSuggest", "Dynamic")" name="lq" type="text" id="location" value="@Model.FilterModel.lq">
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="radius">Within Radius</label>
+                            <label class="form-label" for="radius">Within</label>
                             <select class="form-control" id="radius" name="rad">
                                 @foreach(var option in Enum.GetValues(typeof(RadiusOption)))
                                 {
@@ -61,13 +61,13 @@
 
                     <div class="multiple-choice multiple-radio" data-target="query-container">
                         <input id="location-Specific" type="radio" name="l" value="@((int)LocationOption.Specific)" checked="@(Model.FilterModel.LocationOption == LocationOption.Specific)">
-                        <label for="location-Specific">By training provider</label>
+                        <label for="location-Specific">By school, university or other training provider</label>
                     </div>
 
                     <div class="panel panel-border-narrow js-hidden @(Model.Errors.HasError("query") ? "form-group-error" : "")" id="query-container">
                         <fieldset aria-required="true">
                             <label class="form-label" for="query">
-                                Training provider
+                                School, university or other training provider
                                 <span class="error-message">@Model.Errors.GetError("query").Message</span>
                             </label>
                             <input class="form-control typeahead" data-url="@Url.Action("ProviderSuggest", "Dynamic")" name="query" type="text" id="query" value="@Model.FilterModel.query">

@@ -9,9 +9,9 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewFormatters
 {
     public static class CourseExtensions
     {
-        static string qts = "Qualified Teacher Status";
+        static string qts = "Qualified teacher status";
 
-        static string pgce = "Postgraduate Certificate in Education";
+        static string pgce = "Postgraduate certificate in education";
 
         public static string FormattedOutcome(this Course course)
         {
@@ -21,7 +21,7 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewFormatters
             }
             else if (course.IncludesPgce == IncludesPgce.Yes)
             {
-                return pgce + " and " + qts;
+                return pgce + " with " + qts.ToLower();
             }
             return qts + " and optional " + pgce;
         }
@@ -87,7 +87,7 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewFormatters
 
         public static string FundingOptions(this Course course)
         {
-            if (course.Route.IsSalaried) 
+            if (course.Route.IsSalaried)
             {
                 return "Salary";
             }
@@ -129,7 +129,7 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewFormatters
             return (course.Campuses == null || course.Campuses.Count < 2)
                 ? "unknown" : (course.Campuses.Count - 1).ToString();
         }
-        
+
         public static string VacanciesUiString(this Course course)
         {
             return course.FullTime == VacancyStatus.Vacancies || course.PartTime == VacancyStatus.Vacancies
@@ -140,7 +140,7 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewFormatters
         public static string StudyTypeUiString(this Course course)
         {
             var res = new List<string>();
-            if (course.FullTime != VacancyStatus.NA) res.Add("Full time"); 
+            if (course.FullTime != VacancyStatus.NA) res.Add("Full time");
             if (course.PartTime != VacancyStatus.NA) res.Add("Part time");
 
             return string.Join(", ", res);
