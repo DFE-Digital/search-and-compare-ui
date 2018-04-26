@@ -41,8 +41,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [HttpGet("course/{courseId:int}/ucas-redirect", Name = "RedirectToUcasCourse")]
         public RedirectResult RedirectToUcasCourse(int courseId)
         {
-            var url = "some url";
-            // var url = _api.GetUcasCourseUrl(courseId);
+            var url = _api.GetUcasCourseUrl(courseId);
 
             return new RedirectResult(url);
         }
