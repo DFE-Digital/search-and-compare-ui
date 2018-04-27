@@ -409,3 +409,9 @@ table.alt th
     background-color: #fff8c4;
     border-bottom: 1px solid #bfc1c3;
 }
+
+.break-word {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+}
