@@ -14,5 +14,17 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         {
             return View();
         }
+
+        [HttpGet("privacy-policy")]
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [HttpGet("terms-conditions")]
+        public IActionResult TandC()
+        {
+            return View();
+        }
     }
 }
