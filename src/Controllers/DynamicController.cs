@@ -9,7 +9,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
     //[Authorize]
     public class DynamicController : CommonAttributesControllerBase
-    {  
+    {
         private readonly ISearchAndCompareApi _api;
 
         private readonly IGeocoder _geocoder;

@@ -33,7 +33,7 @@ namespace GovUk.Education.SearchAndCompare.UI
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {                
+        {
             services.AddMvc();
             var apiUri = Environment.GetEnvironmentVariable("API_URI") ?? Configuration.GetSection("ApiConnection").GetValue<string>("Uri");
             services.AddScoped<ISearchAndCompareApi>(provider => new SearchAndCompareApi(new HttpClient(), apiUri));
@@ -62,7 +62,7 @@ namespace GovUk.Education.SearchAndCompare.UI
                 app.UseExceptionHandler("/Home/Error");
                 app.UseStaticFiles();
             }
-            
+
             app.AddContentLanguageHeaders("en");
 
             app.UseMvc(routes => {});

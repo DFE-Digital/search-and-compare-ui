@@ -23,7 +23,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             public void GivenAnEmptySubjectFilterString_WhenCalled_ThenReturnsEmptyList()
             {
                 var result = new QueryFilter{subjects = ""}.SelectedSubjects;
-                
+
                 Assert.That(result, Is.TypeOf<List<int>>());
                 Assert.That(result, Is.Empty);
             }

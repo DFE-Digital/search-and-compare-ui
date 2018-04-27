@@ -54,7 +54,7 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels
         public string FormattedYear {
             get
             {
-                return FeeCaps.StartYear > 0 && FeeCaps.EndYear > FeeCaps.StartYear 
+                return FeeCaps.StartYear > 0 && FeeCaps.EndYear > FeeCaps.StartYear
                         ? string.Format($"{FeeCaps.StartYear}/{FeeCaps.EndYear}")
                         : "this year";
             }

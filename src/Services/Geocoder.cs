@@ -58,7 +58,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
         {
             using(var client = new HttpClient())
             {
-            
+
                 var query = HttpUtility.ParseQueryString(string.Empty);
                 query["key"] = apiKey;
                 query["language"] = "en";

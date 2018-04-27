@@ -47,11 +47,11 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels
             return Course != null && Course.ContactDetails != null
                 && !string.IsNullOrWhiteSpace(Course.ContactDetails.Address);
         }
-        
+
         public HtmlString GetHtmlForSection(string name)
         {
             return markdownFormatter.ToHtml(
-                Course.DescriptionSections.Where(x => x.Name == name).SingleOrDefault()?.Text);          
+                Course.DescriptionSections.Where(x => x.Name == name).SingleOrDefault()?.Text);
         }
 
         public IEnumerable<string> SubjectNames {

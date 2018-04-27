@@ -12,13 +12,13 @@ using GovUk.Education.SearchAndCompare.UI.Filters.Enums;
 namespace GovUk.Education.SearchAndCompare.UI.Filters
 {
     public class ResultsFilter
-    { 
-        public ResultsFilter() 
+    {
+        public ResultsFilter()
         {
             /* PRIVATE_BETA_HACK */
             SelectedSubjects = new List<int>() {2};
         }
-        
+
         public int? page { get; set; }
 
         public double? lng { get; set; }
@@ -57,8 +57,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
 
         public bool parttime { get; set; }
 
-        public List<int> SelectedSubjects { 
-            get {            
+        public List<int> SelectedSubjects {
+            get {
                 List<int> subjectFilterIds = new List<int> ();
                 if (!string.IsNullOrEmpty(subjects))
                 {
@@ -77,12 +77,12 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
             get { return (FundingOption?)funding; }
             set { funding = (int?)value; }
         }
-        
+
         public Coordinates Coordinates
         {
             get {
-                return lng.HasValue && lat.HasValue && rad.HasValue 
-                    ? new Coordinates(lat.Value, lng.Value, null, loc) 
+                return lng.HasValue && lat.HasValue && rad.HasValue
+                    ? new Coordinates(lat.Value, lng.Value, null, loc)
                     : null;
             }
         }
@@ -91,7 +91,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
         {
             get {
                 return offlat.HasValue && offlng.HasValue
-                    ? new Coordinates(offlat.Value, offlng.Value) 
+                    ? new Coordinates(offlat.Value, offlng.Value)
                     : null;
             }
         }
@@ -200,7 +200,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 fulltime = this.fulltime,
                 parttime = this.parttime,
                 l = this.l
-            }; 
+            };
         }
 
         public ResultsFilter WithSortBy(int? sortby)
@@ -281,10 +281,10 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
             };
         }
 
-        
+
         public IEnumerable<string> GetQualificationStrings()
         {
-            if (!qts || pgce) 
+            if (!qts || pgce)
             {
                 yield return "Postgraduate certificate in education with qualified teacher status";
             }
@@ -296,10 +296,10 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
 
         public IEnumerable<string> GetStudyTypeStrings()
         {
-            if (!parttime || fulltime) 
+            if (!parttime || fulltime)
             {
                 yield return "Full time (12 months)";
-            }            
+            }
             if (!fulltime || parttime)
             {
                 yield return "Part time (18 - 24 months)";

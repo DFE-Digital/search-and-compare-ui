@@ -8,9 +8,9 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Utils
         [Test]
         public void Empty()
         {
-            Assert.That(GetHtml(null), Is.EqualTo(""), "null");    
-            Assert.That(GetHtml(""), Is.EqualTo(""), "empty");    
-            Assert.That(GetHtml("  \n\t"), Is.EqualTo(""), "whitespace");    
+            Assert.That(GetHtml(null), Is.EqualTo(""), "null");
+            Assert.That(GetHtml(""), Is.EqualTo(""), "empty");
+            Assert.That(GetHtml("  \n\t"), Is.EqualTo(""), "whitespace");
         }
 
         [Test]
@@ -47,11 +47,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Utils
         public void ListWithLeaderAndWhitespace()
         {
             var markdown = @"
- The list is:           
+ The list is:
 - one
 
 
-   
+
    - two
 * three
 
@@ -61,7 +61,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Utils
 
             Assert.That(GetHtml(markdown), Is.EqualTo(expected));
         }
-        
+
         [Test]
         public void SingleCharParagraph()
         {
@@ -104,17 +104,17 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Utils
         public void NotALink()
         {
             var markdown = "[ www.nosite.com]";
-            var expected = "<p>[ www.nosite.com]</p>";            
+            var expected = "<p>[ www.nosite.com]</p>";
             Assert.That(GetHtml(markdown), Is.EqualTo(expected));
         }
-        
+
 
         [Test]
         public void NotALink2()
         {
             var markdown = @"[
 www.nosite.com]";
-            var expected = "<p>[</p>\n<p>www.nosite.com]</p>";            
+            var expected = "<p>[</p>\n<p>www.nosite.com]</p>";
             Assert.That(GetHtml(markdown), Is.EqualTo(expected));
         }
 

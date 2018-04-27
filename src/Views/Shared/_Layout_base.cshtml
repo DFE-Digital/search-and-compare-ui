@@ -25,14 +25,14 @@
     <link rel="stylesheet" href="~/css/govuk-application-site-search.css"/>
     <link rel="stylesheet" href="~/css/site.css"/>
     <link rel="shortcut icon" href="~/images/favicon.ico" type="image/x-icon" />
-    
+
     <link rel="mask-icon" href="~/images/gov.uk_logotype_crown.svg" color="#0b0c0c">
     <link rel="apple-touch-icon" sizes="180x180" href="~/images/apple-touch-icon-180x180.png">
     <link rel="apple-touch-icon" sizes="167x167" href="~/images/apple-touch-icon-167x167.png">
     <link rel="apple-touch-icon" sizes="152x152" href="~/images/apple-touch-icon-152x152.png">
     <link rel="apple-touch-icon" href="~/images/apple-touch-icon.png">
 
-    
+
     <meta name="theme-color" content="#0b0c0c" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,12 +56,12 @@
         @if (IsSectionDefined("cookieMessage")) {
             RenderSection("cookieMessage");
         }
-        else { 
+        else {
             <p>GOV.UK uses cookies to make the site simpler. <a href="https://www.gov.uk/help/cookies">Find out more about cookies</a></p>
         }
     </div>
 
-    
+
     <header role="banner" id="global-header" class="@ViewData["headerClass"]">
       <div class="header-wrapper">
         <div class="header-global">
@@ -75,7 +75,7 @@
         @RenderSection("propositionHeader", required: false)
       </div>
     </header>
-    
+
 
     @RenderSection("afterHeader", required: false)
 
@@ -115,7 +115,7 @@
 
     @RenderSection("bodyEnd", required: false)
 
-    
+
     <script>if (typeof window.GOVUK === 'undefined') document.body.className = document.body.className.replace('js-enabled', '');</script>
   </body>
 </html>

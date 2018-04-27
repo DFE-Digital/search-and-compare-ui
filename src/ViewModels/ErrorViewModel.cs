@@ -9,7 +9,7 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels
         public IList<ErrorMessage> Messages {get; set;} = new List<ErrorMessage>();
 
         public string ApplicableUriOrNull {get; set;} = null;
-        public ErrorViewModel() 
+        public ErrorViewModel()
         {
         }
 
@@ -37,9 +37,9 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels
 
         public static ErrorViewModel NewEmpty() => new ErrorViewModel();
 
-        
 
-        public class ErrorMessage 
+
+        public class ErrorMessage
         {
             public string Id {get; set;}
             public string Name {get; set;}

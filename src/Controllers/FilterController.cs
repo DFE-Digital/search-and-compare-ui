@@ -25,7 +25,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             _api = api;
             _geocoder = geocoder;
         }
-        
+
         [HttpGet("results/filter/subject")]
         [ActionName("Subject")]
         public IActionResult SubjectGet(ResultsFilter filter)
@@ -38,7 +38,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             };
 
             ViewBag.Errors = TempData.Get<ErrorViewModel>("Errors");
-            
+
             return View("Subject", viewModel);
         }
 
@@ -54,7 +54,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                 TempData.Put("Errors", new ErrorViewModel("subjects", "Please choose at least one subject", null, Url.Action("Subject")));
                 return RedirectToAction(isInWizard ? "SubjectWizard" : "Subject", filter.ToRouteValues());
             }
-            
+
             return isInWizard
                 ? RedirectToAction("FundingWizard", filter.ToRouteValues())
                 : RedirectToAction("Index", "Results", filter.ToRouteValues());
@@ -81,7 +81,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             filter = filter.WithoutLocation();
 
             var isInWizard = ViewBag.IsInWizard == true;
-            
+
 
             if(string.IsNullOrWhiteSpace(filter.query))
             {
@@ -121,12 +121,12 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         public async Task<IActionResult> LocationPost(ResultsFilter filter)
         {
             filter.page = null;
-   
+
             if (filter.LocationOption == LocationOption.Specific)
             {
                 return FullTextPost(filter);
             }
-            
+
             var isInWizard = ViewBag.IsInWizard == true;
             filter.query = null;
 
@@ -144,17 +144,17 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                     : RedirectToAction("Index", "Results", filter.WithoutLocation().ToRouteValues());
             }
 
-            if (string.IsNullOrWhiteSpace(filter.lq)) 
+            if (string.IsNullOrWhiteSpace(filter.lq))
             {
                 TempData.Put("Errors", new ErrorViewModel("lq", "Postcode, town or city", "Please enter a postcode, city or town in England", Url.Action("Location")));
-                return RedirectToAction(isInWizard ? "LocationWizard" : "Location", filter.ToRouteValues());            
+                return RedirectToAction(isInWizard ? "LocationWizard" : "Location", filter.ToRouteValues());
             }
 
             var coords = await _geocoder.ResolvePostCodeAsync(filter.lq);
-            if (coords == null) 
+            if (coords == null)
             {
                 TempData.Put("Errors", new ErrorViewModel("lq", "Postcode, town or city", "We couldn't find this location, please check your input and try again.", Url.Action("Location")));
-                
+
                 return RedirectToAction(isInWizard ? "LocationWizard" : "Location", filter.ToRouteValues());
             }
             else
@@ -179,7 +179,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             ViewBag.IsInWizard = true;
             return LocationGet(filter);
         }
-        
+
         [HttpPost("start/location")]
         [ActionName("LocationWizard")]
         public async Task<IActionResult> LocationWizardPost(ResultsFilter filter)
@@ -199,7 +199,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         public IActionResult Funding(bool? applyFilter, bool includeBursary, bool includeScholarship, bool includeSalary, ResultsFilter filter)
         {
             var isInWizard = ViewBag.IsInWizard == true;
-            
+
             filter.page = null;
 
             if (!applyFilter.HasValue)
@@ -220,15 +220,15 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                 if (!includeScholarship) filter.SelectedFunding = filter.SelectedFunding & ~FundingOption.Scholarship;
                 if (!includeSalary) filter.SelectedFunding = filter.SelectedFunding & ~FundingOption.Salary;
             }
-            else 
+            else
             {
                 filter.SelectedFunding = FundingOption.All;
             }
-            
+
             return RedirectToAction("Index", "Results", filter.ToRouteValues());
         }
 
-        
+
         [HttpGet("start/funding")]
         public IActionResult FundingWizard(ResultsFilter filter)
         {
@@ -249,7 +249,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         {
             return View(model);
         }
-        
+
         [HttpPost("results/filter/qualification")]
         [ActionName("Qualification")]
         public IActionResult QualificationPost(ResultsFilter model)
@@ -264,7 +264,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         {
             return View(model);
         }
-        
+
         [HttpPost("results/filter/studytype")]
         [ActionName("StudyType")]
         public IActionResult StudyTypePost(ResultsFilter model)
