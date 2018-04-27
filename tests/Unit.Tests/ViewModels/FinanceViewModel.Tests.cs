@@ -25,7 +25,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.ViewModels
             new Subject {
                 Funding = new SubjectFunding {
                     Scholarship = 2,
-                    BursaryFirst = 1                    
+                    BursaryFirst = 1
                 }
             }
         };
@@ -33,13 +33,13 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.ViewModels
         [Test]
         public void CtorThrowsWithNullCourse()
         {
-            Assert.Throws(typeof(ArgumentNullException), () => new FinanceViewModel(null, _feeCaps)); 
+            Assert.Throws(typeof(ArgumentNullException), () => new FinanceViewModel(null, _feeCaps));
         }
 
         [Test]
         public void CtorThrowsWithNullFeeCaps()
         {
-            Assert.Throws(typeof(ArgumentNullException), () => new FinanceViewModel(_emptyCourse, null)); 
+            Assert.Throws(typeof(ArgumentNullException), () => new FinanceViewModel(_emptyCourse, null));
         }
     }
 }

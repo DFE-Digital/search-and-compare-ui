@@ -27,4 +27,4 @@ deploy:
   - provider: script
     script: bash travis-deploy.sh $OC_WEBHOOK_PROD
     on:
-      branch: production 
+      branch: production

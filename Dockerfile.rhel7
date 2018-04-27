@@ -14,4 +14,3 @@ FROM registry.access.redhat.com/dotnet/dotnet-20-runtime-rhel7
 WORKDIR /app
 COPY --from=build-env /app/out .
 CMD ["dotnet", "SearchAndCompareUi.dll"]
-

@@ -1,8 +1,8 @@
 @model ResultsViewModel
 
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";       
-    ViewBag.Title = Model.Courses != null && Model.Courses.TotalCount > 0  
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Model.Courses != null && Model.Courses.TotalCount > 0
         ? $"{string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:n0}", Model.Courses.TotalCount)} courses"
         : "No courses found";
 }

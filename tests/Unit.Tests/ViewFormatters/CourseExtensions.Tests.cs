@@ -26,7 +26,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.ViewFormatters
         {
             var sut = new Course
             {
-                ApplicationsAcceptedFrom = null                
+                ApplicationsAcceptedFrom = null
             };
 
             var result = sut.FormattedEarliestApplicationDate();

@@ -9,7 +9,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Services
     class GeocoderTests
     {
         IGeocoder geocoder;
-        
+
         [SetUp]
         public void SetUp()
         {
@@ -70,9 +70,9 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Services
         {
             var res = geocoder.SuggestLocationsAsync("Cambr");
             res.Wait();
-            
+
             var suggestions = res.Result;
-            
+
             Assert.Greater(suggestions.Count(), 0, "Cambr should give suggestions");
             Assert.That(suggestions.First(), Is.EqualTo("Cambridge, UK"), "Cambr should give Cambridge, UK");
         }

@@ -13,9 +13,9 @@ namespace GovUk.Education.SearchAndCompare.UI.ActionFilters
             this.policy = policy;
         }
 
-        public override void OnActionExecuting(ActionExecutingContext context) 
+        public override void OnActionExecuting(ActionExecutingContext context)
         {
-            if (policy == AnalyticsPolicy.Yes) 
+            if (policy == AnalyticsPolicy.Yes)
             {
                 ((Controller) context.Controller).ViewData["SEND_ANALYTICS"] = true;
             }

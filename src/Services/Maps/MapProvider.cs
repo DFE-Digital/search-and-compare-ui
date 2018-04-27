@@ -39,7 +39,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Services.Maps
         public async Task<byte[]> GetStaticMapImageAsync(
             IMapProjection<IMapMarker> mapProjection)
         {
-            using(var client = httpClientProvider.GetHttpClient()) 
+            using(var client = httpClientProvider.GetHttpClient())
             {
                 var query = HttpUtility.ParseQueryString(string.Empty);
                 query["key"] = apiKey;

@@ -52,7 +52,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.ViewFormatters
 
         private static Course MakeCourse(VacancyStatus partTimeVacancyStatus, VacancyStatus fullTimeVacancyStatus)
         {
-            return new Course 
+            return new Course
             {
                 PartTime = partTimeVacancyStatus,
                 FullTime = fullTimeVacancyStatus

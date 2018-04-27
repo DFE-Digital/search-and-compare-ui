@@ -16,6 +16,6 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels
 
         public FilteredList<Subject> Subjects { get; set; }
 
-        public ResultsFilter FilterModel { get; set; } = new ResultsFilter();   
+        public ResultsFilter FilterModel { get; set; } = new ResultsFilter();
     }
 }
