@@ -28,21 +28,21 @@
                     <h1 class="heading-xlarge">Financial support while you&nbsp;train</h1>
                 </legend>
                 <p>
-                    Some business studies teacher training courses offer you a salary.
+                    Business studies courses come with either student finance (a tuition fee loan and maintenance loan, if you’re eligible) or a salary.
                 </p>
 
                 <div class="form-group @(errors.HasError("applyFilter") ? "form-group-error" : "")" id="applyFilter-container">
                     <div class="multiple-choice multiple-radio">
                         <input id="applyFilter-all" type="radio" name="applyFilter" value="false" checked="@(Model.SelectedFunding == FundingOption.All)">
                         <label for="applyFilter-all" class="multi-choice-label">
-                            Show courses with and without a salary
+                            All courses (with salaries or with student finance)
                         </label>
                     </div>
 
                     <div class="multiple-choice multiple-radio">
                         <input id="applyFilter-some" type="radio" name="applyFilter" value="true" checked="@(errors.HasError("funding") || (Model.SelectedFunding != null && Model.SelectedFunding != FundingOption.All))">
                         <label for="applyFilter-some" class="multi-choice-label">
-                            Only show courses that come with a salary
+                            Only courses that come with a salary
                         </label>
                     </div>
 
@@ -51,6 +51,8 @@
                     <input type="hidden" name="includeSalary" value="true">
                 </div>
             </fieldset>
+
+            <p>You can <a href="https://www.gov.uk/student-finance">find out more about student finance and the eligibility requirements</a>.</p>
 
             <div class="filter-apply-button">
                 <input class="button" type="submit" value="Find courses">
@@ -61,9 +63,6 @@
             </h2>
             <p>
                 Some other subjects offer different types of financial support for trainee teachers. You can find out more about <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview/funding-by-subject">financial support for trainee teachers</a> on the Get into Teaching website.
-            </p>
-            <p>
-                You may also be eligible for <a href="https://www.gov.uk/student-finance">financial support for students</a>.
             </p>
         </form>
     </div>

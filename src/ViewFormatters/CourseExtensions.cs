@@ -100,7 +100,7 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewFormatters
             }
             else
             {
-                return "None";
+                return "Student finance if you’re eligible";
             }
         }
 
