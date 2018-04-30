@@ -7,8 +7,8 @@
 
 @if (isInWizard) {
     @Html.Partial("Back", new BackLinkViewModel {
-        Href = Url.Action("Index", "Home"),
-        Title = "Back to start"
+        Href = Url.Action("Disclaimer","Home"),
+        Title = "Back"
     })
 } else {
     @Html.Partial("Back", new BackLinkViewModel {
@@ -77,7 +77,7 @@
             </fieldset>
 
             <div class="filter-apply-button">
-                <input class="button" type="submit" value="@(isInWizard ? "Next" : "Find courses")">
+                <input class="button" type="submit" value="@(isInWizard ? "Continue" : "Find courses")">
             </div>
         </form>
     </div>

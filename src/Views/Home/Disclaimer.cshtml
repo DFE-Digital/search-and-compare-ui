@@ -1,0 +1,18 @@
+@{
+    ViewBag.Title = $"This service does not have every business studies course";
+}
+
+@Html.Partial("Back", new BackLinkViewModel {
+    Href = Url.Action("Index","Home"),
+    Title = "Back to start"
+})
+
+<div class="grid-row">
+    <div class="column-two-thirds">
+        <h1 class="heading-xlarge">This service does not have every business studies course</h1>
+        <p>This service is still in development. It features a limited number of business studies courses in England. More courses are available on <a href="https://www.ucas.com/ucas/teacher-training/ucas-teacher-training-search-training-programmes">the UCAS website<a>.</p>
+        <div class="filter-apply-button">
+            <a class="button" href='@Url.Action("LocationWizard", "Filter")'>Continue</a>
+        </div>
+    </div>
+</div>

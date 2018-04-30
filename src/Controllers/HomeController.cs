@@ -19,6 +19,12 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             return View("Index_privatebeta");
         }
 
+        [HttpGet("disclaimer")]
+        public IActionResult Disclaimer()
+        {
+          return View();
+        }
+
         [AllowAnonymous]
         public IActionResult Error()
         {
