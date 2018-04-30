@@ -310,7 +310,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
         {
             if (SelectedFunding == null || SelectedFunding == FundingOption.All)
             {
-                yield return "With and without salaries";
+                yield return "Student finance and salaries";
                 yield break;
             }
 
