@@ -65,7 +65,14 @@ namespace GovUk.Education.SearchAndCompare.UI
 
             app.AddContentLanguageHeaders("en");
 
-            app.UseMvc(routes => {});
+            app.UseMvc(routes => {
+                routes.MapRoute("cookies", "cookies",
+                    defaults: new { controller = "Legal", action = "Cookies" });
+                routes.MapRoute("privacy", "privacy-policy",
+                    defaults: new { controller = "Legal", action = "Privacy" });
+                routes.MapRoute("tandc", "terms-conditions",
+                    defaults: new { controller = "Legal", action = "TandC" });
+            });
         }
     }
 }
