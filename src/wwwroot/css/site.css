@@ -86,8 +86,6 @@
     padding-top: 13px;
     position: relative;
     background-color: #fff;
-    overflow-y: scroll;
-    overflow-x: hidden
 }
 
 .padded-filter .filter-options.overflow {
@@ -404,6 +402,10 @@ table.alt th
     background: transparent;
 }
 
+.tt-highlight {
+    font-weight: bold;
+}
+
 /* BELOW: PRIVATE_BETA_HACK */
 .private-beta-warning {
     padding: 10px;
@@ -412,7 +414,7 @@ table.alt th
 }
 
 .break-word {
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-  hyphens: auto;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
 }
