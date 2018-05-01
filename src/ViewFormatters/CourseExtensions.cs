@@ -49,10 +49,11 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewFormatters
 
         public static string FormattedStudyInfo(this Course course)
         {
-            return string.Format("{0}, {1}, {2}",
+            return string.Format("{0}, {1}",
             course.Duration(),
-            course.IsUniversityLed() ? "university-led" : "school-led",
             string.Join(", ", course.GetStudyTypes()).ToLower());
+
+            // course.IsUniversityLed() ? "university-led" : "school-led",
         }
 
         public static IEnumerable<string> GetStudyTypes(this Course course)
