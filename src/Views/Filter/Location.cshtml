@@ -46,9 +46,15 @@
                         <div class="form-group">
                             <label class="form-label" for="radius">Within</label>
                             <select class="form-control" id="radius" name="rad">
-                                @foreach(var option in Enum.GetValues(typeof(RadiusOption)))
+                                @foreach(int option in Enum.GetValues(typeof(RadiusOption)))
                                 {
-                                    <option value="@((int) option)">@((int) option) miles</option>
+                                    var defaultSelectedValue = 20;
+                                    if(option == defaultSelectedValue){
+                                        <option value="@(option)" selected="selected" >@(option) miles</option>
+                                    } else
+                                    {
+                                        <option value="@(option)" >@(option) miles</option>
+                                    }
                                 }
                             </select>
                         </div>
