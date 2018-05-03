@@ -16,6 +16,16 @@ branches:
   - staging
   - production
 deploy:
+  - provider: azure_web_apps
+    username: travis-deploy-user
+    site: as-de-bat-ui
+    on:
+      branch: master
+  - provider: azure_web_apps
+    username: travis-deploy-user
+    site: as-te-bat-ui
+    on:
+      branch: staging
   - provider: script
     script: bash travis-deploy.sh $OC_WEBHOOK_DEV
     on:
