@@ -4,11 +4,13 @@ gtag('js', new Date());
 
 gtag('config', 'UA-112932657-1', {
     'anonymize_ip': true,
-    'send_page_view': false,
+    'send_page_view': true,
     'custom_map': {
         'dimension1': 'location',
         'dimension2': 'radius',
-        'dimension3': 'subjects'
+        'dimension3': 'subjects',
+        'dimension4': 'provider',
+        'dimension5': 'funding'
     }
 });
 
@@ -28,5 +30,7 @@ gtag('event', 'sac_page_view', {
     'event_label': location.pathname,
     'location': getParameterByName('loc') || "(none)",
     'radius': getParameterByName('rad') || "(none)",
-    'subjects': getParameterByName('subjects') || "(none)"
+    'subjects': getParameterByName('subjects') || "(none)",
+    'provider': getParameterByName('query') || "(none)",
+    'funding': getParameterByName('funding') || "(none)"
 });
