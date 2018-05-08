@@ -34,7 +34,12 @@
     </div>
 
     <div class="column-two-thirds">
+
+
+        @await Component.InvokeAsync("SuggestedSearch", Model)
         @if (Model.Courses == null || Model.Courses.TotalCount < 1) {
+
+
             @Html.Partial("Display/Empty")
         } else if (Model.MapsEnabled && Model.FilterModel.DisplayAsMap) {
                 @Html.Partial("Display/Map", Model)
