@@ -12,4 +12,4 @@ Runs from vscode and Visual Studio 2017 with F5.
 
 Defaults to published development API backend to make it easier to get started, override this with an environment variable to work against a local copy of the API or to alter for production environments. E.g.:
 
-    cd src && set API_URL=http://localhost:5001/ && dotnet run
+    cd src && set API_URI=http://localhost:5001/api && dotnet run
