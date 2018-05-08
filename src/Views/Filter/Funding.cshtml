@@ -35,14 +35,16 @@
                     <div class="multiple-choice multiple-radio">
                         <input id="applyFilter-all" type="radio" name="applyFilter" value="false" checked="@(Model.SelectedFunding == FundingOption.All)">
                         <label for="applyFilter-all" class="multi-choice-label">
-                            All courses (with salaries or with student finance)
+                            <strong class="bold">All courses (with salaries or with student finance)</strong><br />
+                            102 courses
                         </label>
                     </div>
 
                     <div class="multiple-choice multiple-radio">
                         <input id="applyFilter-some" type="radio" name="applyFilter" value="true" checked="@(errors.HasError("funding") || (Model.SelectedFunding != null && Model.SelectedFunding != FundingOption.All))">
                         <label for="applyFilter-some" class="multi-choice-label">
-                            Only courses that come with a salary
+                            <strong class="bold">Only courses that come with a salary</strong><br />
+                            5 courses
                         </label>
                     </div>
 
