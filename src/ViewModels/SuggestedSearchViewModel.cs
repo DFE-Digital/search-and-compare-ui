@@ -6,11 +6,7 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels
 {
     public class SuggestedSearchViewModel
     {
-        public IDictionary<RelevantType, RelevantResults> RelevantSearchResults { get; set; }
-    }
-    public class RelevantResults
-    {
-        public int TotalCourse { get; set; }
-        public ResultsFilter RelevantResultFilter { get; set; }
+        public int TotalCount { get; set; }
+        public ResultsFilter ResultsFilter { get; set; }
     }
 }

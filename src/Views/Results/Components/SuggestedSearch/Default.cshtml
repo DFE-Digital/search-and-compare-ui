@@ -1,23 +1,31 @@
-<div class="column-two-thirds">
+@model List<SuggestedSearchViewModel>
 
-        <div>
-          <h2 class="heading-large">
-            There are no courses matching your&nbsp;search
-          </h2>
+<h3 class="heading-medium">Suggested searches</h3>
 
-          <p>
-            You can <a href="/start/location">try another search</a>, for example by changing subject or location.
-          </p>
+@if(Model.Any()) {
+  var nearest = Model.FirstOrDefault(x => x.ResultsFilter.RadiusOption.HasValue);
+  var england = Model.FirstOrDefault(x =>
+    !(x.ResultsFilter.SelectedFunding == null || x.ResultsFilter.SelectedFunding == FundingOption.All)
+      && x.ResultsFilter.SelectedFunding.Value.HasFlag(FundingOption.Salary)
+      && x.ResultsFilter.LocationOption == LocationOption.No);
 
-          <h3 class="heading-medium">Suggested searches</h3>
           <p>For business studies there are:</p>
           <ul class="list list-bullet">
-            <li><a href="#">8 courses within 10 miles of SW13</a></li>
-            <li><a href="#">2 courses with funding options available in England</a></li>
-          </ul>
 
-          <p>
-            You can <a href="#">search for courses in other subjects</a> on the UCAS website.
-          </p>
-        </div>
-      </div>
+          @if(nearest != null) {
+            <li>
+              <a href="@(Url.Action("Index", "Results", nearest.ResultsFilter.ToRouteValues()))">@nearest.TotalCount courses within @nearest.ResultsFilter.rad miles around @nearest.ResultsFilter.loc</a>
+              </li>
+          }
+
+          @if(england != null) {
+            <li>
+              <a href="@(Url.Action("Index", "Results", england.ResultsFilter.ToRouteValues()))">@england.TotalCount courses with salaries available in England</a>
+            </li>
+          }
+          </ul>
+}
+
+<p>
+  You can <a href="https://www.ucas.com/ucas/teacher-training/ucas-teacher-training-search-training-programmes">seach for courses in other subjects</a> on the UCAS website..
+</p>
