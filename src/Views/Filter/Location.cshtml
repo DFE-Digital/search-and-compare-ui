@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = $"Choose your search";
     var isInWizard = ViewBag.IsInWizard == true;
-    var selectedRadius = (Model.FilterModel.rad.HasValue) ? Model.FilterModel.rad : (int)RadiusOption.TwentyMiles;
+    var selectedRadius = (Model.FilterModel.rad.HasValue) ? Model.FilterModel.rad : (int)RadiusOption.OneHundredMiles;
 }
 
 @if (isInWizard) {
@@ -44,7 +44,7 @@
                             </label>
                             <input class="form-control typeahead" data-url="@Url.Action("LocationSuggest", "Dynamic")" name="lq" type="text" id="location" value="@Model.FilterModel.lq">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" style="display: none">
 
                             <label class="form-label" for="radius">Within</label>
                             <select class="form-control" id="radius" name="rad">
