@@ -1,17 +1,8 @@
-@model ResultsViewModel
-
-<div class="search-results-header">
-    <div class="found-heading" role="heading">
-        <p class="found-count">No courses found</p>
-        <p class="new-search"><a href='@Url.Action("LocationWizard", "Filter")'>New search</a></p>
-    </div>
-</div>
-
 <div id="noresults">
+    <h2 class="heading-large">
+        There are no courses matching your&nbsp;search
+    </h2>
     <p>
-        There are currently no courses that match your search.
-    </p>
-    <p>
-        You can <a href='@Url.Action("LocationWizard", "Filter")'>try again</a>, for example by changing subject and location.
+        You can <a href='@Url.Action("LocationWizard", "Filter")'>try another search</a>, for example by changing subject or location.
     </p>
 </div>
