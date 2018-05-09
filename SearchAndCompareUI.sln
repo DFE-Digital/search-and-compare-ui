@@ -6,6 +6,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchAndCompareUi", "src\S
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchAndCompareUI.Tests", "tests\SearchAndCompareUI.Tests.csproj", "{E6BC67D7-901E-49B6-909E-5C3C699D6194}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B312634F-9CFE-4A03-B2E9-9A4F4573A4BA}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		.travis.yml = .travis.yml
+		Dockerfile = Dockerfile
+		Dockerfile.rhel7 = Dockerfile.rhel7
+		global.json = global.json
+		Nuget.config = Nuget.config
+		package.json = package.json
+		README.md = README.md
+		travis-build.sh = travis-build.sh
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
