@@ -1,4 +1,4 @@
-@model ResultsFilter
+@model FundingFilterViewModel
 
 @{
     ViewBag.Title = $"Filter by financial support options";
@@ -9,12 +9,12 @@
 @if(isInWizard) {
     @* PRIVATE_BETA_HACK *@
     @Html.Partial("Back", new BackLinkViewModel {
-        Href = Url.Action("LocationWizard", "Filter", Model.ToRouteValues()),
+        Href = Url.Action("LocationWizard", "Filter", Model.FilterModel.ToRouteValues()),
         Title = "Back to location"
     })
 } else {
     @Html.Partial("Back", new BackLinkViewModel {
-        Href = Url.Action("Index", "Results", Model.ToRouteValues()),
+        Href = Url.Action("Index", "Results", Model.FilterModel.ToRouteValues()),
         Title = "Back to search results"
     })
 }
@@ -22,7 +22,7 @@
 <div class="grid-row">
     <div class="column-two-thirds">
         @Html.Partial("Error", errors)
-        <form action='@Url.Action(isInWizard ? "FundingWizard": "Funding", "Filter", Model.ToRouteValues())' method="POST">
+        <form action='@Url.Action(isInWizard ? "FundingWizard": "Funding", "Filter", Model.FilterModel.ToRouteValues())' method="POST">
             <fieldset role="radiogroup" aria-required="true">
                 <legend role="heading">
                     <h1 class="heading-xlarge">Financial support while you&nbsp;train</h1>
@@ -33,18 +33,18 @@
 
                 <div class="form-group @(errors.HasError("applyFilter") ? "form-group-error" : "")" id="applyFilter-container">
                     <div class="multiple-choice multiple-radio">
-                        <input id="applyFilter-all" type="radio" name="applyFilter" value="false" checked="@(Model.SelectedFunding == FundingOption.All)">
+                        <input id="applyFilter-all" type="radio" name="applyFilter" value="false" checked="@(Model.FilterModel.SelectedFunding == FundingOption.All)">
                         <label for="applyFilter-all" class="multi-choice-label">
                             <strong class="bold">All courses (with salaries or with student finance)</strong><br />
-                            102 courses
+                            @Model.AllCount courses
                         </label>
                     </div>
 
                     <div class="multiple-choice multiple-radio">
-                        <input id="applyFilter-some" type="radio" name="applyFilter" value="true" checked="@(errors.HasError("funding") || (Model.SelectedFunding != null && Model.SelectedFunding != FundingOption.All))">
+                        <input id="applyFilter-some" type="radio" name="applyFilter" value="true" checked="@(errors.HasError("funding") || (Model.FilterModel.SelectedFunding != null && Model.FilterModel.SelectedFunding != FundingOption.All))">
                         <label for="applyFilter-some" class="multi-choice-label">
                             <strong class="bold">Only courses that come with a salary</strong><br />
-                            5 courses
+                            @Model.SalaryCount courses
                         </label>
                     </div>
 

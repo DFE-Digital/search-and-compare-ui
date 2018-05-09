@@ -192,7 +192,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         public IActionResult Funding(ResultsFilter filter)
         {
             ViewBag.Errors = TempData.Get<ErrorViewModel>("Errors") ?? new ErrorViewModel();
-            return View("Funding", filter);
+            var model = new FundingFilterViewModel
+            {
+                FilterModel = filter,
+            };
+            return View("Funding", model);
         }
 
         [HttpPost("results/filter/funding")]
