@@ -16,6 +16,11 @@
             <a href='@Url.Action("Index", "Course", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new {courseId = item.Id}))' class="link">@item.Name at @item.Provider.Name</a>
         </h3>
         <dl>
+            @if (item.Distance != null) {
+                <dt>Distance</dt>
+                <dd>@item.FormattedDistance()</dd>
+            }
+
             @if (item.ProviderLocation != null) {
                 <dt>Location</dt>
                 <dd>@item.ProviderLocation.Address</dd>
@@ -28,11 +33,6 @@
 
             <dt>Financial support</dt>
             <dd>@item.FundingOptions()</dd>
-
-            @if (item.Distance != null) {
-                <dt>Distance</dt>
-                <dd>@item.FormattedDistance()</dd>
-            }
         </dl>
     </li>
 }
