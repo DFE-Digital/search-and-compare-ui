@@ -192,9 +192,14 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         public IActionResult Funding(ResultsFilter filter)
         {
             ViewBag.Errors = TempData.Get<ErrorViewModel>("Errors") ?? new ErrorViewModel();
+            var all = _api.GetCoursesTotalCount(filter.ToQueryFilter());
+            filter.SelectedFunding = FundingOption.Salary;
+            var salaryCount = _api.GetCoursesTotalCount(filter.ToQueryFilter());
             var model = new FundingFilterViewModel
             {
                 FilterModel = filter,
+                AllCount = all.TotalCount,
+                SalaryCount = salaryCount.TotalCount,
             };
             return View("Funding", model);
         }
