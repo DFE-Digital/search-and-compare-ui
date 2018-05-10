@@ -195,6 +195,9 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             var all = _api.GetCoursesTotalCount(filter.ToQueryFilter());
             filter.SelectedFunding = FundingOption.Salary;
             var salaryCount = _api.GetCoursesTotalCount(filter.ToQueryFilter());
+
+            filter.SelectedFunding = null;
+
             var model = new FundingFilterViewModel
             {
                 FilterModel = filter,

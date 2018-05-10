@@ -41,7 +41,7 @@
                     </div>
 
                     <div class="multiple-choice multiple-radio">
-                        <input id="applyFilter-some" type="radio" name="applyFilter" value="true" checked="@(errors.HasError("funding") || (Model.FilterModel.SelectedFunding != null && Model.FilterModel.SelectedFunding != FundingOption.All))">
+                        <input id="applyFilter-some" type="radio" name="applyFilter" value="true" checked="@(errors.HasError("funding") || (Model.FilterModel.SelectedFunding != null && Model.FilterModel.SelectedFunding == FundingOption.Salary))">
                         <label for="applyFilter-some" class="multi-choice-label">
                             <strong class="bold">Only courses that come with a salary</strong><br />
                             @Model.SalaryCount courses
