@@ -3,29 +3,25 @@
 <h3 class="heading-medium">Suggested searches</h3>
 
 @if(Model.Any()) {
-  var nearest = Model.FirstOrDefault(x => x.ResultsFilter.RadiusOption.HasValue);
-  var england = Model.FirstOrDefault(x =>
-    !(x.ResultsFilter.SelectedFunding == null || x.ResultsFilter.SelectedFunding == FundingOption.All)
-      && x.ResultsFilter.SelectedFunding.Value.HasFlag(FundingOption.Salary)
-      && x.ResultsFilter.LocationOption == LocationOption.No);
+    <p>For business studies there are:</p>
+    <ul class="list list-bullet">
 
-          <p>For business studies there are:</p>
-          <ul class="list list-bullet">
+    @foreach (var item in Model)
+    {
+      var courseText = " course" + (item.TotalCount == 1 ? "" : "s");
+      var areaText = item.ResultsFilter.RadiusOption.HasValue ?
+        " with " + item.ResultsFilter.GetFundingTypes().First().ToLowerInvariant() + " available within " + item.ResultsFilter.rad + " miles of " + item.ResultsFilter.loc :
+        " with " + item.ResultsFilter.GetFundingTypes().First().ToLowerInvariant() + " available in England";
+      var text = item.TotalCount + courseText + areaText;
 
-          @if(nearest != null) {
-            <li>
-              <a href="@(Url.Action("Index", "Results", nearest.ResultsFilter.ToRouteValues()))">@nearest.TotalCount courses within @nearest.ResultsFilter.rad miles around @nearest.ResultsFilter.loc</a>
-              </li>
-          }
+        <li>
+          <a href="@(Url.Action("Index", "Results", item.ResultsFilter.ToRouteValues()))">@text</a>
+        </li>
+    }
 
-          @if(england != null) {
-            <li>
-              <a href="@(Url.Action("Index", "Results", england.ResultsFilter.ToRouteValues()))">@england.TotalCount courses with salaries available in England</a>
-            </li>
-          }
-          </ul>
+    </ul>
 }
 
 <p>
-  You can <a href="https://www.ucas.com/ucas/teacher-training/ucas-teacher-training-search-training-programmes">seach for courses in other subjects</a> on the UCAS website..
+  You can <a href="https://www.ucas.com/ucas/teacher-training/ucas-teacher-training-search-training-programmes">search for courses in other subjects</a> on the UCAS website..
 </p>

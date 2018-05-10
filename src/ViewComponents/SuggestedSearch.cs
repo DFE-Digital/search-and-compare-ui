@@ -22,71 +22,84 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewComponents
             _api = api;
         }
 
-        private SuggestedSearchViewModel GetAvailableNextNearest(IList<int> availableRads, ResultsFilter resultsFilter, int currentTotal)
+        public Task<IViewComponentResult> InvokeAsync(ResultsViewModel original, int maxResult)
         {
-            SuggestedSearchViewModel nextNearest = null;
+            var originalTotal = original.Courses.TotalCount;
 
-            foreach (int availableRad in availableRads)
+            var hasSalary = !(original.FilterModel.SelectedFunding.HasValue && original.FilterModel.SelectedFunding.Value == FundingOption.All) && original.FilterModel.SelectedFunding.Value.HasFlag(FundingOption.Salary) ;
+
+            var resultsFilters = GetSuggestedSearchesResultsFiltersForAllFunding(original);
+
+            if (hasSalary) {
+                resultsFilters.Add(GetSuggestedSearchesResultsFilterForAnyFunding(original));
+            }
+
+            var results = GetResults(resultsFilters, originalTotal, maxResult);
+
+            return Task.FromResult<IViewComponentResult>(View(results));
+        }
+
+        private ResultsFilter GetSuggestedSearchesResultsFilterForAnyFunding(ResultsViewModel original)
+        {
+            var results = original.FilterModel.Clone(false);
+                results.SelectedFunding = FundingOption.AnyFunding;
+                results.LocationOption = LocationOption.No;
+
+            return results;
+        }
+
+        private IList<ResultsFilter> GetSuggestedSearchesResultsFiltersForAllFunding(ResultsViewModel original)
+        {
+            var allRads = Enum.GetValues(typeof(RadiusOption)).Cast<RadiusOption>();
+            var radsMax = allRads.Max();
+
+            var resultsFilters = new List<ResultsFilter>();
+
+            if (original.FilterModel.RadiusOption.HasValue && !original.FilterModel.RadiusOption.Value.Equals(allRads.Max()))
             {
-                if (nextNearest == null) {
-                    resultsFilter.rad = availableRad;
-                    var result = _api.GetCoursesTotalCount(resultsFilter.ToQueryFilter());
-
-                    if (result.TotalCount > currentTotal)
+                var availableRadSearches = allRads.Where(x => x != radsMax && x > original.FilterModel.RadiusOption.Value)
+                    .Select(x => (int)x)
+                    .OrderBy(x => x)
+                    .Select(x =>
                     {
-                        nextNearest = new SuggestedSearchViewModel { ResultsFilter = resultsFilter, TotalCount = result.TotalCount };
+                        var cloneResultsFilter = original.FilterModel.Clone(true);
+                        cloneResultsFilter.SelectedFunding = FundingOption.All;
+                        cloneResultsFilter.rad = x;
+
+                        return cloneResultsFilter;
+                    })
+                    .ToList();
+
+                resultsFilters.AddRange(availableRadSearches);
+            }
+
+            var noLocationResultsFilter = original.FilterModel.Clone(false);
+            noLocationResultsFilter.SelectedFunding = FundingOption.All;
+            noLocationResultsFilter.LocationOption = LocationOption.No;
+
+            resultsFilters.Add(noLocationResultsFilter);
+
+            return resultsFilters;
+        }
+
+
+        private IList<SuggestedSearchViewModel> GetResults(IList<ResultsFilter> resultsFilters, int originalTotal, int maxResult)
+        {
+            var results = new List<SuggestedSearchViewModel>();
+
+            foreach (var resultsFilter in resultsFilters)
+            {
+                if (results.Count != maxResult)
+                {
+                    var result = _api.GetCoursesTotalCount(resultsFilter.ToQueryFilter());
+                    if (result.TotalCount > originalTotal && !results.Any(x => x.TotalCount == result.TotalCount))
+                    {
+                       results.Add(new SuggestedSearchViewModel { ResultsFilter = resultsFilter, TotalCount = result.TotalCount });
                     }
                 }
             }
 
-            return nextNearest;
-        }
-
-        public Task<IViewComponentResult> InvokeAsync(ResultsViewModel original)
-        {
-            var hasRadiusOption = original.FilterModel.RadiusOption.HasValue;
-            var hasLocationOptionYes = (original.FilterModel.LocationOption == LocationOption.Yes);
-            var hasSelectedFundingSalary = !(original.FilterModel.SelectedFunding == null || original.FilterModel.SelectedFunding == FundingOption.All) && original.FilterModel.SelectedFunding.Value.HasFlag(FundingOption.Salary);
-
-
-            var allRads = Enum.GetValues(typeof(RadiusOption)).Cast<RadiusOption>();
-            var radsMax = allRads.Max();
-
-            var currentTotal = original.Courses.TotalCount;
-
-            var results = new List<SuggestedSearchViewModel>();
-
-            if (original.FilterModel.RadiusOption.HasValue && !original.FilterModel.RadiusOption.Value.Equals(allRads.Max()))
-            {
-                var availableRads = allRads.Where(x => x != radsMax && x > original.FilterModel.RadiusOption.Value)
-                    .Select(x => (int)x )
-                    .OrderBy(x => x)
-                    .ToList();
-
-                var nextNearest = this.GetAvailableNextNearest(availableRads, original.FilterModel.Clone(true), currentTotal);
-
-                if (nextNearest != null)
-                {
-                    results.Add(nextNearest);
-                }
-            }
-
-            if (hasLocationOptionYes && hasSelectedFundingSalary) {
-
-                var newFilterModel = original.FilterModel.Clone(false);
-                newFilterModel.LocationOption = LocationOption.No;
-                var result = _api.GetCoursesTotalCount(newFilterModel.ToQueryFilter());
-
-                // if(result.TotalCount > currentTotal)
-                // {
-
-                    results.Add(new SuggestedSearchViewModel { ResultsFilter = newFilterModel, TotalCount = result.TotalCount });
-                // }
-
-
-            }
-
-            return Task.FromResult<IViewComponentResult>(View(results));
+            return results;
         }
     }
 }
