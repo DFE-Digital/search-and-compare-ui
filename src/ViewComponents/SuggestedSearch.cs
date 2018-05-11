@@ -30,11 +30,22 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewComponents
 
             var resultsFilters = GetSuggestedSearchesResultsFiltersForAllFunding(original);
 
+            IList<SuggestedSearchViewModel> results = null;
+            var salaryResults = new List<SuggestedSearchViewModel>();
             if (hasSalary) {
-                resultsFilters.Add(GetSuggestedSearchesResultsFilterForAnyFunding(original));
+                var salaryResultsFilters = new List<ResultsFilter> { GetSuggestedSearchesResultsFilterForAnyFunding(original) };
+
+                salaryResults = GetResults(salaryResultsFilters, originalTotal, salaryResultsFilters.Count());
             }
 
-            var results = GetResults(resultsFilters, originalTotal, maxResult);
+            var salaryResult = salaryResults.FirstOrDefault();
+            if (salaryResult != null) {
+                results = GetResults(resultsFilters, originalTotal, maxResult - salaryResults.Count() );
+                results.Add(salaryResult);
+            }
+            else {
+                results = GetResults(resultsFilters, originalTotal, maxResult);
+            }
 
             return Task.FromResult<IViewComponentResult>(View(results));
         }
@@ -83,7 +94,7 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewComponents
         }
 
 
-        private IList<SuggestedSearchViewModel> GetResults(IList<ResultsFilter> resultsFilters, int originalTotal, int maxResult)
+        private List<SuggestedSearchViewModel> GetResults(IList<ResultsFilter> resultsFilters, int originalTotal, int maxResult)
         {
             var results = new List<SuggestedSearchViewModel>();
 
@@ -99,7 +110,7 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewComponents
                 }
             }
 
-            return results;
+            return results.ToList();
         }
     }
 }
