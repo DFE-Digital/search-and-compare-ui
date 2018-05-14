@@ -418,3 +418,16 @@ table.alt th
     word-wrap: break-word;
     hyphens: auto;
 }
+
+.form-block--or {
+  margin-left: 10px;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+@media (min-width: 641px) {
+  .form-block--or {
+    margin-top: 10px;
+    margin-bottom: 0;
+  }
+}
