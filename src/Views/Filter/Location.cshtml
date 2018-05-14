@@ -1,7 +1,7 @@
 @model LocationFilterViewModel
 
 @{
-    ViewBag.Title = $"Choose your search";
+    ViewBag.Title = $"Find courses by location or by training provider";
     var isInWizard = ViewBag.IsInWizard == true;
     var selectedRadius = (Model.FilterModel.rad.HasValue) ? Model.FilterModel.rad : (int)RadiusOption.TwentyMiles;
 }
@@ -25,7 +25,7 @@
         <form action='@Url.Action(isInWizard ? "LocationWizard" : "Location", "Filter", Model.FilterModel.ToRouteValues())' method="POST">
             <fieldset role="radiogroup" aria-required="true">
                 <legend role="heading">
-                    <h1 class="heading-xlarge">Choose your search</h1>
+                    <h1 class="heading-xlarge">Find courses by location or by training provider</h1>
                 </legend>
 
                 <div class="form-group @(Model.Errors.HasError("l") ? "form-group-error" : "")" id="l-container">
@@ -45,7 +45,6 @@
                             <input class="form-control typeahead" data-url="@Url.Action("LocationSuggest", "Dynamic")" name="lq" type="text" id="location" value="@Model.FilterModel.lq">
                         </div>
                         <div class="form-group">
-
                             <label class="form-label" for="radius">Within</label>
                             <select class="form-control" id="radius" name="rad">
                                 @foreach(int option in Enum.GetValues(typeof(RadiusOption)))
@@ -65,6 +64,8 @@
                         <input id="location-Unset" type="radio" name="l" value="@((int)LocationOption.No)" checked="@(Model.FilterModel.LocationOption == LocationOption.No)">
                         <label for="location-Unset">Across England</label>
                     </div>
+
+                    <p class="form-block form-block--or">or</p>
 
                     <div class="multiple-choice multiple-radio" data-target="query-container">
                         <input id="location-Specific" type="radio" name="l" value="@((int)LocationOption.Specific)" checked="@(Model.FilterModel.LocationOption == LocationOption.Specific)">
