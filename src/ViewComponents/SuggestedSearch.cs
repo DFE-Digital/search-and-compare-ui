@@ -26,11 +26,10 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewComponents
         {
             var originalTotal = original.Courses.TotalCount;
 
-            var hasSalary = !(original.FilterModel.SelectedFunding.HasValue && original.FilterModel.SelectedFunding.Value == FundingOption.All) && original.FilterModel.SelectedFunding.Value.HasFlag(FundingOption.Salary) ;
+            var hasSalary = !(original.FilterModel.SelectedFunding.HasValue && original.FilterModel.SelectedFunding.Value == FundingOption.All) && original.FilterModel.SelectedFunding.Value.HasFlag(FundingOption.Salary);
 
             var resultsFilters = GetSuggestedSearchesResultsFiltersForAllFunding(original);
 
-            IList<SuggestedSearchViewModel> results = null;
             var salaryResults = new List<SuggestedSearchViewModel>();
             if (hasSalary) {
                 var salaryResultsFilters = new List<ResultsFilter> { GetSuggestedSearchesResultsFilterForAnyFunding(original) };
@@ -38,16 +37,18 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewComponents
                 salaryResults = GetResults(salaryResultsFilters, originalTotal, salaryResultsFilters.Count());
             }
 
+            var result = new SuggestedSearchesViewModel { OriginalResults = original};
             var salaryResult = salaryResults.FirstOrDefault();
             if (salaryResult != null) {
-                results = GetResults(resultsFilters, originalTotal, maxResult - salaryResults.Count() );
-                results.Add(salaryResult);
+                result.SuggestedSearches = GetResults(resultsFilters, originalTotal, maxResult - salaryResults.Count() );
+                result.SuggestedSearches.Add(salaryResult);
             }
             else {
-                results = GetResults(resultsFilters, originalTotal, maxResult);
+                result.SuggestedSearches = GetResults(resultsFilters, originalTotal, maxResult);
             }
 
-            return Task.FromResult<IViewComponentResult>(View(results));
+
+            return Task.FromResult<IViewComponentResult>(View(result));
         }
 
         private ResultsFilter GetSuggestedSearchesResultsFilterForAnyFunding(ResultsViewModel original)
