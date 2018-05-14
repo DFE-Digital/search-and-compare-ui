@@ -1,0 +1,32 @@
+@model SuggestedSearchesViewModel
+
+<h3 class="heading-medium">Suggested searches</h3>
+
+@if(Model.SuggestedSearches.Any()) {
+    var hasSalary = !(Model.OriginalResults.FilterModel.SelectedFunding.HasValue && Model.OriginalResults.FilterModel.SelectedFunding.Value == FundingOption.All) && Model.OriginalResults.FilterModel.SelectedFunding.Value.HasFlag(FundingOption.Salary);
+
+    <p>For business studies there are:</p>
+    <ul class="list list-bullet">
+
+    @foreach (var item in Model.SuggestedSearches)
+    {
+      var courseText = " course" + (item.TotalCount == 1 ? "" : "s");
+      var areaText = item.ResultsFilter.RadiusOption.HasValue ?
+        " within " + item.ResultsFilter.rad + " miles of " + item.ResultsFilter.loc :
+        (
+          hasSalary ?
+            " with " + item.ResultsFilter.GetFundingTypes().First().ToLowerInvariant() + " available in England" :
+            " across England" );
+      var text = item.TotalCount + courseText + areaText;
+
+        <li>
+          <a href="@(Url.Action("Index", "Results", item.ResultsFilter.ToRouteValues()))">@text</a>
+        </li>
+    }
+
+    </ul>
+}
+
+<p>
+  You can <a href="https://www.ucas.com/ucas/teacher-training/ucas-teacher-training-search-training-programmes">search for courses in other subjects</a> on the UCAS website.
+</p>

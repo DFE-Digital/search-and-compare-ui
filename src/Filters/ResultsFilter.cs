@@ -255,6 +255,33 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
             };
         }
 
+        public ResultsFilter Clone(bool withLocation = false, bool withSortby = false, bool withPage = false)
+        {
+            return new ResultsFilter
+            {
+                lat = withLocation ? this.lat : null,
+                lng = withLocation ? this.lng : null,
+                rad = withLocation ? this.rad : null,
+                loc = withLocation ? this.loc : null,
+                lq = withLocation ? this.lq : null,
+                l = withLocation ? this.l : null,
+                subjects = this.subjects,
+                funding = this.funding,
+                query = this.query,
+                display = this.display,
+                zoomlevel = this.zoomlevel,
+                offlng = this.offlng,
+                offlat = this.offlat,
+                pgce = this.pgce,
+                qts = this.qts,
+                fulltime = this.fulltime,
+                parttime = this.parttime,
+                sortby = withSortby ? this.sortby : null,
+                page = withPage ? this.page : null
+            };
+        }
+
+
         public ResultsFilter WithoutSubjects()
         {
             return new ResultsFilter
