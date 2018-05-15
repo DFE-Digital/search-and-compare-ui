@@ -24,8 +24,7 @@
             } else {
                 @Html.Partial("Filters/Location", Model.FilterModel)
             }
-            @* PRIVATE_BETA_HACK *@
-            @* @Html.Partial("Filters/Subject", Model) *@
+            @Html.Partial("Filters/Subject", Model) 
             @Html.Partial("Filters/Funding", Model.FilterModel)
             @Html.Partial("Filters/StudyType", Model.FilterModel)
             @Html.Partial("Filters/Qualification", Model.FilterModel)
