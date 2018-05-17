@@ -53,7 +53,7 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewComponents
 
         private ResultsFilter GetSuggestedSearchesResultsFilterForAnyFunding(ResultsViewModel original)
         {
-            var results = original.FilterModel.Clone(false);
+            var results = original.FilterModel.Clone(false, true);
                 results.SelectedFunding = FundingOption.AnyFunding;
                 results.LocationOption = LocationOption.No;
 
@@ -74,7 +74,7 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewComponents
                     .OrderBy(x => x)
                     .Select(x =>
                     {
-                        var cloneResultsFilter = original.FilterModel.Clone(true);
+                        var cloneResultsFilter = original.FilterModel.Clone(true, true);
                         cloneResultsFilter.SelectedFunding = FundingOption.All;
                         cloneResultsFilter.rad = x;
 
