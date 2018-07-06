@@ -1057,16 +1057,44 @@ details {
     color: #005ea5;
     cursor: pointer;
     position: relative;
-    margin-bottom: 0.26316em; }
-    details summary:hover {
-      color: #2b8cc4; }
-    details summary:focus {
-      outline: 3px solid #ffbf47; }
+    margin-bottom: 0.26316em;
+    padding-left: 25px; }
+  details summary:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: transparent;
+    -webkit-clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+    clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+    border-width: 7px 0 7px 12.124px;
+    border-left-color: inherit; }
+  details summary:hover {
+    color: #2b8cc4; }
+  details summary:focus {
+    outline: 3px solid #ffbf47; }
+  details summary::-webkit-details-marker {
+    display: none; }
+  details[open] > summary:before {
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: transparent;
+    -webkit-clip-path: polygon(0% 0%, 50% 100%, 100% 0%);
+    clip-path: polygon(0% 0%, 50% 100%, 100% 0%);
+    border-width: 12.124px 7px 0 7px;
+    border-top-color: inherit; }
   details .summary {
     text-decoration: underline; }
   details .arrow {
-    margin-right: .35em;
-    font-style: normal; }
+    display: none; }
 
 .panel {
   -webkit-box-sizing: border-box;
@@ -1625,8 +1653,3 @@ input[type=number] {
   color: #fff;
   background: #28a197;
   text-align: center; }
-
-@-moz-document regexp('.*') {
-  details summary:not([tabindex]) {
-    display: list-item;
-    display: revert; } }
