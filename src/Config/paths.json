@@ -1,0 +1,5 @@
+{
+    "public": "./wwwroot/",
+    "assets": "./Assets/",
+    "nodeModules": "./node_modules/govuk-frontend/"
+}

@@ -1,0 +1,544 @@
+$govuk-images-path: "/images/";
+$govuk-fonts-path: "/fonts/";
+
+$govuk-global-styles: true;
+
+@import "node_modules/govuk-frontend/all";
+@import "components/cookie-banner";
+@import "patterns/course-parts";
+@import "patterns/success-summary";
+@import "patterns/definition-list";
+@import "patterns/filters";
+@import "patterns/pagination";
+
+.govuk-header__link--profile {
+    @extend .govuk-header__link;
+
+    &:after {
+        content: ")";
+    }
+
+    &:before {
+        content: "(";
+        margin-left: govuk-spacing(1);
+    }
+}
+
+.govuk-list--dash {
+    padding-left: govuk-spacing(4);
+    list-style-image: url('/images/dash.png');
+    margin-bottom: govuk-spacing(8);
+}
+
+.govuk-checkboxes__label .govuk-\!-font-weight-bold {
+    display: block;
+}
+
+// Add a red border to .form-control-group if validation fails
+.input-validation-error {
+    border: 4px solid govuk-color("red");
+}
+
+.phase-banner-wrapper {
+    max-width: 960px;
+    margin: 0 15px;
+    margin: 0 30px;
+    margin: 0 auto;
+    padding: 0 15px 10px;
+    outline: none;
+
+    @include govuk-media-query($from: tablet) {
+        margin: 0 30px;
+        padding: 0 10px;
+    }
+
+    @include govuk-media-query($from: desktop) {
+        margin: 0 auto;
+        width: 960px;
+    }
+}
+
+// Add extra styles here, or re-organise the Sass files in whichever way makes most sense to you
+
+.add-double-bottom-margin {
+    margin-bottom:  govuk-spacing(2);
+}
+
+.form-control-full {
+    width: 100%;
+}
+
+.results-item {
+    margin-bottom:  govuk-spacing(2);
+}
+
+.metadata dt,
+.metadata dd {
+    display: inline-block;
+}
+
+.metadata dt {
+    width: 20%;
+}
+
+.metadata dd {
+    width: 79%;
+    margin-left: 0;
+}
+
+.filter-category {
+    background-color: govuk-color("grey-3");
+    padding: 12px;
+    margin-bottom: 10px;
+}
+
+.filters {
+    background-color: govuk-colour("white");
+    padding: 10px;
+}
+
+.filter-heading {
+    margin-top: 3px;
+}
+
+.filter-link {
+    padding-top: 10px;
+}
+
+.tabs {
+    padding-left: 0;
+    border-bottom: 1px solid $govuk-input-border-colour;
+    font-size: 19px;
+    margin-bottom:  govuk-spacing(2);
+
+    li {
+        margin-bottom: -1px;
+        display: inline-block;
+    }
+
+    a {
+        display: block;
+        padding: 15px 20px;
+    }
+
+    .active a {
+        border: 1px solid $govuk-input-border-colour;
+        border-bottom-color: govuk-colour("white");
+        text-decoration: none;
+
+        &:link,
+        &:visited {
+            color: govuk-color("black");
+        }
+    }
+}
+
+.form-control-xsmall {
+    width: 120px;
+}
+
+.form-control-small {
+    width: 200px;
+}
+
+.tabs {
+    padding-left: 0;
+    border-bottom: 1px solid $govuk-input-border-colour;
+    font-size: 19px;
+
+    li {
+        margin-bottom: -1px;
+        display: inline-block;
+    }
+
+    a {
+        display: block;
+        padding: 15px 20px;
+    }
+
+    .active a {
+        border: 1px solid $govuk-input-border-colour;
+        border-bottom-color: govuk-colour("white");
+        text-decoration: none;
+
+        &:link,
+        &:visited {
+            color: govuk-color("black");
+        }
+    }
+}
+
+.study-options-table-code {
+    width: 120px;
+}
+
+.study-options-table-vacancies {
+    width: 120px;
+}
+
+.multiple-options li {
+    margin-bottom: 5px;
+    border-bottom: 1px solid #ccc;
+}
+
+.fake-email {
+    margin-left: 15px;
+    margin-top: 20px;
+    border: 5px solid $govuk-input-border-colour;
+    padding: 60px;
+}
+
+.ucas-info-table tr:last-child td {
+    border-bottom: 0;
+}
+
+.ucas-info-table .ucas-view-link {
+    text-align: right;
+}
+
+.missing-section {
+    border: 5px solid $govuk-input-border-colour;
+    padding: govuk-spacing(2);
+}
+
+.preview-pre {
+    white-space: pre-wrap;
+}
+
+.heading-medium .heading-secondary {
+    color: govuk-colour("grey-1");
+    font-weight: normal;
+    display: block;
+}
+
+.ucas-info-table  {
+    .subject-col {
+        width: 30%;
+    }
+
+    .code-col {
+        width: 20%;
+    }
+
+    .ucas-view-link {
+        text-align: right;
+    }
+}
+
+.govuk-phase-banner:first-child {
+    background: #fff8c4;
+    padding-left: 10px;
+}
+
+.govuk-radios__divider {
+    font-family: "nta", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.25;
+    width: 40px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+@media (min-width: 40.0625em) {
+    .govuk-radios__divider {
+        font-size: 19px;
+        line-height: 1.31579;
+    }
+}
+
+.button.button-secondary {
+    background-color: #cccccc;
+    color: black;
+}
+
+.found-heading {
+    border-bottom: 1px solid lightgrey;
+    position: relative;
+    clear: both;
+    min-height: 48px;
+    margin-bottom: 10px;
+}
+
+.search-results-header {
+    &__count {
+        @include mq ($from: desktop) {
+            float: left;
+        }
+    }
+    
+    &__new-search {
+        @include mq ($from: desktop) {
+            float: right;
+        }
+    }
+
+    .govuk-form-group {
+        border-bottom: 1px solid lightgrey;
+        border-top: 1px solid lightgrey;
+        clear: both;
+        margin-bottom: 0;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        
+        @include mq ($from: desktop) {
+            text-align: right;
+        }
+    }
+
+    select {
+        width: 180px;
+    }
+
+    .sortedby-label {
+        @include mq ($from: desktop) {
+            display: inline;
+            margin-right: 0.5em;
+        }
+    }
+}
+
+.search-results {
+    li {
+        @include govuk-responsive-padding(6, "bottom");
+        @include govuk-responsive-padding(6, "top");
+        border-bottom: 1px solid $govuk-border-colour;
+        margin: 0;
+    }
+}
+
+.filter-apply-button {
+    padding-top: 30px;
+    padding-bottom: 20px;
+}
+
+.filter-apply-button-inline {
+    padding-top: 15px;
+}
+
+.panel .filter-apply-button {
+    padding-bottom: 0;
+}
+
+.checkbox-filter .checkbox-container.checkbox-container-noscroll {
+    height: auto;
+    scroll-behavior: initial;
+}
+
+table.alt th,
+table.alt td {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+table.alt th {
+    border: none;
+    background-color: #cccccc;
+    font-weight: bold;
+}
+
+.heading-xlarge-bat {
+    margin-top: 0.125em;
+    margin-bottom: 0.65em;
+}
+
+.phase-banner-wrapper {
+    max-width: 960px;
+    margin: 0 15px;
+    margin: 0 30px;
+    margin: 0 auto;
+    padding: 0 15px 10px;
+    outline: none;
+}
+
+@media screen and (min-width: 641px) {
+    .phase-banner-wrapper {
+        margin: 0 30px;
+        padding: 0 0 10px;
+    }
+}
+
+@media screen and (min-width: 1020px) {
+    .phase-banner-wrapper {
+        margin: 0 auto;
+        width: 960px;
+    }
+}
+
+.course-details-section {
+    float: left;
+    width: 100%;
+}
+
+.subject-details-wrapper {
+    clear: both;
+    padding-left: 12px;
+}
+
+.subject-details-wrapper p {
+    margin-bottom: 10px;
+}
+
+.multiple-choice-subject {
+    width: 100%;
+    border-bottom: solid 1px #cccccc;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.multiple-choice-subject label {
+    margin-bottom: 10px;
+}
+
+.twitter-typeahead {
+    width: 100%;
+}
+
+.tt-suggestion {
+    font-family: "nta", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-weight: 400;
+    font-size: 16px;
+    padding: 7.5px;
+    cursor: pointer;
+}
+
+.tt-suggestion:hover,
+.tt-cursor {
+    background-color: #d5e8f3;
+}
+
+.tt-menu {
+    width: 100%;
+    background-color: white;
+    border: #bfc1c3 2px solid;
+    box-shadow: 0 3px 2px #bfc1c3;
+}
+
+.tt-hint {
+    visibility: hidden !important;
+}
+
+@media screen and (min-width: 641px) {
+    .panel .tt-menu {
+        width: 50%;
+    }
+}
+
+.map-results-list {
+    margin-left: 30px;
+}
+
+.resultsmap {
+    position: relative;
+    text-align: center;
+}
+
+.mapimage::before {
+    content: "Loading...";
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 0;
+    right: 0;
+    font-size: 18px;
+    margin-top: -9px;
+}
+
+.mapimage {
+    z-index: 2;
+    position: relative;
+}
+
+.mapimage img {
+    z-index: 2;
+    position: relative;
+}
+
+.mapcontrols {
+    z-index: 3;
+    position: absolute;
+    right: 10px;
+    bottom: 38px;
+    width: 28px;
+    height: 55px;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
+    box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    cursor: pointer;
+    background-color: rgb(255, 255, 255);
+    width: 28px;
+    height: 55px;
+}
+
+.mapzoombutton {
+    background-color: transparent;
+    background-image: none;
+    display: block;
+    border: 0px;
+    margin: 0px;
+    padding: 0px;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    width: 27px;
+    height: 27px;
+    top: 0px;
+    left: 0px;
+    background-position: initial initial;
+    background-repeat: initial initial;
+}
+
+.mapzoomdivider {
+    position: relative;
+    overflow: hidden;
+    width: 67%;
+    height: 1px;
+    left: 16%;
+    background-color: rgb(230, 230, 230);
+    top: 0px;
+}
+
+.view-list-link,
+.view-map-link {
+    position: relative;
+    background: transparent;
+    display: inline-block;
+    line-height: 35px;
+    margin-left: 30px;
+}
+
+.view-list-link::before {
+    position: absolute;
+    content: "";
+    background: transparent url("/images/maps/icon-burger.png") no-repeat 0 0;
+    width: 71px;
+    height: 56px;
+    background-size: 30%;
+    left: -30px;
+    top: 6px;
+}
+
+.view-map-link::before {
+    position: absolute;
+    content: "";
+    background: transparent url("/images/maps/icon-map.png") no-repeat 0 0;
+    width: 75px;
+    height: 56px;
+    background-size: 30%;
+    left: -30px;
+    top: 0
+}
+
+.tt-highlight {
+    font-weight: bold;
+}

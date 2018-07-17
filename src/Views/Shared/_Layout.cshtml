@@ -13,59 +13,56 @@
     @if (ViewData["SEND_ANALYTICS"] != null) {
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-112932657-1"></script>
-        <script src="~/javascripts/analytics-config.js"></script>
+        <script src="~/scripts/analytics-config.js"></script>
     }
 }
 
-@section propositionHeader {
-    <div class="header-proposition">
-        <div class="content">
-            @*<a href="#proposition-links" class="js-header-toggle menu">Menu</a>*@
-            <nav id="proposition-menu">
-            <a href="~/" id="proposition-name" role="link">@ViewData["serviceName"]</a>
-            @* <ul id="proposition-links">
-             </ul>*@
-            </nav>
-        </div>
-    </div>
-}
-
 @section bodyEnd {
-    <script src="~/javascripts/jquery-3.2.1.min.js"></script>
-    <script src="~/javascripts/vendor/typeahead.jquery.js"></script>
-
-    <script src="~/javascripts/govuk/details.polyfill.js"></script>
-    <script src="~/javascripts/govuk/selection-buttons.js"></script>
-    <script src="~/javascripts/govuk/show-hide-content.js"></script>
-    <script src="~/javascripts/application.js"></script>
+    <script src="~/scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/scripts/typeahead.jquery.js"></script>
+    <script src="~/scripts/cookie-bar.js"></script>
+    <script src="~/scripts/application.js"></script>
+    <script src="~/scripts/all.js"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-112932657-1"></script>
+    <script>
+        window.GOVUKFrontend.initAll()
+    </script>
 }
 
 @section footerSupportLinks {
-    <h2 class="visuallyhidden">Support links</h2>
-    <ul>
-        <li><a href="mailto:becomingateacher@digital.education.gov.uk?subject=Search%20beta%20feedback">Give feedback</a></li>
-        <li><a href="/cookies">Cookies</a></li>
-        <li><a href="/privacy-policy">Privacy Policy</a></li>
-        <li><a href="/terms-conditions">Terms and conditions</a></li>
+    <h2 class="govuk-visually-hidden">Support links</h2>
+    <ul class="govuk-footer__inline-list">
+        <li class="govuk-footer__inline-list-item">
+            <a class="govuk-footer__link" href="mailto:becomingateacher@digital.education.gov.uk?subject=Search%20beta%20feedback">Give feedback</a>
+        </li>
+        <li class="govuk-footer__inline-list-item">
+            <a class="govuk-footer__link" href="/cookies">Cookies</a>
+        </li>
+        <li class="govuk-footer__inline-list-item">
+            <a class="govuk-footer__link" href="/privacy-policy">Privacy Policy</a>
+        </li>
+        <li class="govuk-footer__inline-list-item">
+            <a class="govuk-footer__link" href="/terms-conditions">Terms and conditions</a>
+        </li>
     </ul>
 }
 
-<main role="main">
-    <div class="phase-banner-wrapper">
-        @* PRIVATE_BETA_HACK *@
-        <div class="private-beta-warning font-xsmall">
-            You can <a href="https://www.ucas.com/ucas/teacher-training/ucas-teacher-training-search-training-programmes">find teacher training in other subjects</a> on the UCAS website.
-        </div>
-        <div class="phase-banner">
-            <p>
-                <strong class="phase-tag">BETA</strong>
-                <span>This is a new service – your <a href="mailto:becomingateacher@digital.education.gov.uk?subject=Search%20beta%20feedback">feedback</a> will help us to improve it.</span>
+@section bodyContent {
+    <div class="govuk-width-container">
+        <div class="govuk-phase-banner">
+            @* PRIVATE_BETA_HACK *@
+            <p class="govuk-phase-banner__content">
+                You can
+                <a href="https://www.ucas.com/ucas/teacher-training/ucas-teacher-training-search-training-programmes" class="govuk-link">find teacher training in other subjects</a> on the UCAS website.
             </p>
         </div>
-    </div>
-
-    <div id="content">
+        <div class="govuk-phase-banner">
+                <p class="govuk-phase-banner__content">
+                    <strong class="govuk-tag govuk-phase-banner__content__tag">BETA</strong>
+                    <span class="govuk-phase-banner__text">This is a new service – your
+                        <a href="mailto:becomingateacher@digital.education.gov.uk?subject=Search%20beta%20feedback" class="govuk-link">feedback</a> will help us to improve it.</span>
+                </p>
+        </div>
         @RenderBody()
     </div>
-</main>
+}

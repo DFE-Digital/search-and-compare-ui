@@ -3,37 +3,18 @@
 @* https://www.gov.uk/search *@
 
 <div class="filter-form">
-    <div class="inner-block">
+    <h3 class="govuk-heading-s filter-form__title">
+        Subjects<span class="govuk-visually-hidden">:</span>
+    </h3>
+    @if (Model.Subjects.Items.Count() > 5) {
+        <text>@Html.Raw(string.Join(",<br>", Model.Subjects.Items.OrderBy(x => x.Name).Take(4).Select(x => x.Name))),<br>and @(Model.Subjects.Items.Count() - 4) more&hellip;</text>
+    } else {
+    <ul class="filter-form__value--list">
+        @foreach (var item in Model.Subjects.Items.OrderBy(x => x.Name).Select(x=>x.Name)) {
+        <li>@item</li>
+        }
+    </ul>
+    }
+    <a href='@Url.Action("Subject", "Filter", Model.FilterModel.ToRouteValues())' class="govuk-link">Change subjects</a>
+</div>
 
-        <div class="padded-filter checkbox-filter js-openable-filter">
-            <div class="head legend" role="term">
-                Subjects<span class="visually-hidden">:</span>
-            </div>
-            <div class="filter-options checkbox-container-noscroll" id="subject-filter" role="definition">
-                @if (Model.Subjects.Items.Count() > 5) {
-                    <text>@Html.Raw(string.Join(",<br>", Model.Subjects.Items.OrderBy(x => x.Name).Take(4).Select(x => x.Name))),<br>and @(Model.Subjects.Items.Count() - 4) more&hellip;</text>
-                } else {
-                    @Html.Raw(string.Join(", ", Model.Subjects.Items.OrderBy(x => x.Name).Select(x=>x.Name)))
-                }
-                </ul>
-                <!-- <ul>
-                @if (Model.Subjects.Items.Count() > 5) {
-                    @foreach (var name in Model.Subjects.Items.OrderBy(x => x.Name).Take(4).Select(x => x.Name)) {
-                        <li>@name</li>
-                    }
-                    <li class="last">and @(Model.Subjects.Items.Count() - 4) others</li>
-                } else {
-                    @foreach (var name in Model.Subjects.Items.OrderBy(x => x.Name).Select(x => x.Name).Take(Model.Subjects.Items.Count() - 1)) {
-                        <li>@name</li>
-                    }
-                    <li>@Model.Subjects.Items.OrderBy(x => x.Name).LastOrDefault().Name</li>
-                }
-                </ul> -->
-            </div>
-            <div class="filter-change">
-            <a href='@Url.Action("Subject", "Filter", Model.FilterModel.ToRouteValues())'
-               class="link">Change subjects</a>
-            </div>
-        </div>
-    </div>
-  </div>
