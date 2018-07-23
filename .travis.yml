@@ -5,3 +5,19 @@ mono: none
 dotnet: 2.0.0
 script:
 - "./travis-build.sh --quiet verify"
+env:
+  global:
+  # AZURE_WA_USERNAME
+  - secure: I5jxE+5yBmP9VZywg+pWnmWqW15+/dgPYW5jJGXpMczkbZnPWQD/E+BGB0naoHsDjqztz0dfE2OqC5FEsXZJv7lJUOkNEi5wYoQ6rpy906G6Kmwh/Y5Fneo5GJwO5bEKgcMSkJsBsHMJXJ8B4pC5CC78U2MMiowgPNiZkD8Lj3KuxuT69CRCELqtTimMC6L1uzr+cbFiP6KTdGFJPEVn6NhVIfmt77dbQ0m7y6CpdaIJ88aAkgSeo+2g2u4ptibKoOHRugApR3SDtpzWmA2kZ7lXZR17lA+fEJg+sVUbzwZ2ObtF/PvG5eN/pc3mW+gfQJEagQJiyjfFiXELX2ScxubVrtXvpFLr4Z68lUhswc7Ul2tkdmyXzJJRx54RbYVl+YLqj37qpPqdw0Dl4WZJUO4cM8bYI9jIEI3vIJdKgyvWAx+hns5x9bo80HZvIXa33O6GStm49AKCfY51iWEkrXBIX1H//bPnJagMXh0Z+JyFfqK5C6H6VyZrF1OudpFdpf2J72o7gy7FpAsXy4noG1OsEqzJnB+zToTeXPNZWJ/BOWMA4NbZPa61QzZspJ7peVHfEL9BE+scHlBr1N7YlxT7oasC8XoMIIolG1OT8TfW9Quf0EXWOLGJiGJx6H6WfoEf9e50+zogBX9acSnTHGtotm4rJUKYkSGeypZj468=
+  # AZURE_WA_PASSWORD
+  - secure: xuNnzsuKbSwKEJzN8l7evG+CXmlOCq9rwr99NZU7SJJaAu6HvtGqYHU3CeLk8tI6ToBgmu217IDcyqxnHxDCH9pkFyqrCE/YcEjHXY8gygHmjICY/BemX7LtDxcmvF/GVihvg+duguflbmg/9TfjuqG0Np8l3g74cJ636ak2iX7RKuT+IK4oRi0xmugN6La6YspaO/pQmv68tkQitmIFwxJoq7oLIgZcbgC6V6h7EALs6phWbd9pKJ6GxlZ52ZmzxSL7s16W/p/TSsrCzPIMFC24usjjT3sMtoebC+IjGOR94+0z8kov5a7Dxamp5sFtXF+XIzyJnkJcpNnueMbF5C0Gt/3t95FyAxo//NOkZTYk8lpIClkFLKLoAbslivRZXFni9WpspYYUCgNJbYpY/DOzINOlh87QzYKhxmieDBTqiqcgsCce1b7fDqXSrXpF9fNysQl/R1BRKz6NZicmiEPNRCGN5Lg1mj4beXk6XBrClUKtMUT9jJfYEDLSHo04y3TbXru2ndM5JiiLsR9UURtsCVyBJgGBO/+xu09i+3QMnFol0eX9QU8NrG2lSGSiD5TfSCnIv5TRsx8RR3bixEwgb2g55uwCrvoeYnem+Lg+kIgVjcxi57dDmZcxoi+R8LJhtsren5V9nWIWB8j2kfoHqZAMhWdTLhZvfNbDLuM=
+deploy:
+- provider: azure_web_apps
+  site: bat-dev-search-and-compare-ui-app
+  on: master
+- provider: azure_web_apps
+  site: bat-staging-search-and-compare-ui-app
+  on: staging
+- provider: azure_web_apps
+  site: bat-prod-search-and-compare-ui-app
+  on: production
