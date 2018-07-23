@@ -1,4 +1,4 @@
-# Search and Compare - UI
+# Search and Compare - UI 
 
 [![Build Status](https://travis-ci.com/DFE-Digital/search-and-compare-ui.svg?token=3fqqELBNRC5ecwar1xHq&branch=master)](https://travis-ci.com/DFE-Digital/search-and-compare-ui)
 
