@@ -7,14 +7,17 @@ script:
 - "./travis-build.sh --quiet verify"
 env:
   global:
-  - secure: "XpcjFyyy/fIDS5YHSYjnG6OOoIKmcFokPCsrtAdXNUnRREsUAeMtNJA2tBbmQvLhBv4tkxlOB3bu4ZDAWCYQB5o2nt0ZD7K3JSfRSwbw3TitfxtNuwBVgZsK4e+J28OWl/kVTysFlKCK9wF5RCsnJTPlsNBktp3xM3timTeoTO/LhztpeBlFvALhS8RkFDEpHIoyQ6xXy/zY3AcnHLaYvFvkIEb2vGWIQ6ptYRo/KylQ7A+nIPuhF1bBbpEz/CCqJjUC8ZCQ8/rBcTYYf7RgUoH6FJ4N9H720J4Dpa3ngUzPqMEzPNW903WZeXa65bQc0oQ/JmaD8KBn/AvYh3XtQoyulNIKFY76EZJOyHUhl4mzK3QkMcpJ9TE2U9RVixNAxL69qgP80MZ/Y/+vOy3jMdOc1VQZRFTK0ZkZw6wwbY75Xaeo8mXpyU58IJG1X7bl6VT+jaSxhfqhyOSy3ZorUIK5399HFPU14xpQNzlydvRz+Q7YIXHuvJmJH7JI9rF/jN8gFIG6zOHXvD6NmBwbK3tx3if8UrgAeTblI4A3JNKmHWUwm/3E4R5fEdNBHm5Rulr7G0gHqdG1NvSJNCwMb9UngNNCBGBKcHl3f933IYt+xkOX1t1+iTM5VOr6AkdW+G9qSW/dXWQa464QOeJrYc743FZtPWwVJWW75ZAOoYA="
+    secure: MoOTHg1BuQF6ERP2uyGXSr5ADwOdMfg3q0HpxrKcI7T04OUpodmDN05gW3WlYTQ20iiT+SkZRsxOzL9fpIoQvXNaHQfQ+589nmxla8ZcpwAZvp29LEXuYq3K1BfqiGOGAkwZlxGKqfWjK6ttGiMCXufDAkMknx3PlL8OvdGLQkyYby2NcTMOAZsf4Rjc0UKNjUS7OD213Ej+HE1MQUgAz9S128srfGmWoPMSokXYJcEpMhzJbS2deZ1PN1kRw0Y60HiaT6judePWT6YHadqgGZlSF+B8zd62eGu04D32B8otvK4VpyjKmAdlNTgL+wiNhiLtSsaczpX65WY3Zt3neAb+msggATpYF8lvVjwdeyZv5RnxfQJIAi6Ohapqa1yRYxuSfPfgEHzbjNKnjjh9u+NTLoYNWy1cA0By2fxdK6LMV+2Th1jt7SMVAo007NSb/q1R6tLo8BE4r2RA2m7oXpP95CLboI9+Vs6kxVZEoPxKS8VWgfNSc3Bt+QAoitygChVMzS6dXzYUfLmwh/v96Xi8jOq0zEAgT23sxwflODMsZe6fKdS+GAy9pxfGLxJGN2vkyzhVqQ6asD/dcIFYr+6bnAheCqSxQ5xoy8kLTy86bBYclDDvLPxt+j0BTIIk9wEAzkDvvIiPnxnQ1iiFgxEAodGrs5/6ZVX0Qc3hUis=
 deploy:
-- provider: script
-  script: bash deploy.sh $AZURE_WA_PASSWORD dev
-  on: master
-- provider: script
-  script: bash deploy.sh $AZURE_WA_PASSWORD staging
-  on: staging
-- provider: script
-  script: bash deploy.sh $AZURE_WA_PASSWORD prod
+- provider: azure_web_apps
+  username: govuk-dfe-bat-deployment-user
+  site: bat-dev-search-and-compare-ui-app	
+  on: master	   
+- provider: azure_web_apps
+  username: govuk-dfe-bat-deployment-user
+  site: bat-staging-search-and-compare-ui-app	
+  on: staging	   
+- provider: azure_web_apps
+  username: govuk-dfe-bat-deployment-user
+  site: bat-prod-search-and-compare-ui-app	
   on: production
