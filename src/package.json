@@ -9,7 +9,8 @@
   },
   "scripts": {
     "generate": "gulp generate-assets",
-    "clean": "gulp clean"
+    "clean": "gulp clean",
+    "watch": "gulp watch"
   },
   "devDependencies": {
     "govuk-frontend": "^1.1.1",
@@ -18,6 +19,7 @@
     "gulp-copy": "^1.1.0",
     "gulp-sass": "^4.0.1",
     "gulp-sourcemaps": "^2.6.4",
+    "gulp-watch": "^5.0.1",
     "node-sass": "^4.9.0",
     "require-dir": "^1.0.0",
     "run-sequence": "^2.2.1"

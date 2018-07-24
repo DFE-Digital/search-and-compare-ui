@@ -8,6 +8,7 @@ const runSequence = require('run-sequence');
 const clean = require('gulp-clean');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
+const watch = require('gulp-watch');
 
 gulp.task('clean', function () {
   return gulp.src(configPaths.public + '/**/*', {
@@ -24,6 +25,10 @@ gulp.task('sass', function () {
     }).on('error', sass.logError))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(configPaths.public + '/css/'))
+});
+
+gulp.task('watch', function () {
+  gulp.watch(configPaths.assets + '/Styles/**/*.scss', ['sass']);
 });
 
 gulp.task('copy-fonts', function () {
