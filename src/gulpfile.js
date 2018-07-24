@@ -11,7 +11,10 @@ const sourcemaps = require('gulp-sourcemaps');
 const watch = require('gulp-watch');
 
 gulp.task('clean', function () {
-  return gulp.src(configPaths.public + '/**/*', {
+  return gulp.src([configPaths.public + '/fonts', 
+                   configPaths.public + '/images',
+                   configPaths.public + '/css',
+                   configPaths.public + '/scripts'], {
       read: false
     })
     .pipe(clean())
