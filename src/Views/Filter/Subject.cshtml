@@ -21,87 +21,16 @@
 }
 
 @* Route people to UCAS while we only have Business Studies available *@
-<div class="grid-row">
-    <div class="column-two-thirds">
-      
-        <h1 class="heading-xlarge">Teach a different subject</h1>
-
-
-        <p>
-            If you don’t want to teach business studies you can <a href="https://www.ucas.com/ucas/teacher-training/ucas-teacher-training-search-training-programmes"> find teacher training in other subjects</a> on the UCAS website.
-        </p>
-        <p>
-            <a href='@Url.Action("Index", "Results", Model.FilterModel.ToRouteValues())'>Back to results</a>
-        </p>
+<main class="govuk-main-wrapper" id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl">Teach a different subject</h1>
+            <p class="govuk-body">
+                If you don’t want to teach business studies you can <a href="https://www.ucas.com/ucas/teacher-training/ucas-teacher-training-search-training-programmes"> find teacher training in other subjects</a> on the UCAS website.
+            </p>
+            <p class="govuk-body">
+                <a href='@Url.Action("Index", "Results", Model.FilterModel.ToRouteValues())' class="govuk-link">Back to results</a>
+            </p>
+        </div>
     </div>
-</div>
-
-@* code for real filtering
-<div class="grid-row">
-    <div class="column-two-thirds">
-        @Html.Partial("Error", errors)
-
-        <legend role="heading">
-            <h1 class="heading-xlarge">What subjects would you like to&nbsp;teach?</h1>
-        </legend>
-
-        <!-- <div>
-            <a href="@Url.Action(isInWizard ? "SubjectWizard" : "Subject", "Filter", Model.FilterModel.WithoutSubjects().ToRouteValues())">Clear selection</a>
-        </div> -->
-
-        <form action='@Url.Action(isInWizard ? "SubjectWizard" : "Subject", "Filter", Model.FilterModel.WithoutSubjects().ToRouteValues())' method="POST" id="subjects-container">
-            @foreach (var area in Model.SubjectAreas) {
-                <details>
-                <summary><span class="summary">@area.Name</span></summary>
-                <div class="panel panel-border-narrow">
-                    <fieldset>
-                        @foreach (var subject in area.Subjects.OrderBy(x => x.Name)) {
-                            <div class="multiple-choice multiple-choice-subject">
-                                <input id="@("subject-" + subject.Id)"
-                                    name="SelectedSubjects"
-                                    type="checkbox"
-                                    checked="@selected.Contains(subject.Id)"
-                                    value="@(subject.Id)">
-                                <label for="@("subject-" + subject.Id)">@subject.Name</label>
-
-                                @if (subject.IsSubjectKnowledgeEnhancementAvailable || subject.FundingId.HasValue) {
-                                    <div class="subject-details-wrapper">
-                                        @if(subject.FundingId.HasValue) {
-                                            <p>
-                                                Financial support might be available if you qualify
-                                            </p>
-                                        }
-                                        @if(subject.IsSubjectKnowledgeEnhancementAvailable) {
-                                            <details>
-                                                <summary><span class="summary">Is your degree in a different subject?</span></summary>
-                                                <div class="panel panel-border-narrow">
-                                                    <p>
-                                                        You can complete a course to give you the knowledge you need to begin teacher training in this subject.
-                                                        This type of course is known as subject knowledge enhancement (SKE). To be eligible for it, you'll need a degree in a subject related to the one you want to teach.
-                                                        If you have a degree that isn't related, you'll need a related A-Level or work experience.
-                                                    </p>
-                                                    <p>
-                                                        SKE courses come with a bursary of up to £5,600. They last up to 28 weeks.
-                                                    </p>
-                                                    <p>
-                                                        The training provider for the teacher training course can tell you more about SKE.
-                                                    </p>
-                                                </div>
-                                            </details>
-                                        }
-                                    </div>
-                                }
-                            </div>
-                        }
-                    </fieldset>
-                </div>
-                </details>
-            }
-
-            <div class="filter-apply-button">
-                <input class="button" type="submit" value="@(isInWizard ? "Next" : "Find courses")" role="button">
-            </div>
-        </form>
-    </div>
-</div>
-*@
+</main>

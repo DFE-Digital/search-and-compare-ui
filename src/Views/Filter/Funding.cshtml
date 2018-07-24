@@ -19,51 +19,52 @@
     })
 }
 
-<div class="grid-row">
-    <div class="column-two-thirds">
-        @Html.Partial("Error", errors)
-        <form action='@Url.Action(isInWizard ? "FundingWizard": "Funding", "Filter", Model.ToRouteValues())' method="POST">
-            <fieldset role="radiogroup" aria-required="true">
-                <legend role="heading">
-                    <h1 class="heading-xlarge">Financial support while you&nbsp;train</h1>
-                </legend>
-                <p>
-                    Business studies courses come with either student finance (a tuition fee loan and maintenance loan, if you’re eligible) or a salary.
-                </p>
-
-                <div class="form-group @(errors.HasError("applyFilter") ? "form-group-error" : "")" id="applyFilter-container">
-                    <div class="multiple-choice multiple-radio">
-                        <input id="applyFilter-all" type="radio" name="applyFilter" value="false" checked="@(Model.SelectedFunding == FundingOption.All)">
-                        <label for="applyFilter-all" class="multi-choice-label">
-                            All courses (with salaries or with student finance)
-                        </label>
+<main class="govuk-main-wrapper" id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            @Html.Partial("Error", errors)
+            <form action='@Url.Action(isInWizard ? "FundingWizard": "Funding", "Filter", Model.ToRouteValues())' method="POST">
+                <fieldset role="radiogroup" aria-required="true" class="govuk-fieldset">
+                    <legend role="heading" class="govuk-fieldset__legend govuk-fieldset__legend--xl">       
+                        <h1 class="govuk-heading-xl">Financial support while you&nbsp;train</h1>
+                    </legend>
+                    <p class="govuk-body">
+                        Business studies courses come with either student finance (a tuition fee loan and maintenance loan, if you’re eligible) or a salary.
+                    </p>
+                    <div class="govuk-form-group @(errors.HasError("applyFilter") ? "govuk-form-group--error" : "")" id="applyFilter-container">
+                        <div class="govuk-radios" data-module="radios">
+                            <div class="govuk-radios__item">
+                                <input id="applyFilter-all" class="govuk-radios__input" type="radio" name="applyFilter" value="false" checked="@(Model.SelectedFunding == FundingOption.All)">
+                                <label for="applyFilter-all" class="govuk-label govuk-radios__label">
+                                    All courses (with salaries or with student finance)
+                                </label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input id="applyFilter-some" class="govuk-radios__input" type="radio" name="applyFilter" value="true" checked="@(errors.HasError("funding ") || (Model.SelectedFunding != null && Model.SelectedFunding != FundingOption.All))">
+                                <label for="applyFilter-some" class="govuk-label govuk-radios__label">
+                                    Only courses that come with a salary
+                                </label>
+                            </div>
+                        </div>
+                        <input type="hidden" name="includeBursary" value="true">
+                        <input type="hidden" name="includeScholarship" value="true">
+                        <input type="hidden" name="includeSalary" value="true">
                     </div>
+                </fieldset>
 
-                    <div class="multiple-choice multiple-radio">
-                        <input id="applyFilter-some" type="radio" name="applyFilter" value="true" checked="@(errors.HasError("funding") || (Model.SelectedFunding != null && Model.SelectedFunding != FundingOption.All))">
-                        <label for="applyFilter-some" class="multi-choice-label">
-                            Only courses that come with a salary
-                        </label>
-                    </div>
+                <p class="govuk-body">You can <a href="https://www.gov.uk/student-finance" class="govuk-link">find out more about student finance and the eligibility requirements</a>.</p>
 
-                    <input type="hidden" name="includeBursary" value="true">
-                    <input type="hidden" name="includeScholarship" value="true">
-                    <input type="hidden" name="includeSalary" value="true">
+                <div class="filter-apply-button">
+                    <input class="govuk-button" type="submit" value="Find courses">
                 </div>
-            </fieldset>
 
-            <p>You can <a href="https://www.gov.uk/student-finance">find out more about student finance and the eligibility requirements</a>.</p>
-
-            <div class="filter-apply-button">
-                <input class="button" type="submit" value="Find courses">
-            </div>
-
-            <h2 class="heading-medium">
-                Other financial support
-            </h2>
-            <p>
-                Some other subjects offer different types of financial support for trainee teachers. You can find out more about <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview/funding-by-subject">financial support for trainee teachers</a> on the Get into Teaching website.
-            </p>
-        </form>
+                <h2 class="govuk-heading-m">
+                    Other financial support
+                </h2>
+                <p class="govuk-body">
+                    Some other subjects offer different types of financial support for trainee teachers. You can find out more about <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview/funding-by-subject" class="govuk-link">financial support for trainee teachers</a> on the Get into Teaching website.
+                </p>
+            </form>
+        </div>
     </div>
-</div>
+</main>

@@ -1,19 +1,11 @@
 @model ResultsFilter
 
 <div class="filter-form">
-    <div class="inner-block">
-
-        <div class="padded-filter checkbox-filter js-openable-filter">
-            <div class="head legend" role="term">
-                Qualifications
-            </div>
-            <div class="filter-options checkbox-container-noscroll" id="funding-filter" role="definition">
-                @Html.Raw(string.Join(",<br>", Model.GetQualificationStrings()))
-            </div>
-            <div class="filter-change">
-            <a href='@Url.Action("Qualification", "Filter", Model.ToRouteValues())'
-               class="link">Change qualifications</a>
-            </div>
-        </div>
-    </div>
-  </div>
+    <h3 class="govuk-heading-s filter-form__title">Qualifications</h3>
+    <ul class="filter-form__value--list">
+        @foreach (var item in Model.GetQualificationStrings()) {
+            <li>@item</li>
+        }
+    </ul>
+    <a href='@Url.Action("Qualification", "Filter", Model.ToRouteValues())' class="govuk-link">Change qualifications</a>
+</div>

@@ -17,76 +17,88 @@
         Title = "Back to search results"
     })
 }
+<main class="govuk-main-wrapper" id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            @Html.Partial("Error", Model.Errors)
 
-<div class="grid-row">
-    <div class="column-two-thirds">
-        @Html.Partial("Error", Model.Errors)
+            <form action='@Url.Action(isInWizard ? "LocationWizard" : "Location", "Filter", Model.FilterModel.ToRouteValues())' method="POST">
+                <fieldset role="radiogroup" aria-required="true" class="govuk-fieldset">
+                    <legend role="heading" class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+                        <h1 class="govuk-fieldset__heading">Find courses by location or by training provider</h1>
+                    </legend>
 
-        <form action='@Url.Action(isInWizard ? "LocationWizard" : "Location", "Filter", Model.FilterModel.ToRouteValues())' method="POST">
-            <fieldset role="radiogroup" aria-required="true">
-                <legend role="heading">
-                    <h1 class="heading-xlarge">Find courses by location or by training provider</h1>
-                </legend>
+                    <div class="govuk-form-group @(Model.Errors.HasError(" l ") ? "govuk-form-group--error" : " ")" id="l-container">
 
-                <div class="form-group @(Model.Errors.HasError("l") ? "form-group-error" : "")" id="l-container">
-                    <span class="error-message">@Model.Errors.GetError("l").Message</span>
-                    <div class="multiple-choice" data-target="lq-container">
-                        <input id="location-Set" type="radio" name="l" value="@((int)LocationOption.Yes)" checked="@(Model.FilterModel.LocationOption == LocationOption.Yes)">
-                        <label for="location-Set">
-                            By postcode, town or city
-                        </label>
-                    </div>
-                    <div class="panel panel-border-narrow js-hidden @(Model.Errors.HasError("lq") ? "form-group-error" : "")" id="lq-container">
-                        <div class="form-group">
-                            <label class="form-label" for="location">
-                                Postcode, town or city
-                                <span class="error-message">@Model.Errors.GetError("lq").Message</span>
-                            </label>
-                            <input class="form-control typeahead" data-url="@Url.Action("LocationSuggest", "Dynamic")" name="lq" type="text" id="location" value="@Model.FilterModel.lq">
+                        @if (@Model.Errors.HasError("l")) {
+                            <span class="govuk-error-message">@Model.Errors.GetError("l").Message</span>
+                        }
+
+                        <div class="govuk-radios" data-module="radios">
+                            <div class="govuk-radios__item">
+                                <input id="location-Set" class="govuk-radios__input" type="radio" name="l" value="@((int)LocationOption.Yes)" checked="@(Model.FilterModel.LocationOption == LocationOption.Yes)" data-aria-controls="lq-container">
+                                <label for="location-Set" class="govuk-label govuk-radios__label">
+                                    By postcode, town or city
+                                </label>
+                            </div>
+                        
+                            <div class="govuk-radios__conditional @(Model.Errors.HasError(" lq ") ? "form-group---error " : " ")" id="lq-container">
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label" for="location">
+                                        Postcode, town or city  
+                                        @if (@Model.Errors.HasError("lq")) {
+                                            <span class="govuk-error-message">@Model.Errors.GetError("lq").Message</span>
+                                        }
+                                    </label>
+                                    <input class="govuk-input typeahead" data-url="@Url.Action("LocationSuggest", "Dynamic")" name="lq" type="text" id="location" value="@Model.FilterModel.lq">
+                                </div>
+                                <div class="govuk-form-group">
+                                    <label class="govuk-label" for="radius">Within</label>
+                                    <select class="govuk-select govuk-!-width-one-half" id="radius" name="rad">
+                                        @foreach(int option in Enum.GetValues(typeof(RadiusOption)))
+                                        {
+                                            if (option == selectedRadius) {
+                                                <option value="@(option)" selected="selected" >@(option) miles</option>
+                                            } else
+                                            {
+                                                <option value="@(option)" >@(option) miles</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="govuk-radios__item">
+                                <input id="location-Unset" class="govuk-radios__input" type="radio" name="l" value="@((int)LocationOption.No)" checked="@(Model.FilterModel.LocationOption == LocationOption.No)">
+                                <label for="location-Unset" class="govuk-label govuk-radios__label">Across England</label>
+                            </div>
+
+                            <div class="govuk-radios__divider">or</div>
+
+                            <div class="govuk-radios__item">
+                                <input id="location-Specific" class="govuk-radios__input" type="radio" name="l" value="@((int)LocationOption.Specific)" checked="@(Model.FilterModel.LocationOption == LocationOption.Specific)" data-aria-controls="query-container">
+                                <label for="location-Specific" class="govuk-label govuk-radios__label">By school, university or other training provider</label>
+                            </div>
+
+                            <div class="govuk-radios__conditional @(Model.Errors.HasError(" query ") ? "form-group--error " : " ")" id="query-container">
+                                <div class"form-group">
+                                    <label class="govuk-label" for="query">
+                                        School, university or other training provider
+                                        @if (@Model.Errors.HasError("query")) {
+                                            <span class="govuk-error-message">@Model.Errors.GetError("query").Message</span>
+                                        }
+                                    </label>
+                                    <input class="govuk-input typeahead" data-url="@Url.Action("ProviderSuggest", "Dynamic")" name="query" type="text" id="query" value="@Model.FilterModel.query">
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label" for="radius">Within</label>
-                            <select class="form-control" id="radius" name="rad">
-                                @foreach(int option in Enum.GetValues(typeof(RadiusOption)))
-                                {
-                                    if(option == selectedRadius){
-                                        <option value="@(option)" selected="selected" >@(option) miles</option>
-                                    } else
-                                    {
-                                        <option value="@(option)" >@(option) miles</option>
-                                    }
-                                }
-                            </select>
-                        </div>
                     </div>
+                </fieldset>
 
-                    <div class="multiple-choice multiple-radio">
-                        <input id="location-Unset" type="radio" name="l" value="@((int)LocationOption.No)" checked="@(Model.FilterModel.LocationOption == LocationOption.No)">
-                        <label for="location-Unset">Across England</label>
-                    </div>
-
-                    <p class="form-block form-block--or">or</p>
-
-                    <div class="multiple-choice multiple-radio" data-target="query-container">
-                        <input id="location-Specific" type="radio" name="l" value="@((int)LocationOption.Specific)" checked="@(Model.FilterModel.LocationOption == LocationOption.Specific)">
-                        <label for="location-Specific">By school, university or other training provider</label>
-                    </div>
-
-                    <div class="panel panel-border-narrow js-hidden @(Model.Errors.HasError("query") ? "form-group-error" : "")" id="query-container">
-                        <fieldset aria-required="true">
-                            <label class="form-label" for="query">
-                                School, university or other training provider
-                                <span class="error-message">@Model.Errors.GetError("query").Message</span>
-                            </label>
-                            <input class="form-control typeahead" data-url="@Url.Action("ProviderSuggest", "Dynamic")" name="query" type="text" id="query" value="@Model.FilterModel.query">
-                        </fieldset>
-                    </div>
+                <div class="govuk-form-group">
+                    <input class="govuk-button" type="submit" value="@(isInWizard ? "Continue" : "Find courses")">
                 </div>
-            </fieldset>
-
-            <div class="filter-apply-button">
-                <input class="button" type="submit" value="@(isInWizard ? "Continue" : "Find courses")">
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
+</main>

@@ -7,12 +7,14 @@
     Title = "Back to start"
 })
 
-<div class="grid-row">
-    <div class="column-two-thirds">
-        <h1 class="heading-xlarge">This service does not have every business studies course</h1>
-        <p>This service is still in development. It features a limited number of business studies courses in England. More courses are available on <a href="https://www.ucas.com/ucas/teacher-training/ucas-teacher-training-search-training-programmes">the UCAS website<a>.</p>
-        <div class="filter-apply-button">
-            <a class="button" href='@Url.Action("LocationWizard", "Filter")'>Continue</a>
+<main class="govuk-main-wrapper" id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl" role="heading">This service does not have every business studies course</h1>
+            <p class="govuk-body">This service is still in development. It features a limited number of business studies courses in England. More courses are available on <a href="https://www.ucas.com/ucas/teacher-training/ucas-teacher-training-search-training-programmes">the UCAS website<a>.</p>
+            <p class="govuk-body">
+                <a class="govuk-button" href='@Url.Action("LocationWizard", "Filter")'>Continue</a>
+            </p>
         </div>
     </div>
-</div>
+</main>

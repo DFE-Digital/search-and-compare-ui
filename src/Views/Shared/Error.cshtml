@@ -1,16 +1,16 @@
 ﻿@model ErrorViewModel
 
 @if(Model != null && Model.Messages.Any()) {
-    <div class="error-summary" role="alert" aria-labelledby="error-summary-heading" tabindex="-1">
-
-        <h2 class="heading-medium error-summary-heading" id="error-summary-heading">
-            You&#8217;ll need to correct some information.
-        </h2>
-
-        <ul class="error-summary-list">
-            @foreach(var message in Model.Messages) {
-                <li><a href="#@message.Id-container">@message.Name</a></li>
-            }
-        </ul>
+  <div class="govuk-error-summary" role="alert" aria-labelledby="error-summary-heading" tabindex="-1">
+    <h2 class="govuk-error-summary__title" id="error-summary-title">
+      You&#8217;ll need to correct some information.
+    </h2>
+    <div class="govuk-error-summary__body">
+      <ul class="govuk-list govuk-error-summary__list">
+        @foreach(var message in Model.Messages) {
+          <li><a href="#@message.Id-container">@message.Name</a></li>
+        }
+      </ul>
     </div>
+  </div>
 }
