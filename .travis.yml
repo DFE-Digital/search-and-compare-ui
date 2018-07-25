@@ -10,11 +10,11 @@ env:
     secure: MoOTHg1BuQF6ERP2uyGXSr5ADwOdMfg3q0HpxrKcI7T04OUpodmDN05gW3WlYTQ20iiT+SkZRsxOzL9fpIoQvXNaHQfQ+589nmxla8ZcpwAZvp29LEXuYq3K1BfqiGOGAkwZlxGKqfWjK6ttGiMCXufDAkMknx3PlL8OvdGLQkyYby2NcTMOAZsf4Rjc0UKNjUS7OD213Ej+HE1MQUgAz9S128srfGmWoPMSokXYJcEpMhzJbS2deZ1PN1kRw0Y60HiaT6judePWT6YHadqgGZlSF+B8zd62eGu04D32B8otvK4VpyjKmAdlNTgL+wiNhiLtSsaczpX65WY3Zt3neAb+msggATpYF8lvVjwdeyZv5RnxfQJIAi6Ohapqa1yRYxuSfPfgEHzbjNKnjjh9u+NTLoYNWy1cA0By2fxdK6LMV+2Th1jt7SMVAo007NSb/q1R6tLo8BE4r2RA2m7oXpP95CLboI9+Vs6kxVZEoPxKS8VWgfNSc3Bt+QAoitygChVMzS6dXzYUfLmwh/v96Xi8jOq0zEAgT23sxwflODMsZe6fKdS+GAy9pxfGLxJGN2vkyzhVqQ6asD/dcIFYr+6bnAheCqSxQ5xoy8kLTy86bBYclDDvLPxt+j0BTIIk9wEAzkDvvIiPnxnQ1iiFgxEAodGrs5/6ZVX0Qc3hUis=
 deploy:
 - provider: script
-  script: git push https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-dev-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-dev-search-and-compare-ui-app.git HEAD:master
+  script: git remote add azure https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-dev-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-dev-search-and-compare-ui-app.git && git push azure HEAD:master
   on: master
 - provider: script
-  script: git push https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-staging-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-staging-search-and-compare-ui-app.git HEAD:master
+  script: git remote add azure https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-staging-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-staging-search-and-compare-ui-app.git && git push azure HEAD:master
   on: staging
 - provider: script
-  script: git push https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-prod-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-prod-search-and-compare-ui-app.git HEAD:master
+  script: git remote add azure https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-prod-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-prod-search-and-compare-ui-app.git && git push azure HEAD:master
   on: production
