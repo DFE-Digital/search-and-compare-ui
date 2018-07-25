@@ -13,8 +13,8 @@ deploy:
   script: git push https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-dev-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-dev-search-and-compare-ui-app.git master
   on: master
 - provider: script
-  script: git push https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-dev-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-dev-search-and-compare-ui-app.git master
+  script: git push https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-staging-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-staging-search-and-compare-ui-app.git master
   on: staging
 - provider: script
-  script: git push https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-dev-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-dev-search-and-compare-ui-app.git master
+  script: git push https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-prod-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-prod-search-and-compare-ui-app.git master
   on: production
