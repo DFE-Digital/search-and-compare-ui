@@ -52,12 +52,6 @@ $govuk-global-styles: true;
   text-align: center;
 }
 
-// Custom phase banner for private beta
-.govuk-phase-banner:first-child {
-  background: #fff8c4;
-  padding-left: 10px;
-}
-
 // Search results view
 .search-results {
   li {

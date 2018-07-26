@@ -8,7 +8,7 @@
 
 @if (isInWizard) {
     @Html.Partial("Back", new BackLinkViewModel {
-        Href = Url.Action("Disclaimer","Home"),
+        Href = Url.Action("Index", "Home"),
         Title = "Back"
     })
 } else {

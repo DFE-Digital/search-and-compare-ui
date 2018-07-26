@@ -5,7 +5,7 @@
 @if(Model.SuggestedSearches.Any()) {
     var hasSalary = !(Model.OriginalResults.FilterModel.SelectedFunding.HasValue && Model.OriginalResults.FilterModel.SelectedFunding.Value == FundingOption.All) && Model.OriginalResults.FilterModel.SelectedFunding.Value.HasFlag(FundingOption.Salary);
 
-    <p class="govuk-body">For business studies there are:</p>
+    <p class="govuk-body">There are:</p>
     <ul class="govuk-list govuk-list--bullet">
       @foreach (var item in Model.SuggestedSearches)
       {
