@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout_base.cshtml";
-    ViewData["serviceName"] = "Find postgraduate teacher training in business studies";
+    ViewData["serviceName"] = "Find postgraduate teacher training";
 
     ViewBag.Title = (String.IsNullOrEmpty(ViewBag.Title) ? "" : ViewBag.Title + " - ")
         + ViewData["serviceName"] + " - GOV.UK";
@@ -49,13 +49,6 @@
 
 @section bodyContent {
     <div class="govuk-width-container">
-        <div class="govuk-phase-banner">
-            @* PRIVATE_BETA_HACK *@
-            <p class="govuk-phase-banner__content">
-                You can
-                <a href="https://www.ucas.com/ucas/teacher-training/ucas-teacher-training-search-training-programmes" class="govuk-link">find teacher training in other subjects</a> on the UCAS website.
-            </p>
-        </div>
         <div class="govuk-phase-banner">
                 <p class="govuk-phase-banner__content">
                     <strong class="govuk-tag govuk-phase-banner__content__tag">BETA</strong>

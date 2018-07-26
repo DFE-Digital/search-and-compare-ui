@@ -20,14 +20,11 @@
     })
 }
 
-@* Route people to UCAS while we only have Business Studies available *@
 <main class="govuk-main-wrapper" id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl">Teach a different subject</h1>
+            <h1 class="govuk-heading-xl">Find courses by subject</h1>
             <p class="govuk-body">
-                If you don’t want to teach business studies you can <a href="https://www.ucas.com/ucas/teacher-training/ucas-teacher-training-search-training-programmes"> find teacher training in other subjects</a> on the UCAS website.
-            </p>
             <p class="govuk-body">
                 <a href='@Url.Action("Index", "Results", Model.FilterModel.ToRouteValues())' class="govuk-link">Back to results</a>
             </p>

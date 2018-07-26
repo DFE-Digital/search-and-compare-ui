@@ -15,14 +15,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [HttpGet("home/index")]
         public IActionResult Index()
         {
-            /* PRIVATE_BETA_HACK */
-            return View("Index_privatebeta");
-        }
-
-        [HttpGet("disclaimer")]
-        public IActionResult Disclaimer()
-        {
-          return View();
+            return View("Index");
         }
 
         [AllowAnonymous]
