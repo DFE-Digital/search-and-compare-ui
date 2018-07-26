@@ -1,0 +1,23 @@
+{
+  "name": "search-and-compare-ui",
+  "scripts": {
+  },
+  "env": {
+    "API_URI": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/jincod/dotnetcore-buildpack"
+    }
+  ]
+}
