@@ -41,11 +41,11 @@
                                     By postcode, town or city
                                 </label>
                             </div>
-                        
+
                             <div class="govuk-radios__conditional @(Model.Errors.HasError(" lq ") ? "form-group---error " : " ")" id="lq-container">
                                 <div class="govuk-form-group">
                                     <label class="govuk-label" for="location">
-                                        Postcode, town or city  
+                                        Postcode, town or city
                                         @if (@Model.Errors.HasError("lq")) {
                                             <span class="govuk-error-message">@Model.Errors.GetError("lq").Message</span>
                                         }
