@@ -35,7 +35,7 @@
 }
 
 .accordion.with-js .accordion-section-header {
-  @include govuk-font($size: 19, $weight: bold);
+  @include govuk-font($size: 24, $weight: bold);
   @include govuk-text-colour;
   cursor: pointer;
   position: relative;

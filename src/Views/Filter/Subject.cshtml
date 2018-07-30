@@ -26,7 +26,7 @@
       <div class="govuk-form-group">
         <fieldset class="govuk-fieldset" aria-describedby="nationality-hint">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-            <h1 class="govuk-fieldset__heading">What subjects would you like to&nbsp;teach?</h1>
+            <h1 class="govuk-fieldset__heading">Find courses by subject</h1>
           </legend>
           <form action='@Url.Action(isInWizard ? "SubjectWizard" : "Subject", "Filter", Model.FilterModel.WithoutSubjects().ToRouteValues())' method="POST" id="subjects-container">
             <div class="accordion">
@@ -52,9 +52,6 @@
           <input class="govuk-button" type="submit" value="@(isInWizard ? " Next " : "Find courses ")" role="button">
         </div>
       </form>
-      <p class="govuk-body">
-        <a href='@Url.Action("Index", "Results", Model.FilterModel.ToRouteValues())' class="govuk-link">Back to results</a>
-      </p>
     </div>
   </div>
 </main>
