@@ -7,9 +7,8 @@
 }
 
 @if(isInWizard) {
-    @* PRIVATE_BETA_HACK *@
     @Html.Partial("Back", new BackLinkViewModel {
-        Href = Url.Action("LocationWizard", "Filter", Model.ToRouteValues()),
+        Href = Url.Action("SubjectWizard", "Filter", Model.ToRouteValues()),
         Title = "Back to location"
     })
 } else {

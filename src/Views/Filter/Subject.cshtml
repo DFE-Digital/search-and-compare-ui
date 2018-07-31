@@ -1,33 +1,57 @@
 @model SubjectFilterViewModel
 
 @{
-    ViewBag.Title = $"Filter by subject";
-    var selected = Model.FilterModel.SelectedSubjects;
-    var isInWizard = ViewBag.IsInWizard == true;
-    var errors = ViewBag.Errors as ErrorViewModel;
+  var selected = Model.FilterModel.SelectedSubjects;
+  var isInWizard = ViewBag.IsInWizard == true;
+  var errors = ViewBag.Errors as ErrorViewModel;
 }
 
 
 @if(isInWizard) {
-    @Html.Partial("Back", new BackLinkViewModel {
-        Href = Url.Action("LocationWizard", "Filter", Model.FilterModel.ToRouteValues()),
-        Title = "Back to location"
-    })
+  @Html.Partial("Back", new BackLinkViewModel {
+    Href = Url.Action("LocationWizard", "Filter", Model.FilterModel.ToRouteValues()),
+    Title = "Back to location"
+  })
 } else {
-    @Html.Partial("Back", new BackLinkViewModel {
-        Href = Url.Action("Index", "Results", Model.FilterModel.ToRouteValues()),
-        Title = "Back to search results"
-    })
+  @Html.Partial("Back", new BackLinkViewModel {
+    Href = Url.Action("Index", "Results", Model.FilterModel.ToRouteValues()),
+    Title = "Back to search results"
+  })
 }
 
 <main class="govuk-main-wrapper" id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl">Find courses by subject</h1>
-            <p class="govuk-body">
-            <p class="govuk-body">
-                <a href='@Url.Action("Index", "Results", Model.FilterModel.ToRouteValues())' class="govuk-link">Back to results</a>
-            </p>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      @Html.Partial("Error", errors)
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset" aria-describedby="nationality-hint">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+            <h1 class="govuk-fieldset__heading">Find courses by subject</h1>
+          </legend>
+          <form action='@Url.Action(isInWizard ? "SubjectWizard" : "Subject", "Filter", Model.FilterModel.WithoutSubjects().ToRouteValues())' method="POST" id="subjects-container">
+            <div class="accordion">
+              @foreach (var area in Model.SubjectAreas) {
+                <div class="@(" accordion-section " + (@area.Subjects.Any(subject => selected.Contains(subject.Id)) ? "accordion-section--expanded" : " "))">
+                  <div class="accordion-section-header">@area.Name</div>
+                  <div class="accordion-section-body">
+                    <div class="govuk-checkboxes">
+                      @foreach (var subject in area.Subjects.OrderBy(x => x.Name)) {
+                        <div class="govuk-checkboxes__item">
+                          <input id="@("subject- " + subject.Id)" name="SelectedSubjects" type="checkbox" checked="@selected.Contains(subject.Id)" value="@(subject.Id)" class="govuk-checkboxes__input">
+                          <label for="@("subject- " + subject.Id)" class="govuk-label govuk-checkboxes__label">@subject.Name</label>
+                        </div>
+                      }
+                    </div>
+                  </div>
+                </div>
+              }
+            </div>
+          </fieldset>
         </div>
+        <div class="govuk-form-group">
+          <input class="govuk-button" type="submit" value="@(isInWizard ? "Continue" : "Find courses")" role="button">
+        </div>
+      </form>
     </div>
+  </div>
 </main>

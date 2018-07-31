@@ -80,9 +80,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         {
             filter = filter.WithoutLocation();
 
-            var isInWizard = ViewBag.IsInWizard == true;
-
-
             if(string.IsNullOrWhiteSpace(filter.query))
             {
                 TempData.Put("Errors", new ErrorViewModel("query", "Training provider", "Please enter the name of a training provider", Url.Action("Location")));
@@ -94,9 +91,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                 return RedirectToAction("Location", filter.ToRouteValues());
             }
 
-            return isInWizard
-                ? RedirectToAction("FundingWizard", filter.ToRouteValues())
-                : RedirectToAction("Index", "Results", filter.ToRouteValues());
+            return RedirectToAction("Index", "Results", filter.ToRouteValues());
         }
 
 
@@ -138,9 +133,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
             if (filter.LocationOption == LocationOption.No)
             {
-                /* PRIVATE_BETA_HACK */
                 return isInWizard
-                    ? RedirectToAction("FundingWizard", filter.WithoutLocation().ToRouteValues())
+                    ? RedirectToAction("SubjectWizard", filter.WithoutLocation().ToRouteValues())
                     : RedirectToAction("Index", "Results", filter.WithoutLocation().ToRouteValues());
             }
 
@@ -166,9 +160,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                 filter.sortby = (int)SortByOption.Distance;
             }
 
-            /* PRIVATE_BETA_HACK */
             return isInWizard
-                ? RedirectToAction("FundingWizard", filter.ToRouteValues())
+                ? RedirectToAction("SubjectWizard", filter.ToRouteValues())
                 : RedirectToAction("Index", "Results", filter.ToRouteValues());
         }
 
