@@ -31,7 +31,7 @@
           <form action='@Url.Action(isInWizard ? "SubjectWizard" : "Subject", "Filter", Model.FilterModel.WithoutSubjects().ToRouteValues())' method="POST" id="subjects-container">
             <div class="accordion">
               @foreach (var area in Model.SubjectAreas) {
-                <div class="accordion-section">
+                <div class="@(" accordion-section " + (@area.Subjects.Any(subject => selected.Contains(subject.Id)) ? "accordion-section--expanded" : " "))">
                   <div class="accordion-section-header">@area.Name</div>
                   <div class="accordion-section-body">
                     <div class="govuk-checkboxes">
