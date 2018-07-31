@@ -18,3 +18,6 @@ deploy:
 - provider: script
   script: git fetch --unshallow && git push https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-prod-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-prod-search-and-compare-ui-app.git HEAD:refs/heads/master
   on: production
+- provider: script
+  script: git fetch --unshallow && git push https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-prod-2018-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-prod-2018-search-and-compare-ui-app.git HEAD:refs/heads/master
+  on: production-2018
