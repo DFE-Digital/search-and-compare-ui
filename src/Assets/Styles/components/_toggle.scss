@@ -3,7 +3,7 @@
   @include govuk-responsive-margin(6, "bottom");
   background-color: govuk-colour("grey-3");
   background-image: url('/images/option-select-toggle-sprite.png');
-  background-position: right 5px;
+  background-position: right -75px;
   background-repeat: no-repeat;
   border: none;
   color: $govuk-text-colour;
@@ -14,7 +14,7 @@
   width: 100%;
 
   &.is-toggled {
-    background-position: right -75px;
+    background-position: right 5px;
   }
 
   .js-enabled & {
