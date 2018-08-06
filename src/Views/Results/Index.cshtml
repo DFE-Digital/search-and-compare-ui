@@ -1,46 +1,48 @@
 @model ResultsViewModel
 
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = Model.Courses != null && Model.Courses.TotalCount > 0
-        ? $"{string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:n0}", Model.Courses.TotalCount)} courses"
-        : "No courses found";
+  Layout = "~/Views/Shared/_Layout.cshtml";
+  ViewBag.Title = Model.Courses != null && Model.Courses.TotalCount > 0
+    ? $"{string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:n0}", Model.Courses.TotalCount)} courses"
+    : "No courses found";
 }
 <main class="govuk-main-wrapper" id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl" role="heading">
-                Teacher training courses
-            </h1>
-        </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl" role="heading">
+        Teacher training courses
+      </h1>
     </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-one-third">
-            <nav role="navigation">
-                @if (!string.IsNullOrWhiteSpace(Model.FilterModel.query)) {
-                    @Html.Partial("Filters/Query", Model.FilterModel)
-                } else {
-                    @Html.Partial("Filters/Location", Model.FilterModel)
-                }
-                @Html.Partial("Filters/Subject", Model) 
-                @Html.Partial("Filters/Funding", Model.FilterModel)
-                @Html.Partial("Filters/StudyType", Model.FilterModel)
-                @Html.Partial("Filters/Qualification", Model.FilterModel)
-            </nav>
-        </div>
-
-        <div class="govuk-grid-column-two-thirds">
-            @if (Model.Courses == null || Model.Courses.TotalCount == 0) {
-                @Html.Partial("Display/Empty")
-                @await Component.InvokeAsync("SuggestedSearch", new { original = Model, maxResult = 2})
-            } else if (Model.MapsEnabled && Model.FilterModel.DisplayAsMap) {
-                @Html.Partial("Display/Map", Model)
-            } else {
-                @Html.Partial("Display/List", Model)
-                @if(Model.Courses.TotalCount <= 2) {
-                    @await Component.InvokeAsync("SuggestedSearch", new { original = Model, maxResult = 2})
-                }
-            }
-        </div>
+  </div>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third">
+      <button data-target="#searchFilters" class="js-toggle">
+        Filter the results
+      </button>
+      <div class="js-toggle-content" id="searchFilters">
+        @if (!string.IsNullOrWhiteSpace(Model.FilterModel.query)) {
+          @Html.Partial("Filters/Query", Model.FilterModel)
+        } else {
+          @Html.Partial("Filters/Location", Model.FilterModel)
+        }
+        @Html.Partial("Filters/Subject", Model)
+        @Html.Partial("Filters/Funding", Model.FilterModel)
+        @Html.Partial("Filters/StudyType", Model.FilterModel)
+        @Html.Partial("Filters/Qualification", Model.FilterModel)
+      </div>
     </div>
+    <div class="govuk-grid-column-two-thirds">
+      @if (Model.Courses == null || Model.Courses.TotalCount == 0) {
+        @Html.Partial("Display/Empty")
+        @await Component.InvokeAsync("SuggestedSearch", new { original = Model, maxResult = 2})
+      } else if (Model.MapsEnabled && Model.FilterModel.DisplayAsMap) {
+        @Html.Partial("Display/Map", Model)
+      } else {
+        @Html.Partial("Display/List", Model)
+        @if(Model.Courses.TotalCount <= 2) {
+          @await Component.InvokeAsync("SuggestedSearch", new { original = Model, maxResult = 2})
+        }
+      }
+    </div>
+  </div>
 </main>

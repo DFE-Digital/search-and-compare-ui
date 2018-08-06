@@ -8,6 +8,7 @@ $govuk-global-styles: true;
 @import "components/map";
 @import "components/typahead";
 @import "components/accordion";
+@import "components/toggle";
 @import "patterns/course-parts";
 @import "patterns/success-summary";
 @import "patterns/definition-list";
@@ -54,6 +55,10 @@ $govuk-global-styles: true;
 }
 
 // Search results view
+.search-results-filters {
+  display: block;
+}
+
 .search-results {
   li {
     @include govuk-responsive-padding(6, "bottom");
@@ -65,15 +70,11 @@ $govuk-global-styles: true;
 
 .search-results-header {
   &__count {
-    @include mq ($from: desktop) {
-      float: left;
-    }
+    float: left;
   }
 
   &__new-search {
-    @include mq ($from: desktop) {
-      float: right;
-    }
+    float: right;
   }
 
   .govuk-form-group {
@@ -90,7 +91,9 @@ $govuk-global-styles: true;
   }
 
   select {
-    width: 180px;
+    @include mq ($from: desktop) {
+      width: 180px;
+    }
   }
 
   .sortedby-label {
