@@ -22,4 +22,10 @@ document.addEventListener('click', function (event) {
   // Toggle the content
   toggle(content);
 
+  // Set aira expanded on clicked element
+  if (content.classList.contains('is-visible')) {
+    event.target.setAttribute("aria-expanded", "true");
+  } else {
+    event.target.setAttribute("aria-expanded", "false");
+  }
 }, false);
