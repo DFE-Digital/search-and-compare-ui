@@ -1,18 +1,4 @@
-
-/*
-  Accordion
-
-  This allows a collection of sections to be collapsed by default,
-  showing only their headers. Sections can be exanded or collapsed
-  individually by clicking their headers. An "Open all" button is
-  also added to the top of the accordion, which switches to "Close all"
-  when all the sections are expanded.
-
-  The state of each section is saved to the DOM via the `aria-expanded`
-  attribute, which also provides accessibility.
-
-*/
-
+// https://github.com/frankieroberto/accordion
 
 function Accordion(element) {
 
