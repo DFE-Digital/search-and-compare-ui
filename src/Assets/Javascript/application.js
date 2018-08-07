@@ -32,3 +32,5 @@ if ('addEventListener' in document && document.querySelectorAll) {
     };
   })
 }
+
+window.GOVUKFrontend.initAll()

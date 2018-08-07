@@ -9,9 +9,10 @@ const clean = require('gulp-clean');
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const watch = require('gulp-watch');
+const concat = require('gulp-concat');
 
 gulp.task('clean', function () {
-  return gulp.src([configPaths.public + '/fonts', 
+  return gulp.src([configPaths.public + '/fonts',
                    configPaths.public + '/images',
                    configPaths.public + '/css',
                    configPaths.public + '/scripts'], {
@@ -45,8 +46,14 @@ gulp.task('copy-images', function () {
 });
 
 gulp.task('copy-scripts', function () {
-  return gulp.src([configPaths.nodeModules + 'all.js', configPaths.assets + 'Javascript/*'])
-    .pipe(gulp.dest(configPaths.public + '/scripts/'))
+  return gulp.src([configPaths.nodeModules + 'all.js',
+                   configPaths.assets + 'Javascript/vendor/jquery-3.2.1.min.js',
+                   configPaths.assets + 'Javascript/components/*',
+                   configPaths.assets + 'Javascript/application.js'])
+    .pipe(sourcemaps.init())
+    .pipe(concat('application.js'))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest(configPaths.public + '/scripts/'));
 });
 
 gulp.task('generate-assets', function (done) {
