@@ -44,8 +44,8 @@ module.exports = {
   ],
   module: {
     rules: [
-      { test: /\.scss$/, use: ExtractTextPlugin.extract({ use: [{loader: 'css-loader',options: {minimize: true}},'sass-loader']})},
-      { test: /\.js?$/, exclude: /node_modules/, use: { loader: 'babel-loader', options: {presets: ['es2015']}} }
+      { test: /\.scss$/, use: ExtractTextPlugin.extract({ use: [{ loader: 'css-loader' }, 'sass-loader'] })},
+      { test: /\.js?$/, exclude: /node_modules/, use: { loader: 'babel-loader', options: { presets: ['es2015'] }}}
     ]
   }
 };
