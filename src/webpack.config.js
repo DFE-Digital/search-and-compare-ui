@@ -1,12 +1,10 @@
 const path = require('path');
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const extractCSS = new ExtractTextPlugin('application.css');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
-  mode: 'production',
-  devtool: 'source-map',
+  devtool: 'inline-source-map',
   entry: { 'application': './Assets/app.js' },
   output: {
     path: path.resolve(__dirname, 'wwwroot'),
@@ -35,7 +33,9 @@ module.exports = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin('application.css'),
+    new MiniCssExtractPlugin({
+      filename: 'application.css',
+    }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
@@ -44,7 +44,7 @@ module.exports = {
   ],
   module: {
     rules: [
-      { test: /\.scss$/, use: ExtractTextPlugin.extract({ use: [{ loader: 'css-loader' }, 'sass-loader'] })},
+      { test: /\.scss$/, use:['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']},
       { test: /\.js?$/, exclude: /node_modules/, use: { loader: 'babel-loader', options: { presets: ['es2015'] }}}
     ]
   }

@@ -17,6 +17,6 @@
   </ItemGroup>
   <Target Name="Webpack" Condition="'$(Configuration)'=='Release'" BeforeTargets="AfterBuild">
     <Exec Command="npm install" />
-    <Exec Command="webpack -p" />
+    <Exec Command="npm run build" />
   </Target>
 </Project>

@@ -4,4 +4,4 @@ sassobj
 node_modules
 *.tmp
 .vs
-src/wwwroot/*/
+src/wwwroot/*
