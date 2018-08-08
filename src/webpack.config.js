@@ -7,10 +7,10 @@ const extractCSS = new ExtractTextPlugin('application.css');
 module.exports = {
   mode: 'production',
   devtool: 'source-map',
-  entry: './Assets/app.js',
+  entry: { 'application': './Assets/app.js' },
   output: {
     path: path.resolve(__dirname, 'wwwroot'),
-    filename: 'application.js'
+    publicPath: '/'
   },
   optimization: {
     minimizer: [

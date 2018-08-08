@@ -42,3 +42,4 @@ if ('addEventListener' in document && document.querySelectorAll) {
   })
 }
 
+module.hot.accept();
