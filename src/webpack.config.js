@@ -47,6 +47,10 @@ module.exports = {
       to: 'images'
     },
     {
+      from: 'Assets/Images',
+      to: 'images'
+    },
+    {
       from: 'node_modules/govuk-frontend/assets/fonts',
       to: 'fonts'
     }]),
