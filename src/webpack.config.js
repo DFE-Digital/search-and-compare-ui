@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   devtool: 'inline-source-map',
@@ -40,12 +41,30 @@ module.exports = {
       $: 'jquery',
       jQuery: 'jquery',
       'window.jQuery': 'jquery'
-    })
+    }),
+    new CopyWebpackPlugin([{
+      from: 'node_modules/govuk-frontend/assets/images',
+      to: 'images'
+    },
+    {
+      from: 'node_modules/govuk-frontend/assets/fonts',
+      to: 'fonts'
+    }]),
   ],
   module: {
     rules: [
       { test: /\.scss$/, use:['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']},
-      { test: /\.js?$/, exclude: /node_modules/, use: { loader: 'babel-loader', options: { presets: ['es2015'] }}}
+      { test: /\.js?$/, exclude: /node_modules/, use: { loader: 'babel-loader', options: { presets: ['es2015'] }}},
+      {
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{
+          loader: 'url-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'fonts/'
+          }
+        }]
+      }
     ]
   }
 };
