@@ -1,3 +1,12 @@
+import { initAll } from 'govuk-frontend';
+import './Javascript/cookie-bar.js';
+import './Javascript/accordion.js';
+import './Javascript/toggle.js';
+import './Javascript/typeahead.jquery.js';
+import './Styles/site.scss';
+
+initAll();
+
 if (!!$) {
   $(document).ready(function () {
     // Turn off jQuery animation
@@ -33,4 +42,3 @@ if ('addEventListener' in document && document.querySelectorAll) {
   })
 }
 
-window.GOVUKFrontend.initAll()
