@@ -15,8 +15,4 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.0" />
     <PackageReference Include="DFE.SearchAndCompare.Domain" Version="0.4.0-beta" />
   </ItemGroup>
-  <Target Name="Gulp" Condition="'$(Configuration)'=='Release'" BeforeTargets="AfterBuild">
-    <Exec Command="npm install" />
-    <Exec Command="npm run generate" />
-  </Target>
 </Project>
