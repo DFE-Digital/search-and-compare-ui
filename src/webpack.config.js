@@ -58,17 +58,7 @@ module.exports = {
   module: {
     rules: [
       { test: /\.scss$/, use:['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']},
-      { test: /\.js?$/, exclude: /node_modules/, use: { loader: 'babel-loader', options: { presets: ['es2015'] }}},
-      {
-        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-        use: [{
-          loader: 'url-loader',
-          options: {
-            name: '[name].[ext]',
-            outputPath: 'fonts/'
-          }
-        }]
-      }
+      { test: /\.js?$/, exclude: /node_modules/, use: { loader: 'babel-loader', options: { presets: ['es2015'] }}}
     ]
   }
 };
