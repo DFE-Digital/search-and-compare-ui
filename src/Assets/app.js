@@ -33,15 +33,6 @@ if (!!$) {
   })
 }
 
-if ('addEventListener' in document && document.querySelectorAll) {
-  document.addEventListener('DOMContentLoaded', function () {
-    var accordions = document.querySelectorAll('.accordion')
-    for (var i = accordions.length - 1; i >= 0; i--) {
-      new Accordion(accordions[i])
-    };
-  })
-}
-
 if (process.env.NODE_ENV == 'development') {
   module.hot.accept();
 }
