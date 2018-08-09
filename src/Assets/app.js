@@ -42,4 +42,6 @@ if ('addEventListener' in document && document.querySelectorAll) {
   })
 }
 
-module.hot.accept();
+if (process.env.NODE_ENV == 'development') {
+  module.hot.accept();
+}
