@@ -6,7 +6,9 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   devtool: 'inline-source-map',
-  entry: { 'application': './Assets/app.js' },
+  entry: {
+    'application': './Assets/app.js'
+  },
   output: {
     path: path.resolve(__dirname, 'wwwroot'),
     publicPath: '/'
@@ -46,22 +48,34 @@ module.exports = {
       'window.jQuery': 'jquery'
     }),
     new CopyWebpackPlugin([{
-      from: 'node_modules/govuk-frontend/assets/images',
-      to: 'images'
-    },
-    {
-      from: 'Assets/Images',
-      to: 'images'
-    },
-    {
-      from: 'node_modules/govuk-frontend/assets/fonts',
-      to: 'fonts'
-    }]),
+        from: 'node_modules/govuk-frontend/assets/images',
+        to: 'images'
+      },
+      {
+        from: 'Assets/Images',
+        to: 'images'
+      },
+      {
+        from: 'node_modules/govuk-frontend/assets/fonts',
+        to: 'fonts'
+      }
+    ]),
   ],
   module: {
-    rules: [
-      { test: /\.scss$/, use:['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']},
-      { test: /\.js?$/, exclude: /node_modules/, use: { loader: 'babel-loader', options: { presets: ['es2015'] }}}
+    rules: [{
+        test: /\.scss$/,
+        use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+      },
+      {
+        test: /\.js?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['es2015']
+          }
+        }
+      }
     ]
   }
 };

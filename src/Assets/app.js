@@ -24,7 +24,7 @@ if (!!$) {
           $.get(url, {
             query: query
           }, function (res) {
-              cbAsync(res);
+            cbAsync(res);
           });
         },
         limit: 10
