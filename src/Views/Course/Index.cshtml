@@ -5,11 +5,8 @@
     var showMinimal = !Model.HasSection("about this training programme");
 }
 
-@Html.Partial("Back", new BackLinkViewModel
-{
-    Href = Url.Action("Index", "Results", Model.FilterModel.ToRouteValues()),
-    Title = "Back to search results"
-})
+<div id="backLinkWrapper"></div>
+
 <main class="govuk-main-wrapper" id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
@@ -337,3 +334,14 @@
         </div>
     </div>
 </main>
+
+<script>
+    var isInternalReferrer = document.referrer.indexOf(location.protocol + "//" + location.host) === 0;
+    if (isInternalReferrer) {
+        var backLink = document.createElement("a");
+        backLink.setAttribute("href", "javascript:history.back()");
+        backLink.setAttribute("class", "govuk-back-link")
+        backLink.textContent = "Back to search results";
+        document.getElementById("backLinkWrapper").appendChild(backLink);
+    }
+</script>
