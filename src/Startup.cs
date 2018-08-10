@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.SpaServices.Webpack;
 
 namespace GovUk.Education.SearchAndCompare.UI
 {
@@ -44,6 +45,10 @@ namespace GovUk.Education.SearchAndCompare.UI
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
+                {
+                    HotModuleReplacement = true
+                });
                 app.UseStaticFiles(new StaticFileOptions
                 {
                     OnPrepareResponse = context => {

@@ -34,13 +34,18 @@
   margin-bottom: 0;
 }
 
-.accordion.with-js .accordion-section-header {
+.accordion-section-header {
   @include govuk-font($size: 24, $weight: bold);
   @include govuk-text-colour;
   cursor: pointer;
   position: relative;
   padding-top: 14px;
   padding-bottom: 12px;
+}
+
+.accordion-section-body {
+  padding-bottom: govuk-spacing(6);
+  padding-top: govuk-spacing(3);
 }
 
 .accordion.with-js .accordion-section-header h2 {
@@ -71,9 +76,4 @@
 
 .accordion.with-js .accordion-section[aria-expanded="true"] .icon {
   background-position: 0 0;
-}
-
-.accordion.with-js .accordion-section-body {
-  padding-bottom: govuk-spacing(6);
-  padding-top: govuk-spacing(3);
 }

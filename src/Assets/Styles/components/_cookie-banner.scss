@@ -12,10 +12,6 @@
   background-color: lighten(desaturate(govuk-colour("light-blue"), 8.46), 42.55);
 }
 
-.app-cookie-banner {
-  display: none;
-}
-
 .app-cookie-banner__message {
   margin: 0;
   @include govuk-width-container;
