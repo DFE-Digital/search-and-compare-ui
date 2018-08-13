@@ -5,7 +5,7 @@
     var showMinimal = !Model.HasSection("about this training programme");
 }
 
-<div id="backLinkWrapper"></div>
+<div data-module="back-link"></div>
 
 <main class="govuk-main-wrapper" id="main-content" role="main">
     <div class="govuk-grid-row">
@@ -334,14 +334,3 @@
         </div>
     </div>
 </main>
-
-<script>
-    var isInternalReferrer = document.referrer.indexOf(location.protocol + "//" + location.host) === 0;
-    if (isInternalReferrer) {
-        var backLink = document.createElement("a");
-        backLink.setAttribute("href", "javascript:history.back()");
-        backLink.setAttribute("class", "govuk-back-link")
-        backLink.textContent = "Back to search results";
-        document.getElementById("backLinkWrapper").appendChild(backLink);
-    }
-</script>
