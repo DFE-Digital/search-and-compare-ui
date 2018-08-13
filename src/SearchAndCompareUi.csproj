@@ -16,6 +16,7 @@
     <PackageReference Include="DFE.SearchAndCompare.Domain" Version="0.4.0-beta" />
   </ItemGroup>
   <Target Name="Webpack" Condition="'$(Configuration)'=='Release'" BeforeTargets="AfterBuild">
+    <Exec Command="npm install -g npm" />
     <Exec Command="npm install" />
     <Exec Command="npm run build" />
   </Target>
