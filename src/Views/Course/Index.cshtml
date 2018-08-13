@@ -22,10 +22,10 @@
                 <dl class="govuk-list--description">
                     @if (Model.Course.ProviderLocation != null)
                     {
-                        <dt><span class="govuk-list--description__label">Location</span></dt>
+                        <dt class="govuk-list--description__label">Location</dt>
                         <dd>@Model.Course.ProviderLocation.Address</dd>
                     }
-                    <dt><span class="govuk-list--description__label">Qualification</span></dt>
+                    <dt class="govuk-list--description__label">Qualification</dt>
                     <dd>
                         @if (Model.Course.IncludesPgce != IncludesPgce.No)
                         {
@@ -56,21 +56,21 @@
                     </dd>
 
                     @if (!string.IsNullOrEmpty(@Model.Course.FundingOptions())) {
-                        <dt><span class="govuk-list--description__label">Financial support</span></dt>
+                        <dt class="govuk-list--description__label">Financial support</dt>
                         <dd>@Model.Course.FundingOptions()</dd>
                     }
 
                     @if (!string.IsNullOrEmpty(@Model.Course.FormattedStudyInfo())) {
-                        <dt><span class="govuk-list--description__label">Study type and duration</span></dt>
+                        <dt class="govuk-list--description__label">Study type and duration</dt>
                         <dd>@Model.Course.FormattedStudyInfo()</dd>
                     }
 
                     @if (!string.IsNullOrEmpty(@Model.Course.FormattedEarliestApplicationDate())) {
-                        <dt><span class="govuk-list--description__label">Date you can apply from</span></dt>
+                        <dt class="govuk-list--description__label">Date you can apply from</dt>
                         <dd>@Model.Course.FormattedEarliestApplicationDate()</dd>
                     }
                     @if (!string.IsNullOrEmpty(@Model.Course.FormattedStartDate())) {
-                        <dt><span class="govuk-list--description__label">Date course starts</span></dt>
+                        <dt class="govuk-list--description__label">Date course starts</dt>
                         <dd>@Model.Course.FormattedStartDate()</dd>
                     }
                 </dl>
@@ -103,8 +103,7 @@
                         }
                         @if (Model.HasSection("entry requirements"))
                         {
-                            <li><a href="#section-entry">Requirements</a></li>
-                        }
+                            <li><a href="#section-entry">Requirements</a></li>                        }
                         @if (Model.HasSection("about placement schools"))
                         {
                             <li><a href="#section-schools">Placement schools</a></li>
@@ -245,7 +244,7 @@
                         <dl class="govuk-list--description" role="contentinfo">
                             @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Email))
                             {
-                                <dt class="bold"><span class="govuk-list--description__label">Email</span></dt>
+                                <dt class="govuk-list--description__label">Email</dt>
                                 <dd>
                                     <a href="mailto:@Model.Course.ContactDetails.Email"
                                     title="Send email to course contact"
@@ -257,17 +256,17 @@
                             }
                             @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Phone))
                             {
-                                <dt class="bold"><span class="govuk-list--description__label">Telephone</span></dt>
+                                <dt class="govuk-list--description__label">Telephone</dt>
                                 <dd>@Model.Course.ContactDetails.Phone</dd>
                             }
                             @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Fax))
                             {
-                                <dt class="bold"><span class="govuk-list--description__label">Fax</span></dt>
+                                <dt class="govuk-list--description__label">Fax</dt>
                                 <dd>@Model.Course.ContactDetails.Fax</dd>
                             }
                             @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Website))
                             {
-                                <dt class="bold"><span class="govuk-list--description__label">Website</span></dt>
+                                <dt class="govuk-list--description__label">Website</dt>
                                 <dd>
                                     <a href="@Model.Course.ContactDetails.Website"
                                     title="Go to course website"
@@ -279,7 +278,7 @@
                             }
                             @if (Model.HasAddress())
                             {
-                                <dt class="bold"><span class="govuk-list--description__label">Address</span></dt>
+                                <dt class="govuk-list--description__label">Address</dt>
                                 <dd>
                                     @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address))
                                     {
