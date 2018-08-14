@@ -13,7 +13,7 @@
         var subjects = @item.CourseSubjects.Select(courseSubject => courseSubject.Subject.Name).ToArray();
         <li>
             <h3 class="govuk-heading-m">
-                <a href='@Url.Action("Index", "Course", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new {courseId = item.Id}))' class="link">@item.Name at @item.Provider.Name</a>
+                <a href='@Url.Action("Index", "Course", new {courseId = item.Id})' class="link">@item.Name at @item.Provider.Name</a>
             </h3>
             <dl class="govuk-list--description">
                 @if (item.ProviderLocation != null) {
