@@ -15,11 +15,12 @@
 
 %govuk-list--description > dd {
   @include govuk-font($size: 19, $weight: normal);
+  margin: 0 0 govuk-spacing(2) 0;
   vertical-align: top;
-  margin: 0;
 
   @include mq ($from: desktop) {
     float: left;
+    margin: 0;
     width: 66.66%;
   }
 
