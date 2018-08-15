@@ -5,6 +5,7 @@ import './Javascript/accordion.js';
 import './Javascript/toggle.js';
 import './Javascript/typeahead.jquery.js';
 import './Styles/site.scss';
+import './Styles/site-ie8.scss';
 
 initAll();
 

@@ -42,6 +42,9 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'application.css',
     }),
+    new MiniCssExtractPlugin({
+      filename: 'application-ie8.css',
+    }),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
@@ -63,7 +66,11 @@ module.exports = {
   ],
   module: {
     rules: [{
-        test: /\.scss$/,
+        test: /site.scss$/,
+        use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+      },
+      {
+        test: /site-ie8.scss$/,
         use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
       },
       {
