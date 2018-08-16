@@ -28,10 +28,10 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
         [Test]
         public void Index_CallsApiCorrectly()
         {
-            mockApi.Setup(x => x.GetCourse("1AB")).Returns(GetSimpleCourse()).Verifiable();
+            mockApi.Setup(x => x.GetCourse("XYZ", "1AB")).Returns(GetSimpleCourse()).Verifiable();
             mockApi.Setup(x => x.GetFeeCaps()).Returns(GetFeeCaps()).Verifiable();
 
-            var actionResult = sut.Index("1AB", new Filters.ResultsFilter());
+            var actionResult = sut.Index("XYZ", "1AB", new Filters.ResultsFilter());
 
             Assert.That(actionResult is ViewResult);
             Assert.That((actionResult as ViewResult).Model is CourseViewModel);
@@ -46,9 +46,9 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
         [Test]
         public void RedirectToUcasCourse_CallsApiCorrectly()
         {
-            mockApi.Setup(x => x.GetUcasCourseUrl("1AB")).Returns("http://ucas.com").Verifiable();
+            mockApi.Setup(x => x.GetUcasCourseUrl("XYZ", "1AB")).Returns("http://ucas.com").Verifiable();
 
-            var redirectResult = sut.RedirectToUcasCourse("1AB");
+            var redirectResult = sut.RedirectToUcasCourse("XYZ", "1AB");
 
             Assert.IsFalse(redirectResult.Permanent);
             Assert.AreEqual("http://ucas.com", redirectResult.Url);
