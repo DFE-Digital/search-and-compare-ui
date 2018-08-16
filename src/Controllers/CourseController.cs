@@ -20,10 +20,10 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             _api = api;
         }
 
-        [HttpGet("course/{courseId:int}", Name = "Course")]
-        public IActionResult Index(int courseId, ResultsFilter filter)
+        [HttpGet("course/{courseCode:string}", Name = "Course")]
+        public IActionResult Index(string courseCode, ResultsFilter filter)
         {
-            var course = _api.GetCourse(courseId);
+            var course = _api.GetCourse(courseCode);
             var feeCaps = _api.GetFeeCaps();
 
             var latestFeeCaps = feeCaps.OrderByDescending(x => x.EndYear).FirstOrDefault();
@@ -37,5 +37,13 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
             return View(viewModel);
         }
+        [HttpGet("course/{courseCode:string}/ucas-redirect", Name = "RedirectToUcasCourse")]
+        public RedirectResult RedirectToUcasCourse(string courseCode)
+        {
+            var url = _api.GetUcasCourseUrl(courseCode);
+
+            return new RedirectResult(url);
+        }
+
     }
 }
