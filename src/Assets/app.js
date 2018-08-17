@@ -1,6 +1,6 @@
 import { initAll } from 'govuk-frontend';
 import BackLink from './Javascript/back-link';
-import './Javascript/cookie-bar.js';
+import CookieMessage from './Javascript/cookie-message';
 import './Javascript/accordion.js';
 import './Javascript/toggle.js';
 import './Javascript/typeahead.jquery.js';
@@ -10,6 +10,9 @@ initAll();
 
 var $backLink = document.querySelector('[data-module="back-link"]')
 new BackLink($backLink).init()
+
+var $cookieMessage = document.querySelector('[data-module="cookie-message"]')
+new CookieMessage($cookieMessage).init()
 
 if (!!$) {
   $(document).ready(function () {
