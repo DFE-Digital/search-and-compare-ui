@@ -1,83 +1,49 @@
-// https://github.com/frankieroberto/accordion
+// https://github.com/alphagov/govuk-frontend/pull/958
 
-function Accordion(element) {
+function Accordion($module) {
+  this.$module = $module
+}
 
-  // First do feature detection for required API methods
-  if (
-    document.querySelectorAll &&
-    window.NodeList &&
-    'classList' in document.body
-  ) {
-
-    this.element = element
+Accordion.prototype.init = function () {
+  if (document.querySelectorAll && window.NodeList && 'classList' in document.body) {
     this.sections = []
-    this.setup()
-
+    var accordion_sections = this.$module.querySelectorAll('.accordion-section')
+    var accordion = this
+    for (var i = accordion_sections.length - 1; i >= 0; i--) {
+      accordion.sections.push(new AccordionSection(accordion_sections[i], accordion))
+    };
+    var accordion_controls = document.createElement('div')
+    accordion_controls.setAttribute('class', 'accordion-controls')
+    var open_or_close_all_button = document.createElement('button')
+    open_or_close_all_button.textContent = 'Open all'
+    open_or_close_all_button.setAttribute('class', 'accordion-expand-all')
+    open_or_close_all_button.setAttribute('aria-expanded', 'false')
+    open_or_close_all_button.setAttribute('type', 'button')
+    open_or_close_all_button.addEventListener('click', this.openOrCloseAll.bind(this))
+    accordion_controls.appendChild(open_or_close_all_button)
+    this.$module.insertBefore(accordion_controls, this.$module.firstChild)
+    this.$module.classList.add('with-js')
   }
-
-}
-
-function AccordionSection(element, accordion) {
-  this.element = element
-  this.accordion = accordion
-  this.setup()
-}
-
-Accordion.prototype.setup = function() {
-
-  var accordion_sections = this.element.querySelectorAll('.accordion-section')
-
-  var accordion = this
-
-  for (var i = accordion_sections.length - 1; i >= 0; i--) {
-     accordion.sections.push(new AccordionSection(accordion_sections[i], accordion))
-  };
-
-  var accordion_controls = document.createElement('div')
-  accordion_controls.setAttribute('class', 'accordion-controls')
-
-  var open_or_close_all_button = document.createElement('button')
-  open_or_close_all_button.textContent = 'Open all'
-  open_or_close_all_button.setAttribute('class', 'accordion-expand-all')
-  open_or_close_all_button.setAttribute('aria-expanded', 'false')
-  open_or_close_all_button.setAttribute('type', 'button')
-
-  open_or_close_all_button.addEventListener('click', this.openOrCloseAll.bind(this))
-
-  accordion_controls.appendChild(open_or_close_all_button)
-
-  this.element.insertBefore(accordion_controls, this.element.firstChild)
-  this.element.classList.add('with-js')
 }
 
 Accordion.prototype.openOrCloseAll = function(event) {
-
   var open_or_close_all_button = event.target
   var now_expanded = !(open_or_close_all_button.getAttribute('aria-expanded') == 'true')
-
   for (var i = this.sections.length - 1; i >= 0; i--) {
     this.sections[i].setExpanded(now_expanded)
   };
-
   this.setOpenCloseButtonExpanded(now_expanded)
-
 }
 
-
 Accordion.prototype.setOpenCloseButtonExpanded = function(expanded) {
-
-  var open_or_close_all_button = this.element.querySelector('.accordion-expand-all')
-
+  var open_or_close_all_button = this.$module.querySelector('.accordion-expand-all')
   var new_button_text = expanded ? "Close all" : "Open all"
   open_or_close_all_button.setAttribute('aria-expanded', expanded)
   open_or_close_all_button.textContent = new_button_text
-
 }
 
 Accordion.prototype.updateOpenAll = function() {
-
   var sectionsCount = this.sections.length
-
   var openSectionsCount = 0
 
   for (var i = this.sections.length - 1; i >= 0; i--) {
@@ -91,43 +57,38 @@ Accordion.prototype.updateOpenAll = function() {
   } else {
     this.setOpenCloseButtonExpanded(false)
   }
+}
 
+function AccordionSection(element, accordion) {
+  this.$module = element
+  this.accordion = accordion
+  this.setup()
 }
 
 AccordionSection.prototype.setup = function() {
-
-  var sectionExpanded = this.element.classList.contains('accordion-section--expanded')
-
-  this.element.setAttribute('aria-expanded', sectionExpanded)
-
-  var header = this.element.querySelector('.accordion-section-header')
+  var sectionExpanded = this.$module.classList.contains('accordion-section--expanded')
+  this.$module.setAttribute('aria-expanded', sectionExpanded)
+  var header = this.$module.querySelector('.accordion-section-header')
   header.addEventListener('click', this.toggleExpanded.bind(this))
   header.addEventListener('keypress', this.keyPressed.bind(this))
   header.setAttribute('tabindex', '0')
   header.setAttribute('role', 'button')
-
   var icon = document.createElement('span')
   icon.setAttribute('class', 'icon')
-
   header.appendChild(icon)
 
-  /* Remove this class now, as the `aria-expanded` attribute is being used
-       to store expanded state instead. */
   if (sectionExpanded) {
-    this.element.classList.remove('accordion-section--expanded');
+    this.$module.classList.remove('accordion-section--expanded');
   }
-
 }
 
-AccordionSection.prototype.toggleExpanded = function(){
-  var expanded = (this.element.getAttribute('aria-expanded') == 'true')
-
+AccordionSection.prototype.toggleExpanded = function() {
+  var expanded = (this.$module.getAttribute('aria-expanded') == 'true')
   this.setExpanded(!expanded)
   this.accordion.updateOpenAll()
 }
 
 AccordionSection.prototype.keyPressed = function(event) {
-
   if (event.key === " " || event.key === "Enter") {
     event.preventDefault();
     this.toggleExpanded();
@@ -135,24 +96,12 @@ AccordionSection.prototype.keyPressed = function(event) {
 }
 
 AccordionSection.prototype.expanded = function() {
-  return (this.element.getAttribute('aria-expanded') == 'true')
+  return (this.$module.getAttribute('aria-expanded') == 'true')
 }
 
 AccordionSection.prototype.setExpanded = function(expanded) {
-  this.element.setAttribute('aria-expanded', expanded)
-
-  // This is set to trigger reflow for IE8, which doesn't
-  // always reflow after a setAttribute call.
-  this.element.className = this.element.className
-
+  this.$module.setAttribute('aria-expanded', expanded)
+  this.$module.className = this.$module.className
 }
 
-// init plugin
-if ('addEventListener' in document && document.querySelectorAll) {
-  document.addEventListener('DOMContentLoaded', function () {
-    var accordions = document.querySelectorAll('.accordion')
-    for (var i = accordions.length - 1; i >= 0; i--) {
-      new Accordion(accordions[i])
-    };
-  })
-}
+export default Accordion

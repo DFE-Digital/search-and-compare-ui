@@ -1,4 +1,4 @@
-.js-toggle {
+.govuk-toggle__link {
   @include govuk-font($size: 19, $weight: 'bold');
   @include govuk-responsive-margin(6, "bottom");
   background-color: govuk-colour("grey-3");
@@ -13,7 +13,7 @@
   text-decoration: none;
   width: 100%;
 
-  &.is-toggled {
+  &.govuk-toggle__link--open {
     background-position: right 5px;
   }
 
@@ -27,7 +27,7 @@
   }
 }
 
-.js-toggle-content {
+.govuk-toggle__target {
   display: block;
 
   .js-enabled & {
@@ -38,7 +38,7 @@
       display: block;
     }
 
-    &.is-visible {
+    &.govuk-toggle__target--open {
       display: block;
     }
   }
