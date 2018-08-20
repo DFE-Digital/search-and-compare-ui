@@ -37,13 +37,5 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
             return View(viewModel);
         }
-        [HttpGet("course/{providerCode:string}/{courseCode:string}/ucas-redirect", Name = "RedirectToUcasCourse")]
-        public RedirectResult RedirectToUcasCourse(string providerCode, string courseCode)
-        {
-            var url = _api.GetUcasCourseUrl(providerCode, courseCode);
-
-            return new RedirectResult(url);
-        }
-
     }
 }

@@ -42,19 +42,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             Assert.AreEqual(200, courseViewModel.Finance.FeeCaps.InternationalFees);
             mockApi.VerifyAll();
         }
-
-        [Test]
-        public void RedirectToUcasCourse_CallsApiCorrectly()
-        {
-            mockApi.Setup(x => x.GetUcasCourseUrl("XYZ", "1AB")).Returns("http://ucas.com").Verifiable();
-
-            var redirectResult = sut.RedirectToUcasCourse("XYZ", "1AB");
-
-            Assert.IsFalse(redirectResult.Permanent);
-            Assert.AreEqual("http://ucas.com", redirectResult.Url);
-            mockApi.VerifyAll();
-        }
-
+        
         private List<FeeCaps> GetFeeCaps()
         {
             return new List<FeeCaps>
