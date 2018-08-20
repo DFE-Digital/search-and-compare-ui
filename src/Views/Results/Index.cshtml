@@ -16,19 +16,21 @@
   </div>
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-one-third">
-      <button data-target="#searchFilters" class="js-toggle" aria-expanded="false" aria-controls="searchFilters">
-        Filter the results
-      </button>
-      <div class="js-toggle-content" id="searchFilters">
-        @if (!string.IsNullOrWhiteSpace(Model.FilterModel.query)) {
-          @Html.Partial("Filters/Query", Model.FilterModel)
-        } else {
-          @Html.Partial("Filters/Location", Model.FilterModel)
-        }
-        @Html.Partial("Filters/Subject", Model)
-        @Html.Partial("Filters/Funding", Model.FilterModel)
-        @Html.Partial("Filters/StudyType", Model.FilterModel)
-        @Html.Partial("Filters/Qualification", Model.FilterModel)
+      <div class="govuk-toggle" data-module="toggle">
+        <button class="govuk-toggle__link js-toggle" aria-expanded="false" aria-controls="searchFilters">
+          Filter the results
+        </button>
+        <div class="govuk-toggle__target" id="searchFilters">
+          @if (!string.IsNullOrWhiteSpace(Model.FilterModel.query)) {
+            @Html.Partial("Filters/Query", Model.FilterModel)
+          } else {
+            @Html.Partial("Filters/Location", Model.FilterModel)
+          }
+          @Html.Partial("Filters/Subject", Model)
+          @Html.Partial("Filters/Funding", Model.FilterModel)
+          @Html.Partial("Filters/StudyType", Model.FilterModel)
+          @Html.Partial("Filters/Qualification", Model.FilterModel)
+        </div>
       </div>
     </div>
     <div class="govuk-grid-column-two-thirds">

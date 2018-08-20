@@ -1,15 +1,28 @@
 import { initAll } from 'govuk-frontend';
+import CookieMessage from './Javascript/cookie-message';
 import BackLink from './Javascript/back-link';
-import './Javascript/cookie-bar.js';
-import './Javascript/accordion.js';
-import './Javascript/toggle.js';
+import Accordion from './Javascript/accordion';
+import Toggle from './Javascript/toggle';
 import './Javascript/typeahead.jquery.js';
 import './Styles/site.scss';
 
 initAll();
 
-var $backLink = document.querySelector('[data-module="back-link"]')
-new BackLink($backLink).init()
+var $cookieMessage = document.querySelector('[data-module="cookie-message"]');
+new CookieMessage($cookieMessage).init();
+
+var $backLink = document.querySelector('[data-module="back-link"]');
+new BackLink($backLink).init();
+
+var $accordions = document.querySelectorAll('[data-module="accordion"]')
+for (var i = $accordions.length - 1; i >= 0; i--) {
+  new Accordion($accordions[i]).init();
+};
+
+var $toggle = document.querySelectorAll('[data-module="toggle"]')
+for (var i = $toggle.length - 1; i >= 0; i--) {
+  new Toggle($toggle[i]).init();
+};
 
 if (!!$) {
   $(document).ready(function () {
