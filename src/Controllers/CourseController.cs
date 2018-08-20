@@ -20,7 +20,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             _api = api;
         }
 
-        [HttpGet("course/{providerCode:string}/{courseCode:string}", Name = "Course")]
+        [HttpGet("course/{providerCode}/{courseCode}", Name = "Course")]
         public IActionResult Index(string providerCode, string courseCode, ResultsFilter filter)
         {
             var course = _api.GetCourse(providerCode, courseCode);
