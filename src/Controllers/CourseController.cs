@@ -20,10 +20,10 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             _api = api;
         }
 
-        [HttpGet("course/{courseId:int}", Name = "Course")]
-        public IActionResult Index(int courseId, ResultsFilter filter)
+        [HttpGet("course/{providerCode:string}/{courseCode:string}", Name = "Course")]
+        public IActionResult Index(string providerCode, string courseCode, ResultsFilter filter)
         {
-            var course = _api.GetCourse(courseId);
+            var course = _api.GetCourse(providerCode, courseCode);
             var feeCaps = _api.GetFeeCaps();
 
             var latestFeeCaps = feeCaps.OrderByDescending(x => x.EndYear).FirstOrDefault();
