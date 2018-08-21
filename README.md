@@ -6,6 +6,10 @@ See the [Search and Compare](https://github.com/DFE-Digital/search-and-compare) 
 
 # Running
 
+Run
+
+    npm install
+
 Runs from command line with `cd src && dotnet run`
 
 Runs from vscode and Visual Studio 2017 with F5.
