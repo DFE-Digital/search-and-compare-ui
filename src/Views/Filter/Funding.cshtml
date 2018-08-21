@@ -2,27 +2,19 @@
 
 @{
     ViewBag.Title = $"Filter by financial support options";
-    var isInWizard = ViewBag.IsInWizard == true;
     var errors = ViewBag.Errors as ErrorViewModel;
 }
 
-@if(isInWizard) {
-    @Html.Partial("Back", new BackLinkViewModel {
-        Href = Url.Action("SubjectWizard", "Filter", Model.ToRouteValues()),
-        Title = "Back to location"
-    })
-} else {
-    @Html.Partial("Back", new BackLinkViewModel {
-        Href = Url.Action("Index", "Results", Model.ToRouteValues()),
-        Title = "Back to search results"
-    })
-}
+@Html.Partial("Back", new BackLinkViewModel {
+    Href = Url.Action("Index", "Results", Model.ToRouteValues()),
+    Title = "Back to search results"
+})
 
 <main class="govuk-main-wrapper" id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
             @Html.Partial("Error", errors)
-            <form action='@Url.Action(isInWizard ? "FundingWizard": "Funding", "Filter", Model.ToRouteValues())' method="POST">
+            <form action='@Url.Action("Funding", "Filter", Model.ToRouteValues())' method="POST">
                 <fieldset role="radiogroup" aria-required="true" class="govuk-fieldset">
                     <legend role="heading" class="govuk-fieldset__legend govuk-fieldset__legend--xl">       
                         <h1 class="govuk-heading-xl">Financial support while you&nbsp;train</h1>

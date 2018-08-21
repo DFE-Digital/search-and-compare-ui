@@ -55,9 +55,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                 return RedirectToAction(isInWizard ? "SubjectWizard" : "Subject", filter.ToRouteValues());
             }
 
-            return isInWizard
-                ? RedirectToAction("FundingWizard", filter.ToRouteValues())
-                : RedirectToAction("Index", "Results", filter.ToRouteValues());
+            return RedirectToAction("Index", "Results", filter.ToRouteValues());
         }
 
         [HttpGet("start/subject")]
@@ -191,20 +189,18 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [HttpPost("results/filter/funding")]
         public IActionResult Funding(bool? applyFilter, bool includeBursary, bool includeScholarship, bool includeSalary, ResultsFilter filter)
         {
-            var isInWizard = ViewBag.IsInWizard == true;
-
             filter.page = null;
 
             if (!applyFilter.HasValue)
             {
                 TempData.Put("Errors", new ErrorViewModel("applyFilter", "Please choose an option", null, Url.Action("Funding")));
-                return RedirectToAction(isInWizard ? "FundingWizard" : "Funding", filter.ToRouteValues());
+                return RedirectToAction("Funding", filter.ToRouteValues());
             }
 
             else if (applyFilter == true && !includeBursary && !includeScholarship && !includeSalary)
             {
                 TempData.Put("Errors", new ErrorViewModel("funding", "Funding options", "Please choose at least one funding option", Url.Action("Funding")));
-                return RedirectToAction(isInWizard ? "FundingWizard" : "Funding", filter.ToRouteValues());
+                return RedirectToAction("Funding", filter.ToRouteValues());
             }
             else if (applyFilter == true)
             {
@@ -221,20 +217,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             return RedirectToAction("Index", "Results", filter.ToRouteValues());
         }
 
-
-        [HttpGet("start/funding")]
-        public IActionResult FundingWizard(ResultsFilter filter)
-        {
-            ViewBag.IsInWizard = true;
-            return Funding(filter);
-        }
-
-        [HttpPost("start/funding")]
-        public IActionResult FundingWizard(bool? applyFilter, bool includeBursary, bool includeScholarship, bool includeSalary, ResultsFilter filter)
-        {
-            ViewBag.IsInWizard = true;
-            return Funding(applyFilter, includeBursary, includeScholarship, includeSalary, filter);
-        }
 
         [HttpGet("results/filter/qualification")]
         [ActionName("Qualification")]
