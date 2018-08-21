@@ -121,7 +121,7 @@
             @foreach (var course in courseGroup.Courses) {
                 <dl>
                     <dt>Course Name</dt>
-                    <dd><a href='@Url.Action("Index", "Course", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new {courseId = course.Id}))' class="link">@course.Name</a></dd>
+                    <dd><a href='@Url.Action("Index", "Course", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new {courseCode = course.ProgrammeCode, providerCode = course.Provider.ProviderCode}))' class="link">@course.Name</a></dd>
                 </dl>
             }
         </ul>

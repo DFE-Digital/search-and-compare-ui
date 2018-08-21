@@ -13,7 +13,7 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.0" />
-    <PackageReference Include="DFE.SearchAndCompare.Domain" Version="0.6.0-beta" />
+    <PackageReference Include="DFE.SearchAndCompare.Domain" Version="0.6.1-beta" />
   </ItemGroup>
   <Target Name="Webpack" Condition="'$(Configuration)'=='Release'" BeforeTargets="AfterBuild">
     <Exec Command="npm install" />
