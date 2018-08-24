@@ -2,6 +2,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchAndCompareUi.Shared", "shared\SearchAndCompareUi.Shared.csproj", "{E6BC67D7-901E-49B6-909E-5C3C699D6194}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchAndCompareUi", "src\SearchAndCompareUi.csproj", "{83AA01DC-6869-4403-91C3-FE45F9C6B946}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchAndCompareUI.Tests", "tests\SearchAndCompareUI.Tests.csproj", "{E6BC67D7-901E-49B6-909E-5C3C699D6194}"

@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\src\SearchAndCompareUi.csproj" />
+    <ProjectReference Include="..\shared\SearchAndCompareUi.Shared.csproj" />
   </ItemGroup>
 
 </Project>

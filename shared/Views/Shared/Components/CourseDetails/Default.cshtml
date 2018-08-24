@@ -1,0 +1,322 @@
+@model GovUk.Education.SearchAndCompare.UI.Shared.ViewModels.CourseDetailsViewModel
+
+@{
+    ViewBag.Title = $"{Model.Course.Name} at {Model.Provider.Name}";
+}
+
+<div data-module="back-link"></div>
+
+<main class="govuk-main-wrapper" id="main-content" role="main">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-l" role="heading">
+                @Model.Course.Name at @Model.Provider.Name
+            </h1>
+        </div>
+        <div class="govuk-grid-column-full">
+            <div class="course-basicinfo govuk-!-margin-bottom-8">
+                <dl class="govuk-list--description">
+                    @if (Model.Course.ProviderLocation != null)
+                    {
+                        <dt class="govuk-list--description__label">Location</dt>
+                        <dd>@Model.Course.ProviderLocation.Address</dd>
+                    }
+                    <dt class="govuk-list--description__label">Qualification</dt>
+                    <dd>
+                        @if (Model.Course.IncludesPgce != IncludesPgce.No)
+                        {
+                            <details class="govuk-details">
+                                <summary class="govuk-details__summary">
+                                    <span class="govuk-details__summary-text">@Model.Course.FormattedOutcome()</span>
+                                </summary>
+                                <div class="govuk-details__text">
+                                    <p class="govuk-body">A postgraduate certificate in education (PGCE) with qualified teacher status (QTS) allows you to teach in England, Scotland, Wales and Northern Ireland.</p>
+                                    <p class="govuk-body">This qualification is also recognised internationally.</p>
+                                    <p class="govuk-body">Many PGCE courses include credits that count toward a Master&#8217;s degree.</p>
+                                </div>
+                            </details>
+                        }
+                        else
+                        {
+                            <details class="govuk-details">
+                                <summary class="govuk-details__summary">
+                                    <span class="govuk-details__summary-text">@Model.Course.FormattedOutcome()</span>
+                                </summary>
+
+                                <div class="govuk-details__text">
+                                    <p class="govuk-body">Qualified teacher status (QTS) allows you to teach in state schools in England.</p>
+                                    <p class="govuk-body">If you want to teach in the rest of the UK or internationally, consider a course that gives you the qualification &#39;postgraduate certificate in education with qualified teacher status&#39; instead.</p>
+                                </div>
+                            </details>
+                        }
+                    </dd>
+
+                    @if (!string.IsNullOrEmpty(@Model.Course.FundingOptions())) {
+                        <dt class="govuk-list--description__label">Financial support</dt>
+                        <dd>@Model.Course.FundingOptions()</dd>
+                    }
+
+                    @if (!string.IsNullOrEmpty(@Model.Course.FormattedStudyInfo())) {
+                        <dt class="govuk-list--description__label">Study type and duration</dt>
+                        <dd>@Model.Course.FormattedStudyInfo()</dd>
+                    }
+
+                    @if (!string.IsNullOrEmpty(@Model.Course.FormattedEarliestApplicationDate())) {
+                        <dt class="govuk-list--description__label">Date you can apply from</dt>
+                        <dd>@Model.Course.FormattedEarliestApplicationDate()</dd>
+                    }
+                    @if (!string.IsNullOrEmpty(@Model.Course.FormattedStartDate())) {
+                        <dt class="govuk-list--description__label">Date course starts</dt>
+                        <dd>@Model.Course.FormattedStartDate()</dd>
+                    }
+                </dl>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="govuk-grid-row">
+
+        <div class="govuk-grid-column-two-thirds">
+            <div class="course-contents govuk-!-margin-bottom-8">
+                <h2 class="govuk-heading-s">Contents</h2>
+                <ul class="govuk-list govuk-list--dash">
+                    @if (Model.HasSection("about this training programme"))
+                    {
+                        <li><a href="#section-about">About the course</a></li>
+                    }
+                    @if (Model.HasSection("entry requirements"))
+                    {
+                        <li><a href="#section-entry">Requirements</a></li>
+                    }
+                    @if (Model.HasSection("about placement schools"))
+                    {
+                        <li><a href="#section-schools">Placement schools</a></li>
+                    }
+
+                    <li><a href="#section-fees">Fees</a></li>
+
+                    <li><a href="#section-financial-support">Financial support</a></li>
+
+                    @if (Model.HasSection("about this training provider"))
+                    {
+                        <li><a href="#section-about-provider">About the training provider</a></li>
+                    }
+
+                    @if (Model.HasContactDetails())
+                    {
+                        <li><a href="#section-contact">Contact details</a></li>
+                    }
+
+                    <li><a href="#section-apply">Apply</a></li>
+                </ul>
+            </div>
+
+
+            @if (Model.HasSection("about this training programme"))
+            {
+                <div class="govuk-!-margin-bottom-8">
+                    <h2 class="govuk-heading-m" id="section-about">
+                        About the course
+                    </h2>
+                    <p class="govuk-body">
+                        @Html.Raw(Model.GetHtmlForSection("about this training programme"))
+                    </p>
+                </div>
+            }
+
+            @if (Model.HasSection("entry requirements"))
+            {
+                <div class="govuk-!-margin-bottom-8">
+                    <h2 class="govuk-heading-m" id="section-entry">
+                        Requirements
+                    </h2>
+                    @Html.Raw(Model.GetHtmlForSection("entry requirements"))
+                </div>
+            }
+
+            @if (Model.HasSection("about placement schools"))
+            {
+                <div class="govuk-!-margin-bottom-8">
+                    <h2 class="govuk-heading-m" id="section-schools">
+                        Placement schools
+                    </h2>
+                    <div>
+                        @Html.Raw(Model.GetHtmlForSection("about placement schools"))
+                    </div>
+                </div>
+            }
+
+            <div class="govuk-!-margin-bottom-8">
+                <h2 class="govuk-heading-m" id="section-fees">Fees</h2>
+                <div class="body-text">
+                    <table class="govuk-table">
+                        <caption class="govuk-table__caption">The course fees for @Model.Finance.FormattedYear are as follows:</caption>
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-visually-hidden govuk-table__row">
+                                <th class="govuk-table__header">Student type</th>
+                                <th class="govuk-table__header">Fees to pay</th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row">
+                            <td class="govuk-table__cell">UK students</td>
+                            <td class="govuk-table__cell">@Model.Finance.FormattedUkFees</td>
+                        </tr>
+                        <tr class="govuk-table__row">
+                            <td class="govuk-table__cell">EU students</td>
+                            <td class="govuk-table__cell">@Model.Finance.FormattedEuFees</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="govuk-!-margin-bottom-8">
+                <h2 class="govuk-heading-m" id="section-financial-support">Financial support</h2>
+                @if (Model.Finance.IsSalaried)
+                {
+                    <p class="govuk-body">
+                        @Model.Finance.FormattedSalary
+                    </p>
+                }
+                else if (Model.Finance.HasFunding)
+                {
+                    <p>The following financial support might be available for you depending on your qualifications.</p>
+                    <ul class="govuk-list govuk-list--bullet">
+                        @if (Model.Finance.MaxScholarship.HasValue)
+                        {
+                            <li>@Model.Finance.FormattedMaxScholarship</li>
+                        }
+                        @if (Model.Finance.MaxBursary.HasValue)
+                        {
+                            <li>@Model.Finance.FormattedMaxBursary</li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <p class="govuk-body">
+                        You may be eligible for <a href="https://www.gov.uk/student-finance" class="govuk-link">financial support for students</a>.
+                    </p>
+                }
+
+                <p class="govuk-body">
+                    <a href="https://getintoteaching.education.gov.uk/explore-my-options/overseas-graduates" class="govuk-link">Financial support if you’re from outside of the UK</a>
+                </p>
+            </div>
+
+            @if (Model.HasSection("about this training provider"))
+            {
+                <div class="govuk-!-margin-bottom-8">
+                    <h2 class="govuk-heading-m" id="section-about-provider">
+                        About the training provider
+                    </h2>
+                    <p class="govuk-body">
+                        @Html.Raw(Model.GetHtmlForSection("about this training provider"))
+                    </p>
+                </div>
+            }
+
+            @if (Model.HasContactDetails())
+            {
+                <div class="govuk-!-margin-bottom-8">
+                    <h2 class="govuk-heading-m" id="section-contact">
+                        Contact details
+                    </h2>
+                    <div class="course-basicinfo">
+                        <dl class="govuk-list--description" role="contentinfo">
+                            @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Email))
+                            {
+                                <dt class="govuk-list--description__label">Email</dt>
+                                <dd>
+                                    <a href="mailto:@Model.Course.ContactDetails.Email"
+                                    title="Send email to course contact"
+                                    aria-label="Send email to course contact"
+                                    class="govuk-link">
+                                        @Model.Course.ContactDetails.Email
+                                    </a>
+                                </dd>
+                            }
+                            @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Phone))
+                            {
+                                <dt class="govuk-list--description__label">Telephone</dt>
+                                <dd>@Model.Course.ContactDetails.Phone</dd>
+                            }
+                            @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Fax))
+                            {
+                                <dt class="govuk-list--description__label">Fax</dt>
+                                <dd>@Model.Course.ContactDetails.Fax</dd>
+                            }
+                            @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Website))
+                            {
+                                <dt class="govuk-list--description__label">Website</dt>
+                                <dd>
+                                    <a href="@Model.Course.ContactDetails.Website"
+                                    title="Go to course website"
+                                    aria-label="Go to course website"
+                                        class="govuk-link">
+                                        @Model.Course.ContactDetails.Website
+                                    </a>
+                                </dd>
+                            }
+                            @if (Model.HasAddress())
+                            {
+                                <dt class="govuk-list--description__label">Address</dt>
+                                <dd>
+                                    @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address))
+                                    {
+                                        @foreach (var line in Model.Course.ContactDetails.Address.Split("\n"))
+                                        {
+                                            @line
+                                            <br>
+                                        }
+                                    }
+                                </dd>
+                            }
+                        </dl>
+                    </div>
+                </div>
+            }
+
+
+            <div class="govuk-!-margin-bottom-8">
+                <h2 class="govuk-heading-m" id="section-apply">
+                    Apply
+                </h2>
+                <div>
+                    <p class="govuk-body">
+                        <a href="https://2018.teachertraining.apply.ucas.com/apply/student/login.do" class="govuk-link">Apply on the UCAS website</a>. You'll need to register before you can apply.
+                    </p>
+                    <p class="govuk-body">
+                        You'll need these codes for the Choices section of the application form:
+                    </p>
+                    <ul class="govuk-list govuk-list--bullet">
+                        <li>training provider code: @Model.Course.Provider.ProviderCode</li>
+                        <li>training programme code: @Model.Course.ProgrammeCode</li>
+                        @if (Model.Course.Campuses.Count() == 0)
+                        {
+                            <li>training location or campus code: leave empty</li>
+                        }
+                        else if (Model.Course.Campuses.Count() == 1)
+                        {
+                            <li>training location or campus code: @(String.IsNullOrEmpty(Model.Course.Campuses.Single().CampusCode) ? "leave empty" : Model.Course.Campuses.Single().CampusCode)</li>
+                        }
+                    </ul>
+                    @if (Model.Course.Campuses.Count() > 1)
+                    {
+                        <p class="govuk-body">
+                            When asked for the training location or campus code, use:
+                        </p>
+                        <ul class="govuk-list govuk-list--bullet">
+                            @foreach (var campus in Model.Course.Campuses)
+                            {
+                                <li>@(String.IsNullOrEmpty(campus.CampusCode) ? "leave empty" : campus.CampusCode) for @campus.Name</li>
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

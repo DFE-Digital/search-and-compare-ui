@@ -11,6 +11,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.SpaServices.Webpack;
+using System.Reflection;
+using Microsoft.Extensions.FileProviders;
+using GovUk.Education.SearchAndCompare.UI.Shared.Services;
+using GovUk.Education.SearchAndCompare.UI.Shared.ViewComponents;
+using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace GovUk.Education.SearchAndCompare.UI
 {
@@ -29,10 +34,14 @@ namespace GovUk.Education.SearchAndCompare.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            var sharedAssembly = typeof(CourseDetailsViewComponent).GetTypeInfo().Assembly; 
+            services.AddMvc().AddApplicationPart(sharedAssembly);
+            services.Configure<RazorViewEngineOptions>(o => o.FileProviders.Add(new EmbeddedFileProvider(sharedAssembly, "GovUk.Education.SearchAndCompare.UI.Shared")));
+
             var apiUri = Environment.GetEnvironmentVariable("API_URI") ?? Configuration.GetSection("ApiConnection").GetValue<string>("Uri");
             _logger.LogInformation("Using API base URL: " + apiUri);
             services.AddScoped<ISearchAndCompareApi>(provider => new SearchAndCompareApi(new HttpClient(), apiUri));
+            services.AddScoped<ICourseDetailsService>(provider => new CourseDetailsService(provider.GetService<ISearchAndCompareApi>()));
             services.AddScoped<AnalyticsPolicy>(provider => AnalyticsPolicy.FromEnv());
             services.AddScoped<AnalyticsAttribute>();
             services.AddScoped<IGeocoder>(provider => new Geocoder(Configuration.GetSection("ApiKeys").GetValue<string>("GoogleMaps")));
