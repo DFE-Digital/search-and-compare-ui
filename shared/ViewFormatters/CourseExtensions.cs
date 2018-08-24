@@ -3,9 +3,8 @@ using System.Globalization;
 using System.Linq;
 using GovUk.Education.SearchAndCompare.Domain.Models;
 using GovUk.Education.SearchAndCompare.Domain.Models.Enums;
-using GovUk.Education.SearchAndCompare.UI.ViewModels;
 
-namespace GovUk.Education.SearchAndCompare.UI.ViewFormatters
+namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters
 {
     public static class CourseExtensions
     {

@@ -1,5 +1,5 @@
-using GovUk.Education.SearchAndCompare.UI.ViewFormatters;
 using GovUk.Education.SearchAndCompare.Domain.Models;
+using GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters;
 using NUnit.Framework;
 using System.Collections.Generic;
 

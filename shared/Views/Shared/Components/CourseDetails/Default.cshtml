@@ -1,5 +1,9 @@
 @model GovUk.Education.SearchAndCompare.UI.Shared.ViewModels.CourseDetailsViewModel
 
+@using GovUk.Education.SearchAndCompare.Domain.Models
+@using GovUk.Education.SearchAndCompare.Domain.Models.Enums;
+@using GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters
+
 @{
     ViewBag.Title = $"{Model.Course.Name} at {Model.Provider.Name}";
 }
