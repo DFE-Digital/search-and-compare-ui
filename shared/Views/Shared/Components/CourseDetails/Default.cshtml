@@ -68,12 +68,6 @@
                         <dt class="govuk-list--description__label">Financial support</dt>
                         <dd>@Model.Course.FundingOptions()</dd>
                     }
-
-                    @if (!string.IsNullOrEmpty(@Model.Course.FormattedStudyInfo())) {
-                        <dt class="govuk-list--description__label">Study type and duration</dt>
-                        <dd>@Model.Course.FormattedStudyInfo()</dd>
-                    }
-
                     @if (!string.IsNullOrEmpty(@Model.Course.FormattedEarliestApplicationDate())) {
                         <dt class="govuk-list--description__label">Date you can apply from</dt>
                         <dd>@Model.Course.FormattedEarliestApplicationDate()</dd>
@@ -81,6 +75,17 @@
                     @if (!string.IsNullOrEmpty(@Model.Course.FormattedStartDate())) {
                         <dt class="govuk-list--description__label">Date course starts</dt>
                         <dd>@Model.Course.FormattedStartDate()</dd>
+                    }
+                    @if (!string.IsNullOrEmpty(@Model.Course.ContactDetails.Website)) {
+                        <dt class="govuk-list--description__label">Website</dt>
+                        <dd>                            
+                            <a href="@Model.Course.FormattedWebsite()"
+                            title="Go to course website"
+                            aria-label="Go to course website"
+                                class="govuk-link">
+                                @Model.Course.FormattedWebsite()
+                            </a>
+                        </dd>
                     }
                 </dl>
             </div>
@@ -341,11 +346,11 @@
                             {
                                 <dt class="govuk-list--description__label">Website</dt>
                                 <dd>
-                                    <a href="@Model.Course.ContactDetails.Website"
+                                    <a href="@Model.Course.FormattedWebsite()"
                                     title="Go to course website"
                                     aria-label="Go to course website"
                                         class="govuk-link">
-                                        @Model.Course.ContactDetails.Website
+                                        @Model.Course.FormattedWebsite()
                                     </a>
                                 </dd>
                             }
@@ -387,22 +392,36 @@
                         {
                             <li>training location or campus code: leave empty</li>
                         }
-                        else if (Model.Course.Campuses.Count() == 1)
-                        {
-                            <li>training location or campus code: @(String.IsNullOrEmpty(Model.Course.Campuses.Single().CampusCode) ? "leave empty" : Model.Course.Campuses.Single().CampusCode)</li>
-                        }
                     </ul>
-                    @if (Model.Course.Campuses.Count() > 1)
+                    @if (Model.Course.Campuses.Count() > 0)
                     {
                         <p class="govuk-body">
-                            When asked for the training location or campus code, use:
+                            You’ll also need to choose a training location and give the relevant training location code.
                         </p>
-                        <ul class="govuk-list govuk-list--bullet">
+                        <p class="govuk-body">
+                            Available training locations:
+                        </p>
+
+                        <table class="govuk-table">
+                        <thead class="govuk-table__head">
+                            <tr class="govuk-table__row">
+                                <th class="govuk-table__header" scope="col">Name</th>
+                                <th class="govuk-table__header" scope="col">Address</th>
+                                <th class="govuk-table__header" scope="col">Code</th>
+                            </tr>
+                        </thead>
+                        <tbody class="govuk-table__body">
+                            
                             @foreach (var campus in Model.Course.Campuses)
-                            {
-                                <li>@(String.IsNullOrEmpty(campus.CampusCode) ? "leave empty" : campus.CampusCode) for @campus.Name</li>
+                            {                                
+                                <tr class="govuk-table__row">
+                                    <td class="govuk-table__cell">@campus.Name</td>
+                                    <td class="govuk-table__cell">@campus.Location?.Address</td>
+                                    <td class="govuk-table__cell">@campus.CampusCode</td>
+                                </tr>
                             }
-                        </ul>
+                        </tbody>
+                        </table>
                     }
                 </div>
             </div>
