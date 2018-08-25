@@ -2,13 +2,22 @@
 
 @using GovUk.Education.SearchAndCompare.Domain.Models
 @using GovUk.Education.SearchAndCompare.Domain.Models.Enums;
-@using GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters
+@using GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters;
+@using GovUk.Education.SearchAndCompare.UI.Shared.ViewComponents;
 
 @{
     ViewBag.Title = $"{Model.Course.Name} at {Model.Provider.Name}";
+    Microsoft.AspNetCore.Html.HtmlString section = null;
 }
 
 <div data-module="back-link"></div>
+
+@if (Model.PreviewMode)
+{
+    <div class="preview-banner">
+      This is a preview of a course: @Model.Course.Name (@Model.Course.ProgrammeCode).
+    </div>
+}
 
 <main class="govuk-main-wrapper" id="main-content" role="main">
     <div class="govuk-grid-row">
@@ -85,26 +94,33 @@
             <div class="course-contents govuk-!-margin-bottom-8">
                 <h2 class="govuk-heading-s">Contents</h2>
                 <ul class="govuk-list govuk-list--dash">
-                    @if (Model.HasSection("about this training programme"))
+                    @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutTheCourse))
                     {
                         <li><a href="#section-about">About the course</a></li>
                     }
-                    @if (Model.HasSection("entry requirements"))
+                    @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.EntryRequirements))
                     {
                         <li><a href="#section-entry">Requirements</a></li>
                     }
-                    @if (Model.HasSection("about placement schools"))
+                    @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutSchools))
                     {
-                        <li><a href="#section-schools">Placement schools</a></li>
+                        <li><a href="#section-schools">How school placements work</a></li>
+                    }                    
+                    @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutFees))
+                    {
+                        <li><a href="#section-fees">Fees</a></li>
                     }
-
-                    <li><a href="#section-fees">Fees</a></li>
 
                     <li><a href="#section-financial-support">Financial support</a></li>
 
-                    @if (Model.HasSection("about this training provider"))
+                    @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutTheProvider))
                     {
                         <li><a href="#section-about-provider">About the training provider</a></li>
+                    }
+                    
+                    @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.TrainWithDisabilities))
+                    {
+                        <li><a href="#section-train-with-disabilities">Training with disabilities and other needs</a></li>
                     }
 
                     @if (Model.HasContactDetails())
@@ -117,64 +133,107 @@
             </div>
 
 
-            @if (Model.HasSection("about this training programme"))
+            @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutTheCourse))
             {
                 <div class="govuk-!-margin-bottom-8">
                     <h2 class="govuk-heading-m" id="section-about">
                         About the course
                     </h2>
-                    <p class="govuk-body">
-                        @Html.Raw(Model.GetHtmlForSection("about this training programme"))
-                    </p>
+                        
+                    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.AboutTheCourse)) != null)
+                    {
+                        @Html.Raw(section)
+                    }
+                    else
+                    {
+                        <p class="missing-section">      
+                            Please add details for this section.                            
+                        </p>
+                    }
                 </div>
             }
 
-            @if (Model.HasSection("entry requirements"))
+            @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.EntryRequirements))
             {
                 <div class="govuk-!-margin-bottom-8">
                     <h2 class="govuk-heading-m" id="section-entry">
                         Requirements
-                    </h2>
-                    @Html.Raw(Model.GetHtmlForSection("entry requirements"))
+                    </h2>                    
+                    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.EntryRequirements)) != null)
+                    {
+                        @Html.Raw(section)
+                    }
+                    else
+                    {
+                        <p class="missing-section">      
+                            Please add details for this section.                            
+                        </p>
+                    }
                 </div>
             }
 
-            @if (Model.HasSection("about placement schools"))
+            @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutSchools))
             {
                 <div class="govuk-!-margin-bottom-8">
                     <h2 class="govuk-heading-m" id="section-schools">
-                        Placement schools
+                        How school placements work
                     </h2>
                     <div>
-                        @Html.Raw(Model.GetHtmlForSection("about placement schools"))
+                    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.AboutSchools)) != null)
+                    {
+                        @Html.Raw(section)
+                    }
+                    else
+                    {
+                        <p class="missing-section">      
+                            Please add details for this section.                            
+                        </p>
+                    }
                     </div>
                 </div>
             }
 
-            <div class="govuk-!-margin-bottom-8">
-                <h2 class="govuk-heading-m" id="section-fees">Fees</h2>
-                <div class="body-text">
-                    <table class="govuk-table">
-                        <caption class="govuk-table__caption">The course fees for @Model.Finance.FormattedYear are as follows:</caption>
-                        <thead class="govuk-table__head">
-                            <tr class="govuk-visually-hidden govuk-table__row">
-                                <th class="govuk-table__header">Student type</th>
-                                <th class="govuk-table__header">Fees to pay</th>
+
+            @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutFees))
+            {
+            
+                <div class="govuk-!-margin-bottom-8">
+                    <h2 class="govuk-heading-m" id="section-fees">Fees</h2>
+                    <div>                        
+                        @if ((section = Model.GetHtmlForSection(CourseDetailsSections.AboutFees)) != null)
+                        {
+                            @Html.Raw(section)
+                        }
+                        else
+                        {
+                            <p class="missing-section">      
+                                Please add details for this section.                            
+                            </p>
+                        }
+                    </div>
+                    <div class="body-text">
+                        <table class="govuk-table">
+                            <caption class="govuk-table__caption">The course fees for @Model.Finance.FormattedYear are as follows:</caption>
+                            <thead class="govuk-table__head">
+                                <tr class="govuk-visually-hidden govuk-table__row">
+                                    <th class="govuk-table__header">Student type</th>
+                                    <th class="govuk-table__header">Fees to pay</th>
+                                </tr>
+                            </thead>
+                            <tbody class="govuk-table__body">
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell">UK students</td>
+                                <td class="govuk-table__cell">@Model.Finance.FormattedUkFees</td>
                             </tr>
-                        </thead>
-                        <tbody class="govuk-table__body">
-                        <tr class="govuk-table__row">
-                            <td class="govuk-table__cell">UK students</td>
-                            <td class="govuk-table__cell">@Model.Finance.FormattedUkFees</td>
-                        </tr>
-                        <tr class="govuk-table__row">
-                            <td class="govuk-table__cell">EU students</td>
-                            <td class="govuk-table__cell">@Model.Finance.FormattedEuFees</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                            <tr class="govuk-table__row">
+                                <td class="govuk-table__cell">EU students</td>
+                                <td class="govuk-table__cell">@Model.Finance.FormattedEuFees</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
+            }
 
             <div class="govuk-!-margin-bottom-8">
                 <h2 class="govuk-heading-m" id="section-financial-support">Financial support</h2>
@@ -210,15 +269,41 @@
                 </p>
             </div>
 
-            @if (Model.HasSection("about this training provider"))
+            @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutTheProvider))
             {
                 <div class="govuk-!-margin-bottom-8">
                     <h2 class="govuk-heading-m" id="section-about-provider">
                         About the training provider
                     </h2>
-                    <p class="govuk-body">
-                        @Html.Raw(Model.GetHtmlForSection("about this training provider"))
-                    </p>
+                    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.AboutTheProvider)) != null)
+                    {
+                        @Html.Raw(section)
+                    }
+                    else
+                    {
+                        <p class="missing-section">      
+                            Please add details <a href="@Model.AboutYourOrgLink">about your organisation</a>.                            
+                        </p>
+                    }
+                </div>
+            }
+
+            @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.TrainWithDisabilities))
+            {
+                <div class="govuk-!-margin-bottom-8">
+                    <h2 class="govuk-heading-m" id="section-train-with-disabilities">
+                        Training with disabilities and other needs
+                    </h2>
+                    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.TrainWithDisabilities)) != null)
+                    {
+                        @Html.Raw(section)
+                    }
+                    else
+                    {
+                        <p class="missing-section">      
+                            Please add details <a href="@Model.AboutYourOrgLink">about your organisation</a>.                            
+                        </p>
+                    }
                 </div>
             }
 

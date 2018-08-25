@@ -9,7 +9,8 @@ using Microsoft.AspNetCore.Mvc.ApplicationParts;
 namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewComponents
 {
     public class CourseDetailsViewComponent : ViewComponent
-    {        
+    {     
+
         private readonly ICourseDetailsService _api;
 
         public CourseDetailsViewComponent(ICourseDetailsService api)
@@ -17,7 +18,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewComponents
             _api = api;
         }
 
-        public IViewComponentResult Invoke(string providerCode, string courseCode)
+        public IViewComponentResult Invoke(string providerCode, string courseCode, bool preview = false, string aboutYourOrgLink = null)
         {
             var course = _api.GetCourse(providerCode, courseCode);
             var feeCaps = _api.GetFeeCaps();
@@ -27,10 +28,23 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewComponents
             var viewModel = new CourseDetailsViewModel()
             {
                 Course = course,
-                Finance = new FinanceViewModel(course, latestFeeCaps)
+                Finance = new FinanceViewModel(course, latestFeeCaps),
+                PreviewMode = preview,
+                AboutYourOrgLink = aboutYourOrgLink
             };
 
             return View(viewModel);
         }
+    }
+
+    public static class CourseDetailsSections
+    {
+        public const string AboutTheCourse = "about this training programme";
+        public const string EntryRequirements = "entry requirements";
+        public const string ListOfSchools = "placement schools";
+        public const string AboutSchools = "about placement schools";
+        public const string AboutFees = "about fees";
+        public const string AboutTheProvider = "about this training provider";
+        public const string TrainWithDisabilities = "training with disabilities";        
     }
 }

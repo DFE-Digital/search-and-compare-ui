@@ -5,7 +5,9 @@ $govuk-global-styles: true;
 
 @import "node_modules/govuk-frontend/all";
 @import "components/cookie-banner";
+@import "components/preview-banner";
 @import "components/map";
+@import "components/missing-section";
 @import "components/typahead";
 @import "components/accordion";
 @import "components/toggle";

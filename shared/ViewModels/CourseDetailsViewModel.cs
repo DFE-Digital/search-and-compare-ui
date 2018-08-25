@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
 using GovUk.Education.SearchAndCompare.UI.Shared.Utils;
 using Microsoft.AspNetCore.Html;
@@ -9,6 +9,10 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewModels
 {
     public class CourseDetailsViewModel
     {
+        public string AboutYourOrgLink { get; set; }
+        
+        public bool PreviewMode { get; set; }
+
         public Course Course { get; set; }
 
         public FinanceViewModel Finance { get; set; }
@@ -47,6 +51,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewModels
 
         public HtmlString GetHtmlForSection(string name)
         {
+            if (!HasSection(name)) return null;
+               
             return markdownFormatter.ToHtml(
                 Course.DescriptionSections.Where(x => x.Name == name).SingleOrDefault()?.Text);
         }
