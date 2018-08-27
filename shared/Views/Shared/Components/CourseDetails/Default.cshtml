@@ -163,7 +163,10 @@
                 <div class="govuk-!-margin-bottom-8">
                     <h2 class="govuk-heading-m" id="section-entry">
                         Requirements
-                    </h2>                    
+                    </h2>
+                    <h3 class="govuk-heading-s">
+                        Qualifications
+                    </h3>                    
                     @if ((section = Model.GetHtmlForSection(CourseDetailsSections.EntryRequirements)) != null)
                     {
                         @Html.Raw(section)
@@ -173,6 +176,21 @@
                         <p class="missing-section">      
                             Please add details for this section.                            
                         </p>
+                    }                    
+                    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.EntryRequirementsPersonalQualities)) != null)
+                    {
+                        <h3 class="govuk-heading-s">
+                            Personal qualities
+                        </h3>
+                        @Html.Raw(section)
+                    }
+                    
+                    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.EntryRequirementsOther)) != null)
+                    {
+                        <h3 class="govuk-heading-s">
+                            Other requirements
+                        </h3>
+                        @Html.Raw(section)
                     }
                 </div>
             }
@@ -282,6 +300,13 @@
                     </h2>
                     @if ((section = Model.GetHtmlForSection(CourseDetailsSections.AboutTheProvider)) != null)
                     {
+                        @Html.Raw(section)
+                    }
+                    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.AboutTheAccreditingProvider)) != null)
+                    {
+                        <h3 class="govuk-heading-s">
+                            About the accredited provider
+                        </h3>
                         @Html.Raw(section)
                     }
                     else
