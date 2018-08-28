@@ -1,6 +1,5 @@
-.missing-section
-{
-    border: 5px solid #bfc1c3;
-    padding: 15px;
+.missing-section {
+    border: 5px solid govuk-colour("blue");
     display: block;
-}
+    padding: govuk-spacing(3);
+}  

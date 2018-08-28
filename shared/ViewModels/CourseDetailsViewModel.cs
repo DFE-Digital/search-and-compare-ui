@@ -51,7 +51,10 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewModels
 
         public HtmlString GetHtmlForSection(string name)
         {
-            if (!HasSection(name)) return null;
+            if (!HasSection(name)) 
+            {
+                return null;
+            }
                
             return markdownFormatter.ToHtml(
                 Course.DescriptionSections.Where(x => x.Name == name).SingleOrDefault()?.Text);
