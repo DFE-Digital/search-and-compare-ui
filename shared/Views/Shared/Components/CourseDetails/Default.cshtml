@@ -103,7 +103,7 @@
                     {
                         <li><a href="#section-about">About the course</a></li>
                     }
-                    @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.EntryRequirements))
+                    @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.EntryRequirementsQualifications))
                     {
                         <li><a href="#section-entry">Requirements</a></li>
                     }
@@ -158,7 +158,7 @@
                 </div>
             }
 
-            @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.EntryRequirements))
+            @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.EntryRequirementsQualifications))
             {
                 <div class="govuk-!-margin-bottom-8">
                     <h2 class="govuk-heading-m" id="section-entry">
@@ -167,7 +167,7 @@
                     <h3 class="govuk-heading-s">
                         Qualifications
                     </h3>                    
-                    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.EntryRequirements)) != null)
+                    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.EntryRequirementsQualifications)) != null)
                     {
                         @Html.Raw(section)
                     }
@@ -300,14 +300,14 @@
                     </h2>
                     @if ((section = Model.GetHtmlForSection(CourseDetailsSections.AboutTheProvider)) != null)
                     {
-                        @Html.Raw(section)
-                    }
-                    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.AboutTheAccreditingProvider)) != null)
-                    {
-                        <h3 class="govuk-heading-s">
-                            About the accredited provider
-                        </h3>
-                        @Html.Raw(section)
+                        @Html.Raw(section)                        
+                        @if ((section = Model.GetHtmlForSection(CourseDetailsSections.AboutTheAccreditingProvider)) != null)
+                        {
+                            <h3 class="govuk-heading-s">
+                                About the accredited provider
+                            </h3>
+                            @Html.Raw(section)
+                        }
                     }
                     else
                     {
