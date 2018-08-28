@@ -26,7 +26,10 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewComponents
         {
             var originalTotal = original.Courses.TotalCount;
 
-            var hasSalary = !(original.FilterModel.SelectedFunding.HasValue && original.FilterModel.SelectedFunding.Value == FundingOption.All) && original.FilterModel.SelectedFunding.Value.HasFlag(FundingOption.Salary);
+            var hasSalary = 
+                original.FilterModel.SelectedFunding.HasValue && 
+                original.FilterModel.SelectedFunding.Value != FundingOption.All && 
+                original.FilterModel.SelectedFunding.Value.HasFlag(FundingOption.Salary);
 
             var resultsFilters = GetSuggestedSearchesResultsFiltersForAllFunding(original);
 
