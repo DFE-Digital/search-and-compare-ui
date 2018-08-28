@@ -1,17 +1,28 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using GovUk.Education.SearchAndCompare.Domain.Models;
 using GovUk.Education.SearchAndCompare.Domain.Models.Enums;
-using GovUk.Education.SearchAndCompare.UI.ViewModels;
 
-namespace GovUk.Education.SearchAndCompare.UI.ViewFormatters
+namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters
 {
     public static class CourseExtensions
     {
         static string qts = "Qualified teacher status";
 
         static string pgce = "Postgraduate certificate in education";
+
+        private static Regex websiteRegex = new Regex("^https?:\\/\\/");
+
+        public static string FormattedWebsite(this Course course)
+        {
+            var raw = course.ContactDetails?.Website;
+            
+            return string.IsNullOrEmpty(raw) ? null
+                : websiteRegex.IsMatch(raw) ? raw
+                : "http://" + raw;
+        }
 
         public static string FormattedOutcome(this Course course)
         {

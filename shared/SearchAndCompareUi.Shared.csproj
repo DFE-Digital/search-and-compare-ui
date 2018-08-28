@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <PackageId>GovUk.Education.SearchAndCompare.Ui.Shared</PackageId>
+    <TargetFramework>netcoreapp2.1</TargetFramework>    
+    <RootNamespace>GovUk.Education.SearchAndCompare.UI.Shared</RootNamespace>
+    <Authors>Department for Education</Authors>
+    <Description>Shared components from the SearchAndCompare UI</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>Pre-release</PackageReleaseNotes>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <GitInfoReportImportance>high</GitInfoReportImportance>
+    <GitVersionFile>$(ProjectDir)GitVersion.txt</GitVersionFile>  
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.1" />
+    <PackageReference Include="DFE.SearchAndCompare.Domain" Version="0.6.1-beta" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GitInfo" Version="2.0.11">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Views\**\*.cshtml" /> 
+  </ItemGroup> 
+
+  
+  <Target Name="SemanticVersioning" DependsOnTargets="GitVersion" AfterTargets="GitVersion" Outputs="$(OutputSwaggerGeneration)">
+    <PropertyGroup Condition="'$(GitBranch)'=='master'">
+      <Version>$(GitBaseVersion).$(GitSemVerPatch)</Version>
+      <PackageVersion>$(GitBaseVersion).$(GitSemVerPatch)</PackageVersion>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(GitBranch)'!='master'">
+      <Version>$(GitBaseVersion)-$([System.Text.RegularExpressions.Regex]::Replace('$(GitBranch)','[^A-Za-z0-9]','-')).$(GitSemVerPatch)</Version>
+      <PackageVersion>$(GitBaseVersion)-$([System.Text.RegularExpressions.Regex]::Replace('$(GitBranch)','[^A-Za-z0-9]','-')).$(GitSemVerPatch)</PackageVersion>
+    </PropertyGroup>    
+  </Target>
+
+</Project>

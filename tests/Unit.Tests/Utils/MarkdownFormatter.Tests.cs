@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using GovUk.Education.SearchAndCompare.UI.Utils;
+using GovUk.Education.SearchAndCompare.UI.Shared.Utils;
 
 namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Utils
 {
@@ -11,23 +11,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Utils
             Assert.That(GetHtml(null), Is.EqualTo(""), "null");
             Assert.That(GetHtml(""), Is.EqualTo(""), "empty");
             Assert.That(GetHtml("  \n\t"), Is.EqualTo(""), "whitespace");
-        }
-
-        [Test]
-        public void Headers()
-        {
-            const string expected = "<h4 class=\"govuk-heading-s\">test</h4>";
-
-            Assert.That(GetHtml(@"==test=="), Is.EqualTo(expected), "normal");
-            Assert.That(GetHtml(@"== test=="), Is.EqualTo(expected), "space in middle");
-            Assert.That(GetHtml(@"==test == "), Is.EqualTo(expected), "trailing space");
-            Assert.That(GetHtml(@" ==test=="), Is.EqualTo(expected), "leading space");
-        }
-
-        [Test]
-        public void NotReallyHeaders()
-        {
-            Assert.That(GetHtml(@"foo == bar =="), Is.EqualTo("<p class=\"govuk-body\">foo == bar ==</p>"));
         }
 
         [Test]
@@ -123,47 +106,6 @@ www.nosite.com]";
         {
             var markdown = "<marquee>I took a HTML course at school</marquee>";
             var expected = "<p class=\"govuk-body\">&lt;marquee&gt;I took a HTML course at school&lt;/marquee&gt;</p>";
-            Assert.That(GetHtml(markdown), Is.EqualTo(expected));
-        }
-
-        [Test]
-        public void Bold1()
-        {
-            var markdown = "**booyah**";
-            var expected = "<p class=\"govuk-body\"><span class=\"govuk-!-font-weight-bold\">booyah</span></p>";
-            Assert.That(GetHtml(markdown), Is.EqualTo(expected));
-        }
-
-        [Test]
-        public void Bold2()
-        {
-            var markdown = "- **booyah**";
-            var expected = "<ul class=\"govuk-list\">\n<li><span class=\"govuk-!-font-weight-bold\">booyah</span></li>\n</ul>";
-            Assert.That(GetHtml(markdown), Is.EqualTo(expected));
-        }
-
-        [Test]
-        public void Bold3()
-        {
-            var markdown = "*****";
-            var expected = "<p class=\"govuk-body\"><span class=\"govuk-!-font-weight-bold\">*</span></p>";
-            Assert.That(GetHtml(markdown), Is.EqualTo(expected));
-        }
-
-        [Test]
-        public void NotBold1()
-        {
-            var markdown = @"**boo
-yah**";
-            var expected = "<p class=\"govuk-body\">**boo</p>\n<p class=\"govuk-body\">yah**</p>";
-            Assert.That(GetHtml(markdown), Is.EqualTo(expected));
-        }
-
-        [Test]
-        public void NotBold2()
-        {
-            var markdown = @"****";
-            var expected = "<p class=\"govuk-body\">****</p>";
             Assert.That(GetHtml(markdown), Is.EqualTo(expected));
         }
 

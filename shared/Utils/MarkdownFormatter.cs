@@ -1,13 +1,11 @@
 using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Html;
 
-namespace GovUk.Education.SearchAndCompare.UI.Utils
+namespace GovUk.Education.SearchAndCompare.UI.Shared.Utils
 {
     public class MarkdownFormatter
     {
-        private static readonly Regex headerRegex = new Regex(@"^==(.+?)==\s*[\n$]?", RegexOptions.Compiled | RegexOptions.Multiline);
         private static readonly Regex linkRegex = new Regex(@"\[([^\s\]\n]+)[\t\f\v ]*([^\]\n]+)?\]", RegexOptions.Compiled | RegexOptions.Multiline);
-        private static readonly Regex boldRegex = new Regex(@"\*\*(.+?)\*\*", RegexOptions.Compiled);
 		private static readonly Regex listItemRegex = new Regex(@"^\s*(?:-|\*|[0-9]+\.?)[\t\f\v ](.*)\n?", RegexOptions.Compiled | RegexOptions.Multiline);
 		private static readonly Regex listWrapperRegex = new Regex(@"<li>(?:<\/li>\s*<li>|(?!<\/li>).)*<\/li>", RegexOptions.Compiled );
 		private static readonly Regex paragraphRegex = new Regex(@"^\s*[^<].*$", RegexOptions.Compiled | RegexOptions.Multiline);
@@ -26,8 +24,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Utils
 
             res = lineBreakRegex.Replace(res, "\n");
 
-            res = headerRegex.Replace(res, new MatchEvaluator(match => $"<h4 class=\"govuk-heading-s\">{match.Groups[1].Value.Trim()}</h4>\n"));
-
             res = listItemRegex.Replace(res, new MatchEvaluator(match => $"<li>{match.Groups[1].Value.Trim()}</li>\n"));
 
             res = listWrapperRegex.Replace(res, new MatchEvaluator(match => {
@@ -42,8 +38,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Utils
                 var linkText = match.Groups.Count > 2 && !string.IsNullOrWhiteSpace(match.Groups[2].Value) ? match.Groups[2].Value.Trim() : match.Groups[1].Value.Trim();
                 return $"<a href=\"{match.Groups[1].Value}\" class=\"govuk-link\">{linkText}</a>";
                 }));
-
-            res = boldRegex.Replace(res, new MatchEvaluator(match => $"<span class=\"govuk-!-font-weight-bold\">{match.Groups[1].Value}</span>"));
 
             return new HtmlString(res.Trim());
         }

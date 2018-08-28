@@ -13,29 +13,13 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
     //[Authorize]
     public class CourseController : CommonAttributesControllerBase
     {
-        private readonly ISearchAndCompareApi _api;
-
-        public CourseController(ISearchAndCompareApi api)
-        {
-            _api = api;
-        }
-
         [HttpGet("course/{providerCode}/{courseCode}", Name = "Course")]
         public IActionResult Index(string providerCode, string courseCode, ResultsFilter filter)
         {
-            var course = _api.GetCourse(providerCode, courseCode);
-            var feeCaps = _api.GetFeeCaps();
-
-            var latestFeeCaps = feeCaps.OrderByDescending(x => x.EndYear).FirstOrDefault();
-
-            var viewModel = new CourseViewModel()
-            {
-                Course = course,
-                FilterModel = filter,
-                Finance = new FinanceViewModel(course, latestFeeCaps)
-            };
-
-            return View(viewModel);
+            return View(new CourseViewModel {
+                CourseCode = courseCode,
+                ProviderCode = providerCode
+            });
         }
     }
 }
