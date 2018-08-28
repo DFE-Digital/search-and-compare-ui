@@ -1,20 +1,16 @@
 @model ResultsViewModel
 
-@* https://www.gov.uk/search *@
-
 <div class="filter-form">
-    <h3 class="govuk-heading-s filter-form__title">
-        Subjects<span class="govuk-visually-hidden">:</span>
-    </h3>
-    @if (Model.Subjects.Items.Count() > 5) {
-        <text>@Html.Raw(string.Join(",<br>", Model.Subjects.Items.OrderBy(x => x.Name).Take(4).Select(x => x.Name))),<br>and @(Model.Subjects.Items.Count() - 4) more&hellip;</text>
-    } else {
-    <ul class="filter-form__value--list">
-        @foreach (var item in Model.Subjects.Items.OrderBy(x => x.Name).Select(x=>x.Name)) {
-        <li>@item</li>
-        }
-    </ul>
+  <h3 class="govuk-heading-s filter-form__title">
+    Subjects<span class="govuk-visually-hidden">:</span>
+  </h3>
+  <ul class="filter-form__value--list">
+    @foreach (var item in Model.Subjects.Items.OrderBy(x => x.Name).Take(4).Select(x => x.Name)) {
+      <li>@item</li>
     }
-    <a href='@Url.Action("Subject", "Filter", Model.FilterModel.ToRouteValues())' class="govuk-link">Change subjects</a>
+    @if (Model.Subjects.Items.Count() > 4) {
+      <li>and @(Model.Subjects.Items.Count() - 4) more&hellip;</li>
+    }
+  </ul>
+  <a href='@Url.Action("Subject", "Filter", Model.FilterModel.ToRouteValues())' class="govuk-link">Change subjects</a>
 </div>
-
