@@ -59,7 +59,7 @@ namespace GovUk.Education.SearchAndCompare.UI
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseStatusCodePagesWithRedirects("/error/{0}");
                 app.UseStaticFiles();
             }
 

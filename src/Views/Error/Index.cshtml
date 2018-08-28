@@ -1,0 +1,25 @@
+@model int
+
+@{
+    Layout = "_Layout";
+
+    var statusCode = Model;
+    var errorViewPage = "";
+    switch (statusCode)
+    {
+        case 403:
+            errorViewPage = "Forbidden";
+            break;
+        case 404:
+            errorViewPage = "NotFound";
+            break;
+        case 500:
+            errorViewPage = "ServerError";
+            break;
+        default:
+            errorViewPage = "ServerError";
+            break;
+    }
+}
+
+@Html.Partial(errorViewPage)
