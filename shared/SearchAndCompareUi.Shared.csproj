@@ -1,5 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <PackageId>GovUk.Education.SearchAndCompare.Ui.Shared</PackageId>
@@ -12,6 +11,7 @@
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <GitInfoReportImportance>high</GitInfoReportImportance>
     <GitVersionFile>$(ProjectDir)GitVersion.txt</GitVersionFile>  
+    <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
   </PropertyGroup>
   
   <ItemGroup>
