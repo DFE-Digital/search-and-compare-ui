@@ -13,7 +13,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using System.Reflection;
 using Microsoft.Extensions.FileProviders;
-using GovUk.Education.SearchAndCompare.UI.Shared.Services;
 using GovUk.Education.SearchAndCompare.UI.Shared.ViewComponents;
 using Microsoft.AspNetCore.Mvc.Razor;
 
@@ -41,7 +40,6 @@ namespace GovUk.Education.SearchAndCompare.UI
             var apiUri = Environment.GetEnvironmentVariable("API_URI") ?? Configuration.GetSection("ApiConnection").GetValue<string>("Uri");
             _logger.LogInformation("Using API base URL: " + apiUri);
             services.AddScoped<ISearchAndCompareApi>(provider => new SearchAndCompareApi(new HttpClient(), apiUri));
-            services.AddScoped<ICourseDetailsService>(provider => new CourseDetailsService(provider.GetService<ISearchAndCompareApi>()));
             services.AddScoped<AnalyticsPolicy>(provider => AnalyticsPolicy.FromEnv());
             services.AddScoped<AnalyticsAttribute>();
             services.AddScoped<IGeocoder>(provider => new Geocoder(Configuration.GetSection("ApiKeys").GetValue<string>("GoogleMaps")));
