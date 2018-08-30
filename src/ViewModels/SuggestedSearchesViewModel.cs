@@ -8,5 +8,6 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels
     {
         public List<SuggestedSearchViewModel> SuggestedSearches { get; set; }
         public ResultsViewModel OriginalResults { get; set; }
+        public bool HasSalary { get; internal set; }
     }
 }
