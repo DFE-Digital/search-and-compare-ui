@@ -3,17 +3,15 @@
 <h3 class="govuk-heading-m">Suggested searches</h3>
 
 @if(Model.SuggestedSearches.Any()) {
-    var hasSalary = !(Model.OriginalResults.FilterModel.SelectedFunding.HasValue && Model.OriginalResults.FilterModel.SelectedFunding.Value == FundingOption.All) && Model.OriginalResults.FilterModel.SelectedFunding.Value.HasFlag(FundingOption.Salary);
-
     <p class="govuk-body">There are:</p>
     <ul class="govuk-list govuk-list--bullet">
       @foreach (var item in Model.SuggestedSearches)
       {
         var courseText = " course" + (item.TotalCount == 1 ? "" : "s");
-        var areaText = item.ResultsFilter.RadiusOption.HasValue ?
+        var areaText = item.ResultsFilter?.RadiusOption?.rad != null  item.ResultsFilter?.RadiusOption?.rad != null ?
           " within " + item.ResultsFilter.rad + " miles of " + item.ResultsFilter.loc :
           (
-            hasSalary ?
+            Model.HasSalary ?
               " with " + item.ResultsFilter.GetFundingTypes().First().ToLowerInvariant() + " available in England" :
               " across England" );
         var text = item.TotalCount + courseText + areaText;

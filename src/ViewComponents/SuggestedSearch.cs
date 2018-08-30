@@ -40,7 +40,7 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewComponents
                 salaryResults = GetResults(salaryResultsFilters, originalTotal, salaryResultsFilters.Count());
             }
 
-            var result = new SuggestedSearchesViewModel { OriginalResults = original};
+            var result = new SuggestedSearchesViewModel { OriginalResults = original, HasSalary = hasSalary };
             var salaryResult = salaryResults.FirstOrDefault();
             if (salaryResult != null) {
                 result.SuggestedSearches = GetResults(resultsFilters, originalTotal, maxResult - salaryResults.Count() );
