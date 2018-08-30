@@ -8,7 +8,7 @@
       @foreach (var item in Model.SuggestedSearches)
       {
         var courseText = " course" + (item.TotalCount == 1 ? "" : "s");
-        var areaText = item.ResultsFilter?.RadiusOption?.rad != null  item.ResultsFilter?.RadiusOption?.rad != null ?
+        var areaText = item.ResultsFilter?.RadiusOption?.rad != null && item.ResultsFilter?.RadiusOption?.rad != null ?
           " within " + item.ResultsFilter.rad + " miles of " + item.ResultsFilter.loc :
           (
             Model.HasSalary ?
