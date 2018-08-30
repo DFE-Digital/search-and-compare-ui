@@ -29,6 +29,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
             var latestFeeCaps = feeCaps.OrderByDescending(x => x.EndYear).FirstOrDefault();
 
+            if (course == null || latestFeeCaps == null)
+            {
+                return NotFound();
+            }
+
             var viewModel = new CourseDetailsViewModel()
             {
                 Course = course,
