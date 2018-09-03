@@ -56,6 +56,12 @@ $govuk-global-styles: true;
   text-align: center;
 }
 
+// custom table header border tickness
+.govuk-table__header {
+  border-bottom-width: 2px;
+  border-bottom-color: govuk-color("black");
+}
+
 // Search results view
 .search-results-filters {
   display: block;

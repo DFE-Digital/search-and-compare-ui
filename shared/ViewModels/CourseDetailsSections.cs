@@ -10,6 +10,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewModels
         public const string ListOfSchools = "placement schools";
         public const string AboutSchools = "about school placements";
         public const string AboutFees = "about fees";
+        public const string AboutSalary = "about salary";
+        public const string FinancialSupport = "financial support";
         public const string AboutTheProvider = "about this training provider";
         public const string AboutTheAccreditingProvider = "about this training provider accrediting";        
         public const string TrainWithDisabilities = "training with disabilities";        
