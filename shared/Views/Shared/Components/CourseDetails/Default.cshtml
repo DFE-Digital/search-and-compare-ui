@@ -22,9 +22,15 @@
 <main class="govuk-main-wrapper" id="main-content" role="main">
     <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-l" role="heading">
+            <h1 class="govuk-heading-xl" role="heading">
                 @Model.Course.Name at @Model.Provider.Name
+            
+                @if (!String.IsNullOrEmpty(Model.Course.AccreditingProvider.Name))
+                {
+                    <span class="govuk-caption-lx">Accredited by @Model.Course.AccreditingProvider.Name</span>
+                }
             </h1>
+          
         </div>
         <div class="govuk-grid-column-full">
             <div class="course-basicinfo govuk-!-margin-bottom-8">
