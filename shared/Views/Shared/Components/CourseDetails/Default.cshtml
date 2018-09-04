@@ -24,13 +24,13 @@
         <div class="govuk-grid-column-two-thirds">
             <h1 class="govuk-heading-xl" role="heading">
                 @Model.Course.Name at @Model.Provider.Name
-            
+
                 @if (!String.IsNullOrEmpty(Model.Course.AccreditingProvider?.Name))
                 {
                     <span class="govuk-caption-xl">Accredited by @Model.Course.AccreditingProvider?.Name</span>
                 }
             </h1>
-          
+
         </div>
         <div class="govuk-grid-column-full">
             <div class="course-basicinfo govuk-!-margin-bottom-8">
@@ -88,7 +88,7 @@
                     }
                     @if (!string.IsNullOrEmpty(@Model.Course.ContactDetails.Website)) {
                         <dt class="govuk-list--description__label">Website</dt>
-                        <dd>                            
+                        <dd>
                             <a href="@Model.Course.FormattedWebsite()"
                             title="Go to course website"
                             aria-label="Go to course website"
@@ -122,19 +122,19 @@
                         <li><a href="#section-schools">How school placements work</a></li>
                     }
                     @if(Model.Course.IsSalaried)
-                    {           
+                    {
                         @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutSalary))
                         {
                             <li><a href="#section-salary">Salary</a></li>
                         }
-                    }   
+                    }
                     else
-                    {                
+                    {
                         @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutFees))
                         {
                             <li><a href="#section-fees">Fees</a></li>
                         }
-                    } 
+                    }
 
                     <li><a href="#section-financial-support">Financial support</a></li>
 
@@ -146,7 +146,7 @@
                     {
                         <li><a href="#section-about-provider">About the training provider</a></li>
                     }
-                    
+
                     @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.TrainWithDisabilities))
                     {
                         <li><a href="#section-train-with-disabilities">Training with disabilities and other needs</a></li>
@@ -168,15 +168,15 @@
                     <h2 class="govuk-heading-m" id="section-about">
                         About the course
                     </h2>
-                        
+
                     @if ((section = Model.GetHtmlForSection(CourseDetailsSections.AboutTheCourse)) != null)
                     {
                         @Html.Raw(section)
                     }
                     else
                     {
-                        <p class="missing-section">      
-                            Please add details for this section.                            
+                        <p class="missing-section">
+                            Please add details for this section.
                         </p>
                     }
                 </div>
@@ -188,7 +188,7 @@
                     <h2 class="govuk-heading-m" id="section-interviews">
                         Interview process
                     </h2>
-                    @Html.Raw(Model.GetHtmlForSection(CourseDetailsSections.InterviewProcess))                    
+                    @Html.Raw(Model.GetHtmlForSection(CourseDetailsSections.InterviewProcess))
                 </div>
             }
 
@@ -205,8 +205,8 @@
                     }
                     else
                     {
-                        <p class="missing-section">      
-                            Please add details for this section.                            
+                        <p class="missing-section">
+                            Please add details for this section.
                         </p>
                     }
                     </div>
@@ -228,8 +228,8 @@
                         }
                         else
                         {
-                            <p class="missing-section">      
-                                Please add details for this section.                            
+                            <p class="missing-section">
+                                Please add details for this section.
                             </p>
                         }
                         </div>
@@ -237,14 +237,14 @@
                 }
             }
             else
-            {            
+            {
                 @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutFees))
                 {
                     <div class="govuk-!-margin-bottom-8">
                         <h2 class="govuk-heading-m" id="section-fees">Fees</h2>
-                        
+
                     @if ((section = Model.GetHtmlForSection(CourseDetailsSections.AboutFees)) != null)
-                    {            
+                    {
                         <div class="body-text">
                             <table class="govuk-table">
                                 <caption class="govuk-table__caption">The course fees for @Model.Finance.FormattedYear are as follows:</caption>
@@ -274,11 +274,11 @@
                             @Html.Raw(section)
                         </div>
                     }
-                            
+
                     else
                     {
-                        <p class="missing-section">      
-                            Please add details for this section.                            
+                        <p class="missing-section">
+                            Please add details for this section.
                         </p>
                     }
                     </div>
@@ -290,16 +290,16 @@
                 <p class="govuk-body">
                     You may be eligible for <a href="https://www.gov.uk/student-finance" class="govuk-link">financial support while you study, including bursaries, scholarships and loans</a>.
                 </p>
-                
+
                 <p class="govuk-body">
                     <a href="https://getintoteaching.education.gov.uk/explore-my-options/overseas-graduates" class="govuk-link">Financial support if you’re from outside of the UK</a>
                 </p>
 
                 @if(Model.HasSection(CourseDetailsSections.FinancialSupport))
-                {                    
+                {
                     <h3 class="govuk-heading-s">
                         Financial support from the training provider
-                    </h3>       
+                    </h3>
                     @Html.Raw(Model.GetHtmlForSection(CourseDetailsSections.FinancialSupport))
                 }
             </div>
@@ -312,17 +312,17 @@
                     </h2>
                     <h3 class="govuk-heading-s">
                         Qualifications
-                    </h3>                    
+                    </h3>
                     @if ((section = Model.GetHtmlForSection(CourseDetailsSections.EntryRequirementsQualifications)) != null)
                     {
                         @Html.Raw(section)
                     }
                     else
                     {
-                        <p class="missing-section">      
-                            Please add details for this section.                            
+                        <p class="missing-section">
+                            Please add details for this section.
                         </p>
-                    }                    
+                    }
                     @if ((section = Model.GetHtmlForSection(CourseDetailsSections.EntryRequirementsPersonalQualities)) != null)
                     {
                         <h3 class="govuk-heading-s">
@@ -330,7 +330,7 @@
                         </h3>
                         @Html.Raw(section)
                     }
-                    
+
                     @if ((section = Model.GetHtmlForSection(CourseDetailsSections.EntryRequirementsOther)) != null)
                     {
                         <h3 class="govuk-heading-s">
@@ -341,7 +341,7 @@
                 </div>
             }
 
-            <div class="govuk-!-margin-bottom-8">                
+            <div class="govuk-!-margin-bottom-8">
                 @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutTheProvider) || Model.HasSection(CourseDetailsSections.AboutTheAccreditingProvider))
                 {
                     <h2 class="govuk-heading-m" id="section-about-provider">
@@ -353,18 +353,18 @@
                     }
                     else
                     {
-                        <p class="missing-section">      
-                            Please add details <a href="@Model.AboutYourOrgLink">about your organisation</a>.                            
+                        <p class="missing-section">
+                            Please add details <a href="@Model.AboutYourOrgLink">about your organisation</a>.
                         </p>
                     }
-                }                                           
+                }
                 @if ((section = Model.GetHtmlForSection(CourseDetailsSections.AboutTheAccreditingProvider)) != null)
                 {
                     <h3 class="govuk-heading-s">
                         About the accredited provider
                     </h3>
                     @Html.Raw(section)
-                }         
+                }
             </div>
 
             @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.TrainWithDisabilities))
@@ -379,14 +379,26 @@
                     }
                     else
                     {
-                        <p class="missing-section">      
-                            Please add details <a href="@Model.AboutYourOrgLink">about your organisation</a>.                            
+                        <p class="missing-section">
+                            Please add details <a href="@Model.AboutYourOrgLink">about your organisation</a>.
                         </p>
                     }
                 </div>
             }
 
-            @if (Model.HasContactDetails())
+            @if (Model.PreviewMode)
+            {
+              <div class="govuk-!-margin-bottom-8">
+                  <h2 class="govuk-heading-m" id="section-contact">
+                      Contact details
+                  </h2>
+                  <div class="missing-section">
+                      <p class="govuk-!-font-weight-bold"><strong>Contact details for your organisation are not yet available</strong>.</p>
+                      <p class="govuk-!-margin-bottom-0">We will soon import your email, telephone number and contact address from UCAS entry profiles. You’ll then be able to edit them in the About your organisation section.</p>
+                  </div>
+              </div>
+            }
+            else if (Model.HasContactDetails())
             {
                 <div class="govuk-!-margin-bottom-8">
                     <h2 class="govuk-heading-m" id="section-contact">
@@ -485,9 +497,9 @@
                             </tr>
                         </thead>
                         <tbody class="govuk-table__body">
-                            
+
                             @foreach (var campus in Model.Course.Campuses)
-                            {                                
+                            {
                                 <tr class="govuk-table__row">
                                     <td class="govuk-table__cell">@campus.Name</td>
                                     <td class="govuk-table__cell">@campus.Location?.Address</td>
