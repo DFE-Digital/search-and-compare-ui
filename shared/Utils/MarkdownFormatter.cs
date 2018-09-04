@@ -5,7 +5,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.Utils
 {
     public class MarkdownFormatter
     {
-        private static readonly Regex linkRegex = new Regex(@"\[ *([^\]\n]+) *\](?:\( *([^\)\s\n]+) *\))?", RegexOptions.Compiled | RegexOptions.Multiline);
+        private static readonly Regex linkRegex = new Regex(@"\[ *([^\]\n]+) *\](?:\( *((?:[^\\\(\)\s\n]|\\\(|\\\)|\\\\)+) *\))?", RegexOptions.Compiled | RegexOptions.Multiline);
 		private static readonly Regex listItemRegex = new Regex(@"^\s*(?:-|\*|[0-9]+\.?)[\t\f\v ](.*)\n?", RegexOptions.Compiled | RegexOptions.Multiline);
 		private static readonly Regex listWrapperRegex = new Regex(@"<li>(?:<\/li>\s*<li>|(?!<\/li>).)*<\/li>", RegexOptions.Compiled );
 		private static readonly Regex paragraphRegex = new Regex(@"^\s*[^<].*$", RegexOptions.Compiled | RegexOptions.Multiline);
@@ -36,6 +36,10 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.Utils
 
             res = linkRegex.Replace(res, new MatchEvaluator(match => {
                 var href = match.Groups.Count > 2 && !string.IsNullOrWhiteSpace(match.Groups[2].Value) ? match.Groups[2].Value.Trim() : match.Groups[1].Value.Trim();
+                href.Replace("\\(", "(");         
+                href.Replace("\\)", ")");
+                href.Replace("\\\\", "\\");       
+                
                 return $"<a href=\"{href}\" class=\"govuk-link\">{match.Groups[1].Value.Trim()}</a>";
                 }));
 

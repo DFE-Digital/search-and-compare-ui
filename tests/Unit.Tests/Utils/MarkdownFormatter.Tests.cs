@@ -82,6 +82,13 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Utils
             var expected = "<p class=\"govuk-body\">Go to <a href=\"www.example.com\" class=\"govuk-link\">our website</a>.</p>\n<p class=\"govuk-body\">You'll like it there.</p>";
             Assert.That(GetHtml(markdown), Is.EqualTo(expected));
         }
+        
+        public void LinkWithParenthesesInParentheses()
+        {
+            var markdown = "(Go to [Wikipedia](https://en.wikipedia.org/wiki/Brackets_\\(text_editor\\))).";
+            var expected = "<p class=\"govuk-body\">(Go to <a href=\"https://en.wikipedia.org/wiki/Brackets_(text_editor)\" class=\"govuk-link\">Wikipedia</a>.</p>";
+            Assert.That(GetHtml(markdown), Is.EqualTo(expected));
+        }
 
         [Test]
         public void NotALink2()
