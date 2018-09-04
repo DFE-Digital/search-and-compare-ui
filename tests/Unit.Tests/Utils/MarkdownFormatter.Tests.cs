@@ -62,7 +62,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Utils
         [Test]
         public void PureLinkWithWhiteSpace()
         {
-            var markdown = "[www.example.com    ]";
+            var markdown = "[ www.example.com    ]";
             var expected = "<p class=\"govuk-body\"><a href=\"www.example.com\" class=\"govuk-link\">www.example.com</a></p>";
             Assert.That(GetHtml(markdown), Is.EqualTo(expected));
         }
@@ -70,7 +70,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Utils
         [Test]
         public void NamedLink()
         {
-            var markdown = "[www.example.com   Go to www.example.com  ]";
+            var markdown = "[Go to www.example.com](www.example.com)";
             var expected = "<p class=\"govuk-body\"><a href=\"www.example.com\" class=\"govuk-link\">Go to www.example.com</a></p>";
             Assert.That(GetHtml(markdown), Is.EqualTo(expected));
         }
@@ -78,19 +78,17 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Utils
         [Test]
         public void LinkInParagraph()
         {
-            var markdown = "Go to [www.example.com our website].\nYou'll like it there.";
+            var markdown = "Go to [our website](www.example.com).\nYou'll like it there.";
             var expected = "<p class=\"govuk-body\">Go to <a href=\"www.example.com\" class=\"govuk-link\">our website</a>.</p>\n<p class=\"govuk-body\">You'll like it there.</p>";
             Assert.That(GetHtml(markdown), Is.EqualTo(expected));
         }
-
-        [Test]
-        public void NotALink()
+        
+        public void LinkWithParenthesesInParentheses()
         {
-            var markdown = "[ www.nosite.com]";
-            var expected = "<p class=\"govuk-body\">[ www.nosite.com]</p>";
+            var markdown = "(Go to [Wikipedia](https://en.wikipedia.org/wiki/Brackets_\\(text_editor\\))).";
+            var expected = "<p class=\"govuk-body\">(Go to <a href=\"https://en.wikipedia.org/wiki/Brackets_(text_editor)\" class=\"govuk-link\">Wikipedia</a>.</p>";
             Assert.That(GetHtml(markdown), Is.EqualTo(expected));
         }
-
 
         [Test]
         public void NotALink2()
