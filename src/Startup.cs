@@ -1,26 +1,27 @@
 ﻿using System;
 using System.Net.Http;
+using System.Reflection;
 using GovUk.Education.SearchAndCompare.Domain.Client;
 using GovUk.Education.SearchAndCompare.Services.Http;
 using GovUk.Education.SearchAndCompare.UI.ActionFilters;
 using GovUk.Education.SearchAndCompare.UI.Services;
 using GovUk.Education.SearchAndCompare.UI.Services.Maps;
+using GovUk.Education.SearchAndCompare.UI.Shared.ViewComponents;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.SpaServices.Webpack;
-using System.Reflection;
 using Microsoft.Extensions.FileProviders;
-using GovUk.Education.SearchAndCompare.UI.Shared.ViewComponents;
-using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace GovUk.Education.SearchAndCompare.UI
 {
     public class Startup
     {
-        private readonly ILogger _logger;
+        private readonly Microsoft.Extensions.Logging.ILogger _logger;
 
         public Startup(IConfiguration configuration, ILoggerFactory logFactory)
         {
@@ -33,7 +34,9 @@ namespace GovUk.Education.SearchAndCompare.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var sharedAssembly = typeof(CourseDetailsViewComponent).GetTypeInfo().Assembly; 
+            services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
+
+            var sharedAssembly = typeof(CourseDetailsViewComponent).GetTypeInfo().Assembly;
             services.AddMvc().AddApplicationPart(sharedAssembly);
             services.Configure<RazorViewEngineOptions>(o => o.FileProviders.Add(new EmbeddedFileProvider(sharedAssembly, "GovUk.Education.SearchAndCompare.UI.Shared")));
 
@@ -58,7 +61,8 @@ namespace GovUk.Education.SearchAndCompare.UI
                 });
                 app.UseStaticFiles(new StaticFileOptions
                 {
-                    OnPrepareResponse = context => {
+                    OnPrepareResponse = context =>
+                    {
                         context.Context.Response.Headers.Add("Cache-Control", "no-cache");
                         context.Context.Response.Headers.Add("Expires", "-1");
                     }
@@ -72,7 +76,8 @@ namespace GovUk.Education.SearchAndCompare.UI
 
             app.AddContentLanguageHeaders("en");
 
-            app.UseMvc(routes => {
+            app.UseMvc(routes =>
+            {
                 routes.MapRoute("cookies", "cookies",
                     defaults: new { controller = "Legal", action = "Cookies" });
                 routes.MapRoute("privacy", "privacy-policy",
