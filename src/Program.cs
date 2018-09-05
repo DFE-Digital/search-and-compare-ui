@@ -45,7 +45,6 @@ namespace GovUk.Education.SearchAndCompare.UI
                     options.AddServerHeader = false;
                 })
                 .UseStartup<Startup>()
-                .UseSerilog()
                 .Build();
 
         private static IConfiguration GetConfiguration()
