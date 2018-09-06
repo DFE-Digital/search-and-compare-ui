@@ -243,7 +243,7 @@
                     <div class="govuk-!-margin-bottom-8">
                         <h2 class="govuk-heading-m" id="section-fees">Fees</h2>
 
-                    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.AboutFees)) != null)
+                    @if (Model.HasFeesSet)
                     {
                         <div class="body-text">
                             <table class="govuk-table">
@@ -270,16 +270,20 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div>
-                            @Html.Raw(section)
-                        </div>
-                    }
 
+                    }
                     else
                     {
                         <p class="missing-section">
                             Please add details for this section.
                         </p>
+                    }
+
+                    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.AboutFees)) != null)
+                    {
+                        <div>
+                            @Html.Raw(section)
+                        </div>
                     }
                     </div>
                 }
