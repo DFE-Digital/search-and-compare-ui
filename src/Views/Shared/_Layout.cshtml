@@ -19,6 +19,16 @@
       ga('create', 'UA-112932657-1', 'auto');
       ga('set', 'transport', 'beacon');
       ga('set', 'anonymizeIp', true);
+
+      if (location.search) {
+        var search = location.search;
+        var params = ['lat', 'lng', 'loc', 'lq'];
+        for( i = 0; i < params.length; i++ ){
+          search = search.replace( new RegExp( '([?&])'+params[i]+'(=[^&]*)?&?', 'gi' ), '$1' );
+        }
+        ga('set', 'location', window.location.protocol + "//" + window.location.host + window.location.pathname + search)
+      }
+
       ga('send', 'pageview');
     </script>
   }
