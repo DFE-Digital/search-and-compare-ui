@@ -1,16 +1,16 @@
-﻿using System.Linq;
-using System.Collections.Generic;
-using GovUk.Education.SearchAndCompare.UI.Shared.Utils;
-using Microsoft.AspNetCore.Html;
+﻿using System.Collections.Generic;
+using System.Linq;
 using GovUk.Education.SearchAndCompare.Domain.Models;
 using GovUk.Education.SearchAndCompare.Domain.Models.Enums;
+using GovUk.Education.SearchAndCompare.UI.Shared.Utils;
+using Microsoft.AspNetCore.Html;
 
 namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewModels
 {
     public class CourseDetailsViewModel
     {
         public string AboutYourOrgLink { get; set; }
-        
+
         public bool PreviewMode { get; set; }
 
         public Course Course { get; set; }
@@ -19,7 +19,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewModels
 
         private MarkdownFormatter markdownFormatter = new MarkdownFormatter();
 
-        public Provider Provider {
+        public Provider Provider
+        {
             get
             {
                 return Course.Provider;
@@ -34,63 +35,68 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewModels
 
         public bool HasContactDetails()
         {
-            return Course != null && Course.ContactDetails != null
-                && (!string.IsNullOrWhiteSpace(Course.ContactDetails.Email)
-                    || !string.IsNullOrWhiteSpace(Course.ContactDetails.Phone)
-                    || !string.IsNullOrWhiteSpace(Course.ContactDetails.Fax)
-                    || !string.IsNullOrWhiteSpace(Course.ContactDetails.Website)
-                    || HasAddress());
+            return Course != null && Course.ContactDetails != null &&
+                (!string.IsNullOrWhiteSpace(Course.ContactDetails.Email) ||
+                    !string.IsNullOrWhiteSpace(Course.ContactDetails.Phone) ||
+                    !string.IsNullOrWhiteSpace(Course.ContactDetails.Fax) ||
+                    !string.IsNullOrWhiteSpace(Course.ContactDetails.Website) ||
+                    HasAddress());
         }
 
         public bool HasAddress()
         {
             var a = Course;
-            return Course != null && Course.ContactDetails != null
-                && !string.IsNullOrWhiteSpace(Course.ContactDetails.Address);
+            return Course != null && Course.ContactDetails != null &&
+                !string.IsNullOrWhiteSpace(Course.ContactDetails.Address);
         }
+
+        public bool HasFeesSet => Course?.Fees != null ;
 
         public HtmlString GetHtmlForSection(string name)
         {
-            if (!HasSection(name)) 
+            if (!HasSection(name))
             {
                 return null;
             }
-               
+
             return markdownFormatter.ToHtml(
                 Course.DescriptionSections.Where(x => x.Name == name).SingleOrDefault()?.Text);
         }
 
-        public IEnumerable<string> SubjectNames {
+        public IEnumerable<string> SubjectNames
+        {
             get
             {
                 return Course.CourseSubjects.Select(courseSubject => courseSubject.Subject.Name);
             }
         }
 
-        public string FormattedSubjects {
+        public string FormattedSubjects
+        {
             get
             {
-                return string.Join(", ", SubjectNames.OrderBy(x=>x));
+                return string.Join(", ", SubjectNames.OrderBy(x => x));
             }
         }
 
-        public string FormattedAgeRange {
+        public string FormattedAgeRange
+        {
             get
             {
                 switch (Course.AgeRange)
                 {
                     case (AgeRange.Primary):
-                    {
-                        return "Primary (c3 - 11/12 years)";
-                    }
+                        {
+                            return "Primary (c3 - 11/12 years)";
+                        }
                     case (AgeRange.Secondary):
-                    {
-                        return "Secondary (12-17 years)";
-                    }
+                        {
+                            return "Secondary (12-17 years)";
+                        }
                     default:
-                    {
-                        return "Unknown";
-                    }
+                        {
+                            return "Unknown";
+                        }
                 }
             }
         }
