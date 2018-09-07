@@ -1,12 +1,12 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
-using System.Web;
 using System.Threading.Tasks;
+using System.Web;
+using GovUk.Education.SearchAndCompare.Domain.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Linq;
-using System;
-using GovUk.Education.SearchAndCompare.Domain.Models;
-using System.Collections.Generic;
 
 namespace GovUk.Education.SearchAndCompare.UI.Services
 {
@@ -32,7 +32,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
 
                 dynamic json = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
 
-                if ("OK" != (string)json.status)
+                if ("OK" != (string) json.status)
                 {
                     return null;
                 }
@@ -64,22 +64,22 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
                 query["language"] = "en";
                 query["input"] = input;
                 query["components"] = "country:uk";
-                query["types"]="geocode";
+                query["types"] = "geocode";
 
                 var response = await client.GetAsync("https://maps.googleapis.com/maps/api/place/autocomplete/json?" + query.ToString());
 
                 dynamic json = JsonConvert.DeserializeObject(await response.Content.ReadAsStringAsync());
 
-                if ("OK" != (string)json.status)
+                var res = new List<string>();
+
+                if ("OK" == (string) json.status)
                 {
-                    return null;
+                    foreach (var prediction in json.predictions)
+                    {
+                        res.Add((string) prediction.description);
+                    }
                 }
 
-                var res = new List<string>();
-                foreach(var prediction in json.predictions)
-                {
-                    res.Add((string)prediction.description);
-                }
                 return res;
             }
         }
@@ -87,8 +87,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
         private static bool IsIndicativeOfUk(JToken addressComponent)
         {
             JArray types = (JArray) addressComponent["types"];
-            return types.Any(x => "country" == (string) x)
-                && (string) addressComponent["short_name"] == "GB";
+            return types.Any(x => "country" == (string) x) &&
+                (string) addressComponent["short_name"] == "GB";
         }
     }
 }
