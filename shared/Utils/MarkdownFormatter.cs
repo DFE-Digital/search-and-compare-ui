@@ -26,12 +26,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.Utils
 
             res = listItemRegex.Replace(res, new MatchEvaluator(match => $"<li>{match.Groups[1].Value.Trim()}</li>\n"));
 
-            res = listWrapperRegex.Replace(res, new MatchEvaluator(match => {
-                var isGlobal = whitespace.Match(res.Substring(0, match.Index)).Success && whitespace.Match(res.Substring(match.Index + match.Length)).Success;
-                string clazz = isGlobal ? "govuk-list" : "govuk-list govuk-list--bullet";
-                return $"<ul class=\"{clazz}\">\n{match.Groups[0].Value.Trim()}\n</ul>";
-            }));
-
+            res = listWrapperRegex.Replace(res, new MatchEvaluator(match => $"<ul class=\"govuk-list govuk-list--bullet\">\n{match.Groups[0].Value.Trim()}\n</ul>"));
+            
             res = paragraphRegex.Replace(res, new MatchEvaluator(match => $"<p class=\"govuk-body\">{match.Groups[0].Value.Trim()}</p>"));
 
             res = linkRegex.Replace(res, new MatchEvaluator(match => {

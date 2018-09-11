@@ -22,7 +22,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Utils
 
 3. three";
 
-            var expected = "<ul class=\"govuk-list\">\n<li>one</li>\n<li>two</li>\n<li>three</li>\n</ul>";
+            var expected = "<ul class=\"govuk-list govuk-list--bullet\">\n<li>one</li>\n<li>two</li>\n<li>three</li>\n</ul>";
             Assert.That(GetHtml(markdown), Is.EqualTo(expected));
         }
 
