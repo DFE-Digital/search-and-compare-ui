@@ -263,10 +263,13 @@
                                     <td class="govuk-table__cell">EU students</td>
                                     <td class="govuk-table__cell">@Model.Finance.FormattedEuFees</td>
                                 </tr>
-                                <tr class="govuk-table__row">
-                                    <td class="govuk-table__cell">International students</td>
-                                    <td class="govuk-table__cell">@Model.Finance.FormattedInternationalFees</td>
-                                </tr>
+                                @if (Model.Course.Fees.International != 0)
+                                {
+                                    <tr class="govuk-table__row">
+                                        <td class="govuk-table__cell">International students</td>
+                                        <td class="govuk-table__cell">@Model.Finance.FormattedInternationalFees</td>
+                                    </tr>
+                                }
                                 </tbody>
                             </table>
                         </div>
@@ -399,19 +402,7 @@
                 </div>
             }
 
-            @if (Model.PreviewMode)
-            {
-              <div class="govuk-!-margin-bottom-8">
-                  <h2 class="govuk-heading-m" id="section-contact">
-                      Contact details
-                  </h2>
-                  <div class="missing-section">
-                      <p class="govuk-!-font-weight-bold"><strong>Contact details for your organisation are not yet available</strong>.</p>
-                      <p class="govuk-!-margin-bottom-0">We will soon import your email, telephone number and contact address from UCAS entry profiles. You’ll then be able to edit them in the About your organisation section.</p>
-                  </div>
-              </div>
-            }
-            else if (Model.HasContactDetails())
+            @if (Model.HasContactDetails())
             {
                 <div class="govuk-!-margin-bottom-8">
                     <h2 class="govuk-heading-m" id="section-contact">
