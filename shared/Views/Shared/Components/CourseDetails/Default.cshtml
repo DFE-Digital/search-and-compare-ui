@@ -263,10 +263,13 @@
                                     <td class="govuk-table__cell">EU students</td>
                                     <td class="govuk-table__cell">@Model.Finance.FormattedEuFees</td>
                                 </tr>
-                                <tr class="govuk-table__row">
-                                    <td class="govuk-table__cell">International students</td>
-                                    <td class="govuk-table__cell">@Model.Finance.FormattedInternationalFees</td>
-                                </tr>
+                                @if (Model.Course.Fees.International != 0)
+                                {
+                                    <tr class="govuk-table__row">
+                                        <td class="govuk-table__cell">International students</td>
+                                        <td class="govuk-table__cell">@Model.Finance.FormattedInternationalFees</td>
+                                    </tr>
+                                }
                                 </tbody>
                             </table>
                         </div>
