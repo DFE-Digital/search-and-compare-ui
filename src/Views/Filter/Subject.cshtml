@@ -1,6 +1,7 @@
 @model SubjectFilterViewModel
 
 @{
+  ViewBag.Title = $"Find courses by subject";
   var selected = Model.FilterModel.SelectedSubjects;
   var isInWizard = ViewBag.IsInWizard == true;
   var errors = ViewBag.Errors as ErrorViewModel;
