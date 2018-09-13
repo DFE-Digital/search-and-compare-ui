@@ -1,11 +1,11 @@
 @model ResultsFilter
 
 <div class="filter-form">
-    <h3 class="govuk-heading-s filter-form__title">Qualifications</h3>
-    <ul class="filter-form__value--list">
-        @foreach (var item in Model.GetQualificationStrings()) {
-            <li>@item</li>
-        }
-    </ul>
-    <a href='@Url.Action("Qualification", "Filter", Model.ToRouteValues())' class="govuk-link">Change qualifications</a>
+  <h2 class="govuk-heading-s filter-form__title">Qualifications</h2>
+  <ul class="filter-form__value--list">
+    @foreach (var item in Model.GetQualificationStrings()) {
+      <li>@item</li>
+    }
+  </ul>
+  <a href='@Url.Action("Qualification", "Filter", Model.ToRouteValues())' class="govuk-link">Change qualifications</a>
 </div>

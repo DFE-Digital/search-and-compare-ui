@@ -1,13 +1,13 @@
 @model ResultsFilter
 
 <div class="filter-form">
-    <h3 class="govuk-heading-s filter-form__title">
-        Study type<span class="govuk-visually-hidden">:</span>
-    </h3>
-    <ul class="filter-form__value--list">
-        @foreach (var item in Model.GetStudyTypeStrings()) {
-            <li>@item</li>
-        }
-    </ul>
-    <a href='@Url.Action("StudyType", "Filter", Model.ToRouteValues())' class="govuk-link">Change study type</a>
+  <h2 class="govuk-heading-s filter-form__title">
+    Study type<span class="govuk-visually-hidden">:</span>
+  </h2>
+  <ul class="filter-form__value--list">
+    @foreach (var item in Model.GetStudyTypeStrings()) {
+      <li>@item</li>
+    }
+  </ul>
+  <a href='@Url.Action("StudyType", "Filter", Model.ToRouteValues())' class="govuk-link">Change study type</a>
 </div>

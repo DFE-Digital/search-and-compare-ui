@@ -1,18 +1,15 @@
 @model ResultsFilter
 
-@* https://www.gov.uk/search *@
-
 <div class="filter-form">
-    <h3 class="govuk-heading-s filter-form__title">
-        Location<span class="govuk-visually-hidden">:</span>
-    </h3>
-    <p class="govuk-body filter-form__value">
-        @if(Model.Coordinates != null && Model.RadiusOption != null) {
-            <text>@Model.rad miles around @Model.loc</text>
-        } else {
-            <text>Across England</text>
-        }
-    </p>
-  
-    <a href='@Url.Action("Location", "Filter", Model.ToRouteValues())' class="govuk-link">Change location</a>
-  </div>
+  <h2 class="govuk-heading-s filter-form__title">
+    Location<span class="govuk-visually-hidden">:</span>
+  </h2>
+  <p class="govuk-body filter-form__value">
+    @if(Model.Coordinates != null && Model.RadiusOption != null) {
+      <text>@Model.rad miles around @Model.loc</text>
+    } else {
+      <text>Across England</text>
+    }
+  </p>
+  <a href='@Url.Action("Location", "Filter", Model.ToRouteValues())' class="govuk-link">Change location</a>
+</div>

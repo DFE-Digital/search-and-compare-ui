@@ -1,11 +1,11 @@
 @model ResultsFilter
 
 <div class="filter-form">
-    <h3 class="govuk-heading-s filter-form__title">Financial support</h3>
-    <ul class="filter-form__value--list">
-        @foreach (var item in Model.GetFundingTypes()) {
-            <li>@item</li>
-        }
-    </ul>
-    <a href='@Url.Action("Funding", "Filter", Model.ToRouteValues())' class="govuk-link">Change financial support options</a>
+  <h2 class="govuk-heading-s filter-form__title">Financial support</h2>
+  <ul class="filter-form__value--list">
+    @foreach (var item in Model.GetFundingTypes()) {
+      <li>@item</li>
+    }
+  </ul>
+  <a href='@Url.Action("Funding", "Filter", Model.ToRouteValues())' class="govuk-link">Change financial support options</a>
 </div>

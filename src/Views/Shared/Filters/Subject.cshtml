@@ -1,9 +1,9 @@
 @model ResultsViewModel
 
 <div class="filter-form">
-  <h3 class="govuk-heading-s filter-form__title">
+  <h2 class="govuk-heading-s filter-form__title">
     Subjects<span class="govuk-visually-hidden">:</span>
-  </h3>
+  </h2>
   <ul class="filter-form__value--list">
     @foreach (var item in Model.Subjects.Items.OrderBy(x => x.Name).Take(4).Select(x => x.Name)) {
       <li>@item</li>
