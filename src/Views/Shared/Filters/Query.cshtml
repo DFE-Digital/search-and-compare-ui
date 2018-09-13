@@ -1,13 +1,11 @@
 @model ResultsFilter
 
-@* https://www.gov.uk/search *@
-
 <div class="filter-form">
-    <h3 class="govuk-heading-s filter-form__title">
-        Provider name<span class="govuk-visually-hidden">:</span>
-    </h3>
-    <p class="govuk-body filter-form__value">
-        @Model.query
-    </p>
-    <a href='@Url.Action("Location", "Filter", Model.ToRouteValues())' class="govuk-link">Change location</a>
+  <h2 class="govuk-heading-s filter-form__title">
+    Provider name<span class="govuk-visually-hidden">:</span>
+  </h2>
+  <p class="govuk-body filter-form__value">
+    @Model.query
+  </p>
+  <a href='@Url.Action("Location", "Filter", Model.ToRouteValues())' class="govuk-link">Change location</a>
 </div>
