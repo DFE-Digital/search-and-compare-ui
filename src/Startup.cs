@@ -7,8 +7,10 @@ using GovUk.Education.SearchAndCompare.UI.ActionFilters;
 using GovUk.Education.SearchAndCompare.UI.Services;
 using GovUk.Education.SearchAndCompare.UI.Services.Maps;
 using GovUk.Education.SearchAndCompare.UI.Shared.ViewComponents;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
@@ -36,8 +38,19 @@ namespace GovUk.Education.SearchAndCompare.UI
         {
             services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
 
+            services.AddBasicAuth(SitePassword);
+
             var sharedAssembly = typeof(CourseDetailsViewComponent).GetTypeInfo().Assembly;
-            services.AddMvc().AddApplicationPart(sharedAssembly);
+            services.AddMvc(config =>
+                {
+                    if (PreLaunchMode)
+                    {
+                        // require authorized user for every request
+                        config.Filters.Add(new AuthorizeFilter(
+                            new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build()));
+                    }
+                }
+            ).AddApplicationPart(sharedAssembly);
             services.Configure<RazorViewEngineOptions>(o => o.FileProviders.Add(new EmbeddedFileProvider(sharedAssembly, "GovUk.Education.SearchAndCompare.UI.Shared")));
 
             var apiUri = Environment.GetEnvironmentVariable("API_URI") ?? Configuration.GetSection("ApiConnection").GetValue<string>("Uri");
@@ -52,6 +65,11 @@ namespace GovUk.Education.SearchAndCompare.UI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            if (PreLaunchMode)
+            {
+                app.UseAuthentication();
+            }
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -86,5 +104,14 @@ namespace GovUk.Education.SearchAndCompare.UI
                     defaults: new { controller = "Legal", action = "TandC" });
             });
         }
+
+        private bool PreLaunchMode => !string.IsNullOrWhiteSpace(SitePassword);
+
+        /// <summary>
+        /// This will be set to prevent potential teachers seeing next year's course listings too early.
+        /// The password will be shared with providers and the internal team to be able to preview and check the data before going live.
+        /// Requires an app restart to take effect when set/cleared.
+        /// </summary>
+        private string SitePassword => Configuration["SITE_PASSWORD"];
     }
 }

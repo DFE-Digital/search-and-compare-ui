@@ -9,6 +9,18 @@ See the [Search and Compare](https://github.com/DFE-Digital/search-and-compare) 
 ## Dotnet SDK
 You will need to have Version 2.1.300~2.1.302 of the dotnet SDK installed in order to build and run this. This is due to a bug in ASP.NET MVC Core which is using inconsistent package versions. [The bug](https://github.com/aspnet/Mvc/issues/7969) has a fix promised in .NET Core 2.1.3.  
 
+## Config
+
+### Pre-launch password
+
+Set environment variable / user secret "SITE_PASSWORD" to the chosen password,
+restart the app.
+
+Users will be prompted for a username/password, the username is ignored.
+
+When we are ready for launch clear/remove the environment variable and restart
+this microservice.
+
 ## Running
 Run
 
