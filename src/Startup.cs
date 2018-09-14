@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Net.Http;
 using System.Reflection;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using GovUk.Education.SearchAndCompare.Domain.Client;
 using GovUk.Education.SearchAndCompare.Services.Http;
 using GovUk.Education.SearchAndCompare.UI.ActionFilters;
 using GovUk.Education.SearchAndCompare.UI.Services;
 using GovUk.Education.SearchAndCompare.UI.Services.Maps;
 using GovUk.Education.SearchAndCompare.UI.Shared.ViewComponents;
+using idunno.Authentication.Basic;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
@@ -36,8 +41,44 @@ namespace GovUk.Education.SearchAndCompare.UI
         {
             services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
 
+            services.AddAuthentication(BasicAuthenticationDefaults.AuthenticationScheme)
+                .AddBasic(options =>
+                {
+                    options.Events = new BasicAuthenticationEvents
+                    {
+                        OnValidateCredentials = context =>
+                        {
+                            if (context.Password == "funky")
+                            {
+                                var claims = new[]
+                                {
+                                    new Claim(
+                                        ClaimTypes.NameIdentifier,
+                                        context.Username,
+                                        ClaimValueTypes.String,
+                                        context.Options.ClaimsIssuer),
+                                    new Claim(
+                                        ClaimTypes.Name,
+                                        context.Username,
+                                        ClaimValueTypes.String,
+                                        context.Options.ClaimsIssuer)
+                                };
+
+                                context.Principal = new ClaimsPrincipal(
+                                    new ClaimsIdentity(claims, context.Scheme.Name));
+                                context.Success();
+                            }
+                            return Task.CompletedTask;
+                        }
+                    };
+                    options.AllowInsecureProtocol = true; // only production has https
+                });
+
             var sharedAssembly = typeof(CourseDetailsViewComponent).GetTypeInfo().Assembly;
-            services.AddMvc().AddApplicationPart(sharedAssembly);
+            services.AddMvc(config =>
+                config.Filters.Add(
+                    new AuthorizeFilter(new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build()))
+            ).AddApplicationPart(sharedAssembly);
             services.Configure<RazorViewEngineOptions>(o => o.FileProviders.Add(new EmbeddedFileProvider(sharedAssembly, "GovUk.Education.SearchAndCompare.UI.Shared")));
 
             var apiUri = Environment.GetEnvironmentVariable("API_URI") ?? Configuration.GetSection("ApiConnection").GetValue<string>("Uri");
@@ -52,6 +93,8 @@ namespace GovUk.Education.SearchAndCompare.UI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseAuthentication();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
