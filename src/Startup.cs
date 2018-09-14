@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Net.Http;
 using System.Reflection;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using GovUk.Education.SearchAndCompare.Domain.Client;
 using GovUk.Education.SearchAndCompare.Services.Http;
 using GovUk.Education.SearchAndCompare.UI.ActionFilters;
 using GovUk.Education.SearchAndCompare.UI.Services;
 using GovUk.Education.SearchAndCompare.UI.Services.Maps;
 using GovUk.Education.SearchAndCompare.UI.Shared.ViewComponents;
-using idunno.Authentication.Basic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -42,48 +39,14 @@ namespace GovUk.Education.SearchAndCompare.UI
         {
             services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
 
-            if (PreLaunchMode)
-            {
-                services.AddAuthentication(BasicAuthenticationDefaults.AuthenticationScheme)
-                    .AddBasic(options =>
-                    {
-                        options.Events = new BasicAuthenticationEvents
-                        {
-                            OnValidateCredentials = context =>
-                            {
-                                if (context.Password == SitePassword)
-                                {
-                                    var claims = new[]
-                                    {
-                                        new Claim(
-                                            ClaimTypes.NameIdentifier,
-                                            context.Username,
-                                            ClaimValueTypes.String,
-                                            context.Options.ClaimsIssuer),
-                                        new Claim(
-                                            ClaimTypes.Name,
-                                            context.Username,
-                                            ClaimValueTypes.String,
-                                            context.Options.ClaimsIssuer)
-                                    };
-
-                                    context.Principal = new ClaimsPrincipal(
-                                        new ClaimsIdentity(claims, context.Scheme.Name));
-                                    context.Success();
-                                }
-
-                                return Task.CompletedTask;
-                            }
-                        };
-                        options.AllowInsecureProtocol = true; // only production has https
-                    });
-            }
+            services.AddBasicAuth(SitePassword);
 
             var sharedAssembly = typeof(CourseDetailsViewComponent).GetTypeInfo().Assembly;
             services.AddMvc(config =>
                 {
                     if (PreLaunchMode)
                     {
+                        // require authorized user for every request
                         config.Filters.Add(new AuthorizeFilter(
                             new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build()));
                     }
