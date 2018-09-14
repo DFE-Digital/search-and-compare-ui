@@ -29,6 +29,7 @@ namespace GovUk.Education.SearchAndCompare.UI
         {
             _logger = logFactory.CreateLogger<Startup>();
             Configuration = configuration;
+            _logger.LogInformation($"Pre-launch password protection: {PreLaunchMode}");
         }
 
         public IConfiguration Configuration { get; }
