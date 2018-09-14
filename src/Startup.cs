@@ -42,7 +42,7 @@ namespace GovUk.Education.SearchAndCompare.UI
         {
             services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
 
-            if (PreLanuchMode)
+            if (PreLaunchMode)
             {
                 services.AddAuthentication(BasicAuthenticationDefaults.AuthenticationScheme)
                     .AddBasic(options =>
@@ -82,7 +82,7 @@ namespace GovUk.Education.SearchAndCompare.UI
             var sharedAssembly = typeof(CourseDetailsViewComponent).GetTypeInfo().Assembly;
             services.AddMvc(config =>
                 {
-                    if (PreLanuchMode)
+                    if (PreLaunchMode)
                     {
                         config.Filters.Add(new AuthorizeFilter(
                             new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build()));
@@ -103,7 +103,7 @@ namespace GovUk.Education.SearchAndCompare.UI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (PreLanuchMode)
+            if (PreLaunchMode)
             {
                 app.UseAuthentication();
             }
@@ -143,7 +143,7 @@ namespace GovUk.Education.SearchAndCompare.UI
             });
         }
 
-        private bool PreLanuchMode => !string.IsNullOrWhiteSpace(SitePassword);
+        private bool PreLaunchMode => !string.IsNullOrWhiteSpace(SitePassword);
 
         /// <summary>
         /// This will be set to prevent potential teachers seeing next year's course listings too early.
