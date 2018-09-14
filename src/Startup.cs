@@ -37,47 +37,57 @@ namespace GovUk.Education.SearchAndCompare.UI
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
 
-            services.AddAuthentication(BasicAuthenticationDefaults.AuthenticationScheme)
-                .AddBasic(options =>
-                {
-                    options.Events = new BasicAuthenticationEvents
+            if (PreLanuchMode)
+            {
+                services.AddAuthentication(BasicAuthenticationDefaults.AuthenticationScheme)
+                    .AddBasic(options =>
                     {
-                        OnValidateCredentials = context =>
+                        options.Events = new BasicAuthenticationEvents
                         {
-                            if (context.Password == "funky")
+                            OnValidateCredentials = context =>
                             {
-                                var claims = new[]
+                                if (context.Password == SitePassword)
                                 {
-                                    new Claim(
-                                        ClaimTypes.NameIdentifier,
-                                        context.Username,
-                                        ClaimValueTypes.String,
-                                        context.Options.ClaimsIssuer),
-                                    new Claim(
-                                        ClaimTypes.Name,
-                                        context.Username,
-                                        ClaimValueTypes.String,
-                                        context.Options.ClaimsIssuer)
-                                };
+                                    var claims = new[]
+                                    {
+                                        new Claim(
+                                            ClaimTypes.NameIdentifier,
+                                            context.Username,
+                                            ClaimValueTypes.String,
+                                            context.Options.ClaimsIssuer),
+                                        new Claim(
+                                            ClaimTypes.Name,
+                                            context.Username,
+                                            ClaimValueTypes.String,
+                                            context.Options.ClaimsIssuer)
+                                    };
 
-                                context.Principal = new ClaimsPrincipal(
-                                    new ClaimsIdentity(claims, context.Scheme.Name));
-                                context.Success();
+                                    context.Principal = new ClaimsPrincipal(
+                                        new ClaimsIdentity(claims, context.Scheme.Name));
+                                    context.Success();
+                                }
+
+                                return Task.CompletedTask;
                             }
-                            return Task.CompletedTask;
-                        }
-                    };
-                    options.AllowInsecureProtocol = true; // only production has https
-                });
+                        };
+                        options.AllowInsecureProtocol = true; // only production has https
+                    });
+            }
 
             var sharedAssembly = typeof(CourseDetailsViewComponent).GetTypeInfo().Assembly;
             services.AddMvc(config =>
-                config.Filters.Add(
-                    new AuthorizeFilter(new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build()))
+                {
+                    if (PreLanuchMode)
+                    {
+                        config.Filters.Add(new AuthorizeFilter(
+                            new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build()));
+                    }
+                }
             ).AddApplicationPart(sharedAssembly);
             services.Configure<RazorViewEngineOptions>(o => o.FileProviders.Add(new EmbeddedFileProvider(sharedAssembly, "GovUk.Education.SearchAndCompare.UI.Shared")));
 
@@ -93,7 +103,10 @@ namespace GovUk.Education.SearchAndCompare.UI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseAuthentication();
+            if (PreLanuchMode)
+            {
+                app.UseAuthentication();
+            }
 
             if (env.IsDevelopment())
             {
@@ -129,5 +142,14 @@ namespace GovUk.Education.SearchAndCompare.UI
                     defaults: new { controller = "Legal", action = "TandC" });
             });
         }
+
+        private bool PreLanuchMode => !string.IsNullOrWhiteSpace(SitePassword);
+
+        /// <summary>
+        /// This will be set to prevent potential teachers seeing next year's course listings too early.
+        /// The password will be shared with providers and the internal team to be able to preview and check the data before going live.
+        /// Requires an app restart to take effect when set/cleared.
+        /// </summary>
+        private string SitePassword => Configuration["SITE_PASSWORD"];
     }
 }
