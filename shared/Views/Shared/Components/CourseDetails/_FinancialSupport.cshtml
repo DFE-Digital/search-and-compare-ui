@@ -5,10 +5,6 @@
 @using GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters;
 @using GovUk.Education.SearchAndCompare.UI.Shared.ViewModels;
 
-@{
-  Microsoft.AspNetCore.Html.HtmlString section = null;
-}
-
 <div class="govuk-!-margin-bottom-8">
   <h2 class="govuk-heading-m" id="section-financial-support">Financial support</h2>
   @if (Model.Course.IsSalaried)
@@ -31,6 +27,6 @@
   @if(Model.HasSection(CourseDetailsSections.FinancialSupport))
   {
     <h3 class="govuk-heading-s">Financial support from the training provider</h3>
-    @Html.Raw(Model.GetHtmlForSection(CourseDetailsSections.FinancialSupport))
+    @Html.Raw(Model.GetHtmlForSection(CourseDetailsSections.FinancialSupport));
   }
 </div>

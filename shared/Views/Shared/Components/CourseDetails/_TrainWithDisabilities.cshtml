@@ -6,15 +6,15 @@
 @using GovUk.Education.SearchAndCompare.UI.Shared.ViewModels;
 
 @{
-  Microsoft.AspNetCore.Html.HtmlString section = null;
+  var section = Model.GetHtmlForSection(CourseDetailsSections.TrainWithDisabilities);
 }
 
 @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.TrainWithDisabilities))
-  {
+{
   <div class="govuk-!-margin-bottom-8">
     <h2 class="govuk-heading-m" id="section-train-with-disabilities">Training with disabilities and other needs</h2>
 
-    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.TrainWithDisabilities)) != null)
+    @if (section != null)
     {
       @Html.Raw(section)
     }

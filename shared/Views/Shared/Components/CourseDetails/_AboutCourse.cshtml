@@ -6,7 +6,7 @@
 @using GovUk.Education.SearchAndCompare.UI.Shared.ViewModels;
 
 @{
-  Microsoft.AspNetCore.Html.HtmlString section = null;
+  var section = Model.GetHtmlForSection(CourseDetailsSections.AboutTheCourse);
 }
 
 @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutTheCourse))
@@ -14,7 +14,7 @@
   <div class="govuk-!-margin-bottom-8">
     <h2 class="govuk-heading-m" id="section-about">About the course</h2>
 
-    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.AboutTheCourse)) != null)
+    @if (section != null)
     {
       @Html.Raw(section)
     }

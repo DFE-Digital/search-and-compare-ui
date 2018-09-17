@@ -6,7 +6,9 @@
 @using GovUk.Education.SearchAndCompare.UI.Shared.ViewModels;
 
 @{
-  Microsoft.AspNetCore.Html.HtmlString section = null;
+  var about_the_provider = Model.GetHtmlForSection(CourseDetailsSections.AboutTheProvider);
+  var about_the_accrediting_provider = Model.GetHtmlForSection(CourseDetailsSections.AboutTheAccreditingProvider);
+
 }
 
 <div class="govuk-!-margin-bottom-8">
@@ -14,9 +16,9 @@
   {
     <h2 class="govuk-heading-m" id="section-about-provider">About the training provider</h2>
 
-    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.AboutTheProvider)) != null)
+    @if (about_the_provider != null)
     {
-      @Html.Raw(section)
+      @Html.Raw(about_the_provider)
     }
     else
     {
@@ -24,9 +26,9 @@
     }
   }
 
-  @if ((section = Model.GetHtmlForSection(CourseDetailsSections.AboutTheAccreditingProvider)) != null)
+  @if (about_the_accrediting_provider != null)
   {
     <h3 class="govuk-heading-s">About the accredited provider</h3>
-    @Html.Raw(section)
+    @Html.Raw(about_the_accrediting_provider)
   }
 </div>

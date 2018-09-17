@@ -6,7 +6,9 @@
 @using GovUk.Education.SearchAndCompare.UI.Shared.ViewModels;
 
 @{
-  Microsoft.AspNetCore.Html.HtmlString section = null;
+  var course_details_sections = Model.GetHtmlForSection(CourseDetailsSections.EntryRequirementsQualifications);
+  var entry_requirements_personal_qualities = Model.GetHtmlForSection(CourseDetailsSections.EntryRequirementsPersonalQualities);
+  var entry_requirements_other = Model.GetHtmlForSection(CourseDetailsSections.EntryRequirementsOther);
 }
 
 @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.EntryRequirementsQualifications))
@@ -15,25 +17,25 @@
     <h2 class="govuk-heading-m" id="section-entry">Requirements</h2>
     <h3 class="govuk-heading-s">Qualifications</h3>
 
-    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.EntryRequirementsQualifications)) != null)
+    @if (course_details_sections != null)
     {
-      @Html.Raw(section)
+      @Html.Raw(course_details_sections)
     }
     else
     {
       <p class="missing-section">Please add details for this section.</p>
     }
 
-    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.EntryRequirementsPersonalQualities)) != null)
+    @if (entry_requirements_personal_qualities != null)
     {
       <h3 class="govuk-heading-s">Personal qualities</h3>
-      @Html.Raw(section)
+      @Html.Raw(entry_requirements_personal_qualities)
     }
 
-    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.EntryRequirementsOther)) != null)
+    @if (entry_requirements_other != null)
     {
       <h3 class="govuk-heading-s">Other requirements</h3>
-      @Html.Raw(section)
+      @Html.Raw(entry_requirements_other)
     }
   </div>
 }

@@ -6,7 +6,7 @@
 @using GovUk.Education.SearchAndCompare.UI.Shared.ViewModels;
 
 @{
-  Microsoft.AspNetCore.Html.HtmlString section = null;
+  var section = Model.GetHtmlForSection(CourseDetailsSections.AboutFees);
 }
 
 @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutFees))
@@ -50,7 +50,7 @@
       <p class="missing-section">Please add details for this section.</p>
     }
 
-    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.AboutFees)) != null)
+    @if (section != null)
     {
       @Html.Raw(section)
     }
