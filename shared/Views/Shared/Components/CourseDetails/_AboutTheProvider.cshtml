@@ -1,0 +1,34 @@
+@model GovUk.Education.SearchAndCompare.UI.Shared.ViewModels.CourseDetailsViewModel;
+
+@using GovUk.Education.SearchAndCompare.Domain.Models;
+@using GovUk.Education.SearchAndCompare.Domain.Models.Enums;
+@using GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters;
+@using GovUk.Education.SearchAndCompare.UI.Shared.ViewModels;
+
+@{
+  var about_the_provider = Model.GetHtmlForSection(CourseDetailsSections.AboutTheProvider);
+  var about_the_accrediting_provider = Model.GetHtmlForSection(CourseDetailsSections.AboutTheAccreditingProvider);
+
+}
+
+<div class="govuk-!-margin-bottom-8">
+  @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutTheProvider) || Model.HasSection(CourseDetailsSections.AboutTheAccreditingProvider))
+  {
+    <h2 class="govuk-heading-m" id="section-about-provider">About the training provider</h2>
+
+    @if (about_the_provider != null)
+    {
+      @Html.Raw(about_the_provider)
+    }
+    else
+    {
+      <p class="missing-section">Please add details <a href="@Model.AboutYourOrgLink">about your organisation</a>.</p>
+    }
+  }
+
+  @if (about_the_accrediting_provider != null)
+  {
+    <h3 class="govuk-heading-s">About the accredited provider</h3>
+    @Html.Raw(about_the_accrediting_provider)
+  }
+</div>

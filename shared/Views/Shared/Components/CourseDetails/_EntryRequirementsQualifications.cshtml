@@ -1,0 +1,41 @@
+@model GovUk.Education.SearchAndCompare.UI.Shared.ViewModels.CourseDetailsViewModel;
+
+@using GovUk.Education.SearchAndCompare.Domain.Models;
+@using GovUk.Education.SearchAndCompare.Domain.Models.Enums;
+@using GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters;
+@using GovUk.Education.SearchAndCompare.UI.Shared.ViewModels;
+
+@{
+  var course_details_sections = Model.GetHtmlForSection(CourseDetailsSections.EntryRequirementsQualifications);
+  var entry_requirements_personal_qualities = Model.GetHtmlForSection(CourseDetailsSections.EntryRequirementsPersonalQualities);
+  var entry_requirements_other = Model.GetHtmlForSection(CourseDetailsSections.EntryRequirementsOther);
+}
+
+@if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.EntryRequirementsQualifications))
+{
+  <div class="govuk-!-margin-bottom-8">
+    <h2 class="govuk-heading-m" id="section-entry">Requirements</h2>
+    <h3 class="govuk-heading-s">Qualifications</h3>
+
+    @if (course_details_sections != null)
+    {
+      @Html.Raw(course_details_sections)
+    }
+    else
+    {
+      <p class="missing-section">Please add details for this section.</p>
+    }
+
+    @if (entry_requirements_personal_qualities != null)
+    {
+      <h3 class="govuk-heading-s">Personal qualities</h3>
+      @Html.Raw(entry_requirements_personal_qualities)
+    }
+
+    @if (entry_requirements_other != null)
+    {
+      <h3 class="govuk-heading-s">Other requirements</h3>
+      @Html.Raw(entry_requirements_other)
+    }
+  </div>
+}

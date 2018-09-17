@@ -1,0 +1,14 @@
+@model GovUk.Education.SearchAndCompare.UI.Shared.ViewModels.CourseDetailsViewModel;
+
+@using GovUk.Education.SearchAndCompare.Domain.Models;
+@using GovUk.Education.SearchAndCompare.Domain.Models.Enums;
+@using GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters;
+@using GovUk.Education.SearchAndCompare.UI.Shared.ViewModels;
+
+@if (Model.HasSection(CourseDetailsSections.InterviewProcess))
+{
+  <div class="govuk-!-margin-bottom-8">
+    <h2 class="govuk-heading-m" id="section-interviews">Interview process</h2>
+    @Html.Raw(Model.GetHtmlForSection(CourseDetailsSections.InterviewProcess))
+  </div>
+}

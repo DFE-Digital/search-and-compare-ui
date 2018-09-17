@@ -1,0 +1,32 @@
+@model GovUk.Education.SearchAndCompare.UI.Shared.ViewModels.CourseDetailsViewModel;
+
+@using GovUk.Education.SearchAndCompare.Domain.Models;
+@using GovUk.Education.SearchAndCompare.Domain.Models.Enums;
+@using GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters;
+@using GovUk.Education.SearchAndCompare.UI.Shared.ViewModels;
+
+@if (Model.Course.IncludesPgce != IncludesPgce.No)
+{
+  <details class="govuk-details">
+    <summary class="govuk-details__summary">
+      <span class="govuk-details__summary-text">@Model.Course.FormattedOutcome()</span>
+    </summary>
+    <div class="govuk-details__text">
+      <p class="govuk-body">danA postgraduate certificate in education (PGCE) with qualified teacher status (QTS) allows you to teach in England, Scotland, Wales and Northern Ireland.</p>
+      <p class="govuk-body">This qualification is also recognised internationally.</p>
+      <p class="govuk-body">Many PGCE courses include credits that count toward a Master&#8217;s degree.</p>
+    </div>
+  </details>
+}
+else
+{
+  <details class="govuk-details">
+    <summary class="govuk-details__summary">
+      <span class="govuk-details__summary-text">@Model.Course.FormattedOutcome()</span>
+    </summary>
+    <div class="govuk-details__text">
+      <p class="govuk-body">Qualified teacher status (QTS) allows you to teach in state schools in England.</p>
+      <p class="govuk-body">If you want to teach in the rest of the UK or internationally, consider a course that gives you the qualification &#39;postgraduate certificate in education with qualified teacher status&#39; instead.</p>
+    </div>
+  </details>
+}
