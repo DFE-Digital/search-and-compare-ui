@@ -25,11 +25,6 @@
   <ItemGroup>
     <ProjectReference Include="..\shared\SearchAndCompareUi.Shared.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Update="Views\Error\Unauthorized.cshtml">
-      <Pack>$(IncludeRazorContentInPack)</Pack>
-    </Content>
-  </ItemGroup>
   <Target Name="Webpack" Condition="'$(Configuration)'=='Release'" BeforeTargets="AfterBuild">
     <Exec Command="npm install" />
     <Exec Command="npm run build" />
