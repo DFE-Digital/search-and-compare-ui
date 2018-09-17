@@ -73,7 +73,6 @@ namespace GovUk.Education.SearchAndCompare.UI
 
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
                 app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
                 {
                     HotModuleReplacement = true
@@ -89,9 +88,9 @@ namespace GovUk.Education.SearchAndCompare.UI
             }
             else
             {
-                app.UseStatusCodePagesWithRedirects("/error/{0}");
                 app.UseStaticFiles();
             }
+            app.UseStatusCodePagesWithRedirects("/error/{0}");
 
             app.AddContentLanguageHeaders("en");
 
