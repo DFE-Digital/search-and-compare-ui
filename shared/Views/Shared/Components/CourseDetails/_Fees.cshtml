@@ -1,0 +1,58 @@
+@model GovUk.Education.SearchAndCompare.UI.Shared.ViewModels.CourseDetailsViewModel;
+
+@using GovUk.Education.SearchAndCompare.Domain.Models;
+@using GovUk.Education.SearchAndCompare.Domain.Models.Enums;
+@using GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters;
+@using GovUk.Education.SearchAndCompare.UI.Shared.ViewModels;
+
+@{
+  Microsoft.AspNetCore.Html.HtmlString section = null;
+}
+
+@if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutFees))
+{
+  <div class="govuk-!-margin-bottom-8">
+    <h2 class="govuk-heading-m" id="section-fees">Fees</h2>
+
+    @if (Model.HasFeesSet)
+    {
+      <div class="body-text">
+        <table class="govuk-table">
+          <caption class="govuk-table__caption">The course fees for @Model.Finance.FormattedYear are as follows:</caption>
+          <thead class="govuk-table__head">
+            <tr class="govuk-visually-hidden govuk-table__row">
+              <th class="govuk-table__header">Student type</th>
+              <th class="govuk-table__header">Fees to pay</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">UK students</td>
+              <td class="govuk-table__cell">@Model.Finance.FormattedUkFees</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">EU students</td>
+              <td class="govuk-table__cell">@Model.Finance.FormattedEuFees</td>
+            </tr>
+            @if (Model.Course.Fees.International != 0)
+            {
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">International students</td>
+                <td class="govuk-table__cell">@Model.Finance.FormattedInternationalFees</td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+    else
+    {
+      <p class="missing-section">Please add details for this section.</p>
+    }
+
+    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.AboutFees)) != null)
+    {
+      @Html.Raw(section)
+    }
+  </div>
+}

@@ -1,0 +1,26 @@
+@model GovUk.Education.SearchAndCompare.UI.Shared.ViewModels.CourseDetailsViewModel;
+
+@using GovUk.Education.SearchAndCompare.Domain.Models;
+@using GovUk.Education.SearchAndCompare.Domain.Models.Enums;
+@using GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters;
+@using GovUk.Education.SearchAndCompare.UI.Shared.ViewModels;
+
+@{
+  Microsoft.AspNetCore.Html.HtmlString section = null;
+}
+
+@if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.TrainWithDisabilities))
+  {
+  <div class="govuk-!-margin-bottom-8">
+    <h2 class="govuk-heading-m" id="section-train-with-disabilities">Training with disabilities and other needs</h2>
+
+    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.TrainWithDisabilities)) != null)
+    {
+      @Html.Raw(section)
+    }
+    else
+    {
+      <p class="missing-section">Please add details <a href="@Model.AboutYourOrgLink">about your organisation</a>.</p>
+    }
+  </div>
+}

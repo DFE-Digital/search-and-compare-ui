@@ -1,520 +1,158 @@
-@model GovUk.Education.SearchAndCompare.UI.Shared.ViewModels.CourseDetailsViewModel
+@model GovUk.Education.SearchAndCompare.UI.Shared.ViewModels.CourseDetailsViewModel;
 
-@using GovUk.Education.SearchAndCompare.Domain.Models
+@using GovUk.Education.SearchAndCompare.Domain.Models;
 @using GovUk.Education.SearchAndCompare.Domain.Models.Enums;
 @using GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters;
 @using GovUk.Education.SearchAndCompare.UI.Shared.ViewModels;
 
 @{
-    ViewBag.Title = $"{Model.Course.Name} at {Model.Provider.Name}";
-    Microsoft.AspNetCore.Html.HtmlString section = null;
+  ViewBag.Title = $"{Model.Course.Name} at {Model.Provider.Name}";
+  Microsoft.AspNetCore.Html.HtmlString section = null;
 }
 
 <div data-module="back-link"></div>
 
 @if (Model.PreviewMode)
 {
-    <div class="preview-banner">
-      This is a preview of a course: @Model.Course.Name (@Model.Course.ProgrammeCode).
-    </div>
+  <div class="preview-banner">
+    This is a preview of a course: @Model.Course.Name (@Model.Course.ProgrammeCode).
+  </div>
 }
 
 <main class="govuk-main-wrapper" id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <h1 class="govuk-heading-xl">
-                @Model.Course.Name at @Model.Provider.Name
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">
+        @Model.Course.Name at @Model.Provider.Name
 
-                @if (!String.IsNullOrEmpty(Model.Course.AccreditingProvider?.Name))
-                {
-                    <span class="govuk-caption-xl">Accredited provider: @Model.Course.AccreditingProvider?.Name</span>
-                }
-            </h1>
-
-        </div>
-        <div class="govuk-grid-column-full">
-            <div class="course-basicinfo govuk-!-margin-bottom-8">
-                <dl class="govuk-list--description">
-                    @if(!string.IsNullOrEmpty(Model.Course.Mod) && Model.Course.Mod.Length > 1)
-                    {
-                        <dt class="govuk-list--description__label">Course offered</dt>
-                        <dd>@Model.Course.Mod</dd>
-                    }
-                    @if (Model.Course.ProviderLocation != null)
-                    {
-                        <dt class="govuk-list--description__label">Location</dt>
-                        <dd>@Model.Course.ProviderLocation.Address</dd>
-                    }
-                    <dt class="govuk-list--description__label">Qualification</dt>
-                    <dd>
-                        @if (Model.Course.IncludesPgce != IncludesPgce.No)
-                        {
-                            <details class="govuk-details">
-                                <summary class="govuk-details__summary">
-                                    <span class="govuk-details__summary-text">@Model.Course.FormattedOutcome()</span>
-                                </summary>
-                                <div class="govuk-details__text">
-                                    <p class="govuk-body">A postgraduate certificate in education (PGCE) with qualified teacher status (QTS) allows you to teach in England, Scotland, Wales and Northern Ireland.</p>
-                                    <p class="govuk-body">This qualification is also recognised internationally.</p>
-                                    <p class="govuk-body">Many PGCE courses include credits that count toward a Master&#8217;s degree.</p>
-                                </div>
-                            </details>
-                        }
-                        else
-                        {
-                            <details class="govuk-details">
-                                <summary class="govuk-details__summary">
-                                    <span class="govuk-details__summary-text">@Model.Course.FormattedOutcome()</span>
-                                </summary>
-
-                                <div class="govuk-details__text">
-                                    <p class="govuk-body">Qualified teacher status (QTS) allows you to teach in state schools in England.</p>
-                                    <p class="govuk-body">If you want to teach in the rest of the UK or internationally, consider a course that gives you the qualification &#39;postgraduate certificate in education with qualified teacher status&#39; instead.</p>
-                                </div>
-                            </details>
-                        }
-                    </dd>
-                    @if (!string.IsNullOrEmpty(Model.Course.Duration)) {
-                        <dt class="govuk-list--description__label">Course length</dt>
-                        <dd>@Model.Course.Duration</dd>
-                    }
-                    @if (!string.IsNullOrEmpty(@Model.Course.FormattedEarliestApplicationDate())) {
-                        <dt class="govuk-list--description__label">Date you can apply from</dt>
-                        <dd>@Model.Course.FormattedEarliestApplicationDate()</dd>
-                    }
-                    @if (!string.IsNullOrEmpty(@Model.Course.FormattedStartDate())) {
-                        <dt class="govuk-list--description__label">Date course starts</dt>
-                        <dd>@Model.Course.FormattedStartDate()</dd>
-                    }
-                    @if (!string.IsNullOrEmpty(@Model.Course.ContactDetails.Website)) {
-                        <dt class="govuk-list--description__label">Website</dt>
-                        <dd>
-                            <a href="@Model.Course.FormattedWebsite()"
-                            title="Go to course website"
-                            aria-label="Go to course website"
-                                class="govuk-link">
-                                @Model.Course.FormattedWebsite()
-                            </a>
-                        </dd>
-                    }
-                </dl>
-            </div>
-        </div>
+        @if (!String.IsNullOrEmpty(Model.Course.AccreditingProvider?.Name))
+        {
+          <span class="govuk-caption-xl">Accredited provider: @Model.Course.AccreditingProvider?.Name</span>
+        }
+      </h1>
     </div>
 
+    <div class="govuk-grid-column-full">
+      <div class="course-basicinfo govuk-!-margin-bottom-8">
+        <dl class="govuk-list--description">
+          @if(!string.IsNullOrEmpty(Model.Course.Mod) && Model.Course.Mod.Length > 1)
+          {
+            <dt class="govuk-list--description__label">Course offered</dt>
+            <dd>@Model.Course.Mod</dd>
+          }
+          @if (Model.Course.ProviderLocation != null)
+          {
+            <dt class="govuk-list--description__label">Location</dt>
+            <dd>@Model.Course.ProviderLocation.Address</dd>
+          }
+          <dt class="govuk-list--description__label">Qualification</dt>
+          <dd>
+            @await Html.PartialAsync("_Qualification.cshtml")
+          </dd>
+          @if (!string.IsNullOrEmpty(Model.Course.Duration)) {
+            <dt class="govuk-list--description__label">Course length</dt>
+            <dd>@Model.Course.Duration</dd>
+          }
+          @if (!string.IsNullOrEmpty(@Model.Course.FormattedEarliestApplicationDate())) {
+            <dt class="govuk-list--description__label">Date you can apply from</dt>
+            <dd>@Model.Course.FormattedEarliestApplicationDate()</dd>
+          }
+          @if (!string.IsNullOrEmpty(@Model.Course.FormattedStartDate())) {
+            <dt class="govuk-list--description__label">Date course starts</dt>
+            <dd>@Model.Course.FormattedStartDate()</dd>
+          }
+          @if (!string.IsNullOrEmpty(@Model.Course.ContactDetails.Website)) {
+            <dt class="govuk-list--description__label">Website</dt>
+            <dd>
+              <a href="@Model.Course.FormattedWebsite()" title="Go to course website" aria-label="Go to course website" class="govuk-link">@Model.Course.FormattedWebsite()</a>
+            </dd>
+          }
+        </dl>
+      </div>
+    </div>
+  </div>
 
-    <div class="govuk-grid-row">
-
-        <div class="govuk-grid-column-two-thirds">
-            <div class="course-contents govuk-!-margin-bottom-8">
-                <h2 class="govuk-heading-s">Contents</h2>
-                <ul class="govuk-list govuk-list--dash">
-                    @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutTheCourse))
-                    {
-                        <li><a href="#section-about">About the course</a></li>
-                    }
-                    @if (Model.HasSection(CourseDetailsSections.InterviewProcess))
-                    {
-                        <li><a href="#section-interviews">Interview process</a></li>
-                    }
-                    @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutSchools))
-                    {
-                        <li><a href="#section-schools">How school placements work</a></li>
-                    }
-                    @if(Model.Course.IsSalaried)
-                    {
-                        @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutSalary))
-                        {
-                            <li><a href="#section-salary">Salary</a></li>
-                        }
-                    }
-                    else
-                    {
-                        @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutFees))
-                        {
-                            <li><a href="#section-fees">Fees</a></li>
-                        }
-                    }
-
-                    <li><a href="#section-financial-support">Financial support</a></li>
-
-                    @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.EntryRequirementsQualifications))
-                    {
-                        <li><a href="#section-entry">Requirements</a></li>
-                    }
-                    @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutTheProvider))
-                    {
-                        <li><a href="#section-about-provider">About the training provider</a></li>
-                    }
-
-                    @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.TrainWithDisabilities))
-                    {
-                        <li><a href="#section-train-with-disabilities">Training with disabilities and other needs</a></li>
-                    }
-
-                    @if (Model.HasContactDetails())
-                    {
-                        <li><a href="#section-contact">Contact details</a></li>
-                    }
-
-                    <li><a href="#section-apply">Apply</a></li>
-                </ul>
-            </div>
-
-
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <div class="course-contents govuk-!-margin-bottom-8">
+        <h2 class="govuk-heading-s">Contents</h2>
+          <ul class="govuk-list govuk-list--dash">
             @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutTheCourse))
             {
-                <div class="govuk-!-margin-bottom-8">
-                    <h2 class="govuk-heading-m" id="section-about">
-                        About the course
-                    </h2>
-
-                    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.AboutTheCourse)) != null)
-                    {
-                        @Html.Raw(section)
-                    }
-                    else
-                    {
-                        <p class="missing-section">
-                            Please add details for this section.
-                        </p>
-                    }
-                </div>
+              <li><a href="#section-about">About the course</a></li>
             }
-
             @if (Model.HasSection(CourseDetailsSections.InterviewProcess))
             {
-                <div class="govuk-!-margin-bottom-8">
-                    <h2 class="govuk-heading-m" id="section-interviews">
-                        Interview process
-                    </h2>
-                    @Html.Raw(Model.GetHtmlForSection(CourseDetailsSections.InterviewProcess))
-                </div>
+              <li><a href="#section-interviews">Interview process</a></li>
             }
-
             @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutSchools))
             {
-                <div class="govuk-!-margin-bottom-8">
-                    <h2 class="govuk-heading-m" id="section-schools">
-                        How school placements work
-                    </h2>
-                    <div>
-                    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.AboutSchools)) != null)
-                    {
-                        @Html.Raw(section)
-                    }
-                    else
-                    {
-                        <p class="missing-section">
-                            Please add details for this section.
-                        </p>
-                    }
-                    </div>
-                </div>
+              <li><a href="#section-schools">How school placements work</a></li>
             }
-
-            @if (Model.Course.IsSalaried)
+            @if(Model.Course.IsSalaried)
             {
-                @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutSalary))
-                {
-                    <div class="govuk-!-margin-bottom-8">
-                        <h2 class="govuk-heading-m" id="section-salary">
-                            Salary
-                        </h2>
-                        <div>
-                        @if ((section = Model.GetHtmlForSection(CourseDetailsSections.AboutSalary)) != null)
-                        {
-                            @Html.Raw(section)
-                        }
-                        else
-                        {
-                            <p class="missing-section">
-                                Please add details for this section.
-                            </p>
-                        }
-                        </div>
-                    </div>
-                }
+              @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutSalary))
+              {
+                <li><a href="#section-salary">Salary</a></li>
+              }
             }
             else
             {
-                @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutFees))
-                {
-                    <div class="govuk-!-margin-bottom-8">
-                        <h2 class="govuk-heading-m" id="section-fees">Fees</h2>
-
-                    @if (Model.HasFeesSet)
-                    {
-                        <div class="body-text">
-                            <table class="govuk-table">
-                                <caption class="govuk-table__caption">The course fees for @Model.Finance.FormattedYear are as follows:</caption>
-                                <thead class="govuk-table__head">
-                                    <tr class="govuk-visually-hidden govuk-table__row">
-                                        <th class="govuk-table__header">Student type</th>
-                                        <th class="govuk-table__header">Fees to pay</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="govuk-table__body">
-                                <tr class="govuk-table__row">
-                                    <td class="govuk-table__cell">UK students</td>
-                                    <td class="govuk-table__cell">@Model.Finance.FormattedUkFees</td>
-                                </tr>
-                                <tr class="govuk-table__row">
-                                    <td class="govuk-table__cell">EU students</td>
-                                    <td class="govuk-table__cell">@Model.Finance.FormattedEuFees</td>
-                                </tr>
-                                @if (Model.Course.Fees.International != 0)
-                                {
-                                    <tr class="govuk-table__row">
-                                        <td class="govuk-table__cell">International students</td>
-                                        <td class="govuk-table__cell">@Model.Finance.FormattedInternationalFees</td>
-                                    </tr>
-                                }
-                                </tbody>
-                            </table>
-                        </div>
-
-                    }
-                    else
-                    {
-                        <p class="missing-section">
-                            Please add details for this section.
-                        </p>
-                    }
-
-                    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.AboutFees)) != null)
-                    {
-                        <div>
-                            @Html.Raw(section)
-                        </div>
-                    }
-                    </div>
-                }
+              @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutFees))
+              {
+                <li><a href="#section-fees">Fees</a></li>
+              }
             }
-
-            <div class="govuk-!-margin-bottom-8">
-                <h2 class="govuk-heading-m" id="section-financial-support">Financial support</h2>
-                @if (Model.Course.IsSalaried)
-                {
-                    <p class="govuk-body">
-                        Financial support isn’t available for this course.
-                    </p>
-                    <p class="govuk-body">
-                        If you choose a course without a salary, you may be eligible for financial support while you study, including bursaries, scholarships and loans.
-                    </p>
-                } else {
-                    <p class="govuk-body">
-                        You may be eligible for <a href="https://www.gov.uk/teacher-training-funding" class="govuk-link">financial support while you study, including bursaries, scholarships and loans</a>.
-                    </p>
-                    <p class="govuk-body">
-                        <a href="https://getintoteaching.education.gov.uk/explore-my-options/overseas-graduates" class="govuk-link">Financial support if you’re from outside of the UK</a>.
-                    </p>
-                }
-
-                @if(Model.HasSection(CourseDetailsSections.FinancialSupport))
-                {
-                    <h3 class="govuk-heading-s">
-                        Financial support from the training provider
-                    </h3>
-                    @Html.Raw(Model.GetHtmlForSection(CourseDetailsSections.FinancialSupport))
-                }
-            </div>
-
+            <li><a href="#section-financial-support">Financial support</a></li>
             @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.EntryRequirementsQualifications))
             {
-                <div class="govuk-!-margin-bottom-8">
-                    <h2 class="govuk-heading-m" id="section-entry">
-                        Requirements
-                    </h2>
-                    <h3 class="govuk-heading-s">
-                        Qualifications
-                    </h3>
-                    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.EntryRequirementsQualifications)) != null)
-                    {
-                        @Html.Raw(section)
-                    }
-                    else
-                    {
-                        <p class="missing-section">
-                            Please add details for this section.
-                        </p>
-                    }
-                    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.EntryRequirementsPersonalQualities)) != null)
-                    {
-                        <h3 class="govuk-heading-s">
-                            Personal qualities
-                        </h3>
-                        @Html.Raw(section)
-                    }
-
-                    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.EntryRequirementsOther)) != null)
-                    {
-                        <h3 class="govuk-heading-s">
-                            Other requirements
-                        </h3>
-                        @Html.Raw(section)
-                    }
-                </div>
+              <li><a href="#section-entry">Requirements</a></li>
             }
-
-            <div class="govuk-!-margin-bottom-8">
-                @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutTheProvider) || Model.HasSection(CourseDetailsSections.AboutTheAccreditingProvider))
-                {
-                    <h2 class="govuk-heading-m" id="section-about-provider">
-                        About the training provider
-                    </h2>
-                    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.AboutTheProvider)) != null)
-                    {
-                        @Html.Raw(section)
-                    }
-                    else
-                    {
-                        <p class="missing-section">
-                            Please add details <a href="@Model.AboutYourOrgLink">about your organisation</a>.
-                        </p>
-                    }
-                }
-                @if ((section = Model.GetHtmlForSection(CourseDetailsSections.AboutTheAccreditingProvider)) != null)
-                {
-                    <h3 class="govuk-heading-s">
-                        About the accredited provider
-                    </h3>
-                    @Html.Raw(section)
-                }
-            </div>
+            @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutTheProvider))
+            {
+              <li><a href="#section-about-provider">About the training provider</a></li>
+            }
 
             @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.TrainWithDisabilities))
             {
-                <div class="govuk-!-margin-bottom-8">
-                    <h2 class="govuk-heading-m" id="section-train-with-disabilities">
-                        Training with disabilities and other needs
-                    </h2>
-                    @if ((section = Model.GetHtmlForSection(CourseDetailsSections.TrainWithDisabilities)) != null)
-                    {
-                        @Html.Raw(section)
-                    }
-                    else
-                    {
-                        <p class="missing-section">
-                            Please add details <a href="@Model.AboutYourOrgLink">about your organisation</a>.
-                        </p>
-                    }
-                </div>
+              <li><a href="#section-train-with-disabilities">Training with disabilities and other needs</a></li>
             }
 
             @if (Model.HasContactDetails())
             {
-                <div class="govuk-!-margin-bottom-8">
-                    <h2 class="govuk-heading-m" id="section-contact">
-                        Contact details
-                    </h2>
-                    <div class="course-basicinfo">
-                        <dl class="govuk-list--description">
-                            @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Email))
-                            {
-                                <dt class="govuk-list--description__label">Email</dt>
-                                <dd>
-                                    <a href="mailto:@Model.Course.ContactDetails.Email"
-                                    title="Send email to course contact"
-                                    aria-label="Send email to course contact"
-                                    class="govuk-link">
-                                        @Model.Course.ContactDetails.Email
-                                    </a>
-                                </dd>
-                            }
-                            @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Phone))
-                            {
-                                <dt class="govuk-list--description__label">Telephone</dt>
-                                <dd>@Model.Course.ContactDetails.Phone</dd>
-                            }
-                            @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Fax))
-                            {
-                                <dt class="govuk-list--description__label">Fax</dt>
-                                <dd>@Model.Course.ContactDetails.Fax</dd>
-                            }
-                            @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Website))
-                            {
-                                <dt class="govuk-list--description__label">Website</dt>
-                                <dd>
-                                    <a href="@Model.Course.FormattedWebsite()"
-                                    title="Go to course website"
-                                    aria-label="Go to course website"
-                                        class="govuk-link">
-                                        @Model.Course.FormattedWebsite()
-                                    </a>
-                                </dd>
-                            }
-                            @if (Model.HasAddress())
-                            {
-                                <dt class="govuk-list--description__label">Address</dt>
-                                <dd>
-                                    @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address))
-                                    {
-                                        @foreach (var line in Model.Course.ContactDetails.Address.Split("\n"))
-                                        {
-                                            @line
-                                            <br>
-                                        }
-                                    }
-                                </dd>
-                            }
-                        </dl>
-                    </div>
-                </div>
+              <li><a href="#section-contact">Contact details</a></li>
             }
-
-
-            <div class="govuk-!-margin-bottom-8">
-                <h2 class="govuk-heading-m" id="section-apply">
-                    Apply
-                </h2>
-                <div>
-                    <p class="govuk-body">
-                        <a href="https://2018.teachertraining.apply.ucas.com/apply/student/login.do" class="govuk-link">Apply on the UCAS website</a>. You'll need to register before you can apply.
-                    </p>
-                    <p class="govuk-body">
-                        You'll need these codes for the Choices section of the application form:
-                    </p>
-                    <ul class="govuk-list govuk-list--bullet">
-                        <li>training provider code: @Model.Course.Provider.ProviderCode</li>
-                        <li>training programme code: @Model.Course.ProgrammeCode</li>
-                        @if (Model.Course.Campuses.Count() == 0)
-                        {
-                            <li>training location or campus code: leave empty</li>
-                        }
-                    </ul>
-                    @if (Model.Course.Campuses.Count() > 0)
-                    {
-                        <p class="govuk-body">
-                            You’ll also need to choose a training location and give the relevant training location code.
-                        </p>
-                        <p class="govuk-body">
-                            Available training locations:
-                        </p>
-
-                        <table class="govuk-table">
-                        <thead class="govuk-table__head">
-                            <tr class="govuk-table__row">
-                                <th class="govuk-table__header" scope="col">Name</th>
-                                <th class="govuk-table__header" scope="col">Address</th>
-                                <th class="govuk-table__header" scope="col">Code</th>
-                            </tr>
-                        </thead>
-                        <tbody class="govuk-table__body">
-
-                            @foreach (var campus in Model.Course.Campuses)
-                            {
-                                <tr class="govuk-table__row">
-                                    <td class="govuk-table__cell">@campus.Name</td>
-                                    <td class="govuk-table__cell">@campus.Location?.Address</td>
-                                    <td class="govuk-table__cell">@campus.CampusCode</td>
-                                </tr>
-                            }
-                        </tbody>
-                        </table>
-                    }
-                </div>
-            </div>
+            <li><a href="#section-apply">Apply</a></li>
+          </ul>
         </div>
+
+        @await Html.PartialAsync("_AboutCourse.cshtml")
+
+        @await Html.PartialAsync("_InterviewProcess.cshtml")
+
+        @await Html.PartialAsync("_AboutSchools.cshtml")
+
+        @if (Model.Course.IsSalaried)
+        {
+          @await Html.PartialAsync("_Salary.cshtml")
+        }
+        else
+        {
+          @await Html.PartialAsync("_Fees.cshtml")
+        }
+
+        @await Html.PartialAsync("_FinancialSupport.cshtml")
+
+        @await Html.PartialAsync("_EntryRequirementsQualifications.cshtml")
+
+        @await Html.PartialAsync("_AboutTheProvider.cshtml")
+
+        @await Html.PartialAsync("_TrainWithDisabilities.cshtml")
+
+        @await Html.PartialAsync("_ContactDetails.cshtml")
+
+        @await Html.PartialAsync("_Apply.cshtml")
+
     </div>
+  </div>
 </main>

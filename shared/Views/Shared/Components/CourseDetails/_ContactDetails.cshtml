@@ -1,0 +1,62 @@
+@model GovUk.Education.SearchAndCompare.UI.Shared.ViewModels.CourseDetailsViewModel;
+
+@using GovUk.Education.SearchAndCompare.Domain.Models;
+@using GovUk.Education.SearchAndCompare.Domain.Models.Enums;
+@using GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters;
+@using GovUk.Education.SearchAndCompare.UI.Shared.ViewModels;
+
+@if (Model.HasContactDetails())
+{
+  <div class="govuk-!-margin-bottom-8">
+  <h2 class="govuk-heading-m" id="section-contact">Contact details</h2>
+
+  <div class="course-basicinfo">
+    <dl class="govuk-list--description">
+      @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Email))
+      {
+      <dt class="govuk-list--description__label">Email</dt>
+        <dd>
+          <a href="mailto:@Model.Course.ContactDetails.Email" title="Send email to course contact" aria-label="Send email to course contact" class="govuk-link">@Model.Course.ContactDetails.Email</a>
+        </dd>
+      }
+
+      @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Phone))
+      {
+        <dt class="govuk-list--description__label">Telephone</dt>
+        <dd>@Model.Course.ContactDetails.Phone</dd>
+      }
+
+      @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Fax))
+      {
+        <dt class="govuk-list--description__label">Fax</dt>
+        <dd>@Model.Course.ContactDetails.Fax</dd>
+      }
+
+      @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Website))
+      {
+        <dt class="govuk-list--description__label">Website</dt>
+        <dd>
+          <a href="@Model.Course.FormattedWebsite()" title="Go to course website" aria-label="Go to course website" class="govuk-link">
+            @Model.Course.FormattedWebsite()
+          </a>
+        </dd>
+      }
+
+      @if (Model.HasAddress())
+      {
+        <dt class="govuk-list--description__label">Address</dt>
+        <dd>
+          @if (!String.IsNullOrWhiteSpace(Model.Course.ContactDetails.Address))
+          {
+            @foreach (var line in Model.Course.ContactDetails.Address.Split("\n"))
+            {
+              @line
+              <br>
+            }
+          }
+        </dd>
+      }
+      </dl>
+    </div>
+  </div>
+}
