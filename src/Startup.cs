@@ -90,7 +90,7 @@ namespace GovUk.Education.SearchAndCompare.UI
             {
                 app.UseStaticFiles();
             }
-            app.UseStatusCodePagesWithRedirects("/error/{0}");
+            app.UseStatusCodePagesWithReExecute("/error/{0}");
 
             app.AddContentLanguageHeaders("en");
 
