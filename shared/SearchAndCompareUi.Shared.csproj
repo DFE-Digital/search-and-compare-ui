@@ -2,7 +2,7 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <PackageId>GovUk.Education.SearchAndCompare.Ui.Shared</PackageId>
-    <TargetFramework>netcoreapp2.1</TargetFramework>    
+    <TargetFramework>netcoreapp2.1</TargetFramework>
     <RootNamespace>GovUk.Education.SearchAndCompare.UI.Shared</RootNamespace>
     <Authors>Department for Education</Authors>
     <Description>Shared components from the SearchAndCompare UI</Description>
@@ -10,14 +10,14 @@
     <PackageReleaseNotes>Pre-release</PackageReleaseNotes>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <GitInfoReportImportance>high</GitInfoReportImportance>
-    <GitVersionFile>$(ProjectDir)GitVersion.txt</GitVersionFile>  
+    <GitVersionFile>$(ProjectDir)GitVersion.txt</GitVersionFile>
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.1.1" />
-    <PackageReference Include="DFE.SearchAndCompare.Domain" Version="0.6.1-beta" />
+    <PackageReference Include="DFE.SearchAndCompare.Domain" Version="0.6.3-beta" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.1.1" />
   </ItemGroup>
 
@@ -28,10 +28,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Views\**\*.cshtml" /> 
-  </ItemGroup> 
+    <EmbeddedResource Include="Views\**\*.cshtml" />
+  </ItemGroup>
 
-  
+
   <Target Name="SemanticVersioning" DependsOnTargets="GitVersion" AfterTargets="GitVersion" Outputs="$(OutputSwaggerGeneration)">
     <PropertyGroup Condition="'$(GitBranch)'=='master'">
       <Version>$(GitBaseVersion).$(GitSemVerPatch)</Version>
@@ -40,7 +40,7 @@
     <PropertyGroup Condition="'$(GitBranch)'!='master'">
       <Version>$(GitBaseVersion)-$([System.Text.RegularExpressions.Regex]::Replace('$(GitBranch)','[^A-Za-z0-9]','-')).$(GitSemVerPatch)</Version>
       <PackageVersion>$(GitBaseVersion)-$([System.Text.RegularExpressions.Regex]::Replace('$(GitBranch)','[^A-Za-z0-9]','-')).$(GitSemVerPatch)</PackageVersion>
-    </PropertyGroup>    
+    </PropertyGroup>
   </Target>
 
 </Project>
