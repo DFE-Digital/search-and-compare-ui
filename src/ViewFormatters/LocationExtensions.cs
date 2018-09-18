@@ -6,7 +6,14 @@ namespace GovUk.Education.SearchAndCompare.ViewFormatters
     {
         public static Coordinates AsCoordinates(this Location location)
         {
-            return new Coordinates(location.Latitude, location.Longitude);
+            if(location.Latitude.HasValue && location.Longitude.HasValue )
+            {
+                return new Coordinates(location.Latitude.Value, location.Longitude.Value);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
