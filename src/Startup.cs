@@ -4,6 +4,7 @@ using System.Reflection;
 using GovUk.Education.SearchAndCompare.Domain.Client;
 using GovUk.Education.SearchAndCompare.Services.Http;
 using GovUk.Education.SearchAndCompare.UI.ActionFilters;
+using GovUk.Education.SearchAndCompare.UI.Middleware;
 using GovUk.Education.SearchAndCompare.UI.Services;
 using GovUk.Education.SearchAndCompare.UI.Services.Maps;
 using GovUk.Education.SearchAndCompare.UI.Shared.ViewComponents;
@@ -89,6 +90,7 @@ namespace GovUk.Education.SearchAndCompare.UI
             else
             {
                 app.UseStaticFiles();
+                app.SetSecurityHeaders();
             }
             app.UseStatusCodePagesWithReExecute("/error/{0}");
 
