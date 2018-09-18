@@ -19,6 +19,7 @@
     "copy-webpack-plugin": "^4.5.2",
     "css-loader": "^1.0.0",
     "govuk-frontend": "^1.1.1",
+    "html5shiv": "^3.7.3",
     "jquery": "^3.3.1",
     "mini-css-extract-plugin": "^0.4.1",
     "node-sass": "^4.9.2",
