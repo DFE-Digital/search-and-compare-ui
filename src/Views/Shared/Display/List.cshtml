@@ -1,43 +1,43 @@
 @model ResultsViewModel
 
 <div class="search-results-header">
-    <p class="search-results-header__count govuk-body">@string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:n0}", Model.Courses.TotalCount) courses found</p>
-    <p class="search-results-header__new-search govuk-body">
-        <a href='@Url.Action("LocationWizard", "Filter")' class="govuk-link">New search</a>
-    </p>
-    @Html.Partial("SortBy", Model)
+  <p class="search-results-header__count govuk-body">@string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:n0}", Model.Courses.TotalCount) courses found</p>
+  <p class="search-results-header__new-search govuk-body">
+    <a href='@Url.Action("LocationWizard", "Filter")' class="govuk-link">New search</a>
+  </p>
+  @Html.Partial("SortBy", Model)
 </div>
 
 <ul class="govuk-list search-results">
-    @foreach (var item in Model.Courses.Items) {
-        var subjects = @item.CourseSubjects.Select(courseSubject => courseSubject.Subject.Name).ToArray();
-        <li>
-            <h3 class="govuk-heading-m">
-                <a href='@Url.Action("Index", "Course", new {courseCode = item.ProgrammeCode, providerCode = item.Provider.ProviderCode})' class="link">@item.Name at @item.Provider.Name</a>
-            </h3>
-            <dl class="govuk-list--description">
-                @if (item.ProviderLocation != null) {
-                    <dt>
-                        <span class="govuk-list--description__label">Location</span>
-                    </dt>
-                    <dd>@item.ProviderLocation.Address</dd>
-                }
-                <dt>
-                    <span class="govuk-list--description__label">Study type and duration</span>
-                </dt>
-                <dd>@item.FormattedStudyInfo()</dd>
-                <dt>
-                    <span class="govuk-list--description__label">Financial support</span>
-                </dt>
-                <dd>@item.FundingOptions()</dd>
-                @if (item.Distance != null) {
-                    <dt>
-                        <span class="govuk-list--description__label">Distance</span>
-                    </dt>
-                    <dd>@item.FormattedDistance()</dd>
-                }
-            </dl>
-        </li>
-    }
+  @foreach (var item in Model.Courses.Items) {
+    var subjects = @item.CourseSubjects.Select(courseSubject => courseSubject.Subject.Name).ToArray();
+    <li>
+      <h3 class="govuk-heading-m">
+        <a href='@Url.Action("Index", "Course", new {courseCode = item.ProgrammeCode, providerCode = item.Provider.ProviderCode})' class="link">@item.Name at @item.Provider.Name</a>
+      </h3>
+      <dl class="govuk-list--description">
+        @if (item.ProviderLocation != null) {
+          <dt>
+            <span class="govuk-list--description__label">Location</span>
+          </dt>
+          <dd>@item.ProviderLocation.Address</dd>
+        }
+        <dt>
+          <span class="govuk-list--description__label">Study type and duration</span>
+        </dt>
+        <dd>@item.FormattedStudyInfo()</dd>
+        <dt>
+          <span class="govuk-list--description__label">Financial support</span>
+        </dt>
+        <dd>@item.FundingOptions()</dd>
+        @if (item.Distance != null) {
+          <dt>
+            <span class="govuk-list--description__label">Distance</span>
+          </dt>
+          <dd>@item.FormattedDistance()</dd>
+        }
+      </dl>
+    </li>
+  }
 </ul>
 @Html.Partial("Pagination", Model)
