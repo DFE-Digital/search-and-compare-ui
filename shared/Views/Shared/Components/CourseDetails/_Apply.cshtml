@@ -6,21 +6,32 @@
 @using GovUk.Education.SearchAndCompare.UI.Shared.ViewModels;
 
 <div class="govuk-!-margin-bottom-8">
-  <h2 class="govuk-heading-m" id="section-apply">Apply</h2>
+  <h2 class="govuk-heading-l" id="section-apply">Apply</h2>
+  <div class="govuk-warning-text">
+    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <strong class="govuk-warning-text__text">
+      <span class="govuk-warning-text__assistive">Warning</span>
+      You can’t apply for this course until 9 October 2018
+    </strong>
+  </div>
   <p class="govuk-body">
-    <a href="https://2018.teachertraining.apply.ucas.com/apply/student/login.do" class="govuk-link">Apply on the UCAS website</a>. You'll need to register before you can apply.
+    Apply on the UCAS website from 9 October. You’ll need to register with UCAS before you can apply. Visit Get into Teaching for <a href="https://getintoteaching.education.gov.uk/how-to-apply/apply">guidance on applying for teacher training</a>.
   </p>
   <p class="govuk-body">
-    You'll need these codes for the Choices section of the application form:
+    When you apply you’ll need these codes for the Choices section of your application form:
   </p>
-  <ul class="govuk-list govuk-list--bullet">
-    <li>training provider code: @Model.Course.Provider.ProviderCode</li>
-    <li>training programme code: @Model.Course.ProgrammeCode</li>
-    @if (Model.Course.Campuses.Count() == 0)
-    {
-      <li>training location or campus code: leave empty</li>
-    }
-  </ul>
+  <div class="govuk-inset-text">
+    <ul class="govuk-list">
+      <li class="govuk-!-margin-bottom-2">
+        Training provider code:
+        <span class="govuk-!-display-block govuk-!-font-size-36 govuk-!-font-weight-bold">@Model.Course.Provider.ProviderCode</span>
+      </li>
+      <li>
+        Training programme code:
+        <span class="govuk-!-display-block govuk-!-font-size-36 govuk-!-font-weight-bold">@Model.Course.ProgrammeCode</span>
+      </li>
+    </ul>
+  </div>
 
   @if (Model.Course.Campuses.Count() > 0)
   {
