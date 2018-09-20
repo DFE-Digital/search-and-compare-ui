@@ -18,30 +18,20 @@
       <dl class="govuk-list--description">
         @if(!string.IsNullOrEmpty(item.Mod) && item.Mod.Length > 1)
         {
-          <dt>
-            <span class="govuk-list--description__label">Course offered</span>
-          </dt>
-            <dd>@item.Mod</dd>
+          <dt class="govuk-list--description__label">Course offered</dt>
+          <dd>@item.Mod</dd>
         }
-        <dt>
-          <span class="govuk-list--description__label">Accredited provider</span>
-        </dt>
+        <dt class="govuk-list--description__label">Accredited provider</dt>
         <dd>@item.Provider.Name</dd>
         @if (item.Distance != null) {
-          <dt>
-            <span class="govuk-list--description__label">Distance</span>
-          </dt>
+          <dt class="govuk-list--description__label">Distance</dt>
           <dd>@item.FormattedDistance()</dd>
         }
         @if (item.ProviderLocation != null) {
-          <dt>
-            <span class="govuk-list--description__label">School address</span>
-          </dt>
+          <dt class="govuk-list--description__label">School address</dt>
           <dd>@item.ProviderLocation.Address</dd>
         }
-        <dt>
-          <span class="govuk-list--description__label">Financial support</span>
-        </dt>
+        <dt class="govuk-list--description__label">Financial support</dt>
         <dd>@item.FundingOptions()</dd>
       </dl>
     </li>
