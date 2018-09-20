@@ -16,26 +16,33 @@
         <a href='@Url.Action("Index", "Course", new {courseCode = item.ProgrammeCode, providerCode = item.Provider.ProviderCode})' class="link">@item.Name at @item.Provider.Name</a>
       </h3>
       <dl class="govuk-list--description">
-        @if (item.ProviderLocation != null) {
+        @if(!string.IsNullOrEmpty(item.Mod) && item.Mod.Length > 1)
+        {
           <dt>
-            <span class="govuk-list--description__label">Location</span>
+            <span class="govuk-list--description__label">Course offered</span>
           </dt>
-          <dd>@item.ProviderLocation.Address</dd>
+            <dd>@item.Mod</dd>
         }
         <dt>
-          <span class="govuk-list--description__label">Study type and duration</span>
+          <span class="govuk-list--description__label">Accredited by</span>
         </dt>
-        <dd>@item.FormattedStudyInfo()</dd>
-        <dt>
-          <span class="govuk-list--description__label">Financial support</span>
-        </dt>
-        <dd>@item.FundingOptions()</dd>
+        <dd>@item.Provider.Name</dd>
         @if (item.Distance != null) {
           <dt>
             <span class="govuk-list--description__label">Distance</span>
           </dt>
           <dd>@item.FormattedDistance()</dd>
         }
+        @if (item.ProviderLocation != null) {
+          <dt>
+            <span class="govuk-list--description__label">School address</span>
+          </dt>
+          <dd>@item.ProviderLocation.Address</dd>
+        }
+        <dt>
+          <span class="govuk-list--description__label">Financial support</span>
+        </dt>
+        <dd>@item.FundingOptions()</dd>
       </dl>
     </li>
   }
