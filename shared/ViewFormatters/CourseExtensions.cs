@@ -18,7 +18,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters
         public static string FormattedWebsite(this Course course)
         {
             var raw = course.ContactDetails?.Website;
-            
+
             return string.IsNullOrEmpty(raw) ? null
                 : websiteRegex.IsMatch(raw) ? raw
                 : "http://" + raw;
@@ -40,7 +40,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters
         public static string FormattedDistance(this Course course)
         {
             return course.Distance != null
-                ? string.Format("{0:0.#} miles", ((int) course.Distance / 1.60934 / 1000))
+                ? string.Format("{0:#} miles", ((int) course.Distance / 1.60934 / 1000))
                 : "Unknown";
         }
 
