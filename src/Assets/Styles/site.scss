@@ -116,6 +116,10 @@ $govuk-global-styles: true;
   margin-top: govuk-spacing(2);
 }
 
+.govuk-footer__inline-list {
+  margin-bottom: 0;
+}
+
 .govuk-footer__content {
   @include govuk-font($size: 16, $line-height: 1.5);
   color: $govuk-text-colour;
