@@ -165,9 +165,10 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
         [HttpGet("start/location")]
         [ActionName("LocationWizard")]
-        public IActionResult LocationWizardGet(ResultsFilter filter)
+        public IActionResult LocationWizardGet(ResultsFilter filter, string hideBack)
         {
             ViewBag.IsInWizard = true;
+            ViewBag.HideBack = hideBack == "True";
             return LocationGet(filter);
         }
 
