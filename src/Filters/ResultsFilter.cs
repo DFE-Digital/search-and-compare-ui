@@ -337,7 +337,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
 
             if (SelectedFunding.Value.HasFlag(FundingOption.Salary))
             {
-                yield return "Salaries";
+                yield return "Only courses with a salary";
             }
         }
     }
