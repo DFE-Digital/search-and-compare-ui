@@ -331,21 +331,9 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
         {
             if (SelectedFunding == null || SelectedFunding == FundingOption.All)
             {
-                yield return "Student finance and salaries";
+                yield return "Courses with and without salary";
                 yield break;
             }
-
-            /* PRIVATE_BETA_HACK */
-            /*
-            if (SelectedFunding.Value.HasFlag(FundingOption.Bursary))
-            {
-                yield return "Bursaries";
-            }
-
-            if (SelectedFunding.Value.HasFlag(FundingOption.Scholarship))
-            {
-                yield return "Scholarships";
-            } */
 
             if (SelectedFunding.Value.HasFlag(FundingOption.Salary))
             {
