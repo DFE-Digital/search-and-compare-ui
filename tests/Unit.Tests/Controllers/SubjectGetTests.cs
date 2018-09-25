@@ -35,14 +35,6 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
             }
         };
 
-        private Mock<ISearchAndCompareApi> GetMockApi(List<SubjectArea> subjectAreas)
-        {
-            var mockApi = new Mock<ISearchAndCompareApi>();
-            mockApi.Setup(api => api.GetSubjectAreas())
-                .Returns(subjectAreas);
-            return mockApi;
-        }
-
         public void GivenSomeSubjects_WhenSubjectGetCalledWithNullSubjectFilter_ThenViewModelHasAllSubjects()
         {
             var inputSubjectFilter = string.Empty;
@@ -97,6 +89,14 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
             var resultsViewModel = (SubjectFilterViewModel)result.Model;
 
             Assert.That(resultsViewModel.FilterModel.page, Is.EqualTo(inputPage));
+        }
+
+        private Mock<ISearchAndCompareApi> GetMockApi(List<SubjectArea> subjectAreas)
+        {
+            var mockApi = new Mock<ISearchAndCompareApi>();
+            mockApi.Setup(api => api.GetSubjectAreas())
+                .Returns(subjectAreas);
+            return mockApi;
         }
     }
 }
