@@ -1,21 +1,15 @@
-﻿using System.Diagnostics;
-using GovUk.Education.SearchAndCompare.UI.ViewModels;
-using GovUk.Education.SearchAndCompare.UI.Services;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using GovUk.Education.SearchAndCompare.UI.ActionFilters;
-using Microsoft.Extensions.Configuration;
 
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
-    //[Authorize]
     public class HomeController : CommonAttributesControllerBase
     {
-        private bool PreLaunchMode;
+        private readonly SearchConfig _searchConfig;
 
-        public HomeController(IConfiguration Configuration)
+        public HomeController(SearchConfig searchConfig)
         {
-            PreLaunchMode = !string.IsNullOrWhiteSpace(Configuration["SITE_PASSWORD"]);
+            _searchConfig = searchConfig;
         }
 
         [HttpGet("")]
@@ -23,12 +17,16 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [HttpGet("home/index")]
         public IActionResult Index()
         {
-            if (PreLaunchMode) {
+            // Before launch we don't have a gov.uk start page, so use our own.
+            if (_searchConfig.PreLaunchMode)
+            {
                 return View("Index");
-            } else {
-                bool hideBack = true;
-                return RedirectToAction("LocationWizard", "Filter", new { hideBack });
             }
+
+            // After launch there will be a gov.uk start page, so bounce users past ours and on to the location search
+            const bool hideBack = true;
+            return RedirectToAction("LocationWizard", "Filter", new { hideBack });
+
         }
 
         [AllowAnonymous]
