@@ -10,11 +10,11 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewModels.Enums
             {
                 case SortByOption.AtoZ:
                 {
-                    return "Alphabetical A-Z";
+                    return "Training provider (A-Z)";
                 }
                 case SortByOption.ZtoA:
                 {
-                    return "Alphabetical Z-A";
+                    return "Training provider (Z-A)";
                 }
                 case SortByOption.Distance:
                 {
