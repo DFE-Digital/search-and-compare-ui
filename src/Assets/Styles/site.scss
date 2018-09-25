@@ -69,9 +69,7 @@ $govuk-global-styles: true;
 
 .search-results {
   li {
-    @include govuk-responsive-padding(6, "bottom");
     @include govuk-responsive-padding(6, "top");
-    border-bottom: 1px solid $govuk-border-colour;
     margin: 0;
   }
 }
