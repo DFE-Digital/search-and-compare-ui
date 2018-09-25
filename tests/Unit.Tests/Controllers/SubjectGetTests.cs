@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using GovUk.Education.SearchAndCompare.Domain.Client;
 using GovUk.Education.SearchAndCompare.Domain.Models;
+using GovUk.Education.SearchAndCompare.UI;
 using GovUk.Education.SearchAndCompare.UI.Controllers;
 using GovUk.Education.SearchAndCompare.UI.Filters;
 using GovUk.Education.SearchAndCompare.UI.Services;
@@ -42,7 +43,7 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
         {
             var mockApi = GetMockApi(_subjectAreas);
             var mockGeocoder = new Mock<IGeocoder>();
-            _filterController = new FilterController(mockApi.Object, mockGeocoder.Object);
+            _filterController = new FilterController(mockApi.Object, mockGeocoder.Object, new Mock<ISearchConfig>().Object);
             var tempDataMock = new Mock<ITempDataDictionary>();
             _filterController.TempData = tempDataMock.Object;
 
