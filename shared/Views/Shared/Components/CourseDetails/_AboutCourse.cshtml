@@ -9,18 +9,22 @@
   var section = Model.GetHtmlForSection(CourseDetailsSections.AboutTheCourse);
 }
 
-@if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutTheCourse))
-{
-  <div class="govuk-!-margin-bottom-8">
-    <h2 class="govuk-heading-l" id="section-about">About the course</h2>
+<div class="govuk-!-margin-bottom-8">
+  <h2 class="govuk-heading-l" id="section-about">About the course</h2>
 
-    @if (section != null)
-    {
-      @Html.Raw(section)
-    }
-    else
-    {
-      <p class="missing-section">Please add details for this section.</p>
-    }
-  </div>
-}
+  @if (section != null)
+  {
+    @Html.Raw(section)
+  }
+  else if (Model.PreviewMode)
+  {
+    <p class="missing-section">Please add details for this section.</p>
+  }
+  else
+  {
+    <div class="govuk-inset-text">
+      Find out more at:<br />
+      <a href="@Model.Course.FormattedWebsite()" title="Go to course website" aria-label="Go to course website" class="govuk-link">@Model.Course.FormattedWebsite()</a>
+    </div>
+  }
+</div>
