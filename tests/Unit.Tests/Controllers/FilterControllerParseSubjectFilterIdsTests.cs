@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using GovUk.Education.SearchAndCompare.Domain.Filters;
 using NUnit.Framework;
 
-namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
+namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
 {
     [TestFixture]
     public class FilterControllerParseSubjectFilterIdsTests

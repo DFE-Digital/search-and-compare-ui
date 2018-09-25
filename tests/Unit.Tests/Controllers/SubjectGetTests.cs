@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Moq;
 using NUnit.Framework;
 
-namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
+namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
 {
     [TestFixture]
     public class SubjectGetTests
