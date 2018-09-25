@@ -30,7 +30,8 @@ namespace GovUk.Education.SearchAndCompare.UI
         {
             _logger = logFactory.CreateLogger<Startup>();
             Configuration = configuration;
-            _logger.LogInformation($"Pre-launch password protection: {PreLaunchMode}");
+            ISearchConfig searchConfig = new SearchConfig(Configuration);
+            _logger.LogInformation($"Pre-launch password protection: {searchConfig.PreLaunchMode}");
         }
 
         public IConfiguration Configuration { get; }
@@ -38,14 +39,15 @@ namespace GovUk.Education.SearchAndCompare.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            ISearchConfig searchConfig = new SearchConfig(Configuration);
             services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
 
-            services.AddBasicAuth(SitePassword);
+            services.AddBasicAuth(searchConfig.SitePassword);
 
             var sharedAssembly = typeof(CourseDetailsViewComponent).GetTypeInfo().Assembly;
             services.AddMvc(config =>
                 {
-                    if (PreLaunchMode)
+                    if (searchConfig.PreLaunchMode)
                     {
                         // require authorized user for every request
                         config.Filters.Add(new AuthorizeFilter(
@@ -62,12 +64,16 @@ namespace GovUk.Education.SearchAndCompare.UI
             services.AddScoped<AnalyticsAttribute>();
             services.AddScoped<IGeocoder>(provider => new Geocoder(Configuration.GetSection("ApiKeys").GetValue<string>("GoogleMaps")));
             services.AddScoped<IMapProvider>(provider => new MapProvider(new HttpClientProvider(), Configuration.GetSection("ApiKeys").GetValue<string>("GoogleMapsStatic")));
+
+            services.AddSingleton<ISearchConfig, SearchConfig>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
-            if (PreLaunchMode)
+            var config = serviceProvider.GetService<ISearchConfig>();
+
+            if (config.PreLaunchMode)
             {
                 app.UseAuthentication();
             }
@@ -106,14 +112,5 @@ namespace GovUk.Education.SearchAndCompare.UI
                     defaults: new { controller = "Legal", action = "TandC" });
             });
         }
-
-        private bool PreLaunchMode => !string.IsNullOrWhiteSpace(SitePassword);
-
-        /// <summary>
-        /// This will be set to prevent potential teachers seeing next year's course listings too early.
-        /// The password will be shared with providers and the internal team to be able to preview and check the data before going live.
-        /// Requires an app restart to take effect when set/cleared.
-        /// </summary>
-        private string SitePassword => Configuration["SITE_PASSWORD"];
     }
 }
