@@ -2,8 +2,8 @@
 
 @{
   ViewBag.Title = $"Find courses by location or by training provider";
-  var isInWizard = ViewBag.IsInWizard;
-  var showBack = !ViewBag.HideBack;
+  var isInWizard = ViewBag.IsInWizard == true;
+  var showBack = ViewBag.HideBack != true;
   var selectedRadius = (Model.FilterModel.rad.HasValue) ? Model.FilterModel.rad : (int)RadiusOption.TwentyMiles;
 }
 
