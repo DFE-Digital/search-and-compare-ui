@@ -21,8 +21,11 @@
           <dt class="govuk-list--description__label">Course offered</dt>
           <dd>@item.Mod</dd>
         }
-        <dt class="govuk-list--description__label">Accredited provider</dt>
-        <dd>@item.Provider.Name</dd>
+        @if (!string.IsNullOrEmpty(item.AccreditingProvider?.Name))
+        {
+          <dt class="govuk-list--description__label">Accredited provider</dt>
+          <dd>@item.AccreditingProvider.Name</dd>
+        }
         @if (item.Distance != null) {
           <dt class="govuk-list--description__label">Distance</dt>
           <dd>@item.FormattedDistance()</dd>
