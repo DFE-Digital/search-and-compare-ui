@@ -43,6 +43,10 @@ $govuk-global-styles: true;
   display: block;
 }
 
+.govuk-checkboxes__label + .govuk-body {
+  padding-left: govuk-spacing(3);
+}
+
 // Add a red border to .form-control-group if validation fails
 .input-validation-error {
   border: 4px solid govuk-color("red");
