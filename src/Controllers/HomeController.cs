@@ -25,7 +25,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
             // After launch there will be a gov.uk start page, so bounce users past ours and on to the location search
             return RedirectToAction("LocationWizard", "Filter");
-
         }
 
         [AllowAnonymous]
