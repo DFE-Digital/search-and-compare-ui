@@ -35,17 +35,23 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
             }
         };
 
+        private FilterController _filterController;
+
+        [SetUp]
+        public void SetUp()
+        {
+            var mockApi = GetMockApi(_subjectAreas);
+            var mockGeocoder = new Mock<IGeocoder>();
+            _filterController = new FilterController(mockApi.Object, mockGeocoder.Object);
+        }
+
         [Test]
         public void GivenSomeSubjects_WhenSubjectGetCalledWithNullSubjectFilter_ThenViewModelHasAllSubjects()
         {
             var inputSubjectFilter = string.Empty;
             var expectedSelected = new List<int> { 1, 2, 3, 4 };
 
-            var mockApi = GetMockApi(_subjectAreas);
-            var mockGeocoder = new Mock<IGeocoder>();
-            var controller = new FilterController(mockApi.Object, mockGeocoder.Object);
-
-            var result = controller.SubjectGet(new ResultsFilter { subjects = inputSubjectFilter }) as ViewResult;
+            var result = _filterController.SubjectGet(new ResultsFilter { subjects = inputSubjectFilter }) as ViewResult;
             ViewDataDictionary viewData = result.ViewData;
             var resultsViewModel = (SubjectFilterViewModel)result.Model;
 
@@ -62,11 +68,7 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
             var inputSubjectFilter = "1,2";
             var expectedSelected = new List<int> { 1, 2 };
 
-            var mockApi = GetMockApi(_subjectAreas);
-            var mockGeocoder = new Mock<IGeocoder>();
-            var controller = new FilterController(mockApi.Object, mockGeocoder.Object);
-
-            var result = controller.SubjectGet(new ResultsFilter { subjects = inputSubjectFilter }) as ViewResult;
+            var result = _filterController.SubjectGet(new ResultsFilter { subjects = inputSubjectFilter }) as ViewResult;
             ViewDataDictionary viewData = result.ViewData;
             var resultsViewModel = (SubjectFilterViewModel)result.Model;
 
@@ -80,11 +82,7 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
             var inputPage = 1;
             var expectedSelected = new List<int> { 1, 2 };
 
-            var mockApi = GetMockApi(_subjectAreas);
-            var mockGeocoder = new Mock<IGeocoder>();
-            var controller = new FilterController(mockApi.Object, mockGeocoder.Object);
-
-            var result = controller.SubjectGet(new ResultsFilter
+            var result = _filterController.SubjectGet(new ResultsFilter
             {
                 page = inputPage
             }) as ViewResult;
