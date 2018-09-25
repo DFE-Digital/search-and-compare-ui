@@ -35,6 +35,7 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
             }
         };
 
+        [Test]
         public void GivenSomeSubjects_WhenSubjectGetCalledWithNullSubjectFilter_ThenViewModelHasAllSubjects()
         {
             var inputSubjectFilter = string.Empty;
@@ -55,6 +56,7 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
             Assert.That(viewData["SubjectFilter"], Is.EqualTo(inputSubjectFilter));
         }
 
+        [Test]
         public void GivenSomeSubjects_WhenSubjectGetCalledWithSubjectFilter_ThenViewModelHasSubjectsSelected()
         {
             var inputSubjectFilter = "1,2";
@@ -72,6 +74,7 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
             Assert.That(viewData["SubjectFilter"], Is.EqualTo(inputSubjectFilter));
         }
 
+        [Test]
         public void GivenSubjectAction_WhenSubjectGetCalledWithPageIndex_ThenViewDataHasPageIndexSet()
         {
             var inputPage = 1;
