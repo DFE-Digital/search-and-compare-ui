@@ -30,7 +30,7 @@ namespace GovUk.Education.SearchAndCompare.UI
         {
             _logger = logFactory.CreateLogger<Startup>();
             Configuration = configuration;
-            var searchConfig = new SearchConfig(Configuration);
+            ISearchConfig searchConfig = new SearchConfig(Configuration);
             _logger.LogInformation($"Pre-launch password protection: {searchConfig.PreLaunchMode}");
         }
 
@@ -39,7 +39,7 @@ namespace GovUk.Education.SearchAndCompare.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var searchConfig = new SearchConfig(Configuration);
+            ISearchConfig searchConfig = new SearchConfig(Configuration);
             services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
 
             services.AddBasicAuth(searchConfig.SitePassword);
@@ -65,13 +65,13 @@ namespace GovUk.Education.SearchAndCompare.UI
             services.AddScoped<IGeocoder>(provider => new Geocoder(Configuration.GetSection("ApiKeys").GetValue<string>("GoogleMaps")));
             services.AddScoped<IMapProvider>(provider => new MapProvider(new HttpClientProvider(), Configuration.GetSection("ApiKeys").GetValue<string>("GoogleMapsStatic")));
 
-            services.AddSingleton<SearchConfig, SearchConfig>();
+            services.AddSingleton<ISearchConfig, SearchConfig>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
-            var config = serviceProvider.GetService<SearchConfig>();
+            var config = serviceProvider.GetService<ISearchConfig>();
 
             if (config.PreLaunchMode)
             {

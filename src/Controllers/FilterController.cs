@@ -19,9 +19,9 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         private readonly ISearchAndCompareApi _api;
 
         private readonly IGeocoder _geocoder;
-        private readonly SearchConfig _searchConfig;
+        private readonly ISearchConfig _searchConfig;
 
-        public FilterController(ISearchAndCompareApi api, IGeocoder geocoder, SearchConfig searchConfig)
+        public FilterController(ISearchAndCompareApi api, IGeocoder geocoder, ISearchConfig searchConfig)
         {
             _api = api;
             _geocoder = geocoder;

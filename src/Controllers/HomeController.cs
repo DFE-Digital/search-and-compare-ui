@@ -5,9 +5,9 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
     public class HomeController : CommonAttributesControllerBase
     {
-        private readonly SearchConfig _searchConfig;
+        private readonly ISearchConfig _searchConfig;
 
-        public HomeController(SearchConfig searchConfig)
+        public HomeController(ISearchConfig searchConfig)
         {
             _searchConfig = searchConfig;
         }

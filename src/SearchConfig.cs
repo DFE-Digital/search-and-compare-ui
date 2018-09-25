@@ -2,7 +2,7 @@
 
 namespace GovUk.Education.SearchAndCompare.UI
 {
-    public class SearchConfig
+    public class SearchConfig : ISearchConfig
     {
         private readonly IConfiguration _configuration;
 
