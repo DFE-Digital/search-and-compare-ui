@@ -19,11 +19,13 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         private readonly ISearchAndCompareApi _api;
 
         private readonly IGeocoder _geocoder;
+        private readonly SearchConfig _searchConfig;
 
-        public FilterController(ISearchAndCompareApi api, IGeocoder geocoder)
+        public FilterController(ISearchAndCompareApi api, IGeocoder geocoder, SearchConfig searchConfig)
         {
             _api = api;
             _geocoder = geocoder;
+            _searchConfig = searchConfig;
         }
 
         [HttpGet("results/filter/subject")]
@@ -165,10 +167,10 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
         [HttpGet("start/location")]
         [ActionName("LocationWizard")]
-        public IActionResult LocationWizardGet(ResultsFilter filter, string hideBack)
+        public IActionResult LocationWizardGet(ResultsFilter filter)
         {
             ViewBag.IsInWizard = true;
-            ViewBag.HideBack = hideBack == "True";
+            ViewBag.HideBack = !_searchConfig.PreLaunchMode;
             return LocationGet(filter);
         }
 

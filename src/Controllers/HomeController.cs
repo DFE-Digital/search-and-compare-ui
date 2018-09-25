@@ -24,8 +24,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             }
 
             // After launch there will be a gov.uk start page, so bounce users past ours and on to the location search
-            const bool hideBack = true;
-            return RedirectToAction("LocationWizard", "Filter", new { hideBack });
+            return RedirectToAction("LocationWizard", "Filter");
 
         }
 
