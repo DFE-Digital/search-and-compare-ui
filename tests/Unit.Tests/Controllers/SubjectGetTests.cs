@@ -43,6 +43,9 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
             var mockApi = GetMockApi(_subjectAreas);
             var mockGeocoder = new Mock<IGeocoder>();
             _filterController = new FilterController(mockApi.Object, mockGeocoder.Object);
+            var tempDataMock = new Mock<ITempDataDictionary>();
+            _filterController.TempData = tempDataMock.Object;
+
         }
 
         [Test]
