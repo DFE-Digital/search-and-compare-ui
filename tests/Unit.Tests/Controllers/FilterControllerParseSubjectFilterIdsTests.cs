@@ -31,7 +31,7 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
             var result = new QueryFilter { subjects = "1" }.SelectedSubjects;
 
             Assert.That(result, Is.TypeOf<List<int>>());
-            Assert.That(result, Is.EquivalentTo(new List<int>() { 1 }));
+            Assert.That(result, Is.EquivalentTo(new List<int> { 1 }));
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
             var result = new QueryFilter { subjects = "1,2,3" }.SelectedSubjects;
 
             Assert.That(result, Is.TypeOf<List<int>>());
-            Assert.That(result, Is.EquivalentTo(new List<int>() { 1, 2, 3 }));
+            Assert.That(result, Is.EquivalentTo(new List<int> { 1, 2, 3 }));
         }
     }
 }

@@ -15,20 +15,22 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
     [TestFixture]
     public class SubjectGetTests
     {
-        private List<SubjectArea> _subjectAreas = new List<SubjectArea>()
+        private readonly List<SubjectArea> _subjectAreas = new List<SubjectArea>
         {
-            new SubjectArea() {
-                Subjects = new List<Subject>()
+            new SubjectArea
+            {
+                Subjects = new List<Subject>
                 {
-                    new Subject() { Id = 1 },
-                    new Subject() { Id = 2 },
+                    new Subject { Id = 1 },
+                    new Subject { Id = 2 },
                 }
             },
-            new SubjectArea() {
-                Subjects = new List<Subject>()
+            new SubjectArea
+            {
+                Subjects = new List<Subject>
                 {
-                    new Subject() { Id = 3 },
-                    new Subject() { Id = 4 },
+                    new Subject { Id = 3 },
+                    new Subject { Id = 4 },
                 }
             }
         };
@@ -44,7 +46,7 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
         public void GivenSomeSubjects_WhenSubjectGetCalledWithNullSubjectFilter_ThenViewModelHasAllSubjects()
         {
             var inputSubjectFilter = string.Empty;
-            var expectedSelected = new List<int>() { 1, 2, 3, 4 };
+            var expectedSelected = new List<int> { 1, 2, 3, 4 };
 
             var mockApi = GetMockApi(_subjectAreas);
             var mockGeocoder = new Mock<IGeocoder>();
@@ -64,7 +66,7 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
         public void GivenSomeSubjects_WhenSubjectGetCalledWithSubjectFilter_ThenViewModelHasSubjectsSelected()
         {
             var inputSubjectFilter = "1,2";
-            var expectedSelected = new List<int>() { 1, 2 };
+            var expectedSelected = new List<int> { 1, 2 };
 
             var mockApi = GetMockApi(_subjectAreas);
             var mockGeocoder = new Mock<IGeocoder>();
@@ -81,7 +83,7 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
         public void GivenSubjectAction_WhenSubjectGetCalledWithPageIndex_ThenViewDataHasPageIndexSet()
         {
             var inputPage = 1;
-            var expectedSelected = new List<int>() { 1, 2 };
+            var expectedSelected = new List<int> { 1, 2 };
 
             var mockApi = GetMockApi(_subjectAreas);
             var mockGeocoder = new Mock<IGeocoder>();
