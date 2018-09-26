@@ -30,10 +30,9 @@
             <h1 class="govuk-heading-xl">Find courses by subject</h1>
           </legend>
           <p class="govuk-body">Select the subjects you want to teach.</p>
-          <h2 class="govuk-heading-m">Get more financial support</h2>
-          <p class="govuk-body">Most courses charge a fee. The financial support options available to you will depend on the subject you choose.</p>
-          <p class="govuk-body">For some subjects you could be eligible for up to £28,000 tax-free while you train, through a bursary or scholarship.</p>
-          <p class="govuk-body">Student finance is available for all subjects.</p>
+          <h2 class="govuk-heading-m">Get financial support</h2>
+          <p class="govuk-body">Most courses charge a fee. You can get financial support to help with the costs of your course. The financial support options available to you will depend on the subject you choose.</p>
+          <p class="govuk-body">Find out more about <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview/postgraduate-loans">postgraduate loans</a>, <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview">bursaries and scholarships</a> and <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview/funding-by-subject">funding by subject</a> on Get into Teaching.</p>
           <form action='@Url.Action(isInWizard ? "SubjectWizard" : "Subject", "Filter", Model.FilterModel.WithoutSubjects().ToRouteValues())' method="POST" id="subjects-container">
             <div class="accordion" data-module="accordion">
               @foreach (var area in Model.SubjectAreas) {
