@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -37,11 +38,22 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters
             return qts + " and optional " + pgce;
         }
 
-        public static string FormattedDistance(this Course course)
+        public static string FormattedDistance(this double? distanceMetres)
         {
-            return course.Distance != null
-                ? string.Format("{0:#} miles", ((int) course.Distance / 1.60934 / 1000))
-                : "Unknown";
+            if (distanceMetres == null)
+            {
+                return "Unknown";
+            }
+
+            const double kmPerMile = 1.60934;
+            var distanceMiles = distanceMetres.Value / kmPerMile / 1000d;
+            // only show decimal places if below a mile
+            if (distanceMiles > 1)
+            {
+                distanceMiles = Math.Round(distanceMiles);
+            }
+            var formattedDistance = string.Format("{0:0.#} miles", distanceMiles);
+            return formattedDistance;
         }
 
         public static bool IsUniversityLed(this Course course)
@@ -103,7 +115,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters
             {
                 return "Salary";
             }
-            else if (course.CourseSubjects.Any(cs => cs.Subject.Funding != null && cs.Subject.Funding.Scholarship != null)) {
+            else if (course.CourseSubjects.Any(cs => cs.Subject.Funding != null && cs.Subject.Funding.Scholarship != null))
+            {
                 return "Scholarship, Bursary or Student finance if you’re eligible";
             }
             else if (course.CourseSubjects.Any(cs => cs.Subject.Funding != null))
