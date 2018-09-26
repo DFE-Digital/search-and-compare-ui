@@ -33,11 +33,6 @@
             <dt class="govuk-list--description__label">Course offered</dt>
             <dd>@Model.Course.Mod</dd>
           }
-          @if (Model.Course.ProviderLocation != null)
-          {
-            <dt class="govuk-list--description__label">Location</dt>
-            <dd>@Model.Course.ProviderLocation.Address</dd>
-          }
           <dt class="govuk-list--description__label">Qualification</dt>
           <dd>
             @await Html.PartialAsync("_Qualification.cshtml")

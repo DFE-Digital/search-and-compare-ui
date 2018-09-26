@@ -2,16 +2,28 @@
 
 @{
   Layout = "~/Views/Shared/_Layout.cshtml";
-  ViewBag.Title = Model.Courses != null && Model.Courses.TotalCount > 0
+
+  ViewBag.Title =
+    (Model.Courses != null && Model.Courses.TotalCount > 0
     ? $"{string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:n0}", Model.Courses.TotalCount)} courses"
-    : "No courses found";
+    : "No courses found")
+    + (string.IsNullOrWhiteSpace(Model.FilterModel.query) ? "" : $" - {Model.FilterModel.query}");
 }
+
 <main class="govuk-main-wrapper" id="main-content" role="main">
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <h1 class="govuk-heading-xl">
-        Teacher training courses
-      </h1>
+    <div class="govuk-grid-column-full">
+      @if (string.IsNullOrWhiteSpace(Model.FilterModel.query))
+      {
+        <h1 class="govuk-heading-xl">Teacher training courses</h1>
+      }
+      else
+      {
+        <h1 class="govuk-heading-xl">
+          <span class="govuk-caption-l">Teacher training courses</span>
+          @Model.FilterModel.query
+        </h1>
+      }
     </div>
   </div>
   <div class="govuk-grid-row">
