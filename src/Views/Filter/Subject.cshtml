@@ -30,10 +30,10 @@
             <h1 class="govuk-heading-xl">Find courses by subject</h1>
           </legend>
           <p class="govuk-body">Select the subjects you want to teach.</p>
-          <p class="govuk-body">You can train to teach a subject even if you don’t have a degree in it, or if you haven’t used your degree knowledge recently. For some subjects you can take a subject knowledge enhancement (SKE) course.</p>
-          <p class="govuk-body"><a href="https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses">Find out more about SKE courses on Get into Teaching</a></p>
-          <h2 class="govuk-heading-m">Your choice of subject will affect the financial support</h2>
-          <p class="govuk-body">For some subjects you could be eligible for up to £28,000 tax-free while you train, through a bursary or scholarship. Alternatively, salaried courses are available in many subjects (salaries start at £16,000). Student finance is available for all subjects.</p>
+          <h2 class="govuk-heading-m">Get more financial support</h2>
+          <p class="govuk-body">Most courses charge a fee. The financial support options available to you will depend on the subject you choose.</p>
+          <p class="govuk-body">For some subjects you could be eligible for up to £28,000 tax-free while you train, through a bursary or scholarship.</p>
+          <p class="govuk-body">Student finance is available for all subjects.</p>
           <form action='@Url.Action(isInWizard ? "SubjectWizard" : "Subject", "Filter", Model.FilterModel.WithoutSubjects().ToRouteValues())' method="POST" id="subjects-container">
             <div class="accordion" data-module="accordion">
               @foreach (var area in Model.SubjectAreas) {
@@ -44,7 +44,38 @@
                       @foreach (var subject in area.Subjects.OrderBy(x => x.Name)) {
                         <div class="govuk-checkboxes__item">
                           <input id="@("subject- " + subject.Id)" name="SelectedSubjects" type="checkbox" checked="@selected.Contains(subject.Id)" value="@(subject.Id)" class="govuk-checkboxes__input">
-                          <label for="@("subject- " + subject.Id)" class="govuk-label govuk-checkboxes__label govuk-label--s">@subject.Name</label>
+                          <label for="@("subject- " + subject.Id)" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-!-font-weight-bold govuk-!-margin-bottom-2">
+                              @subject.Name
+                            </span>
+                            @{
+                              string txt = null;
+                              if (subject.Funding?.Scholarship != null)
+                              {
+                                  txt = $"Scholarships and bursaries up to {String.Format("{0:C0}", subject.Funding.Scholarship.Value)} available";
+                              }
+                              else if (subject.Funding?.BursaryFirst != null)
+                              {
+                                 txt = $"Bursaries up to {String.Format("{0:C0}", subject.Funding.BursaryFirst.Value)} available";
+                              }
+
+                              if (txt != null && subject.Funding?.EarlyCareerPayments != null)
+                              {
+                                  txt += $" with further early career payments of {String.Format("{0:C0}", subject.Funding.EarlyCareerPayments.Value)}.";
+                              }
+                              else if (txt != null)
+                              {
+                                  txt += ".";
+                              }
+                            }
+                            <span class="govuk-!-display-block">@txt</span>
+                          </label>
+                          @if (subject.IsSubjectKnowledgeEnhancementAvailable)
+                            {
+                              <p class="govuk-body">
+                                <a href="https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses">Subject knowledge enhancement (SKE) courses</a> are available.
+                              </p>
+                            }
                         </div>
                       }
                     </div>

@@ -38,9 +38,9 @@ $govuk-global-styles: true;
   margin-bottom: govuk-spacing(8);
 }
 
-// Add context to checkbox labels
-.govuk-checkboxes__label .govuk-\!-font-weight-bold {
-  display: block;
+// Fix alignment of paragraph below checkbox label
+.govuk-checkboxes__label + .govuk-body {
+  padding-left: govuk-spacing(3);
 }
 
 // Add a red border to .form-control-group if validation fails
