@@ -3,22 +3,31 @@
 <h3 class="govuk-heading-m">Suggested searches</h3>
 
 @if(Model.SuggestedSearches.Any()) {
-    <p class="govuk-body">There are:</p>
-    <ul class="govuk-list govuk-list--bullet">
-      @foreach (var item in Model.SuggestedSearches)
-      {
-        var courseText = " course" + (item.TotalCount == 1 ? "" : "s");
-        var areaText = item.ResultsFilter?.rad != null && item.ResultsFilter?.loc != null ?
-          " within " + item.ResultsFilter.rad + " miles of " + item.ResultsFilter.loc :
-          (
-            Model.HasSalary ?
-              " with " + item.ResultsFilter.GetFundingTypes().First().ToLowerInvariant() + " available in England" :
-              " across England" );
-        var text = item.TotalCount + courseText + areaText;
+  @if (Model.SelectedSubject != null)
+  {
+    <p class="govuk-body">For @Model.SelectedSubject you can find:</p>
+  }
+  else
+  {
+    <p class="govuk-body">You can find:</p>
+  }
+  <ul class="govuk-list govuk-list--bullet">
+    @foreach (var item in Model.SuggestedSearches)
+    {
+      var courseText = item.TotalCount == 1
+        ? " course"
+        : " courses";
+      var salaryText = Model.HasSalary
+        ? " with or without a salary"
+        : "";
+      var areaText = item.ResultsFilter?.rad != null
+        ? " within " + item.ResultsFilter.rad + " miles"
+        : " across England";
+      var text = item.TotalCount + courseText + salaryText + areaText;
 
-          <li>
-            <a href="@(Url.Action("Index", "Results", item.ResultsFilter.ToRouteValues()))" class="govuk-link">@text</a>
-          </li>
-      }
-    </ul>
+      <li>
+        <a href="@(Url.Action("Index", "Results", item.ResultsFilter.ToRouteValues()))" class="govuk-link">@text</a>
+      </li>
+    }
+  </ul>
 }
