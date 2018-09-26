@@ -13,7 +13,7 @@
     var subjects = @item.CourseSubjects.Select(courseSubject => courseSubject.Subject.Name).ToArray();
     <li>
       <h3 class="govuk-heading-m">
-        <a href='@Url.Action("Index", "Course", new {courseCode = item.ProgrammeCode, providerCode = item.Provider.ProviderCode})' class="link">@item.Name at @item.Provider.Name</a>
+        <a href='@Url.Action("Index", "Course", new {courseCode = item.ProgrammeCode, providerCode = item.Provider.ProviderCode})' class="link">@item.Name with @item.Provider.Name</a>
       </h3>
       <dl class="govuk-list--description">
         @if(!string.IsNullOrEmpty(item.Mod) && item.Mod.Length > 1)
@@ -31,7 +31,7 @@
           <dd>@item.FormattedDistance()</dd>
         }
         @if (item.ProviderLocation != null) {
-          <dt class="govuk-list--description__label">School address</dt>
+          <dt class="govuk-list--description__label">Address</dt>
           <dd>@item.ProviderLocation.Address</dd>
         }
         <dt class="govuk-list--description__label">Financial support</dt>

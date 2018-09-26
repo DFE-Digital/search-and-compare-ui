@@ -104,11 +104,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters
                 return "Salary";
             }
             else if (course.CourseSubjects.Any(cs => cs.Subject.Funding != null && cs.Subject.Funding.Scholarship != null)) {
-                return "Scholarship, bursary";
+                return "Scholarship, Bursary or Student finance if you’re eligible";
             }
             else if (course.CourseSubjects.Any(cs => cs.Subject.Funding != null))
             {
-                return "Bursary";
+                return "Bursary or Student finance if you’re eligible";
             }
             else
             {

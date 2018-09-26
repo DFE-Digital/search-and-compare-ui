@@ -22,7 +22,7 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
       <h1 class="govuk-heading-xl">
-        @Model.Course.Name at @Model.Provider.Name
+        @Model.Course.Name with @Model.Provider.Name
 
         @if (!String.IsNullOrEmpty(Model.Course.AccreditingProvider?.Name))
         {
@@ -120,6 +120,7 @@
               <li><a href="#section-contact">Contact details</a></li>
             }
             <li><a href="#section-apply">Apply</a></li>
+            <li><a href="#section-advice">Advice and support</a></li>
           </ul>
         </div>
 
