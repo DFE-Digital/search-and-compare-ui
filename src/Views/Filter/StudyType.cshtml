@@ -1,54 +1,56 @@
 @model ResultsFilter
 
 @{
-    ViewBag.Title = $"Filter by study type";
+  ViewBag.Title = $"Filter by study type";
 }
 
 
 @Html.Partial("Back", new BackLinkViewModel {
-    Href = Url.Action("Index", "Results", Model.ToRouteValues()),
-    Title = "Back to search results"
+  Href = Url.Action("Index", "Results", Model.ToRouteValues()),
+  Title = "Back to search results"
 })
 
 <main class="govuk-main-wrapper" id="main-content" role="main">
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-            <form action='@Url.Action("StudyType", "Filter", Model.ToRouteValues())' method="POST">
-                <fieldset role="radiogroup" aria-required="true" class="govuk-fieldset">
-                    <legend>
-                        <h1 class="govuk-heading-xl">Study type</h1>
-                    </legend>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <form action='@Url.Action("StudyType", "Filter", Model.ToRouteValues())' method="POST">
+        <fieldset role="radiogroup" aria-required="true" class="govuk-fieldset">
+          <legend>
+            <h1 class="govuk-heading-xl">Study type</h1>
+          </legend>
 
-                    <div class="govuk-checkboxes">
-                        <div class="govuk-checkboxes__item">
-                            <input id="applyFilter-includefulltime" class="govuk-checkboxes__input" type="checkbox" name="fulltime" value="true" checked="@(Model.fulltime || !Model.parttime)">
-                            <label for="applyFilter-includefulltime" class="govuk-label govuk-checkboxes__label">
-                                <span class="govuk-!-font-weight-bold govuk-!-margin-bottom-2">Full time (12 months)</span>
-                                <span>
-                                    You&#8217;ll usually spend 5 days a week on a full-time course.
-                                </span>
-                            </label>
-                        </div>
+          <div class="govuk-form-group">
+            <div class="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input id="applyFilter-includefulltime" class="govuk-checkboxes__input" type="checkbox" name="fulltime" value="true" checked="@(Model.fulltime || !Model.parttime)">
+                <label for="applyFilter-includefulltime" class="govuk-label govuk-checkboxes__label">
+                  <span class="govuk-!-font-weight-bold govuk-!-margin-bottom-2 govuk-!-display-block">Full time (12 months)</span>
+                  <span>
+                    You&#8217;ll usually spend 5 days a week on a full-time course.
+                  </span>
+                </label>
+              </div>
 
-                        <div class="govuk-checkboxes__item">
-                            <input id="applyFilter-includeparttime" class="govuk-checkboxes__input" type="checkbox" name="parttime" value="true" checked="@(Model.parttime || !Model.fulltime)">
-                            <label for="applyFilter-includeparttime" class="govuk-label govuk-checkboxes__label">
-                                <span class="govuk-!-font-weight-bold govuk-!-margin-bottom-2">Part time (18 &ndash; 24 months)</span>
-                                <span>
-                                    You&#8217;ll usually spend 3 days a week on a part-time course.
-                                </span>
-                            </label>
-                        </div>
-                    </div>
-                </fieldset>
+              <div class="govuk-checkboxes__item">
+                <input id="applyFilter-includeparttime" class="govuk-checkboxes__input" type="checkbox" name="parttime" value="true" checked="@(Model.parttime || !Model.fulltime)">
+                <label for="applyFilter-includeparttime" class="govuk-label govuk-checkboxes__label">
+                  <span class="govuk-!-font-weight-bold govuk-!-margin-bottom-2 govuk-!-display-block">Part time (18 &ndash; 24 months)</span>
+                  <span>
+                    You&#8217;ll usually spend 3 days a week on a part-time course.
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </fieldset>
 
-                <input type="hidden" name="fulltime" value="false">
-                <input type="hidden" name="parttime" value="false">
+        <input type="hidden" name="fulltime" value="false">
+        <input type="hidden" name="parttime" value="false">
 
-                <div class="filter-apply-button">
-                    <input class="govuk-button" type="submit" value="Find courses">
-                </div>
-            </form>
+        <div class="govuk-form-group">
+          <input class="govuk-button" type="submit" value="Find courses">
         </div>
+      </form>
     </div>
+  </div>
 </main>
