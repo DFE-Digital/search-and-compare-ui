@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -39,9 +40,20 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters
 
         public static string FormattedDistance(this double? distanceMetres)
         {
-            return distanceMetres != null
-                ? string.Format("{0:#} miles", ((int) distanceMetres / 1.60934 / 1000))
-                : "Unknown";
+            if (distanceMetres == null)
+            {
+                return "Unknown";
+            }
+
+            const double kmPerMile = 1.60934;
+            var distanceMiles = distanceMetres.Value / kmPerMile / 1000d;
+            // only show decimal places if below a mile
+            if (distanceMiles > 1)
+            {
+                distanceMiles = Math.Round(distanceMiles);
+            }
+            var formattedDistance = string.Format("{0:0.#} miles", distanceMiles);
+            return formattedDistance;
         }
 
         public static bool IsUniversityLed(this Course course)

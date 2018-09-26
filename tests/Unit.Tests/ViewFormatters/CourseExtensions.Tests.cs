@@ -43,11 +43,17 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.ViewFormatters
 
         [Test]
         [TestCase(null, "Unknown")]
-        [TestCase(500, " miles")] // missing value is a bug to be fixed, test to document existing behaviour
-        [TestCase(1*Km, "1 miles")]
-        [TestCase(10*Km, "6 miles")]
-        [TestCase(100*Km, "62 miles")]
-        [TestCase(1000*Km, "621 miles")]
+        [TestCase(1, "0 miles")] // rounded to nearest
+        [TestCase(100, "0.1 miles")] // 0.0625 to nearest tenth of a mile
+        [TestCase(400, "0.2 miles")] // 0.249 rounded to nearest tenth of a mile
+        [TestCase(403, "0.3 miles")] // 0.2504 rounded to nearest tenth of a mile
+        [TestCase(800, "0.5 miles")] // almost exactly half a mile (1.6mile/km)
+        [TestCase(1.2 * Km, "0.7 miles")] // 0.746 rounded to nearest tenth of a mile
+        [TestCase(1208, "0.8 miles")] // 0.7506 rounded to nearest tenth of a mile
+        [TestCase(1.6 * Km, "1 miles")] // almost exactly a mile
+        [TestCase(10 * Km, "6 miles")]
+        [TestCase(100 * Km, "62 miles")]
+        [TestCase(1000 * Km, "621 miles")]
         public void FormattedDistanceTest(double? input, string expectedDisplayValue)
         {
             var formattedDistance = input.FormattedDistance();
