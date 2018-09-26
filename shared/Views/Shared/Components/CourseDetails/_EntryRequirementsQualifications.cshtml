@@ -15,7 +15,7 @@
 {
   <div class="govuk-!-margin-bottom-8">
     <h2 class="govuk-heading-l" id="section-entry">Requirements</h2>
-    <h3 class="govuk-heading-s">Qualifications</h3>
+    <h3 class="govuk-heading-m">Qualifications</h3>
 
     @if (course_details_sections != null)
     {
@@ -28,13 +28,13 @@
 
     @if (entry_requirements_personal_qualities != null)
     {
-      <h3 class="govuk-heading-s">Personal qualities</h3>
+      <h3 class="govuk-heading-m">Personal qualities</h3>
       @Html.Raw(entry_requirements_personal_qualities)
     }
 
     @if (entry_requirements_other != null)
     {
-      <h3 class="govuk-heading-s">Other requirements</h3>
+      <h3 class="govuk-heading-m">Other requirements</h3>
       @Html.Raw(entry_requirements_other)
     }
   </div>
