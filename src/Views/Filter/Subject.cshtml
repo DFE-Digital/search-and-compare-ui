@@ -52,16 +52,16 @@
                               string txt = null;
                               if (subject.Funding?.Scholarship != null)
                               {
-                                  txt = $"Scholarships and bursaries up to {String.Format("{0:C0}", subject.Funding.Scholarship.Value)} available";
+                                  txt = $"Scholarships and bursaries up to {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.Scholarship.Value)} available";
                               }
                               else if (subject.Funding?.BursaryFirst != null)
                               {
-                                 txt = $"Bursaries up to {String.Format("{0:C0}", subject.Funding.BursaryFirst.Value)} available";
+                                 txt = $"Bursaries up to {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.BursaryFirst.Value)} available";
                               }
 
                               if (txt != null && subject.Funding?.EarlyCareerPayments != null)
                               {
-                                  txt += $" with further early career payments of {String.Format("{0:C0}", subject.Funding.EarlyCareerPayments.Value)}.";
+                                  txt += $" with further early career payments of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.EarlyCareerPayments.Value)}.";
                               }
                               else if (txt != null)
                               {
