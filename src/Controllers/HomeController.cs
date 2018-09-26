@@ -13,8 +13,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         }
 
         [HttpGet("")]
-        [HttpGet("home")]
-        [HttpGet("home/index")]
         public IActionResult Index()
         {
             // Before launch we don't have a gov.uk start page, so use our own.
