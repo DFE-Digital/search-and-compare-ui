@@ -1,3 +1,7 @@
 @model GovUk.Education.SearchAndCompare.UI.Shared.ViewModels.CourseDetailsViewModel
 
+@{
+  ViewBag.Title = $"{Model.Course.Name} with {Model.Provider.Name}";
+}
+
 @await Component.InvokeAsync("CourseDetails", new { course = Model })
