@@ -48,27 +48,27 @@
                             <span class="govuk-!-font-weight-bold govuk-!-margin-bottom-2">
                               @subject.Name
                             </span>
-                            @if (subject.Funding != null && subject.Funding.BursaryFirst.HasValue)
-                            {
-                              if (subject.Funding.Scholarship.HasValue)
+                            @{
+                              string txt = null;
+                              if (subject.Funding?.Scholarship != null)
                               {
-                                if (subject.Funding.EarlyCareerPayments.HasValue)
-                                {
-                                  var txt = "Scholarships and bursaries up to " + @Html.Raw(@String.Format("{0:C0}", subject.Funding.Scholarship.Value)) + " available with further early career payments of " + @Html.Raw(@String.Format("{0:C0}", subject.Funding.EarlyCareerPayments.Value)) + ".";
-                                  <span class="govuk-!-display-block">@txt</span>
-                                }
-                                else
-                                {
-                                  var txt = "Scholarships and bursaries up to " + @Html.Raw(@String.Format("{0:C0}", subject.Funding.Scholarship.Value)) + " available.";
-                                  <span class="govuk-!-display-block">@txt</span>
-                                }
+                                  txt = $"Scholarships and bursaries up to {String.Format("{0:C0}", subject.Funding.Scholarship.Value)} available";
                               }
-                              else
+                              else if (subject.Funding?.BursaryFirst != null)
                               {
-                                var txt = "Bursaries of " + @Html.Raw(@String.Format("{0:C0}", subject.Funding.BursaryFirst.Value)) + " available.";
-                                <span class="govuk-!-display-block">@txt</span>
+                                 txt = $"Bursaries up to {String.Format("{0:C0}", subject.Funding.BursaryFirst.Value)} available";
+                              }
+
+                              if (txt != null && subject.Funding?.EarlyCareerPayments != null)
+                              {
+                                  txt += $" with further early career payments of {String.Format("{0:C0}", subject.Funding.EarlyCareerPayments.Value)}.";
+                              }
+                              else if (txt != null)
+                              {
+                                  txt += ".";
                               }
                             }
+                            <span class="govuk-!-display-block">@txt</span>
                           </label>
                           @if (subject.IsSubjectKnowledgeEnhancementAvailable)
                             {
