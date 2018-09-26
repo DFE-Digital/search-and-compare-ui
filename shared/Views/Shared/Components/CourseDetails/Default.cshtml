@@ -58,7 +58,7 @@
             <dt class="govuk-list--description__label">Date course starts</dt>
             <dd>@Model.Course.FormattedStartDate()</dd>
           }
-          @if (!string.IsNullOrEmpty(@Model.Course.ContactDetails.Website)) {
+          @if (Model.ShowWebsite) {
             <dt class="govuk-list--description__label">Website</dt>
             <dd>
               <a href="@Model.Course.FormattedWebsite()" title="Go to course website" aria-label="Go to course website" class="govuk-link">@Model.Course.FormattedWebsite()</a>
@@ -74,7 +74,7 @@
       <div class="course-contents govuk-!-margin-bottom-8">
         <h2 class="govuk-heading-m">Contents</h2>
           <ul class="govuk-list govuk-list--dash">
-            @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutTheCourse))
+            @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutTheCourse) || Model.ShowMinimumAboutCourseSection)
             {
               <li><a href="#section-about">About the course</a></li>
             }
@@ -124,7 +124,10 @@
           </ul>
         </div>
 
-        @await Html.PartialAsync("_AboutCourse.cshtml")
+        @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutTheCourse) || Model.ShowMinimumAboutCourseSection)
+        {
+          @await Html.PartialAsync("_AboutCourse.cshtml")
+        }
 
         @await Html.PartialAsync("_InterviewProcess.cshtml")
 

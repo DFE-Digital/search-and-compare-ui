@@ -52,6 +52,14 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewModels
 
         public bool HasFeesSet => Course?.Fees != null ;
 
+        public bool HasWebsite => !string.IsNullOrEmpty(Course.ContactDetails.Website);
+
+        public bool HasContentForAboutSection => HasSection(CourseDetailsSections.AboutTheCourse);
+
+        public bool ShowMinimumAboutCourseSection => !HasContentForAboutSection && !PreviewMode && HasWebsite;
+
+        public bool ShowWebsite => HasWebsite && !ShowMinimumAboutCourseSection;
+
         public HtmlString GetHtmlForSection(string name)
         {
             if (!HasSection(name))
