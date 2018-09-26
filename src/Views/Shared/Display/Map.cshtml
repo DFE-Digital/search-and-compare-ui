@@ -115,7 +115,7 @@
 
         @if (@courseGroup.Courses.First().Distance != null) {
             <dt>Distance from your postcode</dt>
-            <dd>@courseGroup.Courses.First().FormattedDistance()</dd>
+            <dd>@courseGroup.Courses.First().Distance.FormattedDistance()</dd>
         }
         <ul>
             @foreach (var course in courseGroup.Courses) {

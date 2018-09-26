@@ -28,7 +28,7 @@
         }
         @if (item.Distance != null) {
           <dt class="govuk-list--description__label">Distance</dt>
-          <dd>@item.FormattedDistance()</dd>
+          <dd>@item.Distance.FormattedDistance()</dd>
         }
         @if (item.ProviderLocation != null) {
           <dt class="govuk-list--description__label">Address</dt>

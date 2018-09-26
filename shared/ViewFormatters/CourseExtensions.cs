@@ -37,10 +37,10 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters
             return qts + " and optional " + pgce;
         }
 
-        public static string FormattedDistance(this Course course)
+        public static string FormattedDistance(this double? distanceMetres)
         {
-            return course.Distance != null
-                ? string.Format("{0:#} miles", ((int) course.Distance / 1.60934 / 1000))
+            return distanceMetres != null
+                ? string.Format("{0:#} miles", ((int) distanceMetres / 1.60934 / 1000))
                 : "Unknown";
         }
 
