@@ -11,6 +11,7 @@
 <ul class="govuk-list search-results">
   @foreach (var item in Model.Courses.Items) {
     var subjects = @item.CourseSubjects.Select(courseSubject => courseSubject.Subject.Name).ToArray();
+
     <li>
       <h3 class="govuk-heading-m">
         <a href='@Url.Action("Index", "Course", new {courseCode = item.ProgrammeCode, providerCode = item.Provider.ProviderCode})' class="link">@item.Name with @item.Provider.Name</a>
@@ -21,7 +22,7 @@
           <dt class="govuk-list--description__label">Course offered</dt>
           <dd>@item.Mod</dd>
         }
-        @if (!string.IsNullOrEmpty(item.AccreditingProvider?.Name))
+        @if (!string.IsNullOrEmpty(item.AccreditingProvider?.Name) && item.Provider.Name != item.AccreditingProvider?.Name)
         {
           <dt class="govuk-list--description__label">Accredited provider</dt>
           <dd>@item.AccreditingProvider.Name</dd>
