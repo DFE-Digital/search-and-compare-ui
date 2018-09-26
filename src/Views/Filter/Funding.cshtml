@@ -12,13 +12,18 @@
 
 <main class="govuk-main-wrapper" id="main-content" role="main">
   <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-grid-column-full">
       @Html.Partial("Error", errors)
-      <form action='@Url.Action("Funding", "Filter", Model.ToRouteValues())' method="POST">
-        <fieldset role="radiogroup" aria-required="true" class="govuk-fieldset">
-          <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-            <h1 class="govuk-heading-xl">Find courses that pay a salary</h1>
-          </legend>
+    </div>
+  </div>
+
+  <form action='@Url.Action("Funding", "Filter", Model.ToRouteValues())' method="POST">
+    <fieldset role="radiogroup" aria-required="true" class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+        <h1 class="govuk-heading-xl">Find courses that pay a salary</h1>
+      </legend>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
           <p class="govuk-body">
             On a salaried course you’ll be paid and taxed as an unqualified teacher. The salary awarded will differ between schools; you should check the salary with the school before you apply.
           </p>
@@ -48,7 +53,7 @@
         <div class="govuk-form-group">
           <input class="govuk-button" type="submit" value="Find courses">
         </div>
-      </form>
+      </div>
     </div>
-  </div>
+  </form>
 </main>

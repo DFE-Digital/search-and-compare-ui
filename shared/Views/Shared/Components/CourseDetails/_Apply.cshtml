@@ -35,24 +35,24 @@
 
   @if (Model.Course.Campuses.Count() > 0)
   {
+    <h3 class="govuk-heading-m">Available training locations</h3>
     <p class="govuk-body">You’ll also need to choose a training location and give the relevant training location code.</p>
-    <p class="govuk-body">Available training locations:</p>
 
     <table class="govuk-table">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
+          <th class="govuk-table__header" scope="col">Code</th>
           <th class="govuk-table__header" scope="col">Name</th>
           <th class="govuk-table__header" scope="col">Address</th>
-          <th class="govuk-table__header" scope="col">Code</th>
         </tr>
       </thead>
       <tbody class="govuk-table__body">
         @foreach (var campus in Model.Course.Campuses)
         {
           <tr class="govuk-table__row">
+            <td class="govuk-table__cell govuk-!-font-size-24 govuk-!-font-weight-bold">@campus.CampusCode</td>
             <td class="govuk-table__cell">@campus.Name</td>
             <td class="govuk-table__cell">@campus.Location?.Address</td>
-            <td class="govuk-table__cell">@campus.CampusCode</td>
           </tr>
         }
       </tbody>
