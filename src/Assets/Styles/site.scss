@@ -98,7 +98,7 @@ $govuk-global-styles: true;
 
   select {
     @include mq ($from: desktop) {
-      width: 180px;
+      width: 220px;
     }
   }
 
