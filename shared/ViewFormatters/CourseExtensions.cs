@@ -46,13 +46,20 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters
             }
 
             const double kmPerMile = 1.60934;
-            var distanceMiles = distanceMetres.Value / kmPerMile / 1000d;
+
+            decimal distanceMiles = (decimal)( distanceMetres.Value / kmPerMile / 1000d);
+
+            // most precision needed is 0.1 miles (round here to make the "==1" check behave
+            distanceMiles = Math.Round(distanceMiles, 1);
+
             // only show decimal places if below a mile
             if (distanceMiles > 1)
             {
                 distanceMiles = Math.Round(distanceMiles);
             }
-            var formattedDistance = string.Format("{0:0.#} miles", distanceMiles);
+
+            string formattedDistance = string.Format("{0:0.#} mile{1}", distanceMiles, distanceMiles == 1 ? "" : "s");
+
             return formattedDistance;
         }
 

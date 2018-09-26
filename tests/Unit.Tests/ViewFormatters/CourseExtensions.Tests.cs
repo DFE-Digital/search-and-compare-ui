@@ -49,7 +49,9 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.ViewFormatters
         [TestCase(800, "0.5 miles")] // almost exactly half a mile (1.6mile/km)
         [TestCase(1.2 * Km, "0.7 miles")] // 0.746 rounded to nearest tenth of a mile
         [TestCase(1208, "0.8 miles")] // 0.7506 rounded to nearest tenth of a mile
-        [TestCase(1.6 * Km, "1 miles")] // almost exactly a mile
+        [TestCase(1.6 * Km, "1 mile")] // almost exactly a mile - use singular
+        [TestCase(1.8 * Km, "1 mile")] // should still round down
+        [TestCase(3.2 * Km, "2 miles")]
         [TestCase(10 * Km, "6 miles")]
         [TestCase(100 * Km, "62 miles")]
         [TestCase(1000 * Km, "621 miles")]
