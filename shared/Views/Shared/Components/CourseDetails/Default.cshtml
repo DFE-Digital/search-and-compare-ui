@@ -20,7 +20,7 @@
       <h1 class="govuk-heading-xl">
         @Model.Course.Name with @Model.Provider.Name
 
-        @if (!String.IsNullOrEmpty(Model.Course.AccreditingProvider?.Name))
+        @if (!string.IsNullOrEmpty(Model.Course.AccreditingProvider?.Name) && Model.Provider.Name != Model.Course.AccreditingProvider?.Name)
         {
           <span class="govuk-caption-xl">Accredited provider: @Model.Course.AccreditingProvider?.Name</span>
         }
