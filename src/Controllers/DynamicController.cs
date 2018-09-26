@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
 
-    //[Authorize]
     public class DynamicController : CommonAttributesControllerBase
     {
         private readonly ISearchAndCompareApi _api;

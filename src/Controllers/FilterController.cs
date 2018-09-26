@@ -34,7 +34,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         {
             var subjectAreas = _api.GetSubjectAreas();
 
-            var viewModel = new SubjectFilterViewModel {
+            var viewModel = new SubjectFilterViewModel
+            {
                 SubjectAreas = subjectAreas,
                 FilterModel = filter
             };
@@ -80,7 +81,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         {
             filter = filter.WithoutLocation();
 
-            if(string.IsNullOrWhiteSpace(filter.query))
+            if (string.IsNullOrWhiteSpace(filter.query))
             {
                 TempData.Put("Errors", new ErrorViewModel("query", "Training provider", "Please enter the name of a training provider", Url.Action("Location")));
                 return RedirectToAction("Location", filter.ToRouteValues());
@@ -99,7 +100,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("LocationGet")]
         public IActionResult LocationGet(ResultsFilter filter)
         {
-            var viewModel = new LocationFilterViewModel {
+            var viewModel = new LocationFilterViewModel
+            {
                 FilterModel = filter
             };
             var errors = TempData.Get<ErrorViewModel>("Errors");
