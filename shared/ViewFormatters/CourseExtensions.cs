@@ -94,7 +94,9 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters
 
             if (!date.HasValue) { return string.Empty; }
 
-            return date.Value.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"));
+            // n.b. Ucas only specifies the month and year of the course start, so do not display
+            // a day here.
+            return date.Value.ToString("MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"));
         }
 
         public static string FundingOptions(this Course course)
