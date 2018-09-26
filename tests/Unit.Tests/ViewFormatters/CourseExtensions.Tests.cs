@@ -1,8 +1,7 @@
+using FluentAssertions;
 using GovUk.Education.SearchAndCompare.Domain.Models;
 using GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters;
 using NUnit.Framework;
-using System.Collections.Generic;
-using FluentAssertions;
 
 namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.ViewFormatters
 {
