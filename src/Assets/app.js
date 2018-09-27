@@ -16,7 +16,8 @@ new BackLink($backLink).init();
 
 var $accordions = document.querySelectorAll('[data-module="accordion"]')
 for (var i = $accordions.length - 1; i >= 0; i--) {
-  var $sections = $accordions.querySelectorAll('.accordion-section')
+  var $accordion = $accordions[i]
+  var $sections = $accordion.querySelectorAll('.accordion-section')
   for (var j = $sections.length - 1; j >= 0; j--) {
     var $section = $sections[j];
     var sectionContainsCheckedCheckboxes = !!$section.querySelector('.govuk-checkboxes input[type="checkbox"]:checked')
@@ -24,7 +25,7 @@ for (var i = $accordions.length - 1; i >= 0; i--) {
       $section.classList.add('accordion-section--expanded')
     }
   }
-  new Accordion($accordions[i]).init()
+  new Accordion($accordion).init()
 };
 
 var $toggle = document.querySelectorAll('[data-module="toggle"]')
