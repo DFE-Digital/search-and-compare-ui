@@ -42,8 +42,8 @@
                     <div class="govuk-checkboxes">
                       @foreach (var subject in area.Subjects.OrderBy(x => x.Name)) {
                         <div class="govuk-checkboxes__item">
-                          <input id="@("subject- " + subject.Id)" name="SelectedSubjects" type="checkbox" checked="@selected.Contains(subject.Id)" value="@(subject.Id)" class="govuk-checkboxes__input">
-                          <label for="@("subject- " + subject.Id)" class="govuk-label govuk-checkboxes__label">
+                          <input id="@("subject-" + subject.Id)" name="SelectedSubjects" type="checkbox" checked="@selected.Contains(subject.Id)" value="@(subject.Id)" class="govuk-checkboxes__input">
+                          <label for="@("subject-" + subject.Id)" class="govuk-label govuk-checkboxes__label">
                             <span class="govuk-!-font-weight-bold govuk-!-margin-bottom-2">
                               @subject.Name
                             </span>

@@ -16,7 +16,11 @@ new BackLink($backLink).init();
 
 var $accordions = document.querySelectorAll('[data-module="accordion"]')
 for (var i = $accordions.length - 1; i >= 0; i--) {
-  new Accordion($accordions[i]).init();
+  new Accordion($accordions[i]).init({
+    forceSectionExpandedFn: function ($accordionSection) {
+      return !!$accordionSection.querySelector('.govuk-checkboxes input[type="checkbox"]:checked');
+    }
+  });
 };
 
 var $toggle = document.querySelectorAll('[data-module="toggle"]')
