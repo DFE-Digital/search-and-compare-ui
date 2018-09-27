@@ -16,11 +16,15 @@ new BackLink($backLink).init();
 
 var $accordions = document.querySelectorAll('[data-module="accordion"]')
 for (var i = $accordions.length - 1; i >= 0; i--) {
-  new Accordion($accordions[i]).init({
-    forceSectionExpandedFn: function ($accordionSection) {
-      return !!$accordionSection.querySelector('.govuk-checkboxes input[type="checkbox"]:checked');
+  var $sections = $accordions.querySelectorAll('.accordion-section')
+  for (var j = $sections.length - 1; j >= 0; j--) {
+    var $section = $sections[j];
+    var sectionContainsCheckedCheckboxes = !!$section.querySelector('.govuk-checkboxes input[type="checkbox"]:checked')
+    if (sectionContainsCheckedCheckboxes) {
+      $section.classList.add('accordion-section--expanded')
     }
-  });
+  }
+  new Accordion($accordions[i]).init()
 };
 
 var $toggle = document.querySelectorAll('[data-module="toggle"]')
