@@ -76,6 +76,14 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Utils
         }
 
         [Test]
+        public void NamedLinkWithSpace()
+        {
+            var markdown = "[Go to www.example.com] (www.example.com)";
+            var expected = "<p class=\"govuk-body\"><a href=\"www.example.com\" class=\"govuk-link\">Go to www.example.com</a></p>";
+            Assert.That(GetHtml(markdown), Is.EqualTo(expected));
+        }
+
+        [Test]
         public void LinkInParagraph()
         {
             var markdown = "Go to [our website](www.example.com).\nYou'll like it there.";
