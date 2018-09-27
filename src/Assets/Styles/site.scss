@@ -125,3 +125,9 @@ $govuk-global-styles: true;
   @include govuk-font($size: 16, $line-height: 1.5);
   color: $govuk-text-colour;
 }
+
+.govuk-checkboxes__label_text {
+  display: block;
+  font-weight: bold;
+  margin-bottom: govuk-spacing(1);
+}
