@@ -75,6 +75,10 @@ $govuk-global-styles: true;
 }
 
 .search-results-header {
+  @include govuk-clearfix;
+
+  border-bottom: 1px solid lightgrey;
+
   &__count {
     float: left;
   }
@@ -84,7 +88,6 @@ $govuk-global-styles: true;
   }
 
   .govuk-form-group {
-    border-bottom: 1px solid lightgrey;
     border-top: 1px solid lightgrey;
     clear: both;
     margin-bottom: 0;
