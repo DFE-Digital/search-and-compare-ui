@@ -16,7 +16,7 @@
     </div>
 }
 
-@if (!Model.FilterModel.DisplayAsMap) {
+@if (!Model.FilterModel.DisplayAsMap && string.IsNullOrWhiteSpace(Model.FilterModel.query)) {
     <form action='@Url.Action("SortBy", "Results", Model.FilterModel.ToRouteValues())' method="POST">
         <div class="govuk-form-group">
             <label class="govuk-label govuk-label--inline sortedby-label" for="sortby">Sorted by</label>
