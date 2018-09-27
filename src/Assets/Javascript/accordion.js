@@ -4,13 +4,13 @@ function Accordion($module) {
   this.$module = $module
 }
 
-Accordion.prototype.init = function (options) {
+Accordion.prototype.init = function () {
   if (document.querySelectorAll && window.NodeList && 'classList' in document.body) {
     this.sections = []
     var accordion_sections = this.$module.querySelectorAll('.accordion-section')
     var accordion = this
     for (var i = accordion_sections.length - 1; i >= 0; i--) {
-      accordion.sections.push(new AccordionSection(accordion_sections[i], accordion, options))
+      accordion.sections.push(new AccordionSection(accordion_sections[i], accordion))
     };
     var accordion_controls = document.createElement('div')
     accordion_controls.setAttribute('class', 'accordion-controls')
@@ -59,15 +59,14 @@ Accordion.prototype.updateOpenAll = function() {
   }
 }
 
-function AccordionSection(element, accordion, options) {
+function AccordionSection(element, accordion) {
   this.$module = element
   this.accordion = accordion
-  this.setup(options)
+  this.setup()
 }
 
-AccordionSection.prototype.setup = function (options) {
-  var forceSectionExpanded = options.forceSectionExpandedFn && options.forceSectionExpandedFn(this.$module);
-  var sectionExpanded = forceSectionExpanded || this.$module.classList.contains('accordion-section--expanded')
+AccordionSection.prototype.setup = function() {
+  var sectionExpanded = this.$module.classList.contains('accordion-section--expanded')
   this.$module.setAttribute('aria-expanded', sectionExpanded)
   var header = this.$module.querySelector('.accordion-section-header')
   header.addEventListener('click', this.toggleExpanded.bind(this))
