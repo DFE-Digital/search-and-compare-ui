@@ -1,8 +1,8 @@
 @model SuggestedSearchesViewModel
 
-<h3 class="govuk-heading-m">Suggested searches</h3>
-
 @if(Model.SuggestedSearches.Any()) {
+  <h3 class="govuk-heading-m">Suggested searches</h3>
+
   @if (Model.SelectedSubject != null)
   {
     <p class="govuk-body">For @Model.SelectedSubject you can find:</p>
