@@ -5,10 +5,10 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.Utils
 {
     public class MarkdownFormatter
     {
-        private static readonly Regex linkRegex = new Regex(@"\[ *([^\]\n]+) *\](?:\( *((?:[^\\\(\)\s\n]|\\\(|\\\)|\\\\)+) *\))?", RegexOptions.Compiled | RegexOptions.Multiline);
-		private static readonly Regex listItemRegex = new Regex(@"^\s*(?:-|\*|[0-9]+\.?)[\t\f\v ](.*)\n?", RegexOptions.Compiled | RegexOptions.Multiline);
-		private static readonly Regex listWrapperRegex = new Regex(@"<li>(?:<\/li>\s*<li>|(?!<\/li>).)*<\/li>", RegexOptions.Compiled );
-		private static readonly Regex paragraphRegex = new Regex(@"^\s*[^<].*$", RegexOptions.Compiled | RegexOptions.Multiline);
+        private static readonly Regex linkRegex = new Regex(@"\[ *([^\]\n]+) *\] ?(?:\( *((?:[^\\\(\)\s\n]|\\\(|\\\)|\\\\)+) *\))?", RegexOptions.Compiled | RegexOptions.Multiline);
+        private static readonly Regex listItemRegex = new Regex(@"^\s*(?:-|\*|[0-9]+\.?)[\t\f\v ](.*)\n?", RegexOptions.Compiled | RegexOptions.Multiline);
+        private static readonly Regex listWrapperRegex = new Regex(@"<li>(?:<\/li>\s*<li>|(?!<\/li>).)*<\/li>", RegexOptions.Compiled );
+        private static readonly Regex paragraphRegex = new Regex(@"^\s*[^<].*$", RegexOptions.Compiled | RegexOptions.Multiline);
 
         private static readonly Regex lineBreakRegex = new Regex(@"\n\s*", RegexOptions.Compiled);
         private static readonly Regex whitespace = new Regex(@"^\s*$", RegexOptions.Compiled);
