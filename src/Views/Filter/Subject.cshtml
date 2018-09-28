@@ -76,7 +76,7 @@
                           @if (subject.IsSubjectKnowledgeEnhancementAvailable)
                             {
                               <p class="govuk-body">
-                                You can also take a <a href="https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses">subject knowledge enhancement (SKE) course</a>.
+                                You can@(subject.Funding?.Scholarship != null || subject.Funding?.BursaryFirst != null ? " also " : " ")take a <a href="https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses">subject knowledge enhancement (SKE) course</a>.
                               </p>
                             }
                         </div>
