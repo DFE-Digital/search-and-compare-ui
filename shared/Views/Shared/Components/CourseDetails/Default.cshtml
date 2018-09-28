@@ -33,6 +33,8 @@
             <dt class="govuk-list--description__label">Course offered</dt>
             <dd>@Model.Course.Mod</dd>
           }
+          <dt class="govuk-list--description__label">Financial support</dt>
+          <dd>@Model.Course.FundingOptions()</dd>
           <dt class="govuk-list--description__label">Qualification</dt>
           <dd>
             @await Html.PartialAsync("_Qualification.cshtml")
