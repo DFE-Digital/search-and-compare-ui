@@ -9,7 +9,7 @@
   var section = Model.GetHtmlForSection(CourseDetailsSections.AboutFees);
 }
 
-@if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutFees))
+@if (Model.PreviewMode || Model.HasFeesSet)
 {
   <div class="govuk-!-margin-bottom-8">
     <h2 class="govuk-heading-l" id="section-fees">Fees</h2>
