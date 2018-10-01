@@ -25,20 +25,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters
                 : "http://" + raw;
         }
 
-        public static string FormattedOutcome(this Course course)
-        {
-            // FIXME / REMOVE ME?
-            if (course.IncludesPgce == IncludesPgce.No)
-            {
-                return qts;
-            }
-            else if (course.IncludesPgce == IncludesPgce.Yes)
-            {
-                return pgce + " with " + qts.ToLower();
-            }
-            return qts + " and optional " + pgce;
-        }
-
         public static string FormattedDistance(this double? distanceMetres)
         {
             if (distanceMetres == null)
