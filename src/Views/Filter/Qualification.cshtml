@@ -51,7 +51,7 @@
               </div>
 
               <div class="govuk-checkboxes__item">
-                <input id="applyFilter-other" class="govuk-checkboxes__input" type="checkbox" name="qualification" value="@QualificationOption.Other" @Model.qualification.Any(x => x == QualificationOption.Other)>
+                <input id="applyFilter-other" class="govuk-checkboxes__input" type="checkbox" name="qualification" value="@QualificationOption.Other" checked="@Model.qualification.Any(x => x == QualificationOption.Other)">
                 <label for="applyFilter-other" class="govuk-label govuk-checkboxes__label">
                   <span class="govuk-!-font-weight-bold govuk-!-margin-bottom-2 govuk-!-display-block">
                     Further Education (PGCE or PGDE without QTS)
