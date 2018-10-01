@@ -298,17 +298,26 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
 
         public IEnumerable<string> GetQualificationStrings()
         {
-            if (qualification.Any(x => x == QualificationOption.PgdePgceWithQts))
+            if (qualification.Any(x => x == QualificationOption.PgdePgceWithQts)
+                && qualification.Any(x => x == QualificationOption.QtsOnly)
+                && qualification.Any(x => x == QualificationOption.Other))
             {
-                yield return "PGCE (or PGDE) with QTS";
+                yield return "All qualifications";
             }
-            if (qualification.Any(x => x == QualificationOption.QtsOnly))
+            else
             {
-                yield return "QTS only";
-            }
-            if (qualification.Any(x => x == QualificationOption.Other))
-            {
-                yield return "Further Education (PGCE or PGDE without QTS)";
+                if (qualification.Any(x => x == QualificationOption.PgdePgceWithQts))
+                {
+                    yield return "PGCE (or PGDE) with QTS";
+                }
+                if (qualification.Any(x => x == QualificationOption.QtsOnly))
+                {
+                    yield return "QTS only";
+                }
+                if (qualification.Any(x => x == QualificationOption.Other))
+                {
+                    yield return "Further Education (PGCE or PGDE without QTS)";
+                }
             }
         }
         public IEnumerable<string> GetStudyTypeStrings()
