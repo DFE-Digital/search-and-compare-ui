@@ -131,3 +131,11 @@ $govuk-global-styles: true;
   font-weight: bold;
   margin-bottom: govuk-spacing(1);
 }
+
+@media print {
+  .govuk-phase-banner,
+  .govuk-footer,
+  .govuk-back-link {
+    display: none;
+  }
+}
