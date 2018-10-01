@@ -62,6 +62,10 @@ module.exports = {
       {
         from: 'node_modules/html5shiv/dist/html5shiv.min.js',
         to: 'vendor'
+      },
+      {
+        from: 'Assets/Styles/govuk-frontend-ie8.min.css',
+        to: 'vendor'
       }
     ]),
   ],
