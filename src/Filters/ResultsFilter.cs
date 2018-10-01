@@ -13,6 +13,10 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
 {
     public class ResultsFilter
     {
+        public ResultsFilter()
+        {
+            qualification = new List<QualificationOption>();
+        }
         public int? page { get; set; }
 
         public double? lng { get; set; }
@@ -50,6 +54,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
         public bool fulltime { get; set; }
 
         public bool parttime { get; set; }
+        public IList<QualificationOption> qualification { get; set; }
 
         public List<int> SelectedSubjects {
             get {
@@ -145,8 +150,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 sortby = this.sortby,
                 funding = this.funding,
                 query = this.query,
-                pgce = this.pgce,
-                qts = this.qts,
+                qualification = this.qualification,
                 fulltime = this.fulltime,
                 parttime = this.parttime
             };
@@ -302,24 +306,21 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
             };
         }
 
-
         public IEnumerable<string> GetQualificationStrings()
         {
-            // FIXME
-            if (true)
+            if (qualification.Any(x => x == QualificationOption.PgdePgceWithQts))
             {
-                yield return "QTS only";
+                yield return "Postgraduate certificate in education with qualified teacher status";
             }
-            if (true)
+            if (qualification.Any(x => x == QualificationOption.QtsOnly))
             {
-                yield return "PGCE (or PGDE) with QTS";
+                yield return "Qualified teacher status";
             }
-            if (true)
+            if (qualification.Any(x => x == QualificationOption.Other))
             {
-                yield return "Further Education (PGCE or PGDE without QTS)";
+                yield return "Other";
             }
         }
-
         public IEnumerable<string> GetStudyTypeStrings()
         {
             if (!parttime || fulltime)

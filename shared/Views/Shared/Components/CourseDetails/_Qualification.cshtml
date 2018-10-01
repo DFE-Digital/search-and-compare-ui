@@ -1,11 +1,13 @@
 @model GovUk.Education.SearchAndCompare.UI.Shared.ViewModels.CourseDetailsViewModel;
 
+@using GovUk.Education.SearchAndCompare.Domain.Filters.Enums
 @using GovUk.Education.SearchAndCompare.Domain.Models;
 @using GovUk.Education.SearchAndCompare.Domain.Models.Enums;
 @using GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters;
 @using GovUk.Education.SearchAndCompare.UI.Shared.ViewModels;
 
-@if (true)
+@if(Model.Course.IncludesPgce.Equals(IncludesPgce.No))
+
 {
   <details class="govuk-details">
     <summary class="govuk-details__summary">
@@ -22,7 +24,7 @@
     </div>
   </details>
 }
-else if (false)
+else if (Model.Course.IncludesPgce.Equals(IncludesPgce.Yes))
 {
   <details class="govuk-details">
     <summary class="govuk-details__summary">
@@ -39,7 +41,7 @@ else if (false)
     </div>
   </details>
 }
-else if (false)
+else if (Model.Course.IncludesPgce.Equals(IncludesPgce.QtsWithPgde))
 {
   <details class="govuk-details">
     <summary class="govuk-details__summary">
@@ -56,7 +58,7 @@ else if (false)
     </div>
   </details>
 }
-else if (false)
+else if (Model.Course.IncludesPgce.Equals(IncludesPgce.QtlsWithPgce))
 {
   <details class="govuk-details">
     <summary class="govuk-details__summary">
@@ -70,7 +72,7 @@ else if (false)
     </div>
   </details>
 }
-else if (false)
+else if (Model.Course.IncludesPgce.Equals(IncludesPgce.QtsWithPgde))
 {
   <details class="govuk-details">
     <summary class="govuk-details__summary">
