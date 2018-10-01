@@ -9,47 +9,50 @@
   var section = Model.GetHtmlForSection(CourseDetailsSections.AboutFees);
 }
 
-<div class="govuk-!-margin-bottom-8">
-  <h2 class="govuk-heading-l" id="section-fees">Fees</h2>
+@if (Model.PreviewMode || Model.HasFeesSet)
+{
+  <div class="govuk-!-margin-bottom-8">
+    <h2 class="govuk-heading-l" id="section-fees">Fees</h2>
 
-  @if (Model.HasFeesSet)
-  {
-    <div class="body-text">
-      <table class="govuk-table">
-        <caption class="govuk-table__caption">The course fees for @Model.Finance.FormattedYear are as follows:</caption>
-        <thead class="govuk-table__head">
-          <tr class="govuk-visually-hidden govuk-table__row">
-            <th class="govuk-table__header">Student type</th>
-            <th class="govuk-table__header">Fees to pay</th>
-          </tr>
-        </thead>
-        <tbody class="govuk-table__body">
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">UK students</td>
-            <td class="govuk-table__cell">@Model.Finance.FormattedUkFees</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">EU students</td>
-            <td class="govuk-table__cell">@Model.Finance.FormattedEuFees</td>
-          </tr>
-          @if (Model.Course.Fees.International != 0)
-          {
+    @if (Model.HasFeesSet)
+    {
+      <div class="body-text">
+        <table class="govuk-table">
+          <caption class="govuk-table__caption">The course fees for @Model.Finance.FormattedYear are as follows:</caption>
+          <thead class="govuk-table__head">
+            <tr class="govuk-visually-hidden govuk-table__row">
+              <th class="govuk-table__header">Student type</th>
+              <th class="govuk-table__header">Fees to pay</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
-              <td class="govuk-table__cell">International students</td>
-              <td class="govuk-table__cell">@Model.Finance.FormattedInternationalFees</td>
-          </tr>
-          }
-        </tbody>
-      </table>
-    </div>
-  }
-  else
-  {
-    <p class="missing-section">Please add details for this section.</p>
-  }
+              <td class="govuk-table__cell">UK students</td>
+              <td class="govuk-table__cell">@Model.Finance.FormattedUkFees</td>
+            </tr>
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">EU students</td>
+              <td class="govuk-table__cell">@Model.Finance.FormattedEuFees</td>
+            </tr>
+            @if (Model.Course.Fees.International != 0)
+            {
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">International students</td>
+                <td class="govuk-table__cell">@Model.Finance.FormattedInternationalFees</td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+    else
+    {
+      <p class="missing-section">Please add details for this section.</p>
+    }
 
-  @if (section != null)
-  {
-    @Html.Raw(section)
-  }
-</div>
+    @if (section != null)
+    {
+      @Html.Raw(section)
+    }
+  </div>
+}

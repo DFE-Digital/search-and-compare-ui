@@ -88,7 +88,10 @@
             }
             else
             {
-              <li><a href="#section-fees">Fees</a></li>
+              @if (Model.PreviewMode || Model.HasFeesSet)
+              {
+                <li><a href="#section-fees">Fees</a></li>
+              }
             }
             <li><a href="#section-financial-support">Financial support</a></li>
             @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.EntryRequirementsQualifications))

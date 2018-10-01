@@ -50,7 +50,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewModels
                 !string.IsNullOrWhiteSpace(Course.ContactDetails.Address);
         }
 
-        public bool HasFeesSet => Course?.Fees != null ;
+        public bool HasFeesSet => Course?.Fees != null && (Finance?.FormattedUkFees != "£0");
 
         public bool HasWebsite => !string.IsNullOrEmpty(Course.ContactDetails.Website);
 
