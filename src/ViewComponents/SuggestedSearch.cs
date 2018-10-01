@@ -24,7 +24,7 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewComponents
 
         public Task<IViewComponentResult> InvokeAsync(ResultsViewModel original, int maxResult)
         {
-            var originalTotal = original.Courses.TotalCount;
+            var originalTotal = original.Courses?.TotalCount ?? 0;
 
             var hasSalary = 
                 original.FilterModel.SelectedFunding.HasValue && 
