@@ -305,6 +305,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
 
         public IEnumerable<string> GetQualificationStrings()
         {
+            // FIXME
             if (!qts || pgce)
             {
                 yield return "Postgraduate certificate in education with qualified teacher status";
