@@ -136,6 +136,12 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
 
         public QueryFilter ToQueryFilter()
         {
+            byte resQualification = 0;
+            foreach(var qual in this.qualification)
+            {
+                resQualification ^= (byte) qual;
+            }
+
             return new QueryFilter
             {
                 page = this.page,
@@ -146,7 +152,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 sortby = this.sortby,
                 funding = this.funding,
                 query = this.query,
-                qualification = this.qualification,
+                qualification = resQualification,
                 fulltime = this.fulltime,
                 parttime = this.parttime
             };

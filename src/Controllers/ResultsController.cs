@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GovUk.Education.SearchAndCompare.Domain.Client;
+using GovUk.Education.SearchAndCompare.Domain.Filters.Enums;
 using GovUk.Education.SearchAndCompare.Domain.Lists;
 using GovUk.Education.SearchAndCompare.Domain.Models;
 using GovUk.Education.SearchAndCompare.UI.Filters;
@@ -63,6 +64,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         public IActionResult Index(ResultsFilter filter)
         {
             var subjects = api.GetSubjects();
+            filter.qualification = filter.qualification.Any() ? filter.qualification : new List<QualificationOption>{QualificationOption.QtsOnly, QualificationOption.PgdePgceWithQts, QualificationOption.Other};
 
             FilteredList<Subject> filteredSubjects;
             if (filter.SelectedSubjects.Count > 0)
