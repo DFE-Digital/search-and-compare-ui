@@ -1,32 +1,86 @@
 @model GovUk.Education.SearchAndCompare.UI.Shared.ViewModels.CourseDetailsViewModel;
 
+@using GovUk.Education.SearchAndCompare.Domain.Filters.Enums
 @using GovUk.Education.SearchAndCompare.Domain.Models;
 @using GovUk.Education.SearchAndCompare.Domain.Models.Enums;
 @using GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters;
 @using GovUk.Education.SearchAndCompare.UI.Shared.ViewModels;
 
-@if (Model.Course.IncludesPgce != IncludesPgce.No)
+@if(Model.Course.IncludesPgce.Equals(IncludesPgce.No))
+
 {
   <details class="govuk-details">
     <summary class="govuk-details__summary">
-      <span class="govuk-details__summary-text">@Model.Course.FormattedOutcome()</span>
+      <span class="govuk-details__summary-text">QTS</span>
     </summary>
     <div class="govuk-details__text">
-      <p class="govuk-body">A postgraduate certificate in education (PGCE) with qualified teacher status (QTS) allows you to teach in England, Scotland, Wales and Northern Ireland.</p>
-      <p class="govuk-body">This qualification is also recognised internationally.</p>
-      <p class="govuk-body">Many PGCE courses include credits that count toward a Master&#8217;s degree.</p>
+      <p class="govuk-body">
+        Qualified teacher status (QTS) allows you to teach in state schools in England.
+      </p>
+      <p class="govuk-body">
+        If you want to teach in the rest of the UK or internationally, consider a course that gives you the
+        qualification &lsquo;postgraduate certificate in education with qualified teacher status&rsquo; instead.
+       </p>
     </div>
   </details>
 }
-else
+else if (Model.Course.IncludesPgce.Equals(IncludesPgce.Yes))
 {
   <details class="govuk-details">
     <summary class="govuk-details__summary">
-      <span class="govuk-details__summary-text">@Model.Course.FormattedOutcome()</span>
+      <span class="govuk-details__summary-text">PGCE with QTS</span>
     </summary>
     <div class="govuk-details__text">
-      <p class="govuk-body">Qualified teacher status (QTS) allows you to teach in state schools in England.</p>
-      <p class="govuk-body">If you want to teach in the rest of the UK or internationally, consider a course that gives you the qualification &#39;postgraduate certificate in education with qualified teacher status&#39; instead.</p>
+      <p class="govuk-body">
+        A postgraduate certificate in education (PGCE) with qualified teacher status (QTS) allows you to
+        teach in England, Scotland, Wales and Northern Ireland. It&rsquo;s also recognised internationally.
+      </p>
+      <p class="govuk-body">
+        Many PGCE courses include credits that count toward a Master&rsquo;s degree.
+      </p>
+    </div>
+  </details>
+}
+else if (Model.Course.IncludesPgce.Equals(IncludesPgce.QtsWithPgde))
+{
+  <details class="govuk-details">
+    <summary class="govuk-details__summary">
+      <span class="govuk-details__summary-text">PGDE with QTS</span>
+    </summary>
+    <div class="govuk-details__text">
+      <p class="govuk-body">
+        A postgraduate diploma in education (PGCE) with qualified teacher status (QTS) allows you to
+        teach in England, Scotland, Wales and Northern Ireland. It's also recognised internationally.
+        PGDE courses include credits that count toward a Master&rsquo;s degree.
+      </p>
+    </div>
+  </details>
+}
+else if (Model.Course.IncludesPgce.Equals(IncludesPgce.QtlsWithPgce))
+{
+  <details class="govuk-details">
+    <summary class="govuk-details__summary">
+      <span class="govuk-details__summary-text">PGCE</span>
+    </summary>
+    <div class="govuk-details__text">
+      <p class="govuk-body">
+        A postgraduate certificate in education (PGCE) is recognised internationally.
+        This course does not lead to the award of QTS (qualified teacher status).
+      </p>
+    </div>
+  </details>
+}
+else if (Model.Course.IncludesPgce.Equals(IncludesPgce.QtsWithPgde))
+{
+  <details class="govuk-details">
+    <summary class="govuk-details__summary">
+      <span class="govuk-details__summary-text">PGDE</span>
+    </summary>
+    <div class="govuk-details__text">
+      <p class="govuk-body">
+        A postgraduate diploma in education (PGDE) is recognised internationally.
+        This course does not lead to the award of QTS (qualified teacher status).
+      </p>
     </div>
   </details>
 }

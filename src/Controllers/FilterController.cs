@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GovUk.Education.SearchAndCompare.Domain.Client;
@@ -173,6 +174,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         {
             ViewBag.IsInWizard = true;
             ViewBag.HideBack = !_searchConfig.PreLaunchMode;
+            filter.qualification = filter.qualification.Any() ? filter.qualification : new List<QualificationOption>{QualificationOption.QtsOnly, QualificationOption.PgdePgceWithQts, QualificationOption.Other};
             return LocationGet(filter);
         }
 

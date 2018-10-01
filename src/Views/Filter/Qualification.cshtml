@@ -12,41 +12,60 @@
       <form action='@Url.Action("StudyType", "Filter", Model.ToRouteValues())' method="POST">
         <fieldset role="radiogroup" aria-required="true" class="govuk-fieldset">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-            <h1 class="govuk-heading-xl">The qualification you’ll&nbsp;get</h1>
+            <h1 class="govuk-heading-xl">What you&lsquo;ll get</h1>
           </legend>
 
           <div class="govuk-form-group">
             <div class="govuk-checkboxes">
               <div class="govuk-checkboxes__item">
-                <input id="applyFilter-includepgce" class="govuk-checkboxes__input" type="checkbox" name="pgce" value="true" checked="@(Model.pgce || !Model.qts)">
-                <label for="applyFilter-includepgce" class="govuk-label govuk-checkboxes__label">
+                <input id="applyFilter-qts-only" class="govuk-checkboxes__input" type="checkbox" name="qualification" value="@QualificationOption.QtsOnly" checked="@Model.qualification.Any(x => x == QualificationOption.QtsOnly)">
+                <label for="applyFilter-qts-only" class="govuk-label govuk-checkboxes__label">
                   <span class="govuk-!-font-weight-bold govuk-!-margin-bottom-2 govuk-!-display-block">
-                    Postgraduate certificate in education with qualified teacher status
+                    QTS only
                   </span>
-                  <span>
-                    With a course that offers a postgraduate certificate in education (PGCE) with qualified teacher status (QTS), you’ll be able to teach in England, Scotland, Wales and Northern Ireland. This qualification is also recognised internationally. Many PGCE courses include credits that count towards a Master’s degree.
-                  </span>
+                  <p class="govuk-body">
+                    QTS (qualified teacher status) allows you to teach in state schools in
+                    England. If you want to teach in the rest of the UK or internationally,
+                    consider a &lsquo;PGCE (or PGDE) with QTS&rsquo; qualification instead.
+                  </p>
                 </label>
               </div>
 
               <div class="govuk-checkboxes__item">
-                <input id="applyFilter-includeqts" class="govuk-checkboxes__input" type="checkbox" name="qts" value="true" checked="@(Model.qts || !Model.pgce)">
-                <label for="applyFilter-includeqts" class="govuk-label govuk-checkboxes__label">
-                  <span class="govuk-!-font-weight-bold govuk-!-margin-bottom-2 govuk-!-display-block">Qualified teacher status</span>
-                  <span>
-                    Qualified teacher status (QTS) allows you to teach in state schools in England.
+                <input id="applyFilter-pgce-pgde-with-qts" class="govuk-checkboxes__input" type="checkbox" name="qualification" value="@QualificationOption.PgdePgceWithQts" checked="@Model.qualification.Any(x => x == QualificationOption.PgdePgceWithQts)">
+                <label for="applyFilter-pgce-pgde-with-qts" class="govuk-label govuk-checkboxes__label">
+                  <span class="govuk-!-font-weight-bold govuk-!-margin-bottom-2 govuk-!-display-block">
+                    PGCE (or PGDE) with QTS
                   </span>
+                  <p class="govuk-body">
+                    A PGCE (postgraduate certificate in education) with QTS allows you
+                    to teach in England, Scotland, Wales and Northern Ireland. It&lsquo;s also
+                    recognised internationally. Many PGCE courses include credits that
+                    count towards a Master&lsquo;s degree.
+                  </p>
+                  <p class="govuk-body">
+                    Some providers offer a PGDE (postgraduate diploma in education) with QTS,
+                    which is equivalent to a PGCE. In some cases these courses offer more
+                    credits towards a Master&lsquo;s degree than PGCE courses.
+                  </p>
+                </label>
+              </div>
+
+              <div class="govuk-checkboxes__item">
+                <input id="applyFilter-other" class="govuk-checkboxes__input" type="checkbox" name="qualification" value="@QualificationOption.Other" checked="@Model.qualification.Any(x => x == QualificationOption.Other)">
+                <label for="applyFilter-other" class="govuk-label govuk-checkboxes__label">
+                  <span class="govuk-!-font-weight-bold govuk-!-margin-bottom-2 govuk-!-display-block">
+                    Further Education (PGCE or PGDE without QTS)
+                   </span>
                   <span>
-                    If you want to teach in the rest of the UK or internationally, then you’ll need to do a course that offers ‘postgraduate certification in education with qualified teacher status’ instead.
+                    To teach further education you don't need QTS. Instead you can study
+                    for a PGCE or PGDE without QTS.
                   </span>
                 </label>
               </div>
             </div>
           </div>
         </fieldset>
-
-        <input type="hidden" name="pgce" value="false">
-        <input type="hidden" name="qts" value="false">
 
         <div class="govuk-form-group">
           <input class="govuk-button" type="submit" value="Find courses">

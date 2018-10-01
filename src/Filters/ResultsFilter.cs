@@ -13,6 +13,10 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
 {
     public class ResultsFilter
     {
+        public ResultsFilter()
+        {
+            qualification = new List<QualificationOption>();
+        }
         public int? page { get; set; }
 
         public double? lng { get; set; }
@@ -43,13 +47,10 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
 
         public double? offlat { get; set; }
 
-        public bool pgce { get; set; }
-
-        public bool qts { get; set; }
-
         public bool fulltime { get; set; }
 
         public bool parttime { get; set; }
+        public IList<QualificationOption> qualification { get; set; }
 
         public List<int> SelectedSubjects {
             get {
@@ -145,8 +146,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 sortby = this.sortby,
                 funding = this.funding,
                 query = this.query,
-                pgce = this.pgce,
-                qts = this.qts,
+                qualification = this.qualification,
                 fulltime = this.fulltime,
                 parttime = this.parttime
             };
@@ -171,8 +171,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 zoomlevel,
                 offlng,
                 offlat,
-                pgce,
-                qts,
+                qualification,
                 fulltime,
                 parttime
             };
@@ -189,8 +188,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 zoomlevel = this.zoomlevel,
                 offlng = this.offlng,
                 offlat = this.offlat,
-                pgce = this.pgce,
-                qts = this.qts,
+                qualification = this.qualification,
                 fulltime = this.fulltime,
                 parttime = this.parttime,
                 l = this.l
@@ -216,8 +214,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 zoomlevel = this.zoomlevel,
                 offlng = this.offlng,
                 offlat = this.offlat,
-                pgce = this.pgce,
-                qts = this.qts,
+                qualification = this.qualification,
                 fulltime = this.fulltime,
                 parttime = this.parttime
             };
@@ -242,8 +239,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 zoomlevel = this.zoomlevel,
                 offlng = this.offlng,
                 offlat = this.offlat,
-                pgce = this.pgce,
-                qts = this.qts,
+                qualification = this.qualification,
                 fulltime = this.fulltime,
                 parttime = this.parttime
             };
@@ -266,8 +262,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 zoomlevel = this.zoomlevel,
                 offlng = this.offlng,
                 offlat = this.offlat,
-                pgce = this.pgce,
-                qts = this.qts,
+                qualification = this.qualification,
                 fulltime = this.fulltime,
                 parttime = this.parttime,
                 sortby = withSortby ? this.sortby : null,
@@ -295,26 +290,36 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 zoomlevel = this.zoomlevel,
                 offlng = this.offlng,
                 offlat = this.offlat,
-                pgce = this.pgce,
-                qts = this.qts,
+                qualification = this.qualification,
                 fulltime = this.fulltime,
                 parttime = this.parttime
             };
         }
 
-
         public IEnumerable<string> GetQualificationStrings()
         {
-            if (!qts || pgce)
+            if (qualification.Any(x => x == QualificationOption.PgdePgceWithQts)
+                && qualification.Any(x => x == QualificationOption.QtsOnly)
+                && qualification.Any(x => x == QualificationOption.Other))
             {
-                yield return "Postgraduate certificate in education with qualified teacher status";
+                yield return "All qualifications";
             }
-            if (!pgce || qts)
+            else
             {
-                yield return "Qualified teacher status";
+                if (qualification.Any(x => x == QualificationOption.PgdePgceWithQts))
+                {
+                    yield return "PGCE (or PGDE) with QTS";
+                }
+                if (qualification.Any(x => x == QualificationOption.QtsOnly))
+                {
+                    yield return "QTS only";
+                }
+                if (qualification.Any(x => x == QualificationOption.Other))
+                {
+                    yield return "Further Education (PGCE or PGDE without QTS)";
+                }
             }
         }
-
         public IEnumerable<string> GetStudyTypeStrings()
         {
             if (!parttime || fulltime)
