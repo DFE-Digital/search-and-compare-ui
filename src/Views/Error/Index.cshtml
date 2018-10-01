@@ -9,21 +9,27 @@
     {
         case 401:
             errorViewPage = "Unauthorized";
+            ViewBag.Title = "Unauthorized";
             break;
         case 403:
             errorViewPage = "Forbidden";
+            ViewBag.Title = "Forbidden";
             break;
         case 404:
             errorViewPage = "NotFound";
+            ViewBag.Title = "Page not found";
             break;
         case 500:
             errorViewPage = "ServerError";
+            ViewBag.Title = "Something went wrong";
             break;
         case 503:
             errorViewPage = "ServiceUnavailable";
+            ViewBag.Title = "Service unavailable";
             break;
         default:
             errorViewPage = "ServerError";
+            ViewBag.Title = "Something went wrong";
             break;
     }
 }
