@@ -237,6 +237,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         public IActionResult QualificationPost(ResultsFilter model)
         {
             model.page = null;
+            model.qualification = model.qualification.Any() ? model.qualification : new List<QualificationOption>{QualificationOption.QtsOnly, QualificationOption.PgdePgceWithQts, QualificationOption.Other};
+
             return RedirectToAction("Index", "Results", model.ToRouteValues());
         }
 

@@ -9,7 +9,7 @@
 <main class="govuk-main-wrapper" id="main-content" role="main">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form action='@Url.Action("StudyType", "Filter", Model.ToRouteValues())' method="POST">
+      <form action='@Url.Action("Qualification", "Filter", Model.ToRouteValues())' method="POST">
         <fieldset role="radiogroup" aria-required="true" class="govuk-fieldset">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
             <h1 class="govuk-heading-xl">What you&lsquo;ll get</h1>
@@ -68,6 +68,7 @@
         </fieldset>
 
         <div class="govuk-form-group">
+          <input type="hidden" name="qualification" value="">
           <input class="govuk-button" type="submit" value="Find courses">
         </div>
       </form>
