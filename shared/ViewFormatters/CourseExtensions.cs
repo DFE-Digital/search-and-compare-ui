@@ -27,6 +27,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters
 
         public static string FormattedOutcome(this Course course)
         {
+            // FIXME / REMOVE ME?
             if (course.IncludesPgce == IncludesPgce.No)
             {
                 return qts;
