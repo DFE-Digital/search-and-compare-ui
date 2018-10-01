@@ -60,7 +60,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         }
 
         [HttpGet("results")]
-        public IActionResult Index([FromBody] ResultsFilter filter)
+        public IActionResult Index(ResultsFilter filter)
         {
             var subjects = api.GetSubjects();
 

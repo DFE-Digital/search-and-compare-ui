@@ -47,10 +47,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
 
         public double? offlat { get; set; }
 
-        public bool pgce { get; set; }
-
-        public bool qts { get; set; }
-
         public bool fulltime { get; set; }
 
         public bool parttime { get; set; }
@@ -175,8 +171,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 zoomlevel,
                 offlng,
                 offlat,
-                pgce,
-                qts,
+                qualification,
                 fulltime,
                 parttime
             };
@@ -193,8 +188,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 zoomlevel = this.zoomlevel,
                 offlng = this.offlng,
                 offlat = this.offlat,
-                pgce = this.pgce,
-                qts = this.qts,
+                qualification = this.qualification,
                 fulltime = this.fulltime,
                 parttime = this.parttime,
                 l = this.l
@@ -220,8 +214,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 zoomlevel = this.zoomlevel,
                 offlng = this.offlng,
                 offlat = this.offlat,
-                pgce = this.pgce,
-                qts = this.qts,
+                qualification = this.qualification,
                 fulltime = this.fulltime,
                 parttime = this.parttime
             };
@@ -246,8 +239,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 zoomlevel = this.zoomlevel,
                 offlng = this.offlng,
                 offlat = this.offlat,
-                pgce = this.pgce,
-                qts = this.qts,
+                qualification = this.qualification,
                 fulltime = this.fulltime,
                 parttime = this.parttime
             };
@@ -270,8 +262,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 zoomlevel = this.zoomlevel,
                 offlng = this.offlng,
                 offlat = this.offlat,
-                pgce = this.pgce,
-                qts = this.qts,
+                qualification = this.qualification,
                 fulltime = this.fulltime,
                 parttime = this.parttime,
                 sortby = withSortby ? this.sortby : null,
@@ -299,8 +290,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 zoomlevel = this.zoomlevel,
                 offlng = this.offlng,
                 offlat = this.offlat,
-                pgce = this.pgce,
-                qts = this.qts,
+                qualification = this.qualification,
                 fulltime = this.fulltime,
                 parttime = this.parttime
             };
@@ -310,15 +300,15 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
         {
             if (qualification.Any(x => x == QualificationOption.PgdePgceWithQts))
             {
-                yield return "Postgraduate certificate in education with qualified teacher status";
+                yield return "PGCE (or PGDE) with QTS";
             }
             if (qualification.Any(x => x == QualificationOption.QtsOnly))
             {
-                yield return "Qualified teacher status";
+                yield return "QTS only";
             }
             if (qualification.Any(x => x == QualificationOption.Other))
             {
-                yield return "Other";
+                yield return "Further Education (PGCE or PGDE without QTS)";
             }
         }
         public IEnumerable<string> GetStudyTypeStrings()
