@@ -253,6 +253,17 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
 
         public ResultsFilter Clone(bool withLocation = false, bool withSortby = false, bool withPage = false)
         {
+            int? resultingSortBy = null;
+            if(withSortby)
+            {
+                var isSortedByDistance = this.SortBy == SortByOption.Distance;
+                var shouldResetSortByBecauseWeDropLocation = !withLocation && isSortedByDistance;
+                if (!shouldResetSortByBecauseWeDropLocation)
+                {
+                    resultingSortBy = this.sortby;
+                }
+            }
+
             return new ResultsFilter
             {
                 lat = withLocation ? this.lat : null,
@@ -271,7 +282,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 qualification = this.qualification,
                 fulltime = this.fulltime,
                 parttime = this.parttime,
-                sortby = withSortby ? this.sortby : null,
+                sortby = resultingSortBy,
                 page = withPage ? this.page : null
             };
         }
