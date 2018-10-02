@@ -10,12 +10,10 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
     [TestFixture]
     public class HomeControllerTests
     {
-        private HomeController _homeController;
-
         [Test]
         public void RedirectsToLocationFilter()
         {
-            var result = _homeController.Index();
+            var result = new HomeController().Index();
             result.Should().BeOfType<RedirectToActionResult>();
         }
     }
