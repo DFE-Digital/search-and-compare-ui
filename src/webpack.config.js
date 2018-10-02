@@ -66,7 +66,11 @@ module.exports = {
       {
         from: 'Assets/Styles/govuk-frontend-ie8.min.css',
         to: 'vendor'
-      }
+      },
+      {
+        from: 'node_modules/govuk-frontend/assets/images/favicon.ico',
+        to: '.'
+      },
     ]),
   ],
   module: {
