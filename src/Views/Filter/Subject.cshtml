@@ -32,7 +32,7 @@
         <h2 class="govuk-heading-m">Get financial support</h2>
         <p class="govuk-body">Most courses charge a fee. You can get financial support to help with the costs of your course. The financial support options available to you will depend on the subject you choose.</p>
         <p class="govuk-body">Find out more about <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview/postgraduate-loans">postgraduate loans</a>, <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview">bursaries and scholarships</a> and <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview/funding-by-subject">funding by subject</a> on Get into Teaching.</p>
-        <form action='@Url.Action(isInWizard ? "SubjectWizard" : "Subject", "Filter", Model.FilterModel.WithoutSubjects().ToRouteValues())' method="POST" id="subjects-container">
+        <form action='@Url.Action(isInWizard ? "SubjectWizard" : "Subject", "Filter", Model.FilterModel.WithoutSubjects().ToRouteValues())' method="POST" id="subjects-container" data-ga-event-form="Subject">
           <div class="accordion govuk-form-group" data-module="accordion">
             @foreach (var area in Model.SubjectAreas) {
               <div class="@(" accordion-section " + (@area.Subjects.Any(subject => selected.Contains(subject.Id)) ? "accordion-section--expanded" : " "))">
@@ -41,7 +41,7 @@
                   <div class="govuk-checkboxes">
                     @foreach (var subject in area.Subjects.OrderBy(x => x.Name)) {
                       <div class="govuk-checkboxes__item">
-                        <input id="@("subject-" + subject.Id)" name="SelectedSubjects" type="checkbox" checked="@selected.Contains(subject.Id)" value="@(subject.Id)" class="govuk-checkboxes__input">
+                        <input id="@("subject-" + subject.Id)" name="SelectedSubjects" type="checkbox" checked="@selected.Contains(subject.Id)" value="@(subject.Id)" class="govuk-checkboxes__input" data-ga-event-form-input="@(subject.Name)">
                         <label for="@("subject-" + subject.Id)" class="govuk-label govuk-checkboxes__label">
                           <span class="govuk-checkboxes__label_text">
                             @subject.Name

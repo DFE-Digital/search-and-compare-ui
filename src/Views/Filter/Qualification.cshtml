@@ -9,7 +9,7 @@
 <main class="govuk-main-wrapper" id="main-content" role="main">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      <form action='@Url.Action("Qualification", "Filter", Model.ToRouteValues())' method="POST">
+      <form action='@Url.Action("Qualification", "Filter", Model.ToRouteValues())' method="POST" data-ga-event-form="Qualification">
         <fieldset role="radiogroup" aria-required="true" class="govuk-fieldset">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
             <h1 class="govuk-heading-xl">What you will get</h1>
@@ -18,7 +18,7 @@
           <div class="govuk-form-group">
             <div class="govuk-checkboxes">
               <div class="govuk-checkboxes__item">
-                <input id="applyFilter-qts-only" class="govuk-checkboxes__input" type="checkbox" name="qualification" value="@QualificationOption.QtsOnly" checked="@Model.qualification.Any(x => x == QualificationOption.QtsOnly)">
+                <input id="applyFilter-qts-only" class="govuk-checkboxes__input" type="checkbox" name="qualification" value="@QualificationOption.QtsOnly" checked="@Model.qualification.Any(x => x == QualificationOption.QtsOnly)" data-ga-event-form-input="QTS only">
                 <label for="applyFilter-qts-only" class="govuk-label govuk-checkboxes__label">
                   <span class="govuk-!-font-weight-bold govuk-!-margin-bottom-2 govuk-!-display-block">
                     QTS only
@@ -32,7 +32,7 @@
               </div>
 
               <div class="govuk-checkboxes__item">
-                <input id="applyFilter-pgce-pgde-with-qts" class="govuk-checkboxes__input" type="checkbox" name="qualification" value="@QualificationOption.PgdePgceWithQts" checked="@Model.qualification.Any(x => x == QualificationOption.PgdePgceWithQts)">
+                <input id="applyFilter-pgce-pgde-with-qts" class="govuk-checkboxes__input" type="checkbox" name="qualification" value="@QualificationOption.PgdePgceWithQts" checked="@Model.qualification.Any(x => x == QualificationOption.PgdePgceWithQts)" data-ga-event-form-input="PGCE / PGDE with QTS">
                 <label for="applyFilter-pgce-pgde-with-qts" class="govuk-label govuk-checkboxes__label">
                   <span class="govuk-!-font-weight-bold govuk-!-margin-bottom-2 govuk-!-display-block">
                     PGCE (or PGDE) with QTS
@@ -52,7 +52,7 @@
               </div>
 
               <div class="govuk-checkboxes__item">
-                <input id="applyFilter-other" class="govuk-checkboxes__input" type="checkbox" name="qualification" value="@QualificationOption.Other" checked="@Model.qualification.Any(x => x == QualificationOption.Other)">
+                <input id="applyFilter-other" class="govuk-checkboxes__input" type="checkbox" name="qualification" value="@QualificationOption.Other" checked="@Model.qualification.Any(x => x == QualificationOption.Other)" data-ga-event-form-input="Further Education">
                 <label for="applyFilter-other" class="govuk-label govuk-checkboxes__label">
                   <span class="govuk-!-font-weight-bold govuk-!-margin-bottom-2 govuk-!-display-block">
                     Further Education (PGCE or PGDE without QTS)
