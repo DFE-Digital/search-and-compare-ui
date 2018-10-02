@@ -1,6 +1,7 @@
 using System.Linq;
 using GovUk.Education.SearchAndCompare.UI.Services;
 using NUnit.Framework;
+using System.Net.Http;
 
 namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Services
 {
@@ -13,7 +14,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Services
         [SetUp]
         public void SetUp()
         {
-            geocoder = new Geocoder("AIzaSyC6CQg447XEuO95H6aIUkMKVqEeFwrboUk");
+            geocoder = new Geocoder("AIzaSyC6CQg447XEuO95H6aIUkMKVqEeFwrboUk", new HttpClient());
         }
 
         [Test]
