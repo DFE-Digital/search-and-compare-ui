@@ -46,7 +46,7 @@ namespace GovUk.Education.SearchAndCompare.UI
             services.AddSingleton<ISearchAndCompareApi>(provider => new SearchAndCompareApi(new HttpClient(), apiUri));
             services.AddScoped<AnalyticsPolicy>(provider => AnalyticsPolicy.FromEnv());
             services.AddScoped<AnalyticsAttribute>();
-            services.AddScoped<IGeocoder>(provider => new Geocoder(Configuration.GetSection("ApiKeys").GetValue<string>("GoogleMaps")));
+            services.AddSingleton<IGeocoder>(provider => new Geocoder(Configuration.GetSection("ApiKeys").GetValue<string>("GoogleMaps"), new HttpClient()));
             services.AddScoped<IMapProvider>(provider => new MapProvider(new HttpClientProvider(), Configuration.GetSection("ApiKeys").GetValue<string>("GoogleMapsStatic")));
         }
 
