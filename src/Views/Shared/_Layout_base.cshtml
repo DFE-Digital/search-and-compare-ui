@@ -26,7 +26,7 @@
       <script src="@Url.Content("~/vendor/html5shiv.min.js")" asp-append-version="true"></script>
     <![endif]-->
 
-    <meta property="og:image" content="~/images/govuk-opengraph-image.png" />
+    <meta property="og:image" content="@Url.Content("~/images/govuk-opengraph-image.png")" />
 
     @RenderSection("head", required: false)
   </head>
