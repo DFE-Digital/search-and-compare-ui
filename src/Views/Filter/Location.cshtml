@@ -3,18 +3,10 @@
 @{
   ViewBag.Title = $"Find courses by location or by training provider";
   var isInWizard = ViewBag.IsInWizard == true;
-  var showBack = ViewBag.HideBack != true;
   var selectedRadius = (Model.FilterModel.rad.HasValue) ? Model.FilterModel.rad : (int)RadiusOption.TwentyMiles;
 }
 
-@if (isInWizard)
-{
-  if (showBack)
-  {
-    @Html.Partial("Back", new BackLinkViewModel { Href = Url.Action("Index", "Home"), Title = "Back" })
-  }
-}
-else
+@if (!isInWizard)
 {
   @Html.Partial("Back", new BackLinkViewModel { Href = Url.Action("Index", "Results", Model.FilterModel.ToRouteValues()), Title = "Back to search results" })
 }

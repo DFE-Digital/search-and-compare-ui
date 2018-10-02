@@ -8,10 +8,8 @@ using GovUk.Education.SearchAndCompare.UI.Middleware;
 using GovUk.Education.SearchAndCompare.UI.Services;
 using GovUk.Education.SearchAndCompare.UI.Services.Maps;
 using GovUk.Education.SearchAndCompare.UI.Shared.ViewComponents;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
@@ -30,8 +28,6 @@ namespace GovUk.Education.SearchAndCompare.UI
         {
             _logger = logFactory.CreateLogger<Startup>();
             Configuration = configuration;
-            ISearchConfig searchConfig = new SearchConfig(Configuration);
-            _logger.LogInformation($"Pre-launch password protection: {searchConfig.PreLaunchMode}");
         }
 
         public IConfiguration Configuration { get; }
@@ -39,22 +35,10 @@ namespace GovUk.Education.SearchAndCompare.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            ISearchConfig searchConfig = new SearchConfig(Configuration);
             services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
 
-            services.AddBasicAuth(searchConfig.SitePassword);
-
             var sharedAssembly = typeof(CourseDetailsViewComponent).GetTypeInfo().Assembly;
-            services.AddMvc(config =>
-                {
-                    if (searchConfig.PreLaunchMode)
-                    {
-                        // require authorized user for every request
-                        config.Filters.Add(new AuthorizeFilter(
-                            new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build()));
-                    }
-                }
-            ).AddApplicationPart(sharedAssembly);
+            services.AddMvc().AddApplicationPart(sharedAssembly);
             services.Configure<RazorViewEngineOptions>(o => o.FileProviders.Add(new EmbeddedFileProvider(sharedAssembly, "GovUk.Education.SearchAndCompare.UI.Shared")));
 
             var apiUri = Environment.GetEnvironmentVariable("API_URI") ?? Configuration.GetSection("ApiConnection").GetValue<string>("Uri");
@@ -64,20 +48,11 @@ namespace GovUk.Education.SearchAndCompare.UI
             services.AddScoped<AnalyticsAttribute>();
             services.AddScoped<IGeocoder>(provider => new Geocoder(Configuration.GetSection("ApiKeys").GetValue<string>("GoogleMaps")));
             services.AddScoped<IMapProvider>(provider => new MapProvider(new HttpClientProvider(), Configuration.GetSection("ApiKeys").GetValue<string>("GoogleMapsStatic")));
-
-            services.AddSingleton<ISearchConfig, SearchConfig>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            var config = serviceProvider.GetService<ISearchConfig>();
-
-            if (config.PreLaunchMode)
-            {
-                app.UseAuthentication();
-            }
-
             if (env.IsDevelopment())
             {
                 app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions

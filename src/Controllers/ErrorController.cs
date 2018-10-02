@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +5,6 @@ using Microsoft.Extensions.Logging;
 
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
-    [AllowAnonymous]
     [Route("error")]
     public class ErrorController : CommonAttributesControllerBase
     {
