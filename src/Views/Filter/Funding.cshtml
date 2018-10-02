@@ -17,7 +17,7 @@
     </div>
   </div>
 
-  <form action='@Url.Action("Funding", "Filter", Model.ToRouteValues())' method="POST">
+  <form action='@Url.Action("Funding", "Filter", Model.ToRouteValues())' method="POST" data-ga-event-form="Salary">
     <fieldset role="radiogroup" aria-required="true" class="govuk-fieldset">
       <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
         <h1 class="govuk-heading-xl">Find courses that pay a salary</h1>
@@ -33,13 +33,13 @@
           <div class="govuk-form-group @(errors.HasError("applyFilter") ? "govuk-form-group--error" : "")" id="applyFilter-container">
             <div class="govuk-radios" data-module="radios">
               <div class="govuk-radios__item">
-                <input id="applyFilter-all" class="govuk-radios__input" type="radio" name="applyFilter" value="false" checked="@(Model.SelectedFunding == FundingOption.All)">
+                <input id="applyFilter-all" class="govuk-radios__input" type="radio" name="applyFilter" value="false" checked="@(Model.SelectedFunding == FundingOption.All)" data-ga-event-form-input="All courses with/without a salary">
                 <label for="applyFilter-all" class="govuk-label govuk-radios__label">
                   All courses (with or without a salary)
                 </label>
               </div>
               <div class="govuk-radios__item">
-                <input id="applyFilter-some" class="govuk-radios__input" type="radio" name="applyFilter" value="true" checked="@(errors.HasError("funding ") || (Model.SelectedFunding != null && Model.SelectedFunding != FundingOption.All))">
+                <input id="applyFilter-some" class="govuk-radios__input" type="radio" name="applyFilter" value="true" checked="@(errors.HasError("funding ") || (Model.SelectedFunding != null && Model.SelectedFunding != FundingOption.All))" data-ga-event-form-input="Only courses with a salary">
                 <label for="applyFilter-some" class="govuk-label govuk-radios__label">
                   Only courses that come with a salary
                 </label>

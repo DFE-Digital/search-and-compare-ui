@@ -16,7 +16,7 @@
     <div class="govuk-grid-column-two-thirds">
       @Html.Partial("Error", Model.Errors)
 
-      <form action='@Url.Action(isInWizard ? "LocationWizard" : "Location", "Filter", Model.FilterModel.ToRouteValues())' method="POST">
+      <form action='@Url.Action(isInWizard ? "LocationWizard" : "Location", "Filter", Model.FilterModel.ToRouteValues())' method="POST" data-ga-event-form="Location">
         <fieldset role="radiogroup" aria-required="true" class="govuk-fieldset">
           <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
             <h1 class="govuk-heading-xl">Find courses by location or by training provider</h1>
@@ -30,7 +30,7 @@
 
             <div class="govuk-radios" data-module="radios">
               <div class="govuk-radios__item">
-                <input id="location-Set" class="govuk-radios__input" type="radio" name="l" value="@((int)LocationOption.Yes)" checked="@(Model.FilterModel.LocationOption == LocationOption.Yes)" data-aria-controls="lq-container">
+                <input id="location-Set" class="govuk-radios__input" type="radio" name="l" value="@((int)LocationOption.Yes)" checked="@(Model.FilterModel.LocationOption == LocationOption.Yes)" data-aria-controls="lq-container" data-ga-event-form-input="By postcode/city">
                 <label for="location-Set" class="govuk-label govuk-radios__label">
                   By postcode, town or city
                 </label>
@@ -64,14 +64,14 @@
               </div>
 
               <div class="govuk-radios__item">
-                <input id="location-Unset" class="govuk-radios__input" type="radio" name="l" value="@((int)LocationOption.No)" checked="@(Model.FilterModel.LocationOption == LocationOption.No)">
+                <input id="location-Unset" class="govuk-radios__input" type="radio" name="l" value="@((int)LocationOption.No)" checked="@(Model.FilterModel.LocationOption == LocationOption.No)" data-ga-event-form-input="Across England">
                 <label for="location-Unset" class="govuk-label govuk-radios__label">Across England</label>
               </div>
 
               <div class="govuk-radios__divider">or</div>
 
               <div class="govuk-radios__item">
-                <input id="location-Specific" class="govuk-radios__input" type="radio" name="l" value="@((int)LocationOption.Specific)" checked="@(Model.FilterModel.LocationOption == LocationOption.Specific)" data-aria-controls="query-container">
+                <input id="location-Specific" class="govuk-radios__input" type="radio" name="l" value="@((int)LocationOption.Specific)" checked="@(Model.FilterModel.LocationOption == LocationOption.Specific)" data-aria-controls="query-container" data-ga-event-form-input="By school/provider">
                 <label for="location-Specific" class="govuk-label govuk-radios__label">
                   By school, university or other training provider
                 </label>
