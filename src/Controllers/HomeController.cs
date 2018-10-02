@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
@@ -11,7 +10,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             return RedirectToAction("LocationWizard", "Filter");
         }
 
-        [AllowAnonymous]
         public IActionResult Error()
         {
             return StatusCode(500);
