@@ -42,7 +42,7 @@
         <dt class="govuk-list--description__label">Financial support</dt>
         <dd>@item.FundingOptions()</dd>
         @if (item.DistanceAddress != null || item.ProviderLocation != null) {
-          <dt class="govuk-list--description__label">Address</dt>
+          <dt class="govuk-list--description__label">Address location</dt>
           <dd>@((item.DistanceAddress ?? item.ProviderLocation.Address).Replace("\n", ", "))</dd>
         }
         @if (!string.IsNullOrEmpty(item.AccreditingProvider?.Name) && item.Provider.Name != item.AccreditingProvider?.Name)
