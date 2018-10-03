@@ -66,7 +66,7 @@
     <div class="govuk-grid-column-two-thirds">
       <div class="course-contents govuk-!-margin-bottom-8">
         <h2 class="govuk-heading-m">Contents</h2>
-          <ul class="govuk-list govuk-list--dash">
+          <ul class="govuk-list govuk-list--dash" data-ga-event-navigation="Course Contents">
             @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutTheCourse) || Model.ShowMinimumAboutCourseSection)
             {
               <li><a href="#section-about">About the course</a></li>
