@@ -17,6 +17,12 @@
   display: none;
 }
 
+.accordion .accordion-section.accordion-section--hidden .accordion-section-body {
+  .js-enabled & {
+    display: none;
+  }
+}
+
 .accordion.with-js {
   border-bottom-width: 1px;
   border-bottom-color: $govuk-border-colour;
