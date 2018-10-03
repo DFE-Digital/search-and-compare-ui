@@ -101,6 +101,7 @@ AccordionSection.prototype.expanded = function() {
 
 AccordionSection.prototype.setExpanded = function(expanded) {
   this.$module.setAttribute('aria-expanded', expanded)
+  this.$module.classList.remove('accordion-section--hidden');
   this.$module.className = this.$module.className
 }
 
