@@ -26,7 +26,15 @@ for (var i = $accordions.length - 1; i >= 0; i--) {
       $section.classList.add('accordion-section--expanded')
     }
   }
-  new Accordion($accordion).init()
+  try {
+    new Accordion($accordion).init()
+  } catch (e) {
+    for (var j = $sections.length - 1; j >= 0; j--) {
+      var $section = $sections[j]
+      $section.classList.remove('accordion-section--hidden')
+      $section.classList.add('accordion-section--expanded')
+    }
+  }
 };
 
 var $toggle = document.querySelectorAll('[data-module="toggle"]')
