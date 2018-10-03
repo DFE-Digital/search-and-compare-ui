@@ -1,44 +1,46 @@
 @model ResultsViewModel
 
 @{
-    var sortByEnumType = typeof(SortByOption);
+  var sortByEnumType = typeof(SortByOption);
 }
 
 @if (Model.MapsEnabled) {
-    <div class="left">
-        @if (Model.FilterModel.DisplayAsMap){
-            <a href="@Url.Action("Index", "Results", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new { display = "list" }))"
-            class="view-list-link">View as a list</a>
-        } else if (Model.FilterModel.LocationFilterActive) {
-            <a href="@Url.Action("Index", "Results", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new { display = "map" }))"
-            class="view-map-link">View on a map</a>
-        }
-    </div>
+  <p class="govuk-body">
+    @if (Model.FilterModel.DisplayAsMap){
+      <a href="@Url.Action("Index", "Results", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new { display = "list" }))" class="govuk-link">
+        View as a list
+      </a>
+    } else if (Model.FilterModel.LocationFilterActive) {
+      <a href="@Url.Action("Index", "Results", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new { display = "map" }))" class="govuk-link">
+        View on a map
+      </a>
+    }
+  </p>
 }
 
 @if (!Model.FilterModel.DisplayAsMap && string.IsNullOrWhiteSpace(Model.FilterModel.query)) {
-    <form action='@Url.Action("SortBy", "Results", Model.FilterModel.ToRouteValues())' method="POST">
-        <div class="govuk-form-group">
-            <label class="govuk-label govuk-label--inline sortedby-label" for="sortby">Sorted by</label>
-            <select class="govuk-select trigger-result-update sortby-selector"
-                    onchange="this.form.submit()"
-                    aria-label="Sort by"
-                    role="listbox"
-                    name="sortby"
-                    id="sortby">
-                    @foreach(SortByOption option in Model.FilterModel.ValidSortings)
-                    {
-                        if (option == Model.FilterModel.SortBy) {
-                            <option value="@((int) option)" selected>@option.FormattedName()</option>
-                        }
-                        else {
-                            <option value="@((int) option)">@option.FormattedName()</option>
-                        }
-                    }
-            </select>
-        </div>
-        <noscript>
-            <input class="button" type="submit" value="Update" aria-label="Update sort order"/>
-        </noscript>
-    </form>
+  <form action='@Url.Action("SortBy", "Results", Model.FilterModel.ToRouteValues())' method="POST">
+    <div class="govuk-form-group">
+      <label class="govuk-label govuk-label--inline sortedby-label" for="sortby">Sorted by</label>
+      <select class="govuk-select trigger-result-update sortby-selector"
+              onchange="this.form.submit()"
+              aria-label="Sort by"
+              role="listbox"
+              name="sortby"
+              id="sortby">
+              @foreach(SortByOption option in Model.FilterModel.ValidSortings)
+              {
+                if (option == Model.FilterModel.SortBy) {
+                  <option value="@((int) option)" selected>@option.FormattedName()</option>
+                }
+                else {
+                  <option value="@((int) option)">@option.FormattedName()</option>
+                }
+              }
+      </select>
+    </div>
+    <noscript>
+      <input class="button" type="submit" value="Update" aria-label="Update sort order"/>
+    </noscript>
+  </form>
 }
