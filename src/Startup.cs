@@ -55,10 +55,10 @@ namespace GovUk.Education.SearchAndCompare.UI
         {
             if (env.IsDevelopment())
             {
-                app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
-                {
-                    HotModuleReplacement = true
-                });
+                // app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
+                // {
+                //     HotModuleReplacement = true
+                // });
                 app.UseStaticFiles(new StaticFileOptions
                 {
                     OnPrepareResponse = context =>

@@ -8,13 +8,15 @@ using NUnit.Framework;
 namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
 {
     [TestFixture]
-    public class HomeControllerTests
+    public class RedirecstControllerTests
     {
         [Test]
         public void RedirectsToLocationFilter()
         {
-            var result = new HomeController().Index();
-            result.Should().BeOfType<RedirectToActionResult>();
+            var result = (new RedirectsController().StartLocation()) as RedirectToActionResult;
+            result.Should().NotBeNull();
+            result.ControllerName.Should().Be("Filter");
+            result.ActionName.Should().Be("LocationWizard");
         }
     }
 }
