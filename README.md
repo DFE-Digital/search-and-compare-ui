@@ -36,6 +36,11 @@ Note: The `API_URI` value musn't have a trailing slash.
 
     cd src && set API_URI=http://localhost:5001/api && dotnet run
 
+### Set maps config
+
+    dotnet user-secrets add GoogleMaps [the-key]
+    dotnet user-secrets add GoogleMapsStatic [the-static-key]
+
 ## Logging
 
 Logging is configured in `appsettings.json`, and values in there can be overridden with environment variables.
