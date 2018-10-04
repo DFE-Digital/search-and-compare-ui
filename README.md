@@ -1,4 +1,4 @@
-# Search and Compare - UI 
+# Search and Compare - UI
 
 [![Build Status](https://travis-ci.com/DFE-Digital/search-and-compare-ui.svg?token=3fqqELBNRC5ecwar1xHq&branch=master)](https://travis-ci.com/DFE-Digital/search-and-compare-ui)
 
@@ -7,7 +7,7 @@ See the [Search and Compare](https://github.com/DFE-Digital/search-and-compare) 
 # Building and Running
 
 ## Dotnet SDK
-You will need to have Version 2.1.300~2.1.302 of the dotnet SDK installed in order to build and run this. This is due to a bug in ASP.NET MVC Core which is using inconsistent package versions. [The bug](https://github.com/aspnet/Mvc/issues/7969) has a fix promised in .NET Core 2.1.3.  
+You will need to have Version 2.1.300~2.1.302 of the dotnet SDK installed in order to build and run this. This is due to a bug in ASP.NET MVC Core which is using inconsistent package versions. [The bug](https://github.com/aspnet/Mvc/issues/7969) has a fix promised in .NET Core 2.1.3.
 
 ## Config
 
@@ -38,8 +38,8 @@ Note: The `API_URI` value musn't have a trailing slash.
 
 ### Set maps config
 
-    dotnet user-secrets add GoogleMaps [the-key]
-    dotnet user-secrets add GoogleMapsStatic [the-static-key]
+    dotnet user-secrets set ApiKeys__GoogleMaps [the-key]
+    dotnet user-secrets set ApiKeys__GoogleMapsStatic [the-static-key]
 
 ## Logging
 
