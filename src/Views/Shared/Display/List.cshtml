@@ -11,7 +11,10 @@
   </div>
 </div>
 
-@Html.Partial("SortBy", Model)
+@if (string.IsNullOrWhiteSpace(Model.FilterModel.query))
+{
+  @Html.Partial("SortBy", Model)
+}
 
 <ul class="govuk-list search-results">
   @foreach (var item in Model.Courses.Items) {

@@ -17,7 +17,7 @@
 
 @Html.Partial("SortBy", Model)
 
-<div class="resultsmap" style="position: relative;">
+<div class="search-results-map" style="position: relative;">
   <div style="height: @(mapModel.Map.Height)px;" id="map"></div>
   <script>
     var map;
@@ -48,31 +48,44 @@
         fullscreenControl: false
       });
 
+      var customMarker = {
+        url: '/images/map-marker.png',
+        scaledSize: new google.maps.Size(20, 32),
+        origin: new google.maps.Point(0, 0),
+        anchor: new google.maps.Point(0, 32)
+      };
+
+      // Searched location
       var meMarker = createClickableMarker(map, '',
         {
           lat: @(mapModel.Map.MyLocation.Latitude),
           lng: @(mapModel.Map.MyLocation.Longitude)
         },
-        '@Html.Raw(@Url.Action("Location", "Filter", Model.FilterModel.ToRouteValues()))',
-        '/images/maps/green_Marker_dot.png'
+        '@Html.Raw(@Url.Action("Location", "Filter", Model.FilterModel.ToRouteValues()))'
       );
 
+      // All training locations
       var markers = [
         @foreach (var courseGroup in Model.Map.CourseGroups) {
           <text>
             createClickableMarker(
               map,
-              '@(courseGroup.Area.Label)', {
+              '', {
                 lat: @(courseGroup.Coordinates.Latitude),
                 lng: @(courseGroup.Coordinates.Longitude)
               },
-              '#@(courseGroup.Area.Href)'
+              '#@(courseGroup.Area.Href)',
+              customMarker
             ),
           </text>
         }
       ];
+
+      var markerCluster = new MarkerClusterer(map, markers, { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' });
     }
   </script>
+  <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
+    </script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDu77ygF-I0m6ya86NO5Dl0KG2J_C6O6Gg&callback=initMap" async defer></script>
 </div>
 
