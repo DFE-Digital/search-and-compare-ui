@@ -24,7 +24,7 @@
 
     @if (!Model.FilterModel.DisplayAsMap && string.IsNullOrWhiteSpace(Model.FilterModel.query)) {
       <div class="govuk-grid-column-two-thirds">
-        <form action='@Url.Action("SortBy", "Results", Model.FilterModel.ToRouteValues())' method="POST">
+        <form action='@Url.Action("SortBy", "Results", Model.FilterModel.ToRouteValues())' class="govuk-form" method="POST">
           <div class="govuk-form-group">
             <label class="govuk-label govuk-label--inline sortedby-label" for="sortby">Sorted by</label>
             <select class="govuk-select trigger-result-update sortby-selector"
@@ -44,9 +44,7 @@
                     }
             </select>
           </div>
-          <noscript>
-            <input class="button" type="submit" value="Update" aria-label="Update sort order"/>
-          </noscript>
+          <input class="govuk-button" type="submit" value="Update" aria-label="Update sort order"/>
         </form>
       </div>
     }
