@@ -14,7 +14,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Services
         [SetUp]
         public void SetUp()
         {
-            geocoder = new Geocoder("AIzaSyC6CQg447XEuO95H6aIUkMKVqEeFwrboUk", new HttpClient());
+            geocoder = new Geocoder("AIzaSyBytKgqIJS_7wysO7ZFSgUb0I549SmX3yw", new HttpClient());
         }
 
         [Test]
