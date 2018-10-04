@@ -4,13 +4,18 @@
   var mapModel = Model.Map;
 }
 
-<div class="search-results-header">
-  <p class="search-results-header__count govuk-body">@string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:n0}", @mapModel.CourseGroups.Count()) courses found</p>
-  <p class="search-results-header__new-search govuk-body">
-    <a href='@Url.Action("LocationWizard", "Filter")' class="govuk-link">New search</a>
-  </p>
-  @Html.Partial("SortBy", Model)
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-one-half">
+    <p class="govuk-body search-results__count">@string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:n0}", @mapModel.CourseGroups.Count()) courses found</p>
+  </div>
+  <div class="govuk-grid-column-one-half">
+    <p class="govuk-body search-results__new-search">
+      <a href='@Url.Action("LocationWizard", "Filter")' class="govuk-link">New search</a>
+    </p>
+  </div>
 </div>
+
+@Html.Partial("SortBy", Model)
 
 <div class="resultsmap" style="position: relative;">
   <div style="height: @(mapModel.Map.Height)px;" id="map"></div>
