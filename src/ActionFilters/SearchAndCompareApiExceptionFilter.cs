@@ -21,7 +21,7 @@ namespace GovUk.Education.SearchAndCompare.UI.ActionFilters
             _logger = logger;
         }
 
-         public void OnException(ExceptionContext context)
+        public void OnException(ExceptionContext context)
         {
 
            var searchAndCompareApiException = GetSearchAndCompareApiException(context.Exception);
