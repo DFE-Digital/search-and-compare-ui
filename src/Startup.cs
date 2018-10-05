@@ -17,7 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Serilog;
-
+using GovUk.Education.SearchAndCompare.UI.ActionFilters;
 namespace GovUk.Education.SearchAndCompare.UI
 {
     public class Startup
@@ -38,7 +38,10 @@ namespace GovUk.Education.SearchAndCompare.UI
             services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
 
             var sharedAssembly = typeof(CourseDetailsViewComponent).GetTypeInfo().Assembly;
-            services.AddMvc().AddApplicationPart(sharedAssembly);
+            services.AddMvc(options =>
+                options.Filters.Add(typeof(SearchAndCompareApiExceptionFilter))
+            ).AddApplicationPart(sharedAssembly);
+
             services.Configure<RazorViewEngineOptions>(o => o.FileProviders.Add(new EmbeddedFileProvider(sharedAssembly, "GovUk.Education.SearchAndCompare.UI.Shared")));
 
             var apiUri = Environment.GetEnvironmentVariable("API_URI") ?? Configuration.GetSection("ApiConnection").GetValue<string>("Uri");
