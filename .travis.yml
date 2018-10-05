@@ -12,16 +12,13 @@ env:
   - secure: smCYdgwSuPOlGvtFntqRjAgylc+MRP/ITJqC1ClP+X8ed/zlM5Fgda7OFAsIZBGvmD7c5g2sft/WXEjIeBZ8W7Oz9v975RG3sdt+g8VYQfB4oscyvHzteAbIDVbnoPEPiPKHAp+8oG3yVmzbxVsEcxlR8kN2dgbbHRlE1F82lT7e78CST1FvKV+wNemVC4cITBLR8SFPxy35I8FL8d7R7zQUGeeKqGenK72i9YvE9Zb3QAEe49HZ1JzdZyAQfxQLCYgip3h+e7Jp8TnnJwHDIrMd6VYjPEnDkfgwl1AqLw1jSbALit0ScfieQy0tZt+FlugQbzgv5gRoFQO48WPpk0Q90Xr9a4IUviiCMowGxUvZYwOJxQzz9cDeC7hjc7YH8z2IDDIXtIcDdMjiQIdY+u4hqWXkoJ5O7flB7QzBTI/a5TVuftgMW3G3Vr3bw6wMswTmFruxnanLhbVCgZ0xy0H7O/1M0KtdhLEAvEEmwQF/tje+yNhJJhiXz/S2yWQI62U6nkWbDXuz6q/U0S6Y6j46hU/5m2xoobo9MA017FSppGb0RF3VzYp3a8ez5PHe+fHQwSeQo168j5dy6tgLWRspD8fNEBfe/knSVZltQdNq74/xBGtytrjfQcl3lltaVrwD6uNRISPzK27YAVtzuNnIeqWhQJJonA0jglu6/w8=
 deploy:
 - provider: script
-  script: git fetch --unshallow && git push --force-with-lease https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-dev-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-dev-search-and-compare-ui-app.git
-    HEAD:refs/heads/master
+  script: git fetch --unshallow && git remote add deploy https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-dev-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-dev-search-and-compare-ui-app.git && git push --force-with-lease deploy HEAD:refs/remotes/deploy/master
   on: master
 - provider: script
-  script: git fetch --unshallow && git push --force-with-lease https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-staging-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-staging-search-and-compare-ui-app.git
-    HEAD:refs/heads/master
+  script: git fetch --unshallow && git remote add deploy https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-staging-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-staging-search-and-compare-ui-app.git && git push --force-with-lease deploy HEAD:refs/remotes/deploy/master
   on: staging
 - provider: script
-  script: git fetch --unshallow && git push --force-with-lease https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-prod-2018-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-prod-2018-search-and-compare-ui-app.git
-    HEAD:refs/heads/master
+  script: git fetch --unshallow && git remote add deploy https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-prod-2018-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-prod-2018-search-and-compare-ui-app.git && git push --force-with-lease deploy HEAD:refs/remotes/deploy/master
   on: production
 - provider: script
   skip_cleanup: true
