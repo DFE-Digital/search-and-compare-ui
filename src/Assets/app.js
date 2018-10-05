@@ -4,6 +4,7 @@ import BackLink from './Javascript/back-link';
 import Accordion from './Javascript/accordion';
 import Toggle from './Javascript/toggle';
 import './Javascript/analytics.js';
+import './Javascript/map.js';
 import './Javascript/typeahead.jquery.js';
 import './Styles/site.scss';
 
