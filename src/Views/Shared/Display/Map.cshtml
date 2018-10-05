@@ -19,79 +19,11 @@
 
 <div class="search-results-map" style="position: relative;">
   <div style="height: @(mapModel.Map.Height)px;" id="map"></div>
-  <script>
-    var map;
-    function initMap() {
-      function createClickableMarker(map, label, position, href, icon) {
-        var marker = new google.maps.Marker({
-          map: map,
-          label: label,
-          position: position,
-          icon: icon
-        });
-        marker.addListener('click', function () { window.location = href; });
-        return marker;
-      }
-
-      var mapElement = document.getElementById('map');
-
-      map = new google.maps.Map(mapElement, {
-        center: {
-          lat: @(mapModel.Map.Centre.Latitude),
-          lng: @(mapModel.Map.Centre.Longitude)
-        },
-        zoom: @(mapModel.Map.ZoomLevel),
-        mapTypeControl: false,
-        scaleControl: false,
-        streetViewControl: false,
-        rotateControl: false,
-        fullscreenControl: false
-      });
-
-      var customMarker = {
-        url: '/images/map-marker.png',
-        scaledSize: new google.maps.Size(20, 32),
-        origin: new google.maps.Point(0, 0),
-        anchor: new google.maps.Point(0, 32)
-      };
-
-      // Searched location
-      var meMarker = createClickableMarker(map, '',
-        {
-          lat: @(mapModel.Map.MyLocation.Latitude),
-          lng: @(mapModel.Map.MyLocation.Longitude)
-        },
-        '@Html.Raw(@Url.Action("Location", "Filter", Model.FilterModel.ToRouteValues()))'
-      );
-
-      // All training locations
-      var markers = [
-        @foreach (var courseGroup in Model.Map.CourseGroups) {
-          <text>
-            createClickableMarker(
-              map,
-              '', {
-                lat: @(courseGroup.Coordinates.Latitude),
-                lng: @(courseGroup.Coordinates.Longitude)
-              },
-              '#@(courseGroup.Area.Href)',
-              customMarker
-            ),
-          </text>
-        }
-      ];
-
-      var markerCluster = new MarkerClusterer(map, markers, { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' });
-    }
-  </script>
-  <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
-    </script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDu77ygF-I0m6ya86NO5Dl0KG2J_C6O6Gg&callback=initMap" async defer></script>
 </div>
 
-<ul class="govuk-list search-results">
+<ul class="govuk-list govuk-list--courses search-results">
   @foreach (var courseGroup in mapModel.CourseGroups) {
-    <li id="@(courseGroup.Area.Href)">
+    <li>
       <h3 class="govuk-heading-m">
         @courseGroup.Courses.First().Provider.Name
       </h3>
@@ -104,15 +36,46 @@
           <dt class="govuk-list--description__label">Address</dt>
           <dd>@courseGroup.Courses.First().ProviderLocation.Address</dd>
         }
-        @foreach (var course in courseGroup.Courses) {
-          <dt class="govuk-list--description__label">Course Name</dt>
-          <dd>
-            <a href='@Url.Action("Index", "Course", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new {courseCode = course.ProgrammeCode, providerCode = course.Provider.ProviderCode}))' class="link">
-              @course.Name
-            </a>
-          </dd>
-        }
       </dl>
+      <h4 class="govuk-heading-s">Courses</h4>
+      <ul class="govuk-list">
+        @foreach (var course in courseGroup.Courses) {
+          <li>
+            <a href='@(Url.Action("Index", "Course", new {courseCode = course.ProgrammeCode, providerCode = course.Provider.ProviderCode}))' class="govuk-link">
+              @course.Name
+              (@course.Mod)
+            </a>
+          </li>
+        }
+      </ul>
     </li>
   }
 </ul>
+
+<script>
+  window.locations = [
+    @foreach (var courseGroup in Model.Map.CourseGroups)
+    {
+      <text>
+        {
+          "title": "@(courseGroup.Courses.First().Provider.Name)",
+          "lat": @(courseGroup.Coordinates.Latitude),
+          "lng": @(courseGroup.Coordinates.Longitude),
+          "courses":
+          [
+            @foreach (var course in courseGroup.Courses)
+            {
+              <text>
+                {
+                  "name": "@(course.Name)",
+                  "qual": "@(course.Mod)",
+                  "url": "@(Url.Action("Index", "Course", new {courseCode = course.ProgrammeCode, providerCode = course.Provider.ProviderCode}))"
+                },
+              </text>
+            }
+          ]
+        },
+      </text>
+    }
+  ]
+</script>
