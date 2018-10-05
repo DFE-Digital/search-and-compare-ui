@@ -71,6 +71,14 @@ module.exports = {
         from: 'node_modules/govuk-frontend/assets/images/favicon.ico',
         to: '.'
       },
+      {
+        from: 'Public/robots.txt',
+        to: '.'
+      },
+      {
+        from: 'Public/sitemap.txt',
+        to: '.'
+      },
     ]),
   ],
   module: {

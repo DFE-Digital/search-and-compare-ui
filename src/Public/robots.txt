@@ -1,0 +1,3 @@
+Sitemap: https://find-postgraduate-teacher-training.education.gov.uk/sitemap.txt
+User-agent: *
+Allow: /
