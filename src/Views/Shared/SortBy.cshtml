@@ -23,7 +23,7 @@
     }
 
     @if (!Model.FilterModel.DisplayAsMap && string.IsNullOrWhiteSpace(Model.FilterModel.query)) {
-      <div class="govuk-grid-column-two-thirds">
+      <div class="@(Model.MapsEnabled ? "govuk-grid-column-two-thirds": "govuk-grid-column-full")">
         <form action='@Url.Action("SortBy", "Results", Model.FilterModel.ToRouteValues())' class="govuk-form" method="POST">
           <div class="govuk-form-group">
             <label class="govuk-label govuk-label--inline sortedby-label" for="sortby">Sorted by</label>

@@ -42,4 +42,11 @@
     content: ":";
     display: inline-block;
   }
+
+  &__hint {
+    @include govuk-font($size: 16, $weight: normal);
+    color: $govuk-secondary-text-colour;
+    display: block;
+    margin-bottom: govuk-space(1);
+  }
 }
