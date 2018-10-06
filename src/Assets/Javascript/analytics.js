@@ -44,7 +44,7 @@ const initFormAnalytics = () => {
 const initExternalLinkAnalytics = () => {
   // This will attach event listeners to all links with hrefs that point to external resource.
 
-  const externalLinkSelector = 'a[href^="http"]:not(a[href*="' + window.location.hostname + '"])'
+  const externalLinkSelector = 'a[href^="http"]:not([href*="' + window.location.hostname + '"])'
 
   const trackClickEvent = event => {
     triggerAnalyticsEvent("External Link Clicked", event.target.getAttribute("href"))
