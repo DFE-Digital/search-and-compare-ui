@@ -23,10 +23,10 @@
   },
   "buildpacks": [
     {
-      "url": "https://github.com/heroku/heroku-buildpack-nodejs"
+      "url": "https://github.com/jincod/dotnetcore-buildpack"
     },
     {
-      "url": "https://github.com/jincod/dotnetcore-buildpack"
+      "url": "https://github.com/heroku/heroku-buildpack-nodejs"
     }
   ]
 }
