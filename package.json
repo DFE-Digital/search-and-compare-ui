@@ -1,0 +1,9 @@
+{
+  "name": "dfe-search-and-compare-ui",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DFE-Digital/search-and-compare-ui.git"
+  },
+  "license": "ISC"
+}
