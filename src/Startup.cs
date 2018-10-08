@@ -17,7 +17,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Serilog;
-using GovUk.Education.SearchAndCompare.UI.ActionFilters;
+using GovUk.Education.SearchAndCompare.UI.Shared.Features;
+
+
 namespace GovUk.Education.SearchAndCompare.UI
 {
     public class Startup
@@ -49,6 +51,7 @@ namespace GovUk.Education.SearchAndCompare.UI
             services.AddSingleton<ISearchAndCompareApi>(provider => new SearchAndCompareApi(new HttpClient(), apiUri));
             services.AddScoped<AnalyticsPolicy>(provider => AnalyticsPolicy.FromEnv());
             services.AddScoped<AnalyticsAttribute>();
+            services.AddScoped<IFeatureFlags, FeatureFlags>();
             services.AddSingleton<IGeocoder>(provider => new Geocoder(Configuration.GetSection("ApiKeys").GetValue<string>("GoogleMaps"), new HttpClient()));
             services.AddScoped<IMapProvider>(provider => new MapProvider(new HttpClientProvider(), Configuration.GetSection("ApiKeys").GetValue<string>("GoogleMapsStatic")));
         }
