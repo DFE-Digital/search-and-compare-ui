@@ -37,8 +37,12 @@
           <dd>@courseGroup.Courses.First().ProviderLocation.Address</dd>
         }
       </dl>
-      <h4 class="govuk-heading-s">Courses</h4>
-      <ul class="govuk-list">
+      @if(courseGroup.Courses.Count() > 1)
+      {
+        <h4 class="govuk-heading-s govuk-!-margin-0">@courseGroup.Courses.Count() courses</h4>
+      }
+
+      <ul class="govuk-list govuk-list--courses">
         @foreach (var course in courseGroup.Courses) {
           <li>
             <a href='@(Url.Action("Index", "Course", new {courseCode = course.ProgrammeCode, providerCode = course.Provider.ProviderCode}))' class="govuk-link">
@@ -61,7 +65,7 @@
           "title": "@(courseGroup.Courses.First().Provider.Name)",
           "lat": "@(courseGroup.Coordinates.Latitude)",
           "lng": "@(courseGroup.Coordinates.Longitude)",
-          "no_of_courses": "@(courseGroup.Courses.Count())",
+          "no_of_courses": @(courseGroup.Courses.Count()),
           "distance": "@(courseGroup.Courses.First().Distance.FormattedDistance())",
           "courses":
           [
@@ -70,7 +74,7 @@
               <text>
                 {
                   "name": "@(course.Name)",
-                  "code": "@(course.Provider.ProviderCode)",
+                  "code": "@(course.ProgrammeCode)",
                   "qual": "@(course.Mod)",
                   "url": "@(Url.Action("Index", "Course", new {courseCode = course.ProgrammeCode, providerCode = course.Provider.ProviderCode}))"
                 },
