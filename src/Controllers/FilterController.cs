@@ -11,11 +11,12 @@ using GovUk.Education.SearchAndCompare.UI.Utils;
 using GovUk.Education.SearchAndCompare.UI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
+using GovUk.Education.SearchAndCompare.UI.ActionFilters;
+
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
 
-    //[Authorize]
-    public class FilterController : CommonAttributesControllerBase
+    public class FilterController : Controller
     {
         private readonly ISearchAndCompareApi _api;
 

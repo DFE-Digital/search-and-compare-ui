@@ -49,8 +49,6 @@ namespace GovUk.Education.SearchAndCompare.UI
             var apiUri = Environment.GetEnvironmentVariable("API_URI") ?? Configuration.GetSection("ApiConnection").GetValue<string>("Uri");
             _logger.LogInformation("Using API base URL: " + apiUri);
             services.AddSingleton<ISearchAndCompareApi>(provider => new SearchAndCompareApi(new HttpClient(), apiUri));
-            services.AddScoped<AnalyticsPolicy>(provider => AnalyticsPolicy.FromEnv());
-            services.AddScoped<AnalyticsAttribute>();
             services.AddScoped<IFeatureFlags, FeatureFlags>();
             services.AddSingleton<IGeocoder>(provider => new Geocoder(Configuration.GetSection("ApiKeys").GetValue<string>("GoogleMaps"), new HttpClient()));
             services.AddScoped<IMapProvider>(provider => new MapProvider(new HttpClientProvider(), Configuration.GetSection("ApiKeys").GetValue<string>("GoogleMapsStatic")));
