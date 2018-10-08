@@ -36,9 +36,15 @@
         google.maps.event.addListener(marker, 'click', e => {
           const windowsContent = `
             <h4 class="govuk-heading-s">${data.title}</h4>
+            <p class="govuk-body">${data.distance} away</p>
+            <h5 class="govuk-heading-s">${data.no_of_courses} courses</h5>
             <ul class="govuk-list">
               ${data.courses.map(course =>
-                `<li><a href="${course.url}">${course.name}(${course.qual})</a></li>`
+                `<li>
+                  <a href="${course.url}">${course.name}(${course.code})</a>
+                  <br>
+                  ${course.qual}
+                </li>`
               ).join('')}
             </ul>
           `

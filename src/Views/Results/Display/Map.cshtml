@@ -59,8 +59,10 @@
       <text>
         {
           "title": "@(courseGroup.Courses.First().Provider.Name)",
-          "lat": @(courseGroup.Coordinates.Latitude),
-          "lng": @(courseGroup.Coordinates.Longitude),
+          "lat": "@(courseGroup.Coordinates.Latitude)",
+          "lng": "@(courseGroup.Coordinates.Longitude)",
+          "no_of_courses": "@(courseGroup.Courses.Count())",
+          "distance": "@(courseGroup.Courses.First().Distance.FormattedDistance())",
           "courses":
           [
             @foreach (var course in courseGroup.Courses)
@@ -68,6 +70,7 @@
               <text>
                 {
                   "name": "@(course.Name)",
+                  "code": "@(course.Provider.ProviderCode)",
                   "qual": "@(course.Mod)",
                   "url": "@(Url.Action("Index", "Course", new {courseCode = course.ProgrammeCode, providerCode = course.Provider.ProviderCode}))"
                 },
