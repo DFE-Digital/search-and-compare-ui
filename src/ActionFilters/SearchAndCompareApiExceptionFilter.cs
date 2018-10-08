@@ -44,7 +44,10 @@ namespace GovUk.Education.SearchAndCompare.UI.ActionFilters
             if(result == null)
             {
                 var aggregateException = exception as AggregateException;
-                result = aggregateException.InnerExceptions.FirstOrDefault(x => x is SearchAndCompareApiException) as SearchAndCompareApiException;
+                if(aggregateException != null)
+                {
+                    result = aggregateException.InnerExceptions.FirstOrDefault(x => x is SearchAndCompareApiException) as SearchAndCompareApiException;
+                }
             }
 
             return result;
