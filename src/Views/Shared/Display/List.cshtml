@@ -35,7 +35,7 @@
           </dd>
           if (item.DistanceAddress != null) {
             <dt class="govuk-list--description__label">Nearest address</dt>
-            <dd>@((item.DistanceAddress ?? item.ProviderLocation.Address).Replace("\n", ", "))</dd>
+            <dd>@(item.DistanceAddress.Replace("\n", ", "))</dd>
           }
         }
         @if(!string.IsNullOrEmpty(item.Mod) && item.Mod.Length > 1)
@@ -52,7 +52,7 @@
         }
         @if (item.DistanceAddress == null && item.ProviderLocation != null) {
           <dt class="govuk-list--description__label">Main address</dt>
-          <dd>@((item.DistanceAddress ?? item.ProviderLocation.Address).Replace("\n", ", "))</dd>
+          <dd>@(item.ProviderLocation.Address.Replace("\n", ", "))</dd>
         }
       </dl>
     </li>
