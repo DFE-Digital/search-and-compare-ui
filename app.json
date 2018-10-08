@@ -5,6 +5,15 @@
   "env": {
     "API_URI": {
       "required": true
+    },
+    "FEATURE_MAPS": {
+      "required": true
+    },
+    "ApiKeys__GoogleMaps": {
+      "required": true
+    },
+    "ApiKeys__GoogleMapsStatic": {
+      "required": true
     }
   },
   "formation": {
