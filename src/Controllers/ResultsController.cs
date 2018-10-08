@@ -8,6 +8,7 @@ using GovUk.Education.SearchAndCompare.UI.Services.Maps.Models;
 using GovUk.Education.SearchAndCompare.UI.ViewModels;
 using GovUk.Education.SearchAndCompare.ViewFormatters;
 using GovUk.Education.SearchAndCompare.ViewModels;
+using GovUk.Education.SearchAndCompare.UI.Shared.Features;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -20,11 +21,13 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
     {
         private readonly ISearchAndCompareApi api;
         private readonly IMapProvider mapProvider;
+        private readonly IFeatureFlags _featureFlags;
 
-        public ResultsController(ISearchAndCompareApi api, IMapProvider mapProvider)
+        public ResultsController(ISearchAndCompareApi api, IMapProvider mapProvider, IFeatureFlags featureFlags)
         {
             this.api = api;
             this.mapProvider = mapProvider;
+            _featureFlags = featureFlags;
         }
 
         [HttpPost("results/map")]
@@ -79,7 +82,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                 filteredSubjects = new FilteredList<Subject>(subjects, subjects.Count);
             }
 
-            var mapsEnabled = !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("FEATURE_MAPS"));
+            var mapsEnabled = _featureFlags.Maps;
 
             PaginatedList<Course> courses;
             var queryFilter = filter.ToQueryFilter();
