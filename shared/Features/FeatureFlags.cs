@@ -7,10 +7,10 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.Features
 {
     public class FeatureFlags : IFeatureFlags
     {
-        private readonly IConfigurationSection _config;
-        private const string APPLY_2019 = "APPLY_2019";
+        private readonly IConfiguration _config;
+        private const string APPLY_2019 = "FEATURE_APPLY_2019";
 
-        public FeatureFlags(IConfigurationSection config)
+        public FeatureFlags(IConfiguration config)
         {
             _config = config;
         }
