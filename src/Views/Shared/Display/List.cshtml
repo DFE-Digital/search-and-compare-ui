@@ -34,6 +34,10 @@
             </span>
           </dd>
         }
+        @if (item.DistanceAddress != null || item.ProviderLocation != null) {
+          <dt class="govuk-list--description__label">Address</dt>
+          <dd>@((item.DistanceAddress ?? item.ProviderLocation.Address).Replace("\n", ", "))</dd>
+        }
         @if(!string.IsNullOrEmpty(item.Mod) && item.Mod.Length > 1)
         {
           <dt class="govuk-list--description__label">Course offered</dt>
@@ -41,10 +45,6 @@
         }
         <dt class="govuk-list--description__label">Financial support</dt>
         <dd>@item.FundingOptions()</dd>
-        @if (item.DistanceAddress != null || item.ProviderLocation != null) {
-          <dt class="govuk-list--description__label">Address</dt>
-          <dd>@((item.DistanceAddress ?? item.ProviderLocation.Address).Replace("\n", ", "))</dd>
-        }
         @if (!string.IsNullOrEmpty(item.AccreditingProvider?.Name) && item.Provider.Name != item.AccreditingProvider?.Name)
         {
           <dt class="govuk-list--description__label">Accredited provider</dt>
