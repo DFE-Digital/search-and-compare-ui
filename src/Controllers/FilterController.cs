@@ -1,7 +1,6 @@
 using GovUk.Education.SearchAndCompare.Domain.Client;
 using GovUk.Education.SearchAndCompare.Domain.Filters.Enums;
 using GovUk.Education.SearchAndCompare.Domain.Models;
-using GovUk.Education.SearchAndCompare.UI.Exceptions;
 using GovUk.Education.SearchAndCompare.UI.Filters;
 using GovUk.Education.SearchAndCompare.UI.Filters.Enums;
 using GovUk.Education.SearchAndCompare.UI.Services;
@@ -9,6 +8,7 @@ using GovUk.Education.SearchAndCompare.UI.Utils;
 using GovUk.Education.SearchAndCompare.UI.ViewModels;
 using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -265,7 +265,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             try {
                 coords = await _geocoder.ResolvePostCodeAsync(lq);
             }
-            catch(GoogleMapsApiServiceException ex)
+            catch(Exception ex)
             {
                 _telemetryClient.TrackException(ex);
             }

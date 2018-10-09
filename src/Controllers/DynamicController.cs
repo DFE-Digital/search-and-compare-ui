@@ -1,11 +1,11 @@
+using GovUk.Education.SearchAndCompare.Domain.Client;
+using GovUk.Education.SearchAndCompare.UI.Services;
+using Microsoft.ApplicationInsights;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GovUk.Education.SearchAndCompare.Domain.Client;
-using GovUk.Education.SearchAndCompare.UI.Exceptions;
-using GovUk.Education.SearchAndCompare.UI.Services;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.ApplicationInsights;
 
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
@@ -43,7 +43,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             {
                 res = await _geocoder.SuggestLocationsAsync(query);
             }
-            catch(GoogleMapsApiServiceException ex)
+            catch(Exception ex)
             {
                 _telemetryClient.TrackException(ex);
             }

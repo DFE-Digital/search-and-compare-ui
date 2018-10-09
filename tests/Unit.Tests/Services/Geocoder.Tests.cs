@@ -23,7 +23,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Services
         [Test]
         public void Throws_GoogleMapsApiServiceException()
         {
-            var nullApiGeocoder = new Geocoder(null, new HttpClient());
+            var nullApiGeocoder = new Geocoder("bad_key", new HttpClient());
             Action act1 = () => nullApiGeocoder.ResolvePostCodeAsync("asdasdasdasd").Wait();
             act1.Should().ThrowExactly<GoogleMapsApiServiceException>();
 

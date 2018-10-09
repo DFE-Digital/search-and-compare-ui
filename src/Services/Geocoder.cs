@@ -17,7 +17,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
         private readonly HttpClient client;
 
         private static string okStatus = "OK";
-        private static string zeroResultStatus = "ZERO_RESULTS";
 
         private static IList<string> badStatus = new List<string>(){
             "OVER_QUERY_LIMIT",
@@ -49,19 +48,25 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
             {
                 throw new GoogleMapsApiServiceException($"postCode: {postCode}, url: {url}, content: {content}");
             } else {
-                JArray addressComponents = json.results[0].address_components;
-                var isInUk = addressComponents.Any(IsIndicativeOfUk);
-
-                if (isInUk == false)
+                if(status.Equals(okStatus, StringComparison.InvariantCultureIgnoreCase))
                 {
+                    JArray addressComponents = json.results[0].address_components;
+                    var isInUk = addressComponents.Any(IsIndicativeOfUk);
+
+                    if (isInUk == false)
+                    {
+                        return null;
+                    }
+
+                    string formatted = json.results[0].formatted_address;
+                    double lat = json.results[0].geometry.location.lat;
+                    double lng = json.results[0].geometry.location.lng;
+
+                    return new Coordinates(lat, lng, postCode, formatted);
+                } else {
                     return null;
                 }
 
-                string formatted = json.results[0].formatted_address;
-                double lat = json.results[0].geometry.location.lat;
-                double lng = json.results[0].geometry.location.lng;
-
-                return new Coordinates(lat, lng, postCode, formatted);
             }
         }
 
