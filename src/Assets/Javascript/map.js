@@ -66,6 +66,4 @@ const initGoogleMaps = () => {
   const markerCluster = new MarkerClusterer(map, markers, { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' })
 }
 
-if (typeof google !== "undefined" && window.locations) {
-  initGoogleMaps()
-}
+window.initGoogleMaps = initGoogleMaps
