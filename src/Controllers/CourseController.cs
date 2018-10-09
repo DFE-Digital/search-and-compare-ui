@@ -1,11 +1,8 @@
-using System.Linq;
 using GovUk.Education.SearchAndCompare.Domain.Client;
 using GovUk.Education.SearchAndCompare.UI.Filters;
 using GovUk.Education.SearchAndCompare.UI.Shared.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-
-using GovUk.Education.SearchAndCompare.UI.ActionFilters;
-using GovUk.Education.SearchAndCompare.UI.Services;
+using System.Linq;
 
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {

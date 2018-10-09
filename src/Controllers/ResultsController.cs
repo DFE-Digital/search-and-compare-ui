@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using GovUk.Education.SearchAndCompare.Domain.Client;
 using GovUk.Education.SearchAndCompare.Domain.Filters.Enums;
 using GovUk.Education.SearchAndCompare.Domain.Lists;
@@ -13,10 +9,10 @@ using GovUk.Education.SearchAndCompare.UI.ViewModels;
 using GovUk.Education.SearchAndCompare.ViewFormatters;
 using GovUk.Education.SearchAndCompare.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-
-using GovUk.Education.SearchAndCompare.UI.ActionFilters;
-using GovUk.Education.SearchAndCompare.UI.Services;
-using Microsoft.AspNetCore.Mvc.Filters;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {

@@ -1,10 +1,4 @@
-﻿using System.Diagnostics;
-using GovUk.Education.SearchAndCompare.UI.ViewModels;
-using GovUk.Education.SearchAndCompare.UI.Services;
-using Microsoft.AspNetCore.Mvc;
-using GovUk.Education.SearchAndCompare.UI.ActionFilters;
-
-using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {

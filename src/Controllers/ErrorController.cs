@@ -3,10 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-using GovUk.Education.SearchAndCompare.UI.ActionFilters;
-using GovUk.Education.SearchAndCompare.UI.Services;
-using Microsoft.AspNetCore.Mvc.Filters;
-
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
     [Route("error")]
