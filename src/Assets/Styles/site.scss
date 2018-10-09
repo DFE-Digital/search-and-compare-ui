@@ -38,6 +38,15 @@ $govuk-global-styles: true;
   margin-bottom: govuk-spacing(8);
 }
 
+// List of courses within search results map view
+.govuk-list .govuk-list--courses {
+  margin-top: 0;
+
+  li {
+    padding: 0;
+  }
+}
+
 // Fix alignment of paragraph below checkbox label
 .govuk-checkboxes__label + .govuk-body {
   padding-left: govuk-spacing(3);
@@ -70,9 +79,14 @@ $govuk-global-styles: true;
 .search-results {
   border-top: 1px solid $govuk-border-colour;
 
-  li {
+  > li {
     @include govuk-responsive-padding(6, "top");
+    border-top: 1px solid $govuk-border-colour;
     margin: 0;
+  }
+
+  li:first-child {
+    border-top: 0;
   }
 
   &__count {
@@ -146,6 +160,23 @@ $govuk-global-styles: true;
       display: inline;
       margin-right: 0.5em;
     }
+  }
+}
+
+// Google maps info window
+.search-info-window {
+  .govuk-heading-s {
+    @include govuk-responsive-margin(2, "bottom");
+  }
+
+  .govuk-body,
+  .govuk-list {
+    @include govuk-font($size: 16, $line-height: 1.5);
+    @include govuk-responsive-margin(2, "bottom");
+  }
+
+  .govuk-list {
+    margin-bottom: -10px;
   }
 }
 
