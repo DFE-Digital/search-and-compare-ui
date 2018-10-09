@@ -1,8 +1,11 @@
-using GovUk.Education.SearchAndCompare.Domain.Client;
-using GovUk.Education.SearchAndCompare.UI.Services;
-using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GovUk.Education.SearchAndCompare.Domain.Client;
+using GovUk.Education.SearchAndCompare.UI.Exceptions;
+using GovUk.Education.SearchAndCompare.UI.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.ApplicationInsights;
 
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
@@ -13,10 +16,13 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
         private readonly IGeocoder _geocoder;
 
-        public DynamicController(ISearchAndCompareApi api, IGeocoder geocoder)
+        private readonly TelemetryClient _telemetryClient;
+
+        public DynamicController(ISearchAndCompareApi api, IGeocoder geocoder, TelemetryClient telemetryClient)
         {
             _api = api;
             _geocoder = geocoder;
+            _telemetryClient = telemetryClient;
         }
 
         [HttpGet("/dynamic/providersuggest")]
@@ -31,7 +37,17 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [HttpGet("/dynamic/locationsuggest")]
         public async Task<JsonResult> LocationSuggest(string query)
         {
-            var res = await _geocoder.SuggestLocationsAsync(query);
+            IEnumerable<string> res = new List<string>();
+
+            try
+            {
+                res = await _geocoder.SuggestLocationsAsync(query);
+            }
+            catch(GoogleMapsApiServiceException ex)
+            {
+                _telemetryClient.TrackException(ex);
+            }
+
             return Json(res.Count() > 5 ? res.Take(5) : res);
         }
     }
