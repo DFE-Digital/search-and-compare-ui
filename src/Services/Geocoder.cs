@@ -16,6 +16,15 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
         private readonly string apiKey;
         private readonly HttpClient client;
 
+        private static string okStatus = "OK";
+        private static string zeroResultStatus = "ZERO_RESULTS";
+
+        private static IList<string> badStatus = new List<string>(){
+            "OVER_QUERY_LIMIT",
+            "REQUEST_DENIED",
+            "INVALID_REQUEST",
+            "UNKNOWN_ERROR"};
+
         public Geocoder(string apiKey, HttpClient client)
         {
             this.apiKey = apiKey;
@@ -35,7 +44,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
             var content = await response.Content.ReadAsStringAsync();
             dynamic json = JsonConvert.DeserializeObject(content);
 
-            if ("OK" != (string) json.status)
+            var status = (string) json.status;
+            if (badStatus.Any(x => x.Equals(status, StringComparison.InvariantCultureIgnoreCase)))
             {
                 throw new GoogleMapsApiServiceException($"postCode: {postCode}, url: {url}, content: {content}");
             } else {
@@ -70,15 +80,19 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
 
             var content = await response.Content.ReadAsStringAsync();
             dynamic json = JsonConvert.DeserializeObject(content);
+            var status = (string) json.status;
 
             var res = new List<string>();
-            if ("OK" != (string) json.status)
+            if (badStatus.Any(x => x.Equals(status, StringComparison.InvariantCultureIgnoreCase)))
             {
                 throw new GoogleMapsApiServiceException($"input: {input}, url: {url}, content: {content}");
             } else {
-                foreach (var prediction in json.predictions)
+                if(status.Equals(okStatus, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    res.Add((string) prediction.description);
+                    foreach (var prediction in json.predictions)
+                    {
+                        res.Add((string) prediction.description);
+                    }
                 }
             }
 
