@@ -150,7 +150,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                 return RedirectToAction(isInWizard ? "LocationWizard" : "Location", filter.ToRouteValues());
             }
 
-            var coords = await _geocoder.ResolvePostCodeAsync(filter.lq);
+            var coords = await ResolvePostCodeAsync(filter.lq);
             if (coords == null)
             {
                 TempData.Put("Errors", new ErrorViewModel("lq", "Postcode, town or city", "We couldn't find this location, please check your input and try again.", Url.Action("Location")));
@@ -169,20 +169,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             return isInWizard
                 ? RedirectToAction("SubjectWizard", filter.ToRouteValues())
                 : RedirectToAction("Index", "Results", filter.ToRouteValues());
-        }
-
-        private async Task<Coordinates> ResolvePostCodeAsync(string lq)
-        {
-            Coordinates coords = null;
-            try {
-                coords = await _geocoder.ResolvePostCodeAsync(lq);
-            }
-            catch(GoogleMapsApiServiceException ex)
-            {
-                _telemetryClient.TrackException(ex);
-            }
-
-            return coords;
         }
 
         [HttpGet("/")]
@@ -271,6 +257,20 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         {
             model.page = null;
             return RedirectToAction("Index", "Results", model.ToRouteValues());
+        }
+
+        private async Task<Coordinates> ResolvePostCodeAsync(string lq)
+        {
+            Coordinates coords = null;
+            try {
+                coords = await _geocoder.ResolvePostCodeAsync(lq);
+            }
+            catch(GoogleMapsApiServiceException ex)
+            {
+                _telemetryClient.TrackException(ex);
+            }
+
+            return coords;
         }
     }
 }
