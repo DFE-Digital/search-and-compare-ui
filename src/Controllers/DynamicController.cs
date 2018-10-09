@@ -1,13 +1,13 @@
-using System.Linq;
-using System.Threading.Tasks;
 using GovUk.Education.SearchAndCompare.Domain.Client;
 using GovUk.Education.SearchAndCompare.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
 
-    public class DynamicController : CommonAttributesControllerBase
+    public class DynamicController : Controller
     {
         private readonly ISearchAndCompareApi _api;
 

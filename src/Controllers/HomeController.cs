@@ -2,7 +2,7 @@
 
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
-    public class HomeController : CommonAttributesControllerBase
+    public class HomeController : Controller
     {
         public IActionResult Error()
         {

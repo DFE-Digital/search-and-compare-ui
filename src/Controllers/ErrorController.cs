@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
     [Route("error")]
-    public class ErrorController : CommonAttributesControllerBase
+    public class ErrorController : Controller
     {
         private readonly ILogger _logger;
         public ErrorController(ILogger<ErrorController> logger)

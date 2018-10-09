@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
-    public class RedirectsController : CommonAttributesControllerBase
+    public class RedirectsController : Controller
     {
 
         [HttpGet("/start/location")]

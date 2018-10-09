@@ -1,12 +1,8 @@
-﻿using System.Diagnostics;
-using GovUk.Education.SearchAndCompare.UI.ViewModels;
-using GovUk.Education.SearchAndCompare.UI.Services;
-using Microsoft.AspNetCore.Mvc;
-using GovUk.Education.SearchAndCompare.UI.ActionFilters;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
-    public class LegalController : CommonAttributesControllerBase
+    public class LegalController : Controller
     {
         [HttpGet("cookies")]
         public IActionResult Cookies()
