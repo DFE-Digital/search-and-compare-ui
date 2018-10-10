@@ -13,7 +13,7 @@
 
 @if (string.IsNullOrWhiteSpace(Model.FilterModel.query))
 {
-  @Html.Partial("SortBy", Model)
+  @await Html.PartialAsync("SortBy", Model)
 }
 
 <ul class="govuk-list search-results">
@@ -58,4 +58,4 @@
     </li>
   }
 </ul>
-@Html.Partial("Pagination", Model)
+@await Html.PartialAsync("Pagination", Model)

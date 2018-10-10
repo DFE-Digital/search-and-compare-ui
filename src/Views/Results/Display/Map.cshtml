@@ -15,7 +15,7 @@
   </div>
 </div>
 
-@Html.Partial("SortBy", Model)
+@await Html.PartialAsync("SortBy", Model)
 
 <div class="search-results-map" style="position: relative;">
   <div style="height: @(mapModel.Map.Height)px;" id="map"></div>

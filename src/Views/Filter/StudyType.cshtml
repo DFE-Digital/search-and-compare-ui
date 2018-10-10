@@ -5,7 +5,7 @@
 }
 
 
-@Html.Partial("Back", new BackLinkViewModel {
+@await Html.PartialAsync("Back", new BackLinkViewModel {
   Href = Url.Action("Index", "Results", Model.ToRouteValues()),
   Title = "Back to search results"
 })

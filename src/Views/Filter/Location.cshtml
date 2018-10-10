@@ -8,13 +8,13 @@
 
 @if (!isInWizard)
 {
-  @Html.Partial("Back", new BackLinkViewModel { Href = Url.Action("Index", "Results", Model.FilterModel.ToRouteValues()), Title = "Back to search results" })
+  @await Html.PartialAsync("Back", new BackLinkViewModel { Href = Url.Action("Index", "Results", Model.FilterModel.ToRouteValues()), Title = "Back to search results" })
 }
 
 <main class="govuk-main-wrapper" id="main-content" role="main">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      @Html.Partial("Error", Model.Errors)
+      @await Html.PartialAsync("Error", Model.Errors)
 
       <form action='@Url.Action(isInWizard ? "LocationWizard" : "Location", "Filter", Model.FilterModel.ToRouteValues())' method="POST" data-ga-event-form="Location">
         <fieldset role="radiogroup" aria-required="true" class="govuk-fieldset">

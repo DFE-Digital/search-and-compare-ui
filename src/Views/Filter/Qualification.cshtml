@@ -4,7 +4,7 @@
   ViewBag.Title = $"Filter by qualification";
 }
 
-@Html.Partial("Back", new BackLinkViewModel { Href = Url.Action("Index", "Results", Model.ToRouteValues()), Title = "Back to search results"})
+@await Html.PartialAsync("Back", new BackLinkViewModel { Href = Url.Action("Index", "Results", Model.ToRouteValues()), Title = "Back to search results"})
 
 <main class="govuk-main-wrapper" id="main-content" role="main">
   <div class="govuk-grid-row">
