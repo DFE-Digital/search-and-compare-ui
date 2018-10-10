@@ -50,7 +50,7 @@ namespace GovUk.Education.SearchAndCompare.UI
             _logger.LogInformation("Using API base URL: " + apiUri);
             services.AddSingleton<ISearchAndCompareApi>(provider => new SearchAndCompareApi(new HttpClient(), apiUri));
             services.AddScoped<IFeatureFlags, FeatureFlags>();
-            services.AddSingleton<IGeocoder>(provider => new Geocoder(Configuration.GetSection("ApiKeys").GetValue<string>("GoogleMaps"), new HttpClient()));
+            services.AddSingleton<IGeocoder>(provider => new Geocoder(Configuration["google_cloud_platform_key_geocoding"], new HttpClient()));
             services.AddScoped<IMapProvider>(provider => new MapProvider(new HttpClientProvider(), Configuration.GetSection("ApiKeys").GetValue<string>("GoogleMapsStatic")));
         }
 

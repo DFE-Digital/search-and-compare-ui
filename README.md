@@ -26,7 +26,8 @@ Note: The `API_URI` value musn't have a trailing slash.
 
 ### Set maps config
 
-    dotnet user-secrets set google_cloud_platform_key [the-key]
+    dotnet user-secrets set google_cloud_platform_key_geocoding [the-key]
+    dotnet user-secrets set google_cloud_platform_key_maps [the-key]
 
 ## Logging
 
