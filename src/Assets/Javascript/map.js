@@ -62,8 +62,6 @@ const initGoogleMaps = () => {
 
   map.fitBounds(bounds)
   map.panToBounds(bounds)
-
-  const markerCluster = new MarkerClusterer(map, markers, { imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m' })
 }
 
 window.initGoogleMaps = initGoogleMaps
