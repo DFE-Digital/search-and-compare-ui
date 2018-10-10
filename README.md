@@ -7,9 +7,11 @@ See the [Search and Compare](https://github.com/DFE-Digital/search-and-compare) 
 # Building and Running
 
 ## Dotnet SDK
+
 You will need to have Version 2.1.5 of the dotnet SDK installed in order to build and run this.
 
 ## Running
+
 Run
 
     npm install
@@ -45,10 +47,26 @@ Command prompt
 
 For more information see:
 
-* https://github.com/serilog/serilog-settings-configuration
-* https://nblumhardt.com/2016/07/serilog-2-minimumlevel-override/
+- https://github.com/serilog/serilog-settings-configuration
+- https://nblumhardt.com/2016/07/serilog-2-minimumlevel-override/
 
 Serilog has been configured to spit logs out to both the console
 (for `dotnet run` testing & development locally) and Application Insights.
 
 Set the `APPINSIGHTS_INSTRUMENTATIONKEY` environment variable to tell Serilog the application insights key.
+
+## Running the JS unit tests
+
+To run the JS unit tests (full suite, with coverage output):
+
+```bash
+cd src
+npm install
+npm test
+```
+
+To run in watch mode (which also allows you to specify grep patterns to focus only on certain specs/suites, but without coverage output):
+
+```bash
+npm run test:watch
+```
