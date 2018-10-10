@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
 
+
 namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
 {
     [TestFixture]

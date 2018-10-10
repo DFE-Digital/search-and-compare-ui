@@ -1,7 +1,10 @@
+using System;
 using System.Linq;
+using GovUk.Education.SearchAndCompare.UI.Exceptions;
 using GovUk.Education.SearchAndCompare.UI.Services;
 using NUnit.Framework;
 using System.Net.Http;
+using FluentAssertions;
 
 namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Services
 {
@@ -15,6 +18,17 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Services
         public void SetUp()
         {
             geocoder = new Geocoder("AIzaSyBytKgqIJS_7wysO7ZFSgUb0I549SmX3yw", new HttpClient());
+        }
+
+        [Test]
+        public void Throws_GoogleMapsApiServiceException()
+        {
+            var nullApiGeocoder = new Geocoder("bad_key", new HttpClient());
+            Action act1 = () => nullApiGeocoder.ResolvePostCodeAsync("asdasdasdasd").Wait();
+            act1.Should().ThrowExactly<GoogleMapsApiServiceException>();
+
+            Action act2 = () => nullApiGeocoder.SuggestLocationsAsync("asdasdasdasd").Wait();
+            act2.Should().ThrowExactly<GoogleMapsApiServiceException>();
         }
 
         [Test]

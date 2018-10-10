@@ -1,11 +1,14 @@
 using GovUk.Education.SearchAndCompare.Domain.Client;
 using GovUk.Education.SearchAndCompare.Domain.Filters.Enums;
+using GovUk.Education.SearchAndCompare.Domain.Models;
 using GovUk.Education.SearchAndCompare.UI.Filters;
 using GovUk.Education.SearchAndCompare.UI.Filters.Enums;
 using GovUk.Education.SearchAndCompare.UI.Services;
 using GovUk.Education.SearchAndCompare.UI.Utils;
 using GovUk.Education.SearchAndCompare.UI.ViewModels;
+using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -20,10 +23,13 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
         private readonly IGeocoder _geocoder;
 
-        public FilterController(ISearchAndCompareApi api, IGeocoder geocoder)
+        private readonly TelemetryClient _telemetryClient;
+
+        public FilterController(ISearchAndCompareApi api, IGeocoder geocoder, TelemetryClient telemetryClient)
         {
             _api = api;
             _geocoder = geocoder;
+            _telemetryClient = telemetryClient;
         }
 
         [HttpGet("results/filter/subject")]
@@ -144,7 +150,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                 return RedirectToAction(isInWizard ? "LocationWizard" : "Location", filter.ToRouteValues());
             }
 
-            var coords = await _geocoder.ResolvePostCodeAsync(filter.lq);
+            var coords = await ResolvePostCodeAsync(filter.lq);
             if (coords == null)
             {
                 TempData.Put("Errors", new ErrorViewModel("lq", "Postcode, town or city", "We couldn't find this location, please check your input and try again.", Url.Action("Location")));
@@ -251,6 +257,20 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         {
             model.page = null;
             return RedirectToAction("Index", "Results", model.ToRouteValues());
+        }
+
+        private async Task<Coordinates> ResolvePostCodeAsync(string lq)
+        {
+            Coordinates coords = null;
+            try {
+                coords = await _geocoder.ResolvePostCodeAsync(lq);
+            }
+            catch(Exception ex)
+            {
+                _telemetryClient.TrackException(ex);
+            }
+
+            return coords;
         }
     }
 }

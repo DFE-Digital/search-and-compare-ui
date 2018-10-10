@@ -9,11 +9,14 @@ using GovUk.Education.SearchAndCompare.UI.Shared.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using NUnit.Framework;
+using Microsoft.ApplicationInsights;
+
 namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
 {
     [TestFixture]
     public class DynamicControllerTests
     {
+
         [Test]
         public async Task LocationSuggest_empty()
         {
@@ -22,7 +25,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             var geocoderApi = new Mock<IGeocoder>();
             geocoderApi.Setup(x => x.SuggestLocationsAsync(query))
                 .ReturnsAsync(new List<string>());
-            var controller = new DynamicController(mockApi.Object, geocoderApi.Object);
+
+            var controller = new DynamicController(mockApi.Object, geocoderApi.Object, TelemetryClientHelper.GetMocked());
 
             var res = await controller.LocationSuggest(query);
             var jsonResult = res as JsonResult;
@@ -42,7 +46,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             var geocoderApi = new Mock<IGeocoder>();
             geocoderApi.Setup(x => x.SuggestLocationsAsync(query))
                 .ReturnsAsync(new List<string>() { query});
-            var controller = new DynamicController(mockApi.Object, geocoderApi.Object);
+
+            var controller = new DynamicController(mockApi.Object, geocoderApi.Object, TelemetryClientHelper.GetMocked());
 
             var res = await controller.LocationSuggest(query);
             var jsonResult = res as JsonResult;

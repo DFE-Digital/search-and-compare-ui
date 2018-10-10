@@ -10,12 +10,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Moq;
 using NUnit.Framework;
+using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.Channel;
+using Microsoft.ApplicationInsights.Extensibility;
 
-namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
+namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
 {
+
     [TestFixture]
     public class SubjectGetTests
     {
+
         private readonly List<SubjectArea> _subjectAreas = new List<SubjectArea>
         {
             new SubjectArea
@@ -43,7 +48,8 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
         {
             var mockApi = GetMockApi(_subjectAreas);
             var mockGeocoder = new Mock<IGeocoder>();
-            _filterController = new FilterController(mockApi.Object, mockGeocoder.Object);
+
+            _filterController = new FilterController(mockApi.Object, mockGeocoder.Object, TelemetryClientHelper.GetMocked());
             var tempDataMock = new Mock<ITempDataDictionary>();
             _filterController.TempData = tempDataMock.Object;
 
