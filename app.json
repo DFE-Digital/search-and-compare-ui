@@ -9,10 +9,7 @@
     "FEATURE_MAPS": {
       "required": true
     },
-    "ApiKeys__GoogleMaps": {
-      "required": true
-    },
-    "ApiKeys__GoogleMapsStatic": {
+    "google_cloud_platform_key": {
       "required": true
     }
   },
