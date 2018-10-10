@@ -13,7 +13,7 @@
 @section bodyEnd {
   @if (Model.FilterModel.DisplayAsMap)
   {
-    <script src="https://maps.googleapis.com/maps/api/js?key=@(Environment.GetEnvironmentVariable("google_cloud_platform_key"))&callback=initGoogleMaps" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=@(Environment.GetEnvironmentVariable("google_cloud_platform_key_maps"))&callback=initGoogleMaps" async defer></script>
   }
 }
 

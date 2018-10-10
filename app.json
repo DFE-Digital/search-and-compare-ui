@@ -9,7 +9,10 @@
     "FEATURE_MAPS": {
       "required": true
     },
-    "google_cloud_platform_key": {
+    "google_cloud_platform_key_geocoding": {
+      "required": true
+    },
+    "google_cloud_platform_key_maps": {
       "required": true
     }
   },
