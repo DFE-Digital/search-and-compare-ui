@@ -41,25 +41,25 @@
         </button>
         <div class="govuk-toggle__target" id="searchFilters">
           @if (!string.IsNullOrWhiteSpace(Model.FilterModel.query)) {
-            @Html.Partial("Filters/Query", Model.FilterModel)
+            @await Html.PartialAsync("Filters/Query", Model.FilterModel)
           } else {
-            @Html.Partial("Filters/Location", Model.FilterModel)
+            @await Html.PartialAsync("Filters/Location", Model.FilterModel)
           }
-          @Html.Partial("Filters/Subject", Model)
-          @Html.Partial("Filters/StudyType", Model.FilterModel)
-          @Html.Partial("Filters/Qualification", Model.FilterModel)
-          @Html.Partial("Filters/Funding", Model.FilterModel)
+          @await Html.PartialAsync("Filters/Subject", Model)
+          @await Html.PartialAsync("Filters/StudyType", Model.FilterModel)
+          @await Html.PartialAsync("Filters/Qualification", Model.FilterModel)
+          @await Html.PartialAsync("Filters/Funding", Model.FilterModel)
         </div>
       </div>
     </div>
     <div class="govuk-grid-column-two-thirds">
       @if (Model.Courses == null || Model.Courses.TotalCount == 0) {
-        @Html.Partial("Display/Empty")
+        @await Html.PartialAsync("Display/Empty")
         @await Component.InvokeAsync("SuggestedSearch", new { original = Model, maxResult = 2})
       } else if (Model.FilterModel.DisplayAsMap) {
-        @Html.Partial("Display/Map", Model)
+        @await Html.PartialAsync("Display/Map", Model)
       } else {
-        @Html.Partial("Display/List", Model)
+        @await Html.PartialAsync("Display/List", Model)
         @if(Model.Courses.TotalCount <= 2) {
           @await Component.InvokeAsync("SuggestedSearch", new { original = Model, maxResult = 2})
         }

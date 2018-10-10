@@ -9,12 +9,12 @@
 
 
 @if(isInWizard) {
-  @Html.Partial("Back", new BackLinkViewModel {
+  @await Html.PartialAsync("Back", new BackLinkViewModel {
     Href = Url.Action("LocationWizard", "Filter", Model.FilterModel.ToRouteValues()),
     Title = "Back to location"
   })
 } else {
-  @Html.Partial("Back", new BackLinkViewModel {
+  @await Html.PartialAsync("Back", new BackLinkViewModel {
     Href = Url.Action("Index", "Results", Model.FilterModel.ToRouteValues()),
     Title = "Back to search results"
   })
@@ -23,7 +23,7 @@
 <main class="govuk-main-wrapper" id="main-content" role="main">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
-      @Html.Partial("Error", errors)
+      @await Html.PartialAsync("Error", errors)
       <fieldset class="govuk-fieldset">
         <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
           <h1 class="govuk-heading-xl">Find courses by subject</h1>

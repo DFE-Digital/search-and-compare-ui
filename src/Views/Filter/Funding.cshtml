@@ -5,7 +5,7 @@
   var errors = ViewBag.Errors as ErrorViewModel;
 }
 
-@Html.Partial("Back", new BackLinkViewModel {
+@await Html.PartialAsync("Back", new BackLinkViewModel {
   Href = Url.Action("Index", "Results", Model.ToRouteValues()),
   Title = "Back to search results"
 })
@@ -13,7 +13,7 @@
 <main class="govuk-main-wrapper" id="main-content" role="main">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
-      @Html.Partial("Error", errors)
+      @await Html.PartialAsync("Error", errors)
     </div>
   </div>
 
