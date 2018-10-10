@@ -8,13 +8,14 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.Features
     public class FeatureFlags : IFeatureFlags
     {
         private readonly IConfiguration _config;
-        private const string APPLY_2019 = "FEATURE_APPLY_2019";
 
         public FeatureFlags(IConfiguration config)
         {
             _config = config;
         }
-        public bool Apply2019 => ShouldShow(APPLY_2019);
+
+        public bool Apply2019 => ShouldShow("FEATURE_APPLY_2019");
+        public bool Maps => ShouldShow("FEATURE_MAPS");
 
         private bool ShouldShow(string key) => _config.GetValue(key, false);
     }
