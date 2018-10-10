@@ -57,6 +57,11 @@
 </ul>
 
 <script>
+  window.search_location = [{
+    "lat": @(mapModel.Map.MyLocation.Latitude),
+    "lng": @(mapModel.Map.MyLocation.Longitude)
+  }]
+
   window.locations = [
     @foreach (var courseGroup in Model.Map.CourseGroups)
     {

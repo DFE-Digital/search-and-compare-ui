@@ -5,7 +5,12 @@ const initGoogleMaps = () => {
     scaleControl: false,
     streetViewControl: false,
     rotateControl: false,
-    fullscreenControl: true
+    fullscreenControl: true,
+    zoom: 11,
+    center: {
+      lat: window.search_location[0].lat,
+      lng: window.search_location[0].lng
+    }
   })
 
   const customMarker = {
@@ -17,7 +22,6 @@ const initGoogleMaps = () => {
 
   const locations = window.locations
   const infoWindow = new google.maps.InfoWindow()
-  const bounds = new google.maps.LatLngBounds()
   const markers = []
 
   for (let i = 0, length = locations.length; i < length; i++) {
@@ -56,12 +60,16 @@ const initGoogleMaps = () => {
       })
     }))(marker, data)
 
-    bounds.extend(latLng)
     markers.push(marker)
   }
 
-  map.fitBounds(bounds)
-  map.panToBounds(bounds)
+  const marker = new google.maps.Marker({
+    position: {
+      lat: window.search_location[0].lat,
+      lng: window.search_location[0].lng
+    },
+    map: map
+  });
 }
 
 window.initGoogleMaps = initGoogleMaps
