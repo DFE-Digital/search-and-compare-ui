@@ -10,10 +10,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters
 {
     public static class CourseExtensions
     {
-        static string qts = "Qualified teacher status";
-
-        static string pgce = "Postgraduate certificate in education";
-
         private static Regex websiteRegex = new Regex("^https?:\\/\\/");
 
         public static string FormattedWebsite(this Course course)
