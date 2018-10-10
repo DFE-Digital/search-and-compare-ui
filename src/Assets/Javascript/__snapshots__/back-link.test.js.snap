@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Back Link module init() with an element when on a page which does have an internal referrer calls appendChild on element with correct arguments 1`] = `
+Array [
+  Array [
+    <a
+      class="govuk-back-link"
+      href="javascript:history.back()"
+    >
+      Back to search results
+    </a>,
+  ],
+]
+`;
