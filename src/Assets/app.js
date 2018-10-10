@@ -3,7 +3,7 @@ import CookieMessage from "./Javascript/cookie-message"
 import BackLink from "./Javascript/back-link"
 import Accordion from "./Javascript/accordion"
 import Toggle from "./Javascript/toggle"
-import "./Javascript/analytics.js"
+import { initFormAnalytics, initExternalLinkAnalytics, initNavigationAnalytics } from "./Javascript/analytics.js"
 import "./Javascript/map.js"
 import "./Javascript/typeahead.jquery.js"
 import "./Styles/site.scss"
@@ -74,6 +74,14 @@ if (!!$) {
       )
     })
   })
+}
+
+if (typeof ga !== "undefined") {
+  initFormAnalytics()
+  initExternalLinkAnalytics()
+  initNavigationAnalytics()
+} else {
+  console.log("Google Analytics `window.ga` object not found. Skipping analytics.")
 }
 
 if (process.env.NODE_ENV == "development") {
