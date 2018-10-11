@@ -81,9 +81,11 @@ if (typeof ga !== "undefined") {
   initExternalLinkAnalytics()
   initNavigationAnalytics()
 } else {
+  /* istanbul ignore next */
   console.log("Google Analytics `window.ga` object not found. Skipping analytics.")
 }
 
+/* istanbul ignore next */
 if (process.env.NODE_ENV == "development") {
   module.hot.accept()
 }
