@@ -6,7 +6,7 @@ const triggerAnalyticsEvent = (category, action) => {
   })
 }
 
-const initFormAnalytics = () => {
+export const initFormAnalytics = () => {
   // How to use:
   //
   // 1. Attach `data-ga-event-form="Helpful Namespace"` to <form> elements
@@ -41,7 +41,7 @@ const initFormAnalytics = () => {
   }
 }
 
-const initExternalLinkAnalytics = () => {
+export const initExternalLinkAnalytics = () => {
   // This will attach event listeners to all links with hrefs that point to external resource.
 
   const externalLinkSelector = 'a[href^="http"]:not([href*="' + window.location.hostname + '"])'
@@ -57,7 +57,7 @@ const initExternalLinkAnalytics = () => {
   }
 }
 
-const initNavigationAnalytics = () => {
+export const initNavigationAnalytics = () => {
   // How to use:
   //
   // 1. Attach `data-ga-event-navigation="Helpful Namespace"` to a container that has links
@@ -86,10 +86,4 @@ const initNavigationAnalytics = () => {
   for (let i = 0; i < $navs.length; i++) {
     attachAnalyticsToNav($navs[i])
   }
-}
-
-if (typeof ga !== "undefined") {
-  initFormAnalytics()
-  initExternalLinkAnalytics()
-  initNavigationAnalytics()
 }
