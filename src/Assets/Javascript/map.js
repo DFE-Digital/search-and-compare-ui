@@ -6,6 +6,9 @@ const initGoogleMaps = () => {
     streetViewControl: false,
     rotateControl: false,
     fullscreenControl: true,
+    fullscreenControlOptions: {
+      position: google.maps.ControlPosition.RIGHT_BOTTOM
+    },
     zoom: 11,
     center: {
       lat: window.search_location[0].lat,
