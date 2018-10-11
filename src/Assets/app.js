@@ -5,7 +5,7 @@ import Accordion from "./Javascript/accordion"
 import Toggle from "./Javascript/toggle"
 import { initFormAnalytics, initExternalLinkAnalytics, initNavigationAnalytics } from "./Javascript/analytics.js"
 import "./Javascript/map.js"
-import "./Javascript/typeahead.jquery.js"
+import "./Javascript/vendor/typeahead.jquery.js"
 import "./Styles/site.scss"
 
 initAll()
