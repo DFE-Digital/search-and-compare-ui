@@ -1,27 +1,10 @@
-matrix:
-  include:
-    - language: csharp
-      dist: trusty
-      sudo: required
-      mono: none
-      dotnet: 2.1
-      script:
-        - "./travis-build.sh --quiet verify"
-    - language: node_js
-      node_js:
-        - 10.8
-      cache:
-        directories:
-          - "~/.npm"
-          - "~/.cache"
-        override:
-          - npm ci
-      before_script:
-        - cd src
-        - npm ci
-      script:
-        - npm test
-        - cd ..
+language: csharp
+dist: trusty
+sudo: required
+mono: none
+dotnet: 2.1
+script:
+  - "./travis-build.sh --quiet verify"
 env:
   global:
     - secure: MoOTHg1BuQF6ERP2uyGXSr5ADwOdMfg3q0HpxrKcI7T04OUpodmDN05gW3WlYTQ20iiT+SkZRsxOzL9fpIoQvXNaHQfQ+589nmxla8ZcpwAZvp29LEXuYq3K1BfqiGOGAkwZlxGKqfWjK6ttGiMCXufDAkMknx3PlL8OvdGLQkyYby2NcTMOAZsf4Rjc0UKNjUS7OD213Ej+HE1MQUgAz9S128srfGmWoPMSokXYJcEpMhzJbS2deZ1PN1kRw0Y60HiaT6judePWT6YHadqgGZlSF+B8zd62eGu04D32B8otvK4VpyjKmAdlNTgL+wiNhiLtSsaczpX65WY3Zt3neAb+msggATpYF8lvVjwdeyZv5RnxfQJIAi6Ohapqa1yRYxuSfPfgEHzbjNKnjjh9u+NTLoYNWy1cA0By2fxdK6LMV+2Th1jt7SMVAo007NSb/q1R6tLo8BE4r2RA2m7oXpP95CLboI9+Vs6kxVZEoPxKS8VWgfNSc3Bt+QAoitygChVMzS6dXzYUfLmwh/v96Xi8jOq0zEAgT23sxwflODMsZe6fKdS+GAy9pxfGLxJGN2vkyzhVqQ6asD/dcIFYr+6bnAheCqSxQ5xoy8kLTy86bBYclDDvLPxt+j0BTIIk9wEAzkDvvIiPnxnQ1iiFgxEAodGrs5/6ZVX0Qc3hUis=
