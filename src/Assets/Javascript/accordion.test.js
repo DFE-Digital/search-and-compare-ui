@@ -61,6 +61,20 @@ describe("Accordion module", () => {
         expect(document.body.innerHTML).toMatchSnapshot()
       })
     })
+
+    describe("when all sections are open", () => {
+      beforeEach(() => {
+        document
+          .querySelectorAll(".accordion-section")
+          .forEach($section => $section.classList.add("accordion-section--expanded"))
+        accordion.init()
+      })
+
+      it("initialises accordion HTML correctly", () => {
+        expect(document.querySelector(".accordion-expand-all").innerHTML).toBe("Close all")
+        expect(document.body.innerHTML).toMatchSnapshot()
+      })
+    })
   })
 
   describe("events", () => {

@@ -23,6 +23,7 @@ Accordion.prototype.init = function () {
     accordion_controls.appendChild(open_or_close_all_button)
     this.$module.insertBefore(accordion_controls, this.$module.firstChild)
     this.$module.classList.add('with-js')
+    this.updateOpenAll()
   }
 }
 

@@ -15,6 +15,21 @@ exports[`Accordion module init() when all sections are closed initialises accord
 "
 `;
 
+exports[`Accordion module init() when all sections are open initialises accordion HTML correctly 1`] = `
+"
+<div data-module=\\"accordion\\" class=\\"with-js\\"><div class=\\"accordion-controls\\"><button class=\\"accordion-expand-all\\" aria-expanded=\\"true\\" type=\\"button\\">Close all</button></div>
+  <div class=\\"accordion-section\\" aria-expanded=\\"true\\">
+    <div class=\\"accordion-section-header\\" tabindex=\\"0\\" role=\\"button\\">Header 1<span class=\\"icon\\"></span></div>
+    <div class=\\"accordion-section-body\\">Body 1</div>
+  </div>
+  <div class=\\"accordion-section\\" aria-expanded=\\"true\\">
+    <div class=\\"accordion-section-header\\" tabindex=\\"0\\" role=\\"button\\">Header 2<span class=\\"icon\\"></span></div>
+    <div class=\\"accordion-section-body\\">Body 2</div>
+  </div>
+</div>
+"
+`;
+
 exports[`Accordion module init() when in an incompatible environment leaves HTML untouched 1`] = `
 "
 <div data-module=\\"accordion\\">
