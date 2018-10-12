@@ -5,14 +5,16 @@
 @using GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters;
 @using GovUk.Education.SearchAndCompare.UI.Shared.ViewModels;
 
-<div data-module="back-link"></div>
+<div class="govuk-width-container">
+  <div data-module="back-link"></div>
 
-@if (Model.PreviewMode)
-{
-  <div class="preview-banner">
-    This is a preview of a course: @Model.Course.Name (@Model.Course.ProgrammeCode).
-  </div>
-}
+  @if (Model.PreviewMode)
+  {
+    <div class="preview-banner">
+      This is a preview of a course: @Model.Course.Name (@Model.Course.ProgrammeCode).
+    </div>
+  }
+</div>
 
 <main class="govuk-main-wrapper" id="main-content" role="main">
   <div class="govuk-width-container">
