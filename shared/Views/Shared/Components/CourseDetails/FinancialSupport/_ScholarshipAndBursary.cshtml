@@ -1,7 +1,9 @@
+@model GovUk.Education.SearchAndCompare.UI.Shared.ViewModels.CourseDetailsViewModel;
+
 @{
   var scholarship = String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", 22000);
   var bursary = String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", 20000);
-  var subjectName = "subjectName";
+  var subjectName = Model.Course.Name;
 }
 
 <p class="govuk-body">

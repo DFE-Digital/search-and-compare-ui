@@ -4,17 +4,26 @@
 @using GovUk.Education.SearchAndCompare.Domain.Models.Enums;
 @using GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters;
 @using GovUk.Education.SearchAndCompare.UI.Shared.ViewModels;
-
+@{
+  var course = Model.Course;
+}
 <div class="govuk-!-margin-bottom-8">
   <h2 class="govuk-heading-l" id="section-financial-support">Financial support</h2>
 
-  @if (Model.Course.IsSalaried)
+  @if (course.IsSalaried)
   {
     @await Html.PartialAsync("_Salaried.cshtml");
   }
+  else if (course.HasScholarshipAndBursary())
+  {
+    @await Html.PartialAsync("_ScholarshipAndBursary.cshtml");
+  }
+  else if (course.HasBursary())
+  {
+    @await Html.PartialAsync("_Bursary.cshtml");
+  }
   else
   {
-    @if(Model.)
     @await Html.PartialAsync("_Default.cshtml");
   }
 
