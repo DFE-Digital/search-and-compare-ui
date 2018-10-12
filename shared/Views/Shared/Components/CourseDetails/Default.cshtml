@@ -15,140 +15,142 @@
 }
 
 <main class="govuk-main-wrapper" id="main-content" role="main">
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <h1 class="govuk-heading-xl">
-        @Model.Course.Name with @Model.Provider.Name
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <h1 class="govuk-heading-xl">
+          @Model.Course.Name with @Model.Provider.Name
 
-        @if (!string.IsNullOrEmpty(Model.Course.AccreditingProvider?.Name) && Model.Provider.Name != Model.Course.AccreditingProvider?.Name)
-        {
-          <span class="govuk-caption-xl">Accredited provider: @Model.Course.AccreditingProvider?.Name</span>
-        }
-      </h1>
-
-      <div class="course-basicinfo govuk-!-margin-bottom-8">
-        <dl class="govuk-list--description">
-          @if(!string.IsNullOrEmpty(Model.Course.Mod) && Model.Course.Mod.Length > 1)
+          @if (!string.IsNullOrEmpty(Model.Course.AccreditingProvider?.Name) && Model.Provider.Name != Model.Course.AccreditingProvider?.Name)
           {
-            <dt class="govuk-list--description__label">Course offered</dt>
-            <dd>@Model.Course.Mod</dd>
+            <span class="govuk-caption-xl">Accredited provider: @Model.Course.AccreditingProvider?.Name</span>
           }
-          <dt class="govuk-list--description__label">Financial support</dt>
-          <dd>@Model.Course.FundingOptions()</dd>
-          <dt class="govuk-list--description__label">Qualification</dt>
-          <dd>
-            @await Html.PartialAsync("_Qualification.cshtml")
-          </dd>
-          @if (!string.IsNullOrEmpty(Model.Course.Duration)) {
-            <dt class="govuk-list--description__label">Course length</dt>
-            <dd>@Model.Course.Duration</dd>
-          }
-          @if (!string.IsNullOrEmpty(@Model.Course.FormattedEarliestApplicationDate())) {
-            <dt class="govuk-list--description__label">Date you can apply from</dt>
-            <dd>@Model.Course.FormattedEarliestApplicationDate()</dd>
-          }
-          @if (!string.IsNullOrEmpty(@Model.Course.FormattedStartDate())) {
-            <dt class="govuk-list--description__label">Date course starts</dt>
-            <dd>@Model.Course.FormattedStartDate()</dd>
-          }
-          @if (Model.ShowWebsite) {
-            <dt class="govuk-list--description__label">Website</dt>
+        </h1>
+
+        <div class="course-basicinfo govuk-!-margin-bottom-8">
+          <dl class="govuk-list--description">
+            @if(!string.IsNullOrEmpty(Model.Course.Mod) && Model.Course.Mod.Length > 1)
+            {
+              <dt class="govuk-list--description__label">Course offered</dt>
+              <dd>@Model.Course.Mod</dd>
+            }
+            <dt class="govuk-list--description__label">Financial support</dt>
+            <dd>@Model.Course.FundingOptions()</dd>
+            <dt class="govuk-list--description__label">Qualification</dt>
             <dd>
-              <a href="@Model.Course.FormattedWebsite()" title="Go to course website" aria-label="Go to course website" class="govuk-link">@Model.Course.FormattedWebsite()</a>
+              @await Html.PartialAsync("_Qualification.cshtml")
             </dd>
-          }
-        </dl>
+            @if (!string.IsNullOrEmpty(Model.Course.Duration)) {
+              <dt class="govuk-list--description__label">Course length</dt>
+              <dd>@Model.Course.Duration</dd>
+            }
+            @if (!string.IsNullOrEmpty(@Model.Course.FormattedEarliestApplicationDate())) {
+              <dt class="govuk-list--description__label">Date you can apply from</dt>
+              <dd>@Model.Course.FormattedEarliestApplicationDate()</dd>
+            }
+            @if (!string.IsNullOrEmpty(@Model.Course.FormattedStartDate())) {
+              <dt class="govuk-list--description__label">Date course starts</dt>
+              <dd>@Model.Course.FormattedStartDate()</dd>
+            }
+            @if (Model.ShowWebsite) {
+              <dt class="govuk-list--description__label">Website</dt>
+              <dd>
+                <a href="@Model.Course.FormattedWebsite()" title="Go to course website" aria-label="Go to course website" class="govuk-link">@Model.Course.FormattedWebsite()</a>
+              </dd>
+            }
+          </dl>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <div class="course-contents govuk-!-margin-bottom-8">
-        <h2 class="govuk-heading-m">Contents</h2>
-          <ul class="govuk-list govuk-list--dash" data-ga-event-navigation="Course Contents">
-            @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutTheCourse) || Model.ShowMinimumAboutCourseSection)
-            {
-              <li><a href="#section-about">About the course</a></li>
-            }
-            @if (Model.HasSection(CourseDetailsSections.InterviewProcess))
-            {
-              <li><a href="#section-interviews">Interview process</a></li>
-            }
-            @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutSchools))
-            {
-              <li><a href="#section-schools">How school placements work</a></li>
-            }
-            @if(Model.Course.IsSalaried)
-            {
-              @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutSalary))
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <div class="course-contents govuk-!-margin-bottom-8">
+          <h2 class="govuk-heading-m">Contents</h2>
+            <ul class="govuk-list govuk-list--dash" data-ga-event-navigation="Course Contents">
+              @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutTheCourse) || Model.ShowMinimumAboutCourseSection)
               {
-                <li><a href="#section-salary">Salary</a></li>
+                <li><a href="#section-about">About the course</a></li>
               }
-            }
-            else
-            {
-              @if (Model.PreviewMode || Model.HasFeesSet)
+              @if (Model.HasSection(CourseDetailsSections.InterviewProcess))
               {
-                <li><a href="#section-fees">Fees</a></li>
+                <li><a href="#section-interviews">Interview process</a></li>
               }
-            }
-            <li><a href="#section-financial-support">Financial support</a></li>
-            @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.EntryRequirementsQualifications))
-            {
-              <li><a href="#section-entry">Requirements</a></li>
-            }
-            @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutTheProvider))
-            {
-              <li><a href="#section-about-provider">About the training provider</a></li>
-            }
+              @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutSchools))
+              {
+                <li><a href="#section-schools">How school placements work</a></li>
+              }
+              @if(Model.Course.IsSalaried)
+              {
+                @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutSalary))
+                {
+                  <li><a href="#section-salary">Salary</a></li>
+                }
+              }
+              else
+              {
+                @if (Model.PreviewMode || Model.HasFeesSet)
+                {
+                  <li><a href="#section-fees">Fees</a></li>
+                }
+              }
+              <li><a href="#section-financial-support">Financial support</a></li>
+              @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.EntryRequirementsQualifications))
+              {
+                <li><a href="#section-entry">Requirements</a></li>
+              }
+              @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutTheProvider))
+              {
+                <li><a href="#section-about-provider">About the training provider</a></li>
+              }
 
-            @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.TrainWithDisabilities))
-            {
-              <li><a href="#section-train-with-disabilities">Training with disabilities and other needs</a></li>
-            }
+              @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.TrainWithDisabilities))
+              {
+                <li><a href="#section-train-with-disabilities">Training with disabilities and other needs</a></li>
+              }
 
-            @if (Model.HasContactDetails())
-            {
-              <li><a href="#section-contact">Contact details</a></li>
-            }
-            <li><a href="#section-apply">Apply</a></li>
-            <li><a href="#section-advice">Advice and support</a></li>
-          </ul>
-        </div>
+              @if (Model.HasContactDetails())
+              {
+                <li><a href="#section-contact">Contact details</a></li>
+              }
+              <li><a href="#section-apply">Apply</a></li>
+              <li><a href="#section-advice">Advice and support</a></li>
+            </ul>
+          </div>
 
-        @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutTheCourse) || Model.ShowMinimumAboutCourseSection)
-        {
-          @await Html.PartialAsync("_AboutCourse.cshtml")
-        }
+          @if (Model.PreviewMode || Model.HasSection(CourseDetailsSections.AboutTheCourse) || Model.ShowMinimumAboutCourseSection)
+          {
+            @await Html.PartialAsync("_AboutCourse.cshtml")
+          }
 
-        @await Html.PartialAsync("_InterviewProcess.cshtml")
+          @await Html.PartialAsync("_InterviewProcess.cshtml")
 
-        @await Html.PartialAsync("_AboutSchools.cshtml")
+          @await Html.PartialAsync("_AboutSchools.cshtml")
 
-        @if (Model.Course.IsSalaried)
-        {
-          @await Html.PartialAsync("_Salary.cshtml")
-        }
-        else
-        {
-          @await Html.PartialAsync("_Fees.cshtml")
-        }
+          @if (Model.Course.IsSalaried)
+          {
+            @await Html.PartialAsync("_Salary.cshtml")
+          }
+          else
+          {
+            @await Html.PartialAsync("_Fees.cshtml")
+          }
 
-        @await Html.PartialAsync("_FinancialSupport.cshtml")
+          @await Html.PartialAsync("_FinancialSupport.cshtml")
 
-        @await Html.PartialAsync("_EntryRequirementsQualifications.cshtml")
+          @await Html.PartialAsync("_EntryRequirementsQualifications.cshtml")
 
-        @await Html.PartialAsync("_AboutTheProvider.cshtml")
+          @await Html.PartialAsync("_AboutTheProvider.cshtml")
 
-        @await Html.PartialAsync("_TrainWithDisabilities.cshtml")
+          @await Html.PartialAsync("_TrainWithDisabilities.cshtml")
 
-        @await Html.PartialAsync("_ContactDetails.cshtml")
+          @await Html.PartialAsync("_ContactDetails.cshtml")
 
-        @await Html.PartialAsync("_Apply.cshtml")
+          @await Html.PartialAsync("_Apply.cshtml")
 
-        @await Html.PartialAsync("_Advice.cshtml")
+          @await Html.PartialAsync("_Advice.cshtml")
 
+      </div>
     </div>
   </div>
 </main>
