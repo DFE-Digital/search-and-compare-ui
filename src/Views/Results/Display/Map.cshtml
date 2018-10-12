@@ -95,4 +95,18 @@
       </text>
     }
   ]
+
+  window.training_locations = [
+    @foreach (var item in Model.Courses.Items) {
+      <text>
+        {
+          "title": "@item.Name with @item.Provider.Name",
+          "lat": "",
+          "lng": "",
+          "no_of_courses": 0,
+           "distance": "@courseGroup.Courses.First().Distance.FormattedDistance()",
+        },
+      </text>
+    }
+  ]
 </script>
