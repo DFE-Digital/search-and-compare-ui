@@ -25,7 +25,8 @@
         <a href='@Url.Action("Index", "Course", new {courseCode = item.ProgrammeCode, providerCode = item.Provider.ProviderCode})' class="link">@item.Name with @item.Provider.Name</a>
       </h3>
       <dl class="govuk-list--description">
-        @if (item.Distance != null) {
+        @if (item.Distance != null)
+        {
           <dt class="govuk-list--description__label">Distance</dt>
           <dd>
             @item.Distance.FormattedDistance()
@@ -33,9 +34,10 @@
               to the training provider or their nearest training location
             </span>
           </dd>
-          if (item.DistanceAddress != null) {
+          if (item.DistanceAddress != null)
+          {
             <dt class="govuk-list--description__label">Nearest address</dt>
-            <dd>@(item.DistanceAddress.Replace("\n", ", "))</dd>
+            <dd>@item.DistanceAddress.Replace("\n", ", ")</dd>
           }
         }
         @if(!string.IsNullOrEmpty(item.Mod) && item.Mod.Length > 1)
@@ -50,9 +52,10 @@
           <dt class="govuk-list--description__label">Accredited provider</dt>
           <dd>@item.AccreditingProvider.Name</dd>
         }
-        @if (item.DistanceAddress == null && item.ProviderLocation != null) {
+        @if (item.DistanceAddress == null && item.ProviderLocation != null)
+        {
           <dt class="govuk-list--description__label">Main address</dt>
-          <dd>@(item.ProviderLocation.Address.Replace("\n", ", "))</dd>
+          <dd>@item.ProviderLocation.Address.Replace("\n", ", ")</dd>
         }
       </dl>
     </li>
