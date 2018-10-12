@@ -1,8 +1,8 @@
 @model GovUk.Education.SearchAndCompare.UI.Shared.ViewModels.CourseDetailsViewModel;
 
 @{
-  var scholarship = String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", 22000);
-  var bursary = String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", 20000);
+  var scholarship = Model.Finance.CurrencyMaxScholarship;
+  var bursary = Model.Finance.CurrencyMaxBursary;
   var subjectName = Model.Course.Name;
 }
 
@@ -10,7 +10,7 @@
   You could be eligible for either:
 </p>
 
-<ul class="list list-bullet">
+<ul class="govuk-list govuk-list--bullet">
   <li>a scholarship of @scholarship</li>
   <li>a bursary of @bursary</li>
 </ul>
