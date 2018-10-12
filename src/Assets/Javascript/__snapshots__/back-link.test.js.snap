@@ -5,7 +5,7 @@ Array [
   Array [
     <a
       class="govuk-back-link"
-      href="javascript:history.back()"
+      href="http://localhost"
     >
       Back to search results
     </a>,

@@ -14,7 +14,7 @@ BackLink.prototype.init = function() {
 
     if ($isInternalReferrer) {
       var $link = document.createElement("a")
-      $link.setAttribute("href", "javascript:history.back()")
+      $link.setAttribute("href", document.referrer)
       $link.setAttribute("class", "govuk-back-link")
       $link.textContent = "Back to search results"
 
