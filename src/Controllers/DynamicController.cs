@@ -30,7 +30,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         {
             var res = _api.GetProviderSuggestions(query);
             return Json(res
-                .Select(x => x.Name)
+                .Select(x => x.Name + "(" + x.ProviderCode + ")")
                 .ToList());
         }
 
