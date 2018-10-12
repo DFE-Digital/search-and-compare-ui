@@ -5,7 +5,7 @@ import Accordion from "./Javascript/accordion"
 import Toggle from "./Javascript/toggle"
 import { initFormAnalytics, initExternalLinkAnalytics, initNavigationAnalytics } from "./Javascript/analytics.js"
 import "./Javascript/map.js"
-import "./Javascript/typeahead.jquery.js"
+import "./Javascript/vendor/typeahead.jquery.js"
 import "./Styles/site.scss"
 
 initAll()
@@ -81,9 +81,11 @@ if (typeof ga !== "undefined") {
   initExternalLinkAnalytics()
   initNavigationAnalytics()
 } else {
+  /* istanbul ignore next */
   console.log("Google Analytics `window.ga` object not found. Skipping analytics.")
 }
 
+/* istanbul ignore next */
 if (process.env.NODE_ENV == "development") {
   module.hot.accept()
 }
