@@ -76,9 +76,9 @@
                 <div class="govuk-radios__item">
                   <input id="location-Specific" class="govuk-radios__input" type="radio" name="l" value="@((int)LocationOption.Specific)" checked="@(Model.FilterModel.LocationOption == LocationOption.Specific)" data-aria-controls="query-container" data-ga-event-form-input="By school/provider">
                   <label for="location-Specific" class="govuk-label govuk-radios__label">
-                    By school, university or other training provider (enter the name or provider code)
+                    By school, university or other training provider
                   </label>
-                </div>
+                 </div>
 
                 <div class="govuk-radios__conditional govuk-radios__conditional--hidden @(Model.Errors.HasError(" query ") ? "form-group--error " : " ")" id="query-container">
                   <div class"form-group">
@@ -88,6 +88,7 @@
                         <span class="govuk-error-message">@Model.Errors.GetError("query").Message</span>
                       }
                     </label>
+                    <span class="govuk-hint">Enter the name or provider code</span>
                     <input class="govuk-input typeahead" data-url="@Url.Action("ProviderSuggest", "Dynamic")" name="query" type="text" id="query" value="@Model.FilterModel.query">
                   </div>
                 </div>
