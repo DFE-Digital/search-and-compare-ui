@@ -14,7 +14,7 @@
               View as a list
             </a>
           } else if (Model.FilterModel.LocationFilterActive) {
-            <a href="@Url.Action("Index", "Results", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new { display = "map" }))" class="govuk-link">
+            <a href="@Url.Action("ResultsMap", "Results", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new { display = "map" }))" class="govuk-link">
               View on a map
             </a>
           }

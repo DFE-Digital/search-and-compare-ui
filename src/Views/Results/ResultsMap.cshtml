@@ -3,12 +3,19 @@
 @{
   Layout = "~/Views/Shared/_Layout.cshtml";
 
+  var mapModel = Model.Map;
+
   ViewBag.Title =
     (Model.Courses != null && Model.Courses.TotalCount > 0
     ? $"{string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:n0}", Model.Courses.TotalCount)} courses"
     : "No courses found")
     + (string.IsNullOrWhiteSpace(Model.FilterModel.query) ? "" : $" - {Model.FilterModel.query}");
 }
+
+@section bodyEnd {
+  <script src="https://maps.googleapis.com/maps/api/js?key=@(Environment.GetEnvironmentVariable("google_cloud_platform_key_maps"))&callback=initGoogleMaps" async defer></script>
+}
+
 <main class="govuk-main-wrapper" id="main-content" role="main">
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
@@ -49,11 +56,44 @@
         @await Html.PartialAsync("Display/Empty")
         @await Component.InvokeAsync("SuggestedSearch", new { original = Model, maxResult = 2})
       } else {
-        @await Html.PartialAsync("Display/List", Model)
-        @if(Model.Courses.TotalCount <= 2) {
-          @await Component.InvokeAsync("SuggestedSearch", new { original = Model, maxResult = 2})
-        }
+        @await Html.PartialAsync("Display/Map")
       }
     </div>
   </div>
 </main>
+
+<script>
+  window.search_location = [{
+    "lat": @(mapModel.Map.MyLocation.Latitude),
+    "lng": @(mapModel.Map.MyLocation.Longitude)
+  }]
+
+  window.locations = [
+    @foreach (var courseGroup in Model.Map.CourseGroups)
+    {
+      <text>
+        {
+          "title": "@(courseGroup.Courses.First().Provider.Name)",
+          "lat": "@(courseGroup.Coordinates.Latitude)",
+          "lng": "@(courseGroup.Coordinates.Longitude)",
+          "no_of_courses": @(courseGroup.Courses.Count()),
+          "distance": "@(courseGroup.Courses.First().Distance.FormattedDistance())",
+          "courses":
+          [
+            @foreach (var course in courseGroup.Courses)
+            {
+              <text>
+                {
+                  "name": "@(course.Name)",
+                  "code": "@(course.ProgrammeCode)",
+                  "qual": "@(course.Mod)",
+                  "url": "@(Url.Action("Index", "Course", new {courseCode = course.ProgrammeCode, providerCode = course.Provider.ProviderCode}))"
+                },
+              </text>
+            }
+          ]
+        },
+      </text>
+    }
+  ]
+</script>
