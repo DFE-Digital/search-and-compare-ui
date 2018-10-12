@@ -92,32 +92,62 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                 Subjects = filteredSubjects,
                 FilterModel = filter,
                 MapsEnabled = mapsEnabled
+
             };
 
-            if (mapsEnabled && filter.DisplayAsMap)
+            queryFilter.pageSize = 10;
+
+            viewModel.Courses = api.GetCourses(queryFilter);
+
+            return View(viewModel);
+        }
+
+        [HttpGet("resultsmap")]
+        public IActionResult ResultsMap(ResultsFilter filter)
+        {
+            var subjects = api.GetSubjects();
+            filter.qualification = filter.qualification.Any() ? filter.qualification : new List<QualificationOption>{QualificationOption.QtsOnly, QualificationOption.PgdePgceWithQts, QualificationOption.Other};
+
+            FilteredList<Subject> filteredSubjects;
+            if (filter.SelectedSubjects.Count > 0)
             {
-                queryFilter.pageSize = 0;
-                courses = api.GetCourses(queryFilter);
-                var courseGroups = GroupByProvider(courses);
-
-                var mapProjection = mapProvider.GetMapProjection<CourseGroup>(
-                    courseGroups, filter.Coordinates, 400, filter.zoomlevel);
-
-                viewModel.Map = new MapViewModel
-                {
-                    CourseGroups = mapProjection.MarkersWithAreas,
-                    MyLocation = filter.Coordinates,
-                    Map = mapProjection,
-                    MapsApiKey = mapProvider.ApiKey
-                };
-                viewModel.Courses = courses;
+                filteredSubjects = new FilteredList<Subject>(
+                    subjects.Where(subject => filter.SelectedSubjects.Contains(subject.Id)).ToList(),
+                    subjects.Count
+                );
             }
             else
             {
-                queryFilter.pageSize = 10;
-
-                viewModel.Courses = api.GetCourses(queryFilter);
+                filteredSubjects = new FilteredList<Subject>(subjects, subjects.Count);
             }
+
+            var mapsEnabled = _featureFlags.Maps;
+
+            PaginatedList<Course> courses;
+            var queryFilter = filter.ToQueryFilter();
+
+            var viewModel = new ResultsViewModel
+            {
+                Subjects = filteredSubjects,
+                FilterModel = filter,
+                MapsEnabled = mapsEnabled
+            };
+
+            queryFilter.pageSize = 0;
+            courses = api.GetCourses(queryFilter);
+            var courseGroups = GroupByProvider(courses);
+
+            var mapProjection = mapProvider.GetMapProjection<CourseGroup>(
+                courseGroups, filter.Coordinates, 400, filter.zoomlevel);
+
+            viewModel.Map = new MapViewModel
+            {
+                CourseGroups = mapProjection.MarkersWithAreas,
+                MyLocation = filter.Coordinates,
+                Map = mapProjection,
+                MapsApiKey = mapProvider.ApiKey
+            };
+            viewModel.Courses = courses;
 
             return View(viewModel);
         }
