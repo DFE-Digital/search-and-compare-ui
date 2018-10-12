@@ -5,55 +5,59 @@
   var errors = ViewBag.Errors as ErrorViewModel;
 }
 
-@await Html.PartialAsync("Back", new BackLinkViewModel {
-  Href = Url.Action("Index", "Results", Model.ToRouteValues()),
-  Title = "Back to search results"
-})
+<div class="govuk-width-container">
+  @await Html.PartialAsync("Back", new BackLinkViewModel {
+    Href = Url.Action("Index", "Results", Model.ToRouteValues()),
+    Title = "Back to search results"
+  })
+</div>
 
 <main class="govuk-main-wrapper" id="main-content" role="main">
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      @await Html.PartialAsync("Error", errors)
-    </div>
-  </div>
-
-  <form action='@Url.Action("Funding", "Filter", Model.ToRouteValues())' method="POST" data-ga-event-form="Salary">
-    <fieldset role="radiogroup" aria-required="true" class="govuk-fieldset">
-      <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-        <h1 class="govuk-heading-xl">Find courses that pay a salary</h1>
-      </legend>
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds">
-          <p class="govuk-body">
-            On a salaried course you’ll be paid and taxed as an unqualified teacher. The salary awarded will differ between schools – you should check the salary with the school before you apply.
-          </p>
-          <p class="govuk-body">
-            Salaried courses are not eligible for bursaries, scholarships or student finance. There are usually no course fees to pay.
-          </p>
-          <div class="govuk-form-group @(errors.HasError("applyFilter") ? "govuk-form-group--error" : "")" id="applyFilter-container">
-            <div class="govuk-radios" data-module="radios">
-              <div class="govuk-radios__item">
-                <input id="applyFilter-all" class="govuk-radios__input" type="radio" name="applyFilter" value="false" checked="@(Model.SelectedFunding == FundingOption.All)" data-ga-event-form-input="All courses with/without a salary">
-                <label for="applyFilter-all" class="govuk-label govuk-radios__label">
-                  All courses (with or without a salary)
-                </label>
-              </div>
-              <div class="govuk-radios__item">
-                <input id="applyFilter-some" class="govuk-radios__input" type="radio" name="applyFilter" value="true" checked="@(errors.HasError("funding ") || (Model.SelectedFunding != null && Model.SelectedFunding != FundingOption.All))" data-ga-event-form-input="Only courses with a salary">
-                <label for="applyFilter-some" class="govuk-label govuk-radios__label">
-                  Only courses that come with a salary
-                </label>
-              </div>
-            </div>
-            <input type="hidden" name="includeBursary" value="false">
-            <input type="hidden" name="includeScholarship" value="false">
-            <input type="hidden" name="includeSalary" value="true">
-          </div>
-        </fieldset>
-        <div class="govuk-form-group">
-          <input class="govuk-button" type="submit" value="Find courses">
-        </div>
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        @await Html.PartialAsync("Error", errors)
       </div>
     </div>
-  </form>
+
+    <form action='@Url.Action("Funding", "Filter", Model.ToRouteValues())' method="POST" data-ga-event-form="Salary">
+      <fieldset role="radiogroup" aria-required="true" class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+          <h1 class="govuk-heading-xl">Find courses that pay a salary</h1>
+        </legend>
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+            <p class="govuk-body">
+              On a salaried course you’ll be paid and taxed as an unqualified teacher. The salary awarded will differ between schools – you should check the salary with the school before you apply.
+            </p>
+            <p class="govuk-body">
+              Salaried courses are not eligible for bursaries, scholarships or student finance. There are usually no course fees to pay.
+            </p>
+            <div class="govuk-form-group @(errors.HasError("applyFilter") ? "govuk-form-group--error" : "")" id="applyFilter-container">
+              <div class="govuk-radios" data-module="radios">
+                <div class="govuk-radios__item">
+                  <input id="applyFilter-all" class="govuk-radios__input" type="radio" name="applyFilter" value="false" checked="@(Model.SelectedFunding == FundingOption.All)" data-ga-event-form-input="All courses with/without a salary">
+                  <label for="applyFilter-all" class="govuk-label govuk-radios__label">
+                    All courses (with or without a salary)
+                  </label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input id="applyFilter-some" class="govuk-radios__input" type="radio" name="applyFilter" value="true" checked="@(errors.HasError("funding ") || (Model.SelectedFunding != null && Model.SelectedFunding != FundingOption.All))" data-ga-event-form-input="Only courses with a salary">
+                  <label for="applyFilter-some" class="govuk-label govuk-radios__label">
+                    Only courses that come with a salary
+                  </label>
+                </div>
+              </div>
+              <input type="hidden" name="includeBursary" value="false">
+              <input type="hidden" name="includeScholarship" value="false">
+              <input type="hidden" name="includeSalary" value="true">
+            </div>
+          </fieldset>
+          <div class="govuk-form-group">
+            <input class="govuk-button" type="submit" value="Find courses">
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
 </main>

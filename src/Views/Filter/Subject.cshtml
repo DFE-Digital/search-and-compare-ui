@@ -7,89 +7,92 @@
   var errors = ViewBag.Errors as ErrorViewModel;
 }
 
-
-@if(isInWizard) {
-  @await Html.PartialAsync("Back", new BackLinkViewModel {
-    Href = Url.Action("LocationWizard", "Filter", Model.FilterModel.ToRouteValues()),
-    Title = "Back to location"
-  })
-} else {
-  @await Html.PartialAsync("Back", new BackLinkViewModel {
-    Href = Url.Action("Index", "Results", Model.FilterModel.ToRouteValues()),
-    Title = "Back to search results"
-  })
-}
+<div class="govuk-width-container">
+  @if(isInWizard) {
+    @await Html.PartialAsync("Back", new BackLinkViewModel {
+      Href = Url.Action("LocationWizard", "Filter", Model.FilterModel.ToRouteValues()),
+      Title = "Back to location"
+    })
+  } else {
+    @await Html.PartialAsync("Back", new BackLinkViewModel {
+      Href = Url.Action("Index", "Results", Model.FilterModel.ToRouteValues()),
+      Title = "Back to search results"
+    })
+  }
+</div>
 
 <main class="govuk-main-wrapper" id="main-content" role="main">
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      @await Html.PartialAsync("Error", errors)
-      <fieldset class="govuk-fieldset">
-        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
-          <h1 class="govuk-heading-xl">Find courses by subject</h1>
-        </legend>
-        <p class="govuk-body">Select the subjects you want to teach.</p>
-        <h2 class="govuk-heading-m">Get financial support</h2>
-        <p class="govuk-body">You’ll have to pay a fee for most courses. You can get financial support to cover this, and to help with your living costs while you study. The amount of financial support available to you will depend on the subject you choose.</p>
-        <p class="govuk-body">Visit Get into Teaching to find out more about <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview/postgraduate-loans">postgraduate courses</a>, <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview">bursaries and scholarships</a>, and <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview/funding-by-subject">funding by subject</a>.</p>
-        <form action='@Url.Action(isInWizard ? "SubjectWizard" : "Subject", "Filter", Model.FilterModel.WithoutSubjects().ToRouteValues())' method="POST" id="subjects-container" data-ga-event-form="Subject">
-          <div class="accordion govuk-form-group" data-module="accordion">
-            @foreach (var area in Model.SubjectAreas) {
-              <div class="@("accordion-section " + (@area.Subjects.Any(subject => selected.Contains(subject.Id)) ? "accordion-section--expanded" : "accordion-section--hidden"))">
-                <div class="accordion-section-header">@area.Name</div>
-                <div class="accordion-section-body">
-                  <div class="govuk-checkboxes">
-                    @foreach (var subject in area.Subjects.OrderBy(x => x.Name)) {
-                      <div class="govuk-checkboxes__item">
-                        <input id="@("subject-" + subject.Id)" name="SelectedSubjects" type="checkbox" checked="@selected.Contains(subject.Id)" value="@(subject.Id)" class="govuk-checkboxes__input" data-ga-event-form-input="@(subject.Name)">
-                        <label for="@("subject-" + subject.Id)" class="govuk-label govuk-checkboxes__label">
-                          <span class="govuk-checkboxes__label_text">
-                            @subject.Name
-                          </span>
-                          @{
-                            string txt = null;
-                            if (subject.Funding?.Scholarship != null && subject.Funding?.BursaryFirst != null)
-                            {
-                                txt = $"Scholarships of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.Scholarship.Value)} and bursaries of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.BursaryFirst.Value)} are available";
-                            }
-                            else if (subject.Funding?.Scholarship != null)
-                            {
-                                txt = $"Scholarships of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.Scholarship.Value)} are available";
-                            }
-                            else if (subject.Funding?.BursaryFirst != null)
-                            {
-                                txt = $"Bursaries of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.BursaryFirst.Value)} available";
-                            }
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        @await Html.PartialAsync("Error", errors)
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+            <h1 class="govuk-heading-xl">Find courses by subject</h1>
+          </legend>
+          <p class="govuk-body">Select the subjects you want to teach.</p>
+          <h2 class="govuk-heading-m">Get financial support</h2>
+          <p class="govuk-body">You’ll have to pay a fee for most courses. You can get financial support to cover this, and to help with your living costs while you study. The amount of financial support available to you will depend on the subject you choose.</p>
+          <p class="govuk-body">Visit Get into Teaching to find out more about <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview/postgraduate-loans">postgraduate courses</a>, <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview">bursaries and scholarships</a>, and <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview/funding-by-subject">funding by subject</a>.</p>
+          <form action='@Url.Action(isInWizard ? "SubjectWizard" : "Subject", "Filter", Model.FilterModel.WithoutSubjects().ToRouteValues())' method="POST" id="subjects-container" data-ga-event-form="Subject">
+            <div class="accordion govuk-form-group" data-module="accordion">
+              @foreach (var area in Model.SubjectAreas) {
+                <div class="@("accordion-section " + (@area.Subjects.Any(subject => selected.Contains(subject.Id)) ? "accordion-section--expanded" : "accordion-section--hidden"))">
+                  <div class="accordion-section-header">@area.Name</div>
+                  <div class="accordion-section-body">
+                    <div class="govuk-checkboxes">
+                      @foreach (var subject in area.Subjects.OrderBy(x => x.Name)) {
+                        <div class="govuk-checkboxes__item">
+                          <input id="@("subject-" + subject.Id)" name="SelectedSubjects" type="checkbox" checked="@selected.Contains(subject.Id)" value="@(subject.Id)" class="govuk-checkboxes__input" data-ga-event-form-input="@(subject.Name)">
+                          <label for="@("subject-" + subject.Id)" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              @subject.Name
+                            </span>
+                            @{
+                              string txt = null;
+                              if (subject.Funding?.Scholarship != null && subject.Funding?.BursaryFirst != null)
+                              {
+                                  txt = $"Scholarships of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.Scholarship.Value)} and bursaries of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.BursaryFirst.Value)} are available";
+                              }
+                              else if (subject.Funding?.Scholarship != null)
+                              {
+                                  txt = $"Scholarships of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.Scholarship.Value)} are available";
+                              }
+                              else if (subject.Funding?.BursaryFirst != null)
+                              {
+                                  txt = $"Bursaries of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.BursaryFirst.Value)} available";
+                              }
 
-                            if (txt != null && subject.Funding?.EarlyCareerPayments != null)
-                            {
-                                txt += $", with early career payments of £5,000 each in your third and fifth year of teaching (£7,500 each in some areas of England).";
+                              if (txt != null && subject.Funding?.EarlyCareerPayments != null)
+                              {
+                                  txt += $", with early career payments of £5,000 each in your third and fifth year of teaching (£7,500 each in some areas of England).";
+                              }
+                              else if (txt != null)
+                              {
+                                  txt += ".";
+                              }
                             }
-                            else if (txt != null)
+                            <span class="govuk-!-display-block">@txt</span>
+                          </label>
+                          @if (subject.IsSubjectKnowledgeEnhancementAvailable)
                             {
-                                txt += ".";
+                              <p class="govuk-body">
+                                You can@(subject.Funding?.Scholarship != null || subject.Funding?.BursaryFirst != null ? " also " : " ")take a <a href="https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses">subject knowledge enhancement (SKE) course</a>.
+                              </p>
                             }
-                          }
-                          <span class="govuk-!-display-block">@txt</span>
-                        </label>
-                        @if (subject.IsSubjectKnowledgeEnhancementAvailable)
-                          {
-                            <p class="govuk-body">
-                              You can@(subject.Funding?.Scholarship != null || subject.Funding?.BursaryFirst != null ? " also " : " ")take a <a href="https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses">subject knowledge enhancement (SKE) course</a>.
-                            </p>
-                          }
-                      </div>
-                    }
+                        </div>
+                      }
+                    </div>
                   </div>
                 </div>
-              </div>
-            }
-          </div>
-          <div class="govuk-form-group">
-            <input class="govuk-button" type="submit" value="@(isInWizard ? "Continue" : "Find courses")" role="button">
-          </div>
-        </form>
-      </fieldset>
+              }
+            </div>
+            <div class="govuk-form-group">
+              <input class="govuk-button" type="submit" value="@(isInWizard ? "Continue" : "Find courses")" role="button">
+            </div>
+          </form>
+        </fieldset>
+      </div>
     </div>
   </div>
 </main>
