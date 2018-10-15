@@ -10,56 +10,67 @@
     ? $"{string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:n0}", Model.Courses.TotalCount)} courses"
     : "No courses found")
     + (string.IsNullOrWhiteSpace(Model.FilterModel.query) ? "" : $" - {Model.FilterModel.query}");
+
+  ViewData["bodyClasses"] = "map-results";
 }
 
 @section bodyEnd {
   <script src="https://maps.googleapis.com/maps/api/js?key=@(Environment.GetEnvironmentVariable("google_cloud_platform_key_maps"))&callback=initGoogleMaps" async defer></script>
 }
 
-<main class="govuk-main-wrapper" id="main-content" role="main">
-  <div class="govuk-width-container govuk-width-container--full govuk-width-container--fluid">
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-full">
-        @if (string.IsNullOrWhiteSpace(Model.FilterModel.query))
-        {
-          <h1 class="govuk-heading-xl">Teacher training courses</h1>
-        }
-        else
-        {
-          <h1 class="govuk-heading-xl">
-            <span class="govuk-caption-l">Teacher training courses</span>
-            @Model.FilterModel.query
-          </h1>
-        }
-      </div>
-    </div>
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-one-third">
-        <div class="govuk-toggle" data-module="toggle">
-          <button class="govuk-toggle__link js-toggle" aria-expanded="false" aria-controls="searchFilters">
-            Filter the results
-          </button>
-          <div class="govuk-toggle__target" id="searchFilters">
-            @if (!string.IsNullOrWhiteSpace(Model.FilterModel.query)) {
-              @await Html.PartialAsync("Filters/Query", Model.FilterModel)
-            } else {
-              @await Html.PartialAsync("Filters/Location", Model.FilterModel)
-            }
-            @await Html.PartialAsync("Filters/Subject", Model)
-            @await Html.PartialAsync("Filters/StudyType", Model.FilterModel)
-            @await Html.PartialAsync("Filters/Qualification", Model.FilterModel)
-            @await Html.PartialAsync("Filters/Funding", Model.FilterModel)
-          </div>
+<main id="main-content" role="main">
+  <div class="map-results__container">
+    <aside class="map-results__sidebar">
+      @if (string.IsNullOrWhiteSpace(Model.FilterModel.query))
+      {
+        <h1 class="govuk-heading-l">Teacher training courses near <text>@Model.FilterModel.loc</text></h1>
+      }
+      else
+      {
+        <h1 class="govuk-heading-l">
+          <span class="govuk-caption-l">Teacher training courses</span>
+          @Model.FilterModel.query
+        </h1>
+      }
+
+      <p class="govuk-body">
+        @string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:n0}", @Model.Courses.TotalCount) courses found within <text>@Model.FilterModel.rad</text> miles
+      </p>
+
+      <ul class="govuk-list govuk-!-margin-bottom-5">
+        <li>
+          <a href="@Url.Action("Index", "Results", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new { display = "list" }))" class="govuk-link">View results as a list</a>
+        </li>
+        <li>
+          <a href='@Url.Action("LocationWizard", "Filter")' class="govuk-link">New search</a>
+        </li>
+      </ul>
+
+      <div class="govuk-toggle" data-module="toggle">
+        <button class="govuk-toggle__link js-toggle" aria-expanded="false" aria-controls="searchFilters">
+          Filter the results
+        </button>
+        <div class="govuk-toggle__target" id="searchFilters">
+          @if (!string.IsNullOrWhiteSpace(Model.FilterModel.query)) {
+            @await Html.PartialAsync("Filters/Query", Model.FilterModel)
+          } else {
+            @await Html.PartialAsync("Filters/Location", Model.FilterModel)
+          }
+          @await Html.PartialAsync("Filters/Subject", Model)
+          @await Html.PartialAsync("Filters/StudyType", Model.FilterModel)
+          @await Html.PartialAsync("Filters/Qualification", Model.FilterModel)
+          @await Html.PartialAsync("Filters/Funding", Model.FilterModel)
         </div>
       </div>
-      <div class="govuk-grid-column-two-thirds">
-        @if (Model.Courses == null || Model.Courses.TotalCount == 0) {
-          @await Html.PartialAsync("Display/Empty")
-          @await Component.InvokeAsync("SuggestedSearch", new { original = Model, maxResult = 2})
-        } else {
-          @await Html.PartialAsync("Display/Map")
-        }
-      </div>
+    </aside>
+
+    <div class="map-results__map">
+      @if (Model.Courses == null || Model.Courses.TotalCount == 0) {
+        @await Html.PartialAsync("Display/Empty")
+        @await Component.InvokeAsync("SuggestedSearch", new { original = Model, maxResult = 2})
+      } else {
+        @await Html.PartialAsync("Display/Map")
+      }
     </div>
   </div>
 </main>
@@ -70,26 +81,34 @@
     "lng": @(mapModel.Map.MyLocation.Longitude)
   }]
 
-  window.locations = [
-    @foreach (var courseGroup in Model.Map.CourseGroups)
+  window.courses = [
+    @foreach (var course in Model.Courses.Items)
     {
       <text>
         {
-          "title": "@(courseGroup.Courses.First().Provider.Name)",
-          "lat": "@(courseGroup.Coordinates.Latitude)",
-          "lng": "@(courseGroup.Coordinates.Longitude)",
-          "no_of_courses": @(courseGroup.Courses.Count()),
-          "distance": "@(courseGroup.Courses.First().Distance.FormattedDistance())",
-          "courses":
+          "name": "@course.Name",
+          "code": "@course.ProgrammeCode",
+          "qual": "@course.Mod",
+          "finance": "@course.FundingOptions()",
+          "url": "@Url.Action("Index", "Course", new {courseCode = course.ProgrammeCode, providerCode = course.Provider.ProviderCode})",
+          "address": "@course.DistanceAddress.Replace("\n", ", ")",
+          "provider":
           [
-            @foreach (var course in courseGroup.Courses)
+            {
+              "name": "@course.Provider.Name",
+              "lat": "@course.ProviderLocation.Latitude",
+              "lng": "@course.ProviderLocation.Longitude",
+            }
+          ],
+          "campuses":
+          [
+            @foreach (var campus in course.Campuses)
             {
               <text>
                 {
-                  "name": "@(course.Name)",
-                  "code": "@(course.ProgrammeCode)",
-                  "qual": "@(course.Mod)",
-                  "url": "@(Url.Action("Index", "Course", new {courseCode = course.ProgrammeCode, providerCode = course.Provider.ProviderCode}))"
+                  "name": "@campus.Name",
+                  "lat": "@campus.Location?.Latitude",
+                  "lng": "@campus.Location?.Longitude"
                 },
               </text>
             }
