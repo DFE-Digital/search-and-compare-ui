@@ -68,6 +68,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewModels
             }
         }
 
+        public bool HasEarlyCareerPayments => Course.CourseSubjects.Any(cs => cs.Subject.Funding != null && cs.Subject.Funding.EarlyCareerPayments != null);
         public string CurrencyMaxScholarship => String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", MaxScholarship);
         public string FormattedMaxScholarship =>  $"Up to {CurrencyMaxScholarship} tax free scholarship while you train";
 

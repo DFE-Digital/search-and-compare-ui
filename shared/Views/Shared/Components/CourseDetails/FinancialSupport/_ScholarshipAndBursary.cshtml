@@ -3,7 +3,9 @@
 @{
   var scholarship = Model.Finance.CurrencyMaxScholarship;
   var bursary = Model.Finance.CurrencyMaxBursary;
-  var subjectName = Model.Course.Name;
+
+  var isMaths = Model.Course.Name.Equals("Mathematics", StringComparison.InvariantCultureIgnoreCase);
+  var subjectName = isMaths ? "maths" : Model.Course.Name;
 }
 
 <p class="govuk-body">
@@ -15,9 +17,12 @@
   <li>a bursary of @bursary</li>
 </ul>
 
-<p class="govuk-body">
-  With a scholarship or bursary, you’ll also get early career payments of £5,000 each in your third and fifth year of teaching (£7,500 in <a href="https://www.gov.uk/guidance/mathematics-early-career-payments-guidance-for-teachers-and-schools">some areas of England</a>).
-</p>
+@if(Model.Finance.HasEarlyCareerPayments)
+{
+  <p class="govuk-body">
+    With a scholarship or bursary, you’ll also get early career payments of £5,000 each in your third and fifth year of teaching (£7,500 in <a href="https://www.gov.uk/guidance/mathematics-early-career-payments-guidance-for-teachers-and-schools">some areas of England</a>).
+  </p>
+}
 
 <p class="govuk-body">
   To qualify for a scholarship you’ll need a degree of 2:1 or above in @subjectName or a related subject. For a bursary you’ll need a 2:2 or above in any subject.

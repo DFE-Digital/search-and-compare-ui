@@ -2,7 +2,13 @@
 
 @{
   var bursary = Model.Finance.CurrencyMaxBursary;
-  var requirements = new List<string>() {"a degree of 2:2 or above in any subject", "at least grade B in maths A-level (or an equivalent)"};
+  var requirements = new List<string>() {"a degree of 2:2 or above in any subject"};
+
+  if(Model.Course.CourseSubjects.Any(x => x.Subject != null &&  x.Subject.Name.Equals("Primary with Mathematics", StringComparison.InvariantCultureIgnoreCase)))
+  {
+    requirements.Add("at least grade B in maths A-level (or an equivalent)");
+  }
+
   var requirementsOneLiner = requirements.Count() == 1;
   var firstLineEnding = requirementsOneLiner ? $" {requirements[0]}." : ":";
   var firstLine = $"You’ll get a bursary of {bursary} if you have{firstLineEnding}";
