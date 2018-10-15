@@ -4,8 +4,11 @@
   var scholarship = Model.Finance.CurrencyMaxScholarship;
   var bursary = Model.Finance.CurrencyMaxBursary;
 
-  var isMaths = Model.Course.Name.Equals("Mathematics", StringComparison.InvariantCultureIgnoreCase);
-  var subjectName = isMaths ? "maths" : Model.Course.Name;
+
+  var courseSubjectName = Model.Course.CourseSubjects.FirstOrDefault(x => x.Subject != null)?.Subject?.Name;
+
+  var isMaths = courseSubjectName.Equals("Mathematics", StringComparison.InvariantCultureIgnoreCase);
+  var subjectName = isMaths ? "maths" : courseSubjectName;
 }
 
 <p class="govuk-body">
