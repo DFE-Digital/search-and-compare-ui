@@ -30,6 +30,13 @@ const initGoogleMaps = () => {
     anchor: new google.maps.Point(0, 32)
   }
 
+  const customMarker3 = {
+    url: '/images/text-map-marker.png',
+    scaledSize: new google.maps.Size(60, 22),
+    origin: new google.maps.Point(0, 0),
+    anchor: new google.maps.Point(25, 10)
+  }
+
   const courses = window.courses
   const infoWindow = new google.maps.InfoWindow()
   const markers = []
@@ -85,7 +92,7 @@ const initGoogleMaps = () => {
   // 5 miles, 10 miles, 20 miles
   const $earthRadiusMiles = 3963.1676
   const $earthRadiusMeters = 6378100
-  const $circles = ['5', '10', '20']
+  const $circles = [5, 10, 20]
   for (let i = 0; i < $circles.length; i++) {
     const radiusCircle = new google.maps.Circle({
       strokeColor: '#000000',
@@ -95,6 +102,13 @@ const initGoogleMaps = () => {
       map: map,
       center: map.getCenter(),
       radius: ($circles[i] / $earthRadiusMiles) * $earthRadiusMeters
+    })
+
+    new google.maps.Marker({
+      position: new google.maps.LatLng((window.search_location[0].lat + ($circles[i] * 1.609/111.111)), window.search_location[0].lng),
+      map: map,
+      icon: customMarker3,
+      label: `${$circles[i]} miles`
     })
   }
 
