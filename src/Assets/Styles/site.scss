@@ -180,19 +180,25 @@ $govuk-global-styles: true;
 
   &__map {
     height: 300px;
+    padding: govuk-spacing(4) govuk-spacing(4) 0 govuk-spacing(4);
 
     @include mq ($from: desktop) {
       height: 100%;
       left: 360px;
+      padding: 0;
       position: absolute;
       right: 0;
       top: 0;
     }
 
     .google-map {
-      height: 100%;
-      position: absolute;
+      height: 300px;
       width: 100%;
+
+      @include mq ($from: desktop) {
+        height: 100%;
+        position: absolute;
+      }
     }
   }
 
@@ -229,8 +235,13 @@ $govuk-global-styles: true;
 // Google maps legend
 .google-map-legend {
   background: govuk-colour("white");
+  display: none;
   margin: govuk-spacing(4);
   padding: govuk-spacing(4);
+
+  @include mq ($from: tablet) {
+    display: block;
+  }
 
   img {
     display: inline-block;

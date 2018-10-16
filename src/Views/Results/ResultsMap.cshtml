@@ -20,6 +20,14 @@
 
 <main id="main-content" role="main">
   <div class="map-results__container">
+    <div class="map-results__map">
+      @if (Model.Courses == null || Model.Courses.TotalCount == 0) {
+        @await Html.PartialAsync("Display/Empty")
+        @await Component.InvokeAsync("SuggestedSearch", new { original = Model, maxResult = 2})
+      } else {
+        @await Html.PartialAsync("Display/Map")
+      }
+    </div>
     <aside class="map-results__sidebar">
       @if (string.IsNullOrWhiteSpace(Model.FilterModel.query))
       {
@@ -90,15 +98,6 @@
       </ul>
       @await Html.PartialAsync("Pagination", Model)
     </aside>
-
-    <div class="map-results__map">
-      @if (Model.Courses == null || Model.Courses.TotalCount == 0) {
-        @await Html.PartialAsync("Display/Empty")
-        @await Component.InvokeAsync("SuggestedSearch", new { original = Model, maxResult = 2})
-      } else {
-        @await Html.PartialAsync("Display/Map")
-      }
-    </div>
   </div>
 </main>
 
