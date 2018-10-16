@@ -84,7 +84,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
             var mapsEnabled = _featureFlags.Maps;
 
-            PaginatedList<Course> courses;
             var queryFilter = filter.ToQueryFilter();
 
             var viewModel = new ResultsViewModel
