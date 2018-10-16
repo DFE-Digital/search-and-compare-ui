@@ -11,18 +11,6 @@ jest.mock("./Javascript/back-link")
 jest.mock("./Javascript/accordion")
 jest.mock("./Javascript/toggle")
 
-const cbAsyncMock = jest.fn()
-global.$ = jest.fn(() => ({
-  ready: cb => cb(),
-  each: cb => cb(),
-  data: () => "url",
-  typeahead: (_, options) => options.source(null, null, cbAsyncMock)
-}))
-$.get = (url, payload, cb) => cb()
-$.fx = {}
-global.jQuery = global.$
-global.ga = jest.fn()
-
 describe("App", () => {
   beforeAll(() => {
     document.body.innerHTML = `
@@ -74,12 +62,6 @@ describe("App", () => {
 
     it("should initialise Toggle", () => {
       expect(Toggle).toHaveBeenCalled()
-    })
-
-    it("should initialise jQuery and Typeahead", () => {
-      expect($).toHaveBeenCalled()
-      expect(jQuery.fx.off).toBe(true)
-      expect(cbAsyncMock).toHaveBeenCalled()
     })
   })
 })

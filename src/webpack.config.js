@@ -42,11 +42,6 @@ module.exports = {
     new MiniCssExtractPlugin({
       filename: 'application.css',
     }),
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      'window.jQuery': 'jquery'
-    }),
     new CopyWebpackPlugin([{
         from: 'node_modules/govuk-frontend/assets/images',
         to: 'images'
