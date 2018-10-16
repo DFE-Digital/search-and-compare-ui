@@ -17,7 +17,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.Features
         public bool Apply2019 => ShouldShow("FEATURE_APPLY_2019");
         public bool Maps => ShouldShow("FEATURE_MAPS");
 
-        private bool ShouldShow(string key)
+        public bool ShouldShow(string key)
         {
             var value = _config[key];
             return !string.IsNullOrWhiteSpace(value) && value.Trim().ToLower().Equals("true");
