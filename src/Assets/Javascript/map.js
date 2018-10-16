@@ -1,4 +1,22 @@
 const initGoogleMaps = () => {
+  let $zoomLevel
+  switch (window.map_settings[0].zoom) {
+    case 5:
+      $zoomLevel = 12;
+      break
+    case 10:
+      $zoomLevel = 11;
+      break
+    case 20:
+      $zoomLevel = 10;
+      break
+    case 50:
+      $zoomLevel = 9;
+      break
+    case 100:
+      $zoomLevel = 8;
+  }
+
   const map = new google.maps.Map(document.getElementById('map'), {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     mapTypeControl: false,
@@ -9,10 +27,10 @@ const initGoogleMaps = () => {
     fullscreenControlOptions: {
       position: google.maps.ControlPosition.RIGHT_BOTTOM
     },
-    zoom: 11,
+    zoom: $zoomLevel,
     center: {
-      lat: window.search_location[0].lat,
-      lng: window.search_location[0].lng
+      lat: window.map_settings[0].search_lat,
+      lng: window.map_settings[0].search_lng
     }
   })
 
@@ -41,10 +59,10 @@ const initGoogleMaps = () => {
   const infoWindow = new google.maps.InfoWindow()
   const markers = []
 
-  for (let i = 0, length = courses.length; i < length; i++) {
+  for (let i = 0; i < courses.length; i++) {
     const course = courses[i]
 
-    for (let j = 0, length = course.campuses.length; j < length; j++) {
+    for (let j = 0; j < course.campuses.length; j++) {
       const campus = course.campuses[j]
       if (campus.lat.length > 1) {
         var latLng = new google.maps.LatLng(campus.lat, campus.lng)
@@ -105,7 +123,7 @@ const initGoogleMaps = () => {
     })
 
     new google.maps.Marker({
-      position: new google.maps.LatLng((window.search_location[0].lat + ($circles[i] * 1.609/111.111)), window.search_location[0].lng),
+      position: new google.maps.LatLng((window.map_settings[0].search_lat + ($circles[i] * 1.609/111.111)), window.map_settings[0].search_lng),
       map: map,
       icon: customMarker3,
       label: `${$circles[i]} miles`

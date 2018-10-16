@@ -102,9 +102,10 @@
 </main>
 
 <script>
-  window.search_location = [{
-    "lat": @(mapModel.Map.MyLocation.Latitude),
-    "lng": @(mapModel.Map.MyLocation.Longitude)
+  window.map_settings = [{
+    "search_lat": @(mapModel.Map.MyLocation.Latitude),
+    "search_lng": @(mapModel.Map.MyLocation.Longitude),
+    "zoom": @(Model.FilterModel.rad)
   }]
 
   window.courses = [
