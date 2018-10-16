@@ -23,12 +23,12 @@
     <aside class="map-results__sidebar">
       @if (string.IsNullOrWhiteSpace(Model.FilterModel.query))
       {
-        <h1 class="govuk-heading-l">Teacher training courses near <text>@Model.FilterModel.loc</text></h1>
+        <h1 class="govuk-heading-m">Teacher training courses near <text>@Model.FilterModel.loc</text></h1>
       }
       else
       {
-        <h1 class="govuk-heading-l">
-          <span class="govuk-caption-l">Teacher training courses</span>
+        <h1 class="govuk-heading-m">
+          <span class="govuk-caption-m">Teacher training courses</span>
           @Model.FilterModel.query
         </h1>
       }
@@ -62,6 +62,33 @@
           @await Html.PartialAsync("Filters/Funding", Model.FilterModel)
         </div>
       </div>
+      <ul class="govuk-list search-results">
+        @foreach (var item in Model.Courses.Items) {
+          var subjects = @item.CourseSubjects.Select(courseSubject => courseSubject.Subject.Name).ToArray();
+
+          <li>
+            <h3 class="govuk-heading-s">
+              <a href='@Url.Action("Index", "Course", new {courseCode = item.ProgrammeCode, providerCode = item.Provider.ProviderCode})' class="link">@item.Name with @item.Provider.Name</a>
+            </h3>
+            <dl class="govuk-list--description">
+              @if (item.Distance != null) {
+                <dt class="govuk-list--description__label">Distance</dt>
+                <dd>
+                  @item.Distance.FormattedDistance()
+                </dd>
+              }
+              @if(!string.IsNullOrEmpty(item.Mod) && item.Mod.Length > 1)
+              {
+                <dt class="govuk-list--description__label">Course offered</dt>
+                <dd>@item.Mod</dd>
+              }
+              <dt class="govuk-list--description__label">Financial support</dt>
+              <dd>@item.FundingOptions()</dd>
+            </dl>
+          </li>
+        }
+      </ul>
+      @await Html.PartialAsync("Pagination", Model)
     </aside>
 
     <div class="map-results__map">

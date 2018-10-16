@@ -71,8 +71,6 @@ const initGoogleMaps = () => {
         })
       }))(marker, campus)
 
-      console.log(marker)
-
       markers.push(marker)
     }
   }
