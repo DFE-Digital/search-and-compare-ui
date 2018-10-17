@@ -208,5 +208,5 @@ $govuk-global-styles: true;
 
 // Autocomplete overrides
 .autocomplete__wrapper {
-  font-family: "nta", Arial, sans-serif;
+  font-family: $font-family;
 }
