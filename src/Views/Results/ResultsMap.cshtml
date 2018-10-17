@@ -108,32 +108,26 @@
     "zoom": @(Model.FilterModel.rad)
   }
 
-  window.courses = [
-    @foreach (var course in Model.Courses.Items)
+  window.locations = [
+    @foreach (var courseGroup in Model.Map.CourseGroups)
     {
       <text>
         {
-          "name": "@course.Name",
-          "code": "@course.ProgrammeCode",
-          "qual": "@course.Mod",
-          "finance": "@course.FundingOptions()",
-          "url": "@Url.Action("Index", "Course", new {courseCode = course.ProgrammeCode, providerCode = course.Provider.ProviderCode})",
-          "address": "@course.DistanceAddress.Replace("\n", ", ")",
-          "provider":
-          {
-            "name": "@course.Provider.Name",
-            "lat": "@course.ProviderLocation.Latitude",
-            "lng": "@course.ProviderLocation.Longitude",
-          },
-          "campuses":
+          "title": "@(courseGroup.Courses.First().Provider.Name)",
+          "lat": "@(courseGroup.Coordinates.Latitude)",
+          "lng": "@(courseGroup.Coordinates.Longitude)",
+          "no_of_courses": @(courseGroup.Courses.Count()),
+          "distance": "@(courseGroup.Courses.First().Distance.FormattedDistance())",
+          "courses":
           [
-            @foreach (var campus in course.Campuses)
+            @foreach (var course in courseGroup.Courses)
             {
               <text>
                 {
-                  "name": "@campus.Name",
-                  "lat": "@(campus.Location == null ? course.ProviderLocation.Latitude : campus.Location.Latitude)",
-                  "lng": "@(campus.Location == null ? course.ProviderLocation.Longitude : campus.Location.Longitude)",
+                  "name": "@(course.Name)",
+                  "code": "@(course.ProgrammeCode)",
+                  "qual": "@(course.Mod)",
+                  "url": "@(Url.Action("Index", "Course", new {courseCode = course.ProgrammeCode, providerCode = course.Provider.ProviderCode}))"
                 },
               </text>
             }

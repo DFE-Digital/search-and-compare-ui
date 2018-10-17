@@ -55,7 +55,7 @@ const initGoogleMaps = () => {
     anchor: new google.maps.Point(25, 10)
   }
 
-  const courses = window.courses
+  const locations = window.locations
   const infoWindow = new google.maps.InfoWindow()
   const markers = []
 
@@ -63,41 +63,42 @@ const initGoogleMaps = () => {
     infoWindow.close()
   })
 
-  for (let i = 0; i < courses.length; i++) {
-    const course = courses[i]
+  for (let i = 0, length = locations.length; i < length; i++) {
+    const data = locations[i]
+    const latLng = new google.maps.LatLng(data.lat, data.lng)
 
-    for (let j = 0; j < course.campuses.length; j++) {
-      const campus = course.campuses[j]
+    const marker = new google.maps.Marker({
+      position: latLng,
+      map,
+      title: data.title,
+      icon: customMarker
+    });
 
-      const marker = new google.maps.Marker({
-        position: new google.maps.LatLng(campus.lat, campus.lng),
-        map,
-        title: campus.name,
-        icon: customMarker,
-        zIndex: 99999
-      });
+    (((marker, data) => {
+      google.maps.event.addListener(marker, 'click', e => {
+        const windowsContent = `
+          <div class="search-info-window">
+            ${ data.no_of_courses > 1 ? `<h3 class="govuk-heading-s">${data.title}</h3>` : `<h3 class="govuk-heading-s">${data.courses[0].name} with ${data.title}</h3>`}
+            ${ data.no_of_courses > 1 ? `<h4 class="govuk-heading-s">${data.no_of_courses} courses</h4>` : ''}
+            <ul class="govuk-list">
+              ${data.courses.map(course =>
+                `<li>
+                  <a href="${course.url}">${course.name} (${course.code})</a>
+                  <br>
+                  ${course.qual}
+                </li>`
+              ).join('')}
+            </ul>
+          </div>
+        `
 
-      (((marker, campus) => {
-        google.maps.event.addListener(marker, 'click', e => {
-          const windowsContent = `
-            <div class="search-info-window">
-              <h3 class="govuk-heading-s">
-                <a href="${course.url}">${course.name} with ${course.provider.name}</a>
-              </h3>
-              <p class="govuk-body">Location: <br>${course.address}</p>
-              <p class="govuk-body">Course offered:<br>${course.qual}</p>
-              <p class="govuk-body">Financial support:<br>${course.finance}</p>
-            </div>
-          `
+        infoWindow.setContent(windowsContent)
+        infoWindow.setOptions({maxWidth:250})
+        infoWindow.open(map, marker)
+      })
+    }))(marker, data)
 
-          infoWindow.setContent(windowsContent)
-          infoWindow.setOptions({maxWidth: 250})
-          infoWindow.open(map, marker)
-        })
-      }))(marker, campus)
-
-      markers.push(marker)
-    }
+    markers.push(marker)
   }
 
   // Add marker for search location
