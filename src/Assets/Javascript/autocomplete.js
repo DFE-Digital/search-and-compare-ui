@@ -25,6 +25,10 @@ export const requestFromApi = endpoint => {
   }
 }
 
+const inputValueTemplate = result => (typeof result === "string" ? result : result && result.name)
+const suggestionTemplate = result =>
+  typeof result === "string" ? result : result && `${result.name} (${result.providerCode})`
+
 const initAutocomplete = ($el, $input) => {
   accessibleAutocomplete({
     element: $el,
@@ -33,7 +37,11 @@ const initAutocomplete = ($el, $input) => {
     name: $input.getAttribute("name"),
     defaultValue: $input.value,
     minLength: 3,
-    source: requestFromApi($input.getAttribute("data-url"))
+    source: requestFromApi($input.getAttribute("data-url")),
+    templates: {
+      inputValue: inputValueTemplate,
+      suggestion: suggestionTemplate
+    }
   })
 
   $input.parentNode.removeChild($input)
