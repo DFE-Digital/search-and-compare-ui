@@ -84,6 +84,10 @@ module.exports = {
         use: ["style-loader", MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
       },
       {
+        test: /\.css$/,
+        use: ["style-loader", MiniCssExtractPlugin.loader, "css-loader"]
+      },
+      {
         test: /\.js?$/,
         exclude: /node_modules/,
         use: {
