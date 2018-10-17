@@ -59,6 +59,10 @@ const initGoogleMaps = () => {
   const infoWindow = new google.maps.InfoWindow()
   const markers = []
 
+  google.maps.event.addListener(map, 'click', function() {
+    infoWindow.close();
+  });
+
   for (let i = 0; i < courses.length; i++) {
     const course = courses[i]
 
