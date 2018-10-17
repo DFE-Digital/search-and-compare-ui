@@ -102,11 +102,11 @@
 </main>
 
 <script>
-  window.map_settings = [{
+  window.map_settings = {
     "search_lat": @(mapModel.Map.MyLocation.Latitude),
     "search_lng": @(mapModel.Map.MyLocation.Longitude),
     "zoom": @(Model.FilterModel.rad)
-  }]
+  }
 
   window.courses = [
     @foreach (var course in Model.Courses.Items)
@@ -120,13 +120,11 @@
           "url": "@Url.Action("Index", "Course", new {courseCode = course.ProgrammeCode, providerCode = course.Provider.ProviderCode})",
           "address": "@course.DistanceAddress.Replace("\n", ", ")",
           "provider":
-          [
-            {
-              "name": "@course.Provider.Name",
-              "lat": "@course.ProviderLocation.Latitude",
-              "lng": "@course.ProviderLocation.Longitude",
-            }
-          ],
+          {
+            "name": "@course.Provider.Name",
+            "lat": "@course.ProviderLocation.Latitude",
+            "lng": "@course.ProviderLocation.Longitude",
+          },
           "campuses":
           [
             @foreach (var campus in course.Campuses)
