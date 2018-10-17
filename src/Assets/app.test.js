@@ -4,12 +4,14 @@ import BackLink from "./Javascript/back-link"
 import Accordion from "./Javascript/accordion"
 import Toggle from "./Javascript/toggle"
 import { initFormAnalytics, initExternalLinkAnalytics, initNavigationAnalytics } from "./Javascript/analytics.js"
+import initAutocomplete from "./Javascript/autocomplete"
 
 jest.mock("govuk-frontend")
 jest.mock("./Javascript/cookie-message")
 jest.mock("./Javascript/back-link")
 jest.mock("./Javascript/accordion")
 jest.mock("./Javascript/toggle")
+jest.mock("./Javascript/autocomplete")
 
 describe("App", () => {
   beforeAll(() => {
@@ -25,7 +27,10 @@ describe("App", () => {
     </div>
   </div>
   <div data-module="toggle"></div>
-  <input class="typeahead">
+  <input type="text" id="location">
+  <div id="location-autocomplete"></div>
+  <input type="text" id="provider">
+  <div id="provider-autocomplete"></div>
 </div>
 `
 
@@ -62,6 +67,10 @@ describe("App", () => {
 
     it("should initialise Toggle", () => {
       expect(Toggle).toHaveBeenCalled()
+    })
+
+    it("should initialise Autocomplete", () => {
+      expect(initAutocomplete).toHaveBeenCalled()
     })
   })
 })

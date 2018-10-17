@@ -4,6 +4,7 @@ import BackLink from "./Javascript/back-link"
 import Accordion from "./Javascript/accordion"
 import Toggle from "./Javascript/toggle"
 import { initFormAnalytics, initExternalLinkAnalytics, initNavigationAnalytics } from "./Javascript/analytics.js"
+import initAutocomplete from "./Javascript/autocomplete"
 import "./Javascript/map.js"
 import "./Styles/site.scss"
 
@@ -40,6 +41,26 @@ for (var i = $accordions.length - 1; i >= 0; i--) {
 var $toggle = document.querySelectorAll('[data-module="toggle"]')
 for (var i = $toggle.length - 1; i >= 0; i--) {
   new Toggle($toggle[i]).init()
+}
+
+try {
+  var $locationAutocomplete = document.getElementById("location-autocomplete")
+  var $locationInput = document.getElementById("location")
+  if ($locationAutocomplete) {
+    initAutocomplete($locationAutocomplete, $locationInput)
+  }
+} catch (err) {
+  console.error("Failed to initialise location autocomplete:", err)
+}
+
+try {
+  var $providerAutocomplete = document.getElementById("provider-autocomplete")
+  var $providerInput = document.getElementById("query")
+  if ($providerAutocomplete) {
+    initAutocomplete($providerAutocomplete, $providerInput)
+  }
+} catch (err) {
+  console.error("Failed to initialise provider autocomplete:", err)
 }
 
 if (typeof ga !== "undefined") {

@@ -48,6 +48,7 @@
                       }
                     </label>
                     <input class="govuk-input" data-url="@Url.Action("LocationSuggest", "Dynamic")" name="lq" type="text" id="location" value="@Model.FilterModel.lq">
+                    <div id="location-autocomplete"></div>
                   </div>
                   <div class="govuk-form-group">
                     <label class="govuk-label" for="radius">Within</label>
@@ -90,6 +91,7 @@
                     </label>
                     <span class="govuk-hint">Enter the name or provider code</span>
                     <input class="govuk-input" data-url="@Url.Action("ProviderSuggest", "Dynamic")" name="query" type="text" id="query" value="@Model.FilterModel.query">
+                    <div id="provider-autocomplete"></div>
                   </div>
                 </div>
               </div>
