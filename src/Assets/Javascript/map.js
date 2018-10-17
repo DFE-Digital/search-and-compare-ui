@@ -68,14 +68,9 @@ const initGoogleMaps = () => {
 
     for (let j = 0; j < course.campuses.length; j++) {
       const campus = course.campuses[j]
-      if (campus.lat.length > 1) {
-        var latLng = new google.maps.LatLng(campus.lat, campus.lng)
-      } else {
-        var latLng = new google.maps.LatLng(course.provider.lat, course.provider.lng)
-      }
 
       const marker = new google.maps.Marker({
-        position: latLng,
+        position: new google.maps.LatLng(campus.lat, campus.lng),
         map,
         title: campus.name,
         icon: customMarker,

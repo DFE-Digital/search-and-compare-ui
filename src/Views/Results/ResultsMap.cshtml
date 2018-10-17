@@ -132,8 +132,8 @@
               <text>
                 {
                   "name": "@campus.Name",
-                  "lat": "@campus.Location?.Latitude",
-                  "lng": "@campus.Location?.Longitude"
+                  "lat": "@(campus.Location == null ? course.ProviderLocation.Latitude : campus.Location.Latitude)",
+                  "lng": "@(campus.Location == null ? course.ProviderLocation.Longitude : campus.Location.Longitude)",
                 },
               </text>
             }
