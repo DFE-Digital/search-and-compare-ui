@@ -205,3 +205,8 @@ $govuk-global-styles: true;
     display: none;
   }
 }
+
+// Autocomplete overrides
+.autocomplete__wrapper {
+  font-family: "nta", Arial, sans-serif;
+}
