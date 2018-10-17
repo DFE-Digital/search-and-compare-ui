@@ -39,6 +39,8 @@ namespace GovUk.Education.SearchAndCompare.UI
         {
             services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(dispose: true));
 
+            services.AddMemoryCache();
+
             var sharedAssembly = typeof(CourseDetailsViewComponent).GetTypeInfo().Assembly;
             services.AddMvc(options =>
                 options.Filters.Add(typeof(SearchAndCompareApiExceptionFilter))
@@ -89,6 +91,8 @@ namespace GovUk.Education.SearchAndCompare.UI
                     defaults: new { controller = "Legal", action = "Privacy" });
                 routes.MapRoute("tandc", "terms-conditions",
                     defaults: new { controller = "Legal", action = "TandC" });
+                routes.MapRoute("sitemap", "sitemap.txt",
+                    defaults: new { controller = "Sitemap", action = "Index"});
             });
         }
     }
