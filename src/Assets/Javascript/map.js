@@ -1,6 +1,6 @@
 const initGoogleMaps = () => {
   let $zoomLevel
-  switch (window.map_settings.zoom) {
+  switch (window.mapSettings.zoom) {
     case 5:
       $zoomLevel = 12
       break
@@ -29,27 +29,27 @@ const initGoogleMaps = () => {
     },
     zoom: $zoomLevel,
     center: {
-      lat: window.map_settings.search_lat,
-      lng: window.map_settings.search_lng
+      lat: window.mapSettings.search_lat,
+      lng: window.mapSettings.search_lng
     }
   })
 
-  const customMarker = {
-    url: '/images/map-marker.png',
+  const locationMarker = {
+    url: '/images/map-marker-black.png',
     scaledSize: new google.maps.Size(20, 32),
     origin: new google.maps.Point(0, 0),
     anchor: new google.maps.Point(0, 32)
   }
 
-  const customMarker2 = {
-    url: '/images/map-marker-default.png',
-    scaledSize: new google.maps.Size(20, 32),
+  const searchMarker = {
+    url: '/images/map-marker-red.png',
+    scaledSize: new google.maps.Size(30, 44),
     origin: new google.maps.Point(0, 0),
-    anchor: new google.maps.Point(0, 32)
+    anchor: new google.maps.Point(12, 32)
   }
 
-  const customMarker3 = {
-    url: '/images/text-map-marker.png',
+  const textMarker = {
+    url: '/images/map-marker-text.png',
     scaledSize: new google.maps.Size(60, 22),
     origin: new google.maps.Point(0, 0),
     anchor: new google.maps.Point(25, 10)
@@ -71,7 +71,8 @@ const initGoogleMaps = () => {
       position: latLng,
       map,
       title: data.title,
-      icon: customMarker
+      icon: locationMarker,
+      zIndex: 2
     });
 
     (((marker, data) => {
@@ -105,7 +106,7 @@ const initGoogleMaps = () => {
   new google.maps.Marker({
     position: map.getCenter(),
     map: map,
-    icon: customMarker2
+    icon: searchMarker
   })
 
   // 5 miles, 10 miles, 20 miles
@@ -123,22 +124,25 @@ const initGoogleMaps = () => {
       radius: ($circles[i] / $earthRadiusMiles) * $earthRadiusMeters
     })
 
+    // Add label for each radius
+    // https://stackoverflow.com/questions/7477003/calculating-new-longitude-latitude-from-old-n-meters
     new google.maps.Marker({
-      position: new google.maps.LatLng((window.map_settings.search_lat + ($circles[i] * 1.609 / 111.111)), window.map_settings.search_lng),
+      position: new google.maps.LatLng((window.mapSettings.search_lat + ($circles[i] * 1.609 / 111.111)), window.mapSettings.search_lng),
       map: map,
-      icon: customMarker3,
-      label: `${$circles[i]} miles`
+      icon: textMarker,
+      label: `${$circles[i]} miles`,
+      zIndex: 1
     })
   }
 
   const $icons = {
     search_location: {
       name: 'Your location',
-      icon: customMarker2.url
+      icon: searchMarker.url
     },
     campus: {
       name: 'Training locations',
-      icon: customMarker.url
+      icon: locationMarker.url
     }
   }
 
@@ -149,7 +153,7 @@ const initGoogleMaps = () => {
     var name = type.name
     var icon = type.icon
     var listItem = document.createElement('li')
-    listItem.innerHTML = '<img width="20" src="' + icon + '"> ' + name
+    listItem.innerHTML = `<img width="20" src="${icon}"> ${name}`
     legendList.appendChild(listItem)
   }
 
