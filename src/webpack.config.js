@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const CopyWebpackPlugin = require("copy-webpack-plugin")
 
 module.exports = {
-  devtool: "inline-source-map",
+  devtool: process.env.NODE_ENV === "development" ? "inline-source-map" : "",
   entry: {
     application: "./Assets/app.js"
   },
