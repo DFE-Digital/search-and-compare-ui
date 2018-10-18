@@ -8,7 +8,6 @@ $govuk-global-styles: true;
 @import "components/preview-banner";
 @import "components/map";
 @import "components/missing-section";
-@import "components/typahead";
 @import "components/accordion";
 @import "components/toggle";
 @import "patterns/course-parts";
@@ -34,7 +33,7 @@ $govuk-global-styles: true;
 // Custom list style
 .govuk-list--dash {
   padding-left: govuk-spacing(4);
-  list-style-image: url('/images/dash.png');
+  list-style-image: url("/images/dash.png");
   margin-bottom: govuk-spacing(8);
 }
 
@@ -90,7 +89,7 @@ $govuk-global-styles: true;
   }
 
   &__count {
-    float: left
+    float: left;
   }
 
   &__new-search {
@@ -118,7 +117,7 @@ $govuk-global-styles: true;
   }
 
   .govuk-form {
-    @include mq ($from: desktop) {
+    @include mq($from: desktop) {
       text-align: right;
     }
   }
@@ -129,7 +128,7 @@ $govuk-global-styles: true;
     margin-bottom: 0;
     margin-top: govuk-spacing(2);
 
-    @include mq ($from: desktop) {
+    @include mq($from: desktop) {
       margin: 0;
     }
   }
@@ -138,7 +137,7 @@ $govuk-global-styles: true;
     float: right;
     margin: govuk-spacing(2) 0 0 0;
 
-    @include mq ($from: desktop) {
+    @include mq($from: desktop) {
       margin: 0 0 0 govuk-spacing(2);
     }
 
@@ -150,13 +149,13 @@ $govuk-global-styles: true;
   select {
     width: 100%;
 
-    @include mq ($from: desktop) {
+    @include mq($from: desktop) {
       width: 220px;
     }
   }
 
   .sortedby-label {
-    @include mq ($from: desktop) {
+    @include mq($from: desktop) {
       display: inline;
       margin-right: 0.5em;
     }
@@ -205,4 +204,9 @@ $govuk-global-styles: true;
   .govuk-back-link {
     display: none;
   }
+}
+
+// Autocomplete overrides
+.autocomplete__wrapper {
+  font-family: $font-family;
 }

@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Autocomplete initAutocomplete should create an autocomplete input 1`] = `
+<input
+  aria-owns="input__listbox"
+  autocomplete="off"
+  class="autocomplete__input autocomplete__input--default"
+  id="input"
+  placeholder=""
+  role="textbox"
+  type="text"
+/>
+`;

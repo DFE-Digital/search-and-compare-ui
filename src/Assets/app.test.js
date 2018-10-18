@@ -4,24 +4,14 @@ import BackLink from "./Javascript/back-link"
 import Accordion from "./Javascript/accordion"
 import Toggle from "./Javascript/toggle"
 import { initFormAnalytics, initExternalLinkAnalytics, initNavigationAnalytics } from "./Javascript/analytics.js"
+import initAutocomplete from "./Javascript/autocomplete"
 
 jest.mock("govuk-frontend")
 jest.mock("./Javascript/cookie-message")
 jest.mock("./Javascript/back-link")
 jest.mock("./Javascript/accordion")
 jest.mock("./Javascript/toggle")
-
-const cbAsyncMock = jest.fn()
-global.$ = jest.fn(() => ({
-  ready: cb => cb(),
-  each: cb => cb(),
-  data: () => "url",
-  typeahead: (_, options) => options.source(null, null, cbAsyncMock)
-}))
-$.get = (url, payload, cb) => cb()
-$.fx = {}
-global.jQuery = global.$
-global.ga = jest.fn()
+jest.mock("./Javascript/autocomplete")
 
 describe("App", () => {
   beforeAll(() => {
@@ -37,7 +27,10 @@ describe("App", () => {
     </div>
   </div>
   <div data-module="toggle"></div>
-  <input class="typeahead">
+  <input type="text" id="location">
+  <div id="location-autocomplete"></div>
+  <input type="text" id="provider">
+  <div id="provider-autocomplete"></div>
 </div>
 `
 
@@ -76,10 +69,8 @@ describe("App", () => {
       expect(Toggle).toHaveBeenCalled()
     })
 
-    it("should initialise jQuery and Typeahead", () => {
-      expect($).toHaveBeenCalled()
-      expect(jQuery.fx.off).toBe(true)
-      expect(cbAsyncMock).toHaveBeenCalled()
+    it("should initialise Autocomplete", () => {
+      expect(initAutocomplete).toHaveBeenCalled()
     })
   })
 })

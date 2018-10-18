@@ -4,7 +4,7 @@
 module.exports = {
   coverageDirectory: "coverage",
   moduleNameMapper: {
-    "\\.(scss)$": "<rootDir>/Assets/Javascript/__mocks__/styleMock.js"
+    "\\.(s?css)$": "<rootDir>/Assets/Javascript/__mocks__/styleMock.js"
   },
   coveragePathIgnorePatterns: ["/node_modules/", "/vendor/"]
 }

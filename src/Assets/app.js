@@ -4,8 +4,8 @@ import BackLink from "./Javascript/back-link"
 import Accordion from "./Javascript/accordion"
 import Toggle from "./Javascript/toggle"
 import { initFormAnalytics, initExternalLinkAnalytics, initNavigationAnalytics } from "./Javascript/analytics.js"
+import initAutocomplete from "./Javascript/autocomplete"
 import "./Javascript/map.js"
-import "./Javascript/vendor/typeahead.jquery.js"
 import "./Styles/site.scss"
 
 initAll()
@@ -43,37 +43,24 @@ for (var i = $toggle.length - 1; i >= 0; i--) {
   new Toggle($toggle[i]).init()
 }
 
-if (!!$) {
-  $(document).ready(function() {
-    // Turn off jQuery animation
-    jQuery.fx.off = true
+try {
+  var $locationAutocomplete = document.getElementById("location-autocomplete")
+  var $locationInput = document.getElementById("location")
+  if ($locationAutocomplete) {
+    initAutocomplete($locationAutocomplete, $locationInput)
+  }
+} catch (err) {
+  console.error("Failed to initialise location autocomplete:", err)
+}
 
-    $(".typeahead").each(function() {
-      var $this = $(this)
-      var url = $this.data("url")
-      $this.typeahead(
-        {
-          minLength: 3,
-          highlight: true
-        },
-        {
-          name: url.replace(/\//g, "-"),
-          source: function(query, cbSync, cbAsync) {
-            $.get(
-              url,
-              {
-                query: query
-              },
-              function(res) {
-                cbAsync(res)
-              }
-            )
-          },
-          limit: 10
-        }
-      )
-    })
-  })
+try {
+  var $providerAutocomplete = document.getElementById("provider-autocomplete")
+  var $providerInput = document.getElementById("query")
+  if ($providerAutocomplete) {
+    initAutocomplete($providerAutocomplete, $providerInput)
+  }
+} catch (err) {
+  console.error("Failed to initialise provider autocomplete:", err)
 }
 
 if (typeof ga !== "undefined") {

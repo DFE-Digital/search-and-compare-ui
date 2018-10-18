@@ -1,17 +1,17 @@
-const path = require('path');
-const webpack = require('webpack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require("path")
+const webpack = require("webpack")
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const CopyWebpackPlugin = require("copy-webpack-plugin")
 
 module.exports = {
-  devtool: 'inline-source-map',
+  devtool: "inline-source-map",
   entry: {
-    'application': './Assets/app.js'
+    application: "./Assets/app.js"
   },
   output: {
-    path: path.resolve(__dirname, 'wwwroot'),
-    publicPath: '/'
+    path: path.resolve(__dirname, "wwwroot"),
+    publicPath: "/"
   },
   optimization: {
     minimizer: [
@@ -40,62 +40,63 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'application.css',
+      filename: "application.css"
     }),
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      'window.jQuery': 'jquery'
-    }),
-    new CopyWebpackPlugin([{
-        from: 'node_modules/govuk-frontend/assets/images',
-        to: 'images'
+    new CopyWebpackPlugin([
+      {
+        from: "node_modules/govuk-frontend/assets/images",
+        to: "images"
       },
       {
-        from: 'Assets/Images',
-        to: 'images'
+        from: "Assets/Images",
+        to: "images"
       },
       {
-        from: 'node_modules/govuk-frontend/assets/fonts',
-        to: 'fonts'
+        from: "node_modules/govuk-frontend/assets/fonts",
+        to: "fonts"
       },
       {
-        from: 'node_modules/html5shiv/dist/html5shiv.min.js',
-        to: 'vendor'
+        from: "node_modules/html5shiv/dist/html5shiv.min.js",
+        to: "vendor"
       },
       {
-        from: 'Assets/Styles/govuk-frontend-ie8.min.css',
-        to: 'vendor'
+        from: "Assets/Styles/govuk-frontend-ie8.min.css",
+        to: "vendor"
       },
       {
-        from: 'node_modules/govuk-frontend/assets/images/favicon.ico',
-        to: '.'
+        from: "node_modules/govuk-frontend/assets/images/favicon.ico",
+        to: "."
       },
       {
-        from: 'Public/robots.txt',
-        to: '.'
+        from: "Public/robots.txt",
+        to: "."
       },
       {
-        from: 'Public/sitemap.txt',
-        to: '.'
-      },
-    ]),
+        from: "Public/sitemap.txt",
+        to: "."
+      }
+    ])
   ],
   module: {
-    rules: [{
+    rules: [
+      {
         test: /\.scss$/,
-        use: ['style-loader', MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+        use: ["style-loader", MiniCssExtractPlugin.loader, "css-loader", "sass-loader"]
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", MiniCssExtractPlugin.loader, "css-loader"]
       },
       {
         test: /\.js?$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "babel-loader",
           options: {
-            presets: ['es2015']
+            presets: ["es2015"]
           }
         }
       }
     ]
   }
-};
+}
