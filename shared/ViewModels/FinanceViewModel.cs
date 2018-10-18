@@ -12,9 +12,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewModels
 
         public FeeCaps FeeCaps { get; set; }
 
-        public bool IsSalaried {
-            get { return Course.IsSalaried; }
-        }
+        public bool IsSalaried => Course.IsSalaried;
 
         public string FormattedEuFees {
             get { return string.Format(CultureInfo.InvariantCulture, "£{0:n0}", Course.Fees.Eu); }
@@ -70,12 +68,9 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewModels
             }
         }
 
-        public string FormattedMaxScholarship {
-            get
-            {
-                return string.Format(CultureInfo.InvariantCulture, "Up to £{0:n0} tax free scholarship while you train", MaxScholarship);
-            }
-        }
+        public bool HasEarlyCareerPayments => Course.CourseSubjects.Any(cs => cs.Subject.Funding != null && cs.Subject.Funding.EarlyCareerPayments != null);
+        public string CurrencyMaxScholarship => String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", MaxScholarship);
+        public string FormattedMaxScholarship =>  $"Up to {CurrencyMaxScholarship} tax free scholarship while you train";
 
         public int? MaxBursary {
             get
@@ -87,12 +82,9 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewModels
             }
         }
 
-        public string FormattedMaxBursary {
-            get
-            {
-                return string.Format(CultureInfo.InvariantCulture, "Up to £{0:n0} tax free bursary while you train", MaxBursary);
-            }
-        }
+        public string CurrencyMaxBursary => String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", MaxBursary);
+
+        public string FormattedMaxBursary =>  $"Up to {CurrencyMaxBursary} tax free bursary while you train";
 
         public FinanceViewModel(Course course, FeeCaps feeCaps)
         {

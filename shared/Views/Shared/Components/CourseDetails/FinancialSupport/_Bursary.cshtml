@@ -1,0 +1,33 @@
+@model GovUk.Education.SearchAndCompare.UI.Shared.ViewModels.CourseDetailsViewModel;
+
+@{
+  var bursary = Model.Finance.CurrencyMaxBursary;
+  var requirements = new List<string>() {"a degree of 2:2 or above in any subject"};
+
+  if(Model.Course.CourseSubjects.Any(x => x.Subject != null && x.Subject.Name.Equals("Primary with Mathematics", StringComparison.InvariantCultureIgnoreCase)))
+  {
+    requirements.Add("at least grade B in maths A-level (or an equivalent)");
+  }
+
+  var requirementsOneLiner = requirements.Count() == 1;
+  var firstLineEnding = requirementsOneLiner ? $" {requirements[0]}." : ":";
+  var firstLine = $"You’ll get a bursary of {bursary} if you have{firstLineEnding}";
+}
+
+  <p class="govuk-body">
+    @firstLine
+  </p>
+
+  @if(!requirementsOneLiner)
+  {
+    <ul class="govuk-list govuk-list--bullet">
+      @foreach(var requirement in requirements)
+      {
+        <li>@requirement</li>
+      }
+    </ul>
+  }
+
+<p class="govuk-body">
+  You don’t have to apply for a bursary - you’ll automatically start receiving it once you begin your course. Find out <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview/how-you-will-be-paid">how you’ll be paid</a>.
+</p>
