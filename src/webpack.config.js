@@ -71,10 +71,6 @@ module.exports = {
         from: "Public/robots.txt",
         to: "."
       },
-      {
-        from: "Public/sitemap.txt",
-        to: "."
-      }
     ])
   ],
   module: {
