@@ -29,9 +29,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         public JsonResult ProviderSuggest(string query)
         {
             var res = _api.GetProviderSuggestions(query);
-            return Json(res
-                .Select(x => x.Name)
-                .ToList());
+            return Json(res.Select(x => new { name = x.Name, providerCode = x.ProviderCode }).ToList());
         }
 
         [HttpGet("/dynamic/locationsuggest")]
@@ -43,7 +41,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             {
                 res = await _geocoder.SuggestLocationsAsync(query);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _telemetryClient.TrackException(ex);
             }
