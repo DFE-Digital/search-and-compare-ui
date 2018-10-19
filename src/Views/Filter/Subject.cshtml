@@ -33,7 +33,7 @@
           <p class="govuk-body">Select the subjects you want to teach.</p>
           <h2 class="govuk-heading-m">Get financial support</h2>
           <p class="govuk-body">You’ll have to pay a fee for most courses. You can get financial support to cover this, and to help with your living costs while you study. The amount of financial support available to you will depend on the subject you choose.</p>
-          <p class="govuk-body">Visit Get into Teaching to find out more about <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview/postgraduate-loans">postgraduate courses</a>, <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview">bursaries and scholarships</a>, and <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview/funding-by-subject">funding by subject</a>.</p>
+          <p class="govuk-body">Visit Get into Teaching to find out more about <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview/postgraduate-loans">postgraduate loans</a>, <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview">bursaries and scholarships</a>, and <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview/funding-by-subject">funding by subject</a>.</p>
           <form action='@Url.Action(isInWizard ? "SubjectWizard" : "Subject", "Filter", Model.FilterModel.WithoutSubjects().ToRouteValues())' method="POST" id="subjects-container" data-ga-event-form="Subject">
             <div class="accordion govuk-form-group" data-module="accordion">
               @foreach (var area in Model.SubjectAreas) {
