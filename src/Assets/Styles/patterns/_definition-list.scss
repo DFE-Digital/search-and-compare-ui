@@ -8,6 +8,7 @@
   vertical-align: top;
 
   @include mq ($from: desktop) {
+    clear: left;
     float: left;
     margin-bottom: govuk-spacing(1);
     width: 30%;

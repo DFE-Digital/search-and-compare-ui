@@ -97,11 +97,6 @@ $govuk-global-styles: true;
   }
 }
 
-.search-results-map {
-  border-top: 1px solid $govuk-border-colour;
-  padding-top: govuk-spacing(2);
-}
-
 .search-results-header {
   border-top: 1px solid $govuk-border-colour;
   padding-bottom: govuk-spacing(2);
@@ -162,6 +157,63 @@ $govuk-global-styles: true;
   }
 }
 
+.map-results {
+  .govuk-header__container {
+    max-width: none;
+    padding-left: govuk-spacing(2);
+    padding-right: govuk-spacing(2);
+  }
+
+  .govuk-header__logo {
+    max-width: 180px;
+  }
+
+  .govuk-phase-banner {
+    display: none;
+  }
+
+  &__container {
+    overflow: hidden;
+    position: relative;
+  }
+
+  &__map {
+    height: 300px;
+    padding: govuk-spacing(4) govuk-spacing(4) 0 govuk-spacing(4);
+
+    @include mq ($from: desktop) {
+      height: 100%;
+      left: 360px;
+      padding: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    .google-map {
+      height: 300px;
+      width: 100%;
+
+      @include mq ($from: desktop) {
+        height: 100%;
+        position: absolute;
+      }
+    }
+  }
+
+  &__sidebar {
+    border-right: 1px solid $govuk-border-colour;
+    box-sizing: border-box;
+    padding: govuk-spacing(4);
+
+    @include mq ($from: desktop) {
+      height: 600px;
+      overflow-x: scroll;
+      width: 360px;
+    }
+  }
+}
+
 // Google maps info window
 .search-info-window {
   .govuk-heading-s {
@@ -176,6 +228,23 @@ $govuk-global-styles: true;
 
   .govuk-list {
     margin-bottom: -10px;
+  }
+}
+
+// Google maps legend
+.google-map-legend {
+  background: govuk-colour("white");
+  display: none;
+  margin: govuk-spacing(4);
+  padding: govuk-spacing(4);
+
+  @include mq ($from: tablet) {
+    display: block;
+  }
+
+  img {
+    display: inline-block;
+    vertical-align: middle;
   }
 }
 
