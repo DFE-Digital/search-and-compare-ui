@@ -5,10 +5,14 @@ import Accordion from "./Javascript/accordion"
 import Toggle from "./Javascript/toggle"
 import { initFormAnalytics, initExternalLinkAnalytics, initNavigationAnalytics } from "./Javascript/analytics.js"
 import initAutocomplete from "./Javascript/autocomplete"
-import "./Javascript/map.js"
+import initGoogleMaps from "./Javascript/map.js"
+import initLocationsMap from './Javascript/locations-map';
 import "./Styles/site.scss"
 
 initAll()
+
+window.initGoogleMaps = initGoogleMaps
+window.initLocationsMap = initLocationsMap
 
 var $cookieMessage = document.querySelector('[data-module="cookie-message"]')
 new CookieMessage($cookieMessage).init()
