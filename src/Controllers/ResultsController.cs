@@ -33,17 +33,19 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             return RedirectToAction("Index", "Results", filter.ToRouteValues());
         }
 
-        private static List<CourseGroup> GroupByProvider(PaginatedList<Course> courses)
+        private static List<CourseGroup> GroupCoursesByCampusLocation(PaginatedList<Course> courses)
         {
-            return courses.Items.GroupBy(
-                course => course.ProviderLocation.AsCoordinates(),
-                course => course,
-                (key, groupedCourses) => new CourseGroup
-                {
-                    Courses = groupedCourses.ToList(),
-                    Coordinates = key
-                }
-            ).ToList();
+            return courses.Items
+                .SelectMany(c => c.Campuses)
+                .GroupBy(
+                    campus => campus.Location.AsCoordinates(),
+                    campus => campus.Course,
+                    (key, groupedCourses) => new CourseGroup
+                    {
+                        Coordinates = key,
+                        Courses = groupedCourses.ToList(),
+                    }
+                ).ToList();
         }
 
         [HttpGet("results")]
@@ -121,7 +123,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
             queryFilter.pageSize = 0;
             courses = _api.GetCourses(queryFilter);
-            var courseGroups = GroupByProvider(courses);
+            var courseGroups = GroupCoursesByCampusLocation(courses);
 
             IMapProjection<CourseGroup> mapProjection = new MapProjection<CourseGroup>(courseGroups, filter.Coordinates, 400, filter.zoomlevel);
 
