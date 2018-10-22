@@ -10,6 +10,7 @@
 
 @{
   var show2019Apply = FeatureFlags.Apply2019;
+  var showMap = FeatureFlags.Maps;
 }
 
 
@@ -59,7 +60,10 @@
   {
     <h3 class="govuk-heading-m">Choose a training location</h3>
     <p class="govuk-body">You’ll also need to choose a training location and give the relevant training location code.</p>
-    <div id="locations-map" class="google-map--locations"></div>
+    @if (showMap)
+    {
+      <div id="locations-map" class="google-map--locations"></div>
+    }
     <table class="govuk-table">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
@@ -82,19 +86,22 @@
   }
 </div>
 
-<script>
-  window.trainingLocations = [
-    @foreach (var campus in Model.Course.Campuses)
-    {
-      <text>
-        {
-          "code": "@campus.CampusCode",
-          "name": "@campus.Name",
-          "lat": @(campus.Location == null ? Model.Course.ProviderLocation.Latitude : campus.Location.Latitude),
-          "lng": @(campus.Location == null ? Model.Course.ProviderLocation.Longitude : campus.Location.Longitude),
-          "address": "@campus.Location?.Address"
-        },
-      </text>
-    }
-  ]
-</script>
+@if (showMap)
+{
+  <script>
+    window.trainingLocations = [
+      @foreach (var campus in Model.Course.Campuses)
+      {
+        <text>
+          {
+            "code": "@campus.CampusCode",
+            "name": "@campus.Name",
+            "lat": @(campus.Location == null ? Model.Course.ProviderLocation.Latitude : campus.Location.Latitude),
+            "lng": @(campus.Location == null ? Model.Course.ProviderLocation.Longitude : campus.Location.Longitude),
+            "address": "@campus.Location?.Address"
+          },
+        </text>
+      }
+    ]
+  </script>
+}
