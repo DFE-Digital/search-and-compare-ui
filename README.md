@@ -22,9 +22,9 @@ Runs from vscode and Visual Studio 2017 with F5.
 
 Defaults to published development API backend to make it easier to get started, override this with an environment variable to work against a local copy of the API or to alter for production environments. E.g.:
 
-Note: The `API_URI` value musn't have a trailing slash.
+Note: The `API_URL` value musn't have a trailing slash.
 
-    cd src && set API_URI=http://localhost:5001/api && dotnet run
+    cd src && set API_URL=http://localhost:5001/api && dotnet run
 
 ### Set maps config
 
