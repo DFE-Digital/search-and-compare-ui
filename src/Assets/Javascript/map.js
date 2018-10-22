@@ -160,4 +160,4 @@ const initGoogleMaps = () => {
   map.controls[google.maps.ControlPosition.RIGHT_TOP].push(legend)
 }
 
-window.initGoogleMaps = initGoogleMaps
+export default initGoogleMaps
