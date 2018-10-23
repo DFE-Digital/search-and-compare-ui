@@ -36,6 +36,7 @@
     "webpack-hot-middleware": "^2.22.3"
   },
   "dependencies": {
+    "@google/markerwithlabel": "^1.2.3",
     "accessible-autocomplete": "^1.6.1"
   }
 }

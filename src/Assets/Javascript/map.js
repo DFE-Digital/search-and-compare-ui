@@ -1,3 +1,5 @@
+import MarkerWithLabel from "@google/markerwithlabel"
+
 const initGoogleMaps = () => {
   const bounds = new google.maps.LatLngBounds()
 
@@ -39,13 +41,6 @@ const initGoogleMaps = () => {
     }
   })
 
-  const locationMarker = {
-    url: "/images/map-marker-black.png",
-    scaledSize: new google.maps.Size(20, 32),
-    origin: new google.maps.Point(0, 0),
-    anchor: new google.maps.Point(0, 32)
-  }
-
   const searchMarker = {
     url: "/images/map-marker-red.png",
     scaledSize: new google.maps.Size(30, 44),
@@ -72,11 +67,14 @@ const initGoogleMaps = () => {
     const data = locations[i]
     const latLng = new google.maps.LatLng(data.lat, data.lng)
 
-    const marker = new google.maps.Marker({
+    const marker = new MarkerWithLabel({
+      map: map,
       position: latLng,
-      map,
       title: data.title,
-      icon: locationMarker,
+      labelContent: data.title,
+      labelAnchor: new google.maps.Point(0, 0),
+      labelClass: "map-marker-label",
+      labelInBackground: true,
       zIndex: 2
     })
     ;((marker, data) => {
