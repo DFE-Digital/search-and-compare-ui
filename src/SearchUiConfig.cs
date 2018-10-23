@@ -24,11 +24,7 @@ namespace GovUk.Education.SearchAndCompare.UI
                 {
                     apiUrl = apiUrl.Substring(0, apiUrl.Length - 1);
                 }
-
-                if (!apiUrl.EndsWith("/api"))
-                {
-                    apiUrl = apiUrl + "/api";
-                }
+                apiUrl = apiUrl + "/api";
                 return apiUrl;
             }
         }
