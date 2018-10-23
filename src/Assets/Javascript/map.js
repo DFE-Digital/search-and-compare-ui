@@ -1,4 +1,6 @@
 const initGoogleMaps = () => {
+  const bounds = new google.maps.LatLngBounds()
+
   let $zoomLevel
   switch (window.mapSettings.zoom) {
     case 5:
@@ -17,6 +19,9 @@ const initGoogleMaps = () => {
       $zoomLevel = 8
   }
 
+  const centerLat = window.mapSettings.search_lat
+  const centerLng = window.mapSettings.search_lng
+
   const map = new google.maps.Map(document.getElementById("map"), {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     mapTypeControl: false,
@@ -29,8 +34,8 @@ const initGoogleMaps = () => {
     },
     zoom: $zoomLevel,
     center: {
-      lat: window.mapSettings.search_lat,
-      lng: window.mapSettings.search_lng
+      lat: centerLat,
+      lng: centerLng
     }
   })
 
@@ -74,7 +79,6 @@ const initGoogleMaps = () => {
       icon: locationMarker,
       zIndex: 2
     })
-
     ;((marker, data) => {
       google.maps.event.addListener(marker, "click", e => {
         const windowsContent = `
@@ -107,6 +111,11 @@ const initGoogleMaps = () => {
     })(marker, data)
 
     markers.push(marker)
+
+    // Extend the bounds by the first 10 locations so we get a decent number as part of the first view.
+    if (i < 10) {
+      bounds.extend(latLng)
+    }
   }
 
   // Add marker for search location
@@ -168,6 +177,11 @@ const initGoogleMaps = () => {
   }
 
   map.controls[google.maps.ControlPosition.RIGHT_TOP].push(legend)
+
+  if (locations.length > 1) {
+    map.fitBounds(bounds)
+    map.panTo(new google.maps.LatLng(centerLat, centerLng))
+  }
 }
 
 export default initGoogleMaps
