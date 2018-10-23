@@ -11,6 +11,26 @@ namespace GovUk.Education.SearchAndCompare.UI
             _configuration = configuration;
         }
 
-        public string ApiUrl => _configuration["API_URL"];
+        /// <summary>
+        /// Gets api url, trimming trailing slash and adding /api suffix if missing
+        /// </summary>
+        public string ApiUrl
+        {
+            get
+            {
+                var apiUrl = _configuration["API_URL"];
+                // remove trailing slash
+                if (apiUrl.EndsWith("/"))
+                {
+                    apiUrl = apiUrl.Substring(0, apiUrl.Length - 1);
+                }
+
+                if (!apiUrl.EndsWith("/api"))
+                {
+                    apiUrl = apiUrl + "/api";
+                }
+                return apiUrl;
+            }
+        }
     }
 }
