@@ -17,7 +17,7 @@ const initGoogleMaps = () => {
       $zoomLevel = 8
   }
 
-  const map = new google.maps.Map(document.getElementById('map'), {
+  const map = new google.maps.Map(document.getElementById("map"), {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     mapTypeControl: false,
     scaleControl: false,
@@ -35,21 +35,21 @@ const initGoogleMaps = () => {
   })
 
   const locationMarker = {
-    url: '/images/map-marker-black.png',
+    url: "/images/map-marker-black.png",
     scaledSize: new google.maps.Size(20, 32),
     origin: new google.maps.Point(0, 0),
     anchor: new google.maps.Point(0, 32)
   }
 
   const searchMarker = {
-    url: '/images/map-marker-red.png',
+    url: "/images/map-marker-red.png",
     scaledSize: new google.maps.Size(30, 44),
     origin: new google.maps.Point(0, 0),
     anchor: new google.maps.Point(12, 32)
   }
 
   const textMarker = {
-    url: '/images/map-marker-text.png',
+    url: "/images/map-marker-text.png",
     scaledSize: new google.maps.Size(60, 22),
     origin: new google.maps.Point(0, 0),
     anchor: new google.maps.Point(25, 10)
@@ -59,7 +59,7 @@ const initGoogleMaps = () => {
   const infoWindow = new google.maps.InfoWindow()
   const markers = []
 
-  google.maps.event.addListener(map, 'click', function () {
+  google.maps.event.addListener(map, "click", function() {
     infoWindow.close()
   })
 
@@ -73,31 +73,38 @@ const initGoogleMaps = () => {
       title: data.title,
       icon: locationMarker,
       zIndex: 2
-    });
+    })
 
-    (((marker, data) => {
-      google.maps.event.addListener(marker, 'click', e => {
+    ;((marker, data) => {
+      google.maps.event.addListener(marker, "click", e => {
         const windowsContent = `
           <div class="search-info-window">
-            ${ data.no_of_courses > 1 ? `<h3 class="govuk-heading-s">${data.title}</h3>` : `<h3 class="govuk-heading-s">${data.courses[0].name} with ${data.title}</h3>`}
-            ${ data.no_of_courses > 1 ? `<h4 class="govuk-heading-s">${data.no_of_courses} courses</h4>` : ''}
+            ${
+              data.no_of_courses > 1
+                ? `<h3 class="govuk-heading-s">${data.title}</h3>`
+                : `<h3 class="govuk-heading-s">${data.courses[0].name} with ${data.title}</h3>`
+            }
+            ${data.no_of_courses > 1 ? `<h4 class="govuk-heading-s">${data.no_of_courses} courses</h4>` : ""}
             <ul class="govuk-list">
-              ${data.courses.map(course =>
-                `<li>
+              ${data.courses
+                .map(
+                  course =>
+                    `<li>
                   <a href="${course.url}">${course.name} (${course.code})</a>
                   <br>
                   ${course.qual}
                 </li>`
-              ).join('')}
+                )
+                .join("")}
             </ul>
           </div>
         `
 
         infoWindow.setContent(windowsContent)
-        infoWindow.setOptions({maxWidth:250})
+        infoWindow.setOptions({ maxWidth: 250 })
         infoWindow.open(map, marker)
       })
-    }))(marker, data)
+    })(marker, data)
 
     markers.push(marker)
   }
@@ -115,7 +122,7 @@ const initGoogleMaps = () => {
   const $circles = [5, 10, 20]
   for (let i = 0; i < $circles.length; i++) {
     new google.maps.Circle({
-      strokeColor: '#000000',
+      strokeColor: "#000000",
       strokeOpacity: 0.3,
       strokeWeight: 1,
       fillOpacity: 0,
@@ -127,7 +134,10 @@ const initGoogleMaps = () => {
     // Add label for each radius
     // https://stackoverflow.com/questions/7477003/calculating-new-longitude-latitude-from-old-n-meters
     new google.maps.Marker({
-      position: new google.maps.LatLng((window.mapSettings.search_lat + ($circles[i] * 1.609 / 111.111)), window.mapSettings.search_lng),
+      position: new google.maps.LatLng(
+        window.mapSettings.search_lat + ($circles[i] * 1.609) / 111.111,
+        window.mapSettings.search_lng
+      ),
       map: map,
       icon: textMarker,
       label: `${$circles[i]} miles`,
@@ -137,22 +147,22 @@ const initGoogleMaps = () => {
 
   const $icons = {
     search_location: {
-      name: 'Your location',
+      name: "Your location",
       icon: searchMarker.url
     },
     campus: {
-      name: 'Training locations',
+      name: "Training locations",
       icon: locationMarker.url
     }
   }
 
-  const legend = document.getElementById('legend')
-  const legendList = legend.querySelector('ul')
+  const legend = document.getElementById("legend")
+  const legendList = legend.querySelector("ul")
   for (let key in $icons) {
     var type = $icons[key]
     var name = type.name
     var icon = type.icon
-    var listItem = document.createElement('li')
+    var listItem = document.createElement("li")
     listItem.innerHTML = `<img width="20" src="${icon}"> ${name}`
     legendList.appendChild(listItem)
   }
