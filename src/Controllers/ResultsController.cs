@@ -67,6 +67,10 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         public IActionResult Index(ResultsFilter filter)
         {
             var subjects = api.GetSubjects();
+            if (subjects == null)
+            {
+                throw new Exception("Failed to retrieve subject list from api");
+            }
             filter.qualification = filter.qualification.Any() ? filter.qualification : new List<QualificationOption>{QualificationOption.QtsOnly, QualificationOption.PgdePgceWithQts, QualificationOption.Other};
 
             FilteredList<Subject> filteredSubjects;
