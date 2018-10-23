@@ -89,6 +89,7 @@ namespace GovUk.Education.SearchAndCompare.UI
             app.AddContentLanguageHeaders("en");
 
             var config = serviceProvider.GetService<SearchUiConfig>();
+            config.Validate();
             _logger.LogInformation($"Using API base URL: {config.ApiUrl}");
 
             app.UseMvc(routes =>

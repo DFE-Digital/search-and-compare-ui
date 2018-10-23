@@ -1,9 +1,12 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System;
+using Microsoft.Extensions.Configuration;
 
 namespace GovUk.Education.SearchAndCompare.UI
 {
     public class SearchUiConfig
     {
+        private const string ConfigKeyApiUrl = "API_URL";
+
         private readonly IConfiguration _configuration;
 
         public SearchUiConfig(IConfiguration configuration)
@@ -18,7 +21,11 @@ namespace GovUk.Education.SearchAndCompare.UI
         {
             get
             {
-                var apiUrl = _configuration["API_URL"];
+                var apiUrl = _configuration[ConfigKeyApiUrl];
+                if (string.IsNullOrWhiteSpace(apiUrl))
+                {
+                    return apiUrl;
+                }
                 // remove trailing slash
                 if (apiUrl.EndsWith("/"))
                 {
@@ -26,6 +33,14 @@ namespace GovUk.Education.SearchAndCompare.UI
                 }
                 apiUrl = apiUrl + "/api";
                 return apiUrl;
+            }
+        }
+
+        public void Validate()
+        {
+            if (string.IsNullOrWhiteSpace(ApiUrl))
+            {
+                throw new Exception($"Config value {ConfigKeyApiUrl} missing");
             }
         }
     }
