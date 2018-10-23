@@ -181,7 +181,7 @@ $govuk-global-styles: true;
     height: 300px;
     padding: govuk-spacing(4) govuk-spacing(4) 0 govuk-spacing(4);
 
-    @include mq ($from: desktop) {
+    @include mq($from: desktop) {
       height: 100%;
       left: 360px;
       padding: 0;
@@ -194,7 +194,7 @@ $govuk-global-styles: true;
       height: 300px;
       width: 100%;
 
-      @include mq ($from: desktop) {
+      @include mq($from: desktop) {
         height: 100%;
         position: absolute;
       }
@@ -204,12 +204,44 @@ $govuk-global-styles: true;
   &__sidebar {
     border-right: 1px solid $govuk-border-colour;
     box-sizing: border-box;
-    padding: govuk-spacing(4);
+    padding: govuk-spacing(3);
+    padding-bottom: 0;
 
-    @include mq ($from: desktop) {
-      height: 600px;
+    @include mq($from: desktop) {
+      // 62px is the height of the GOVUK header, but without a cookie banner.
+      height: calc(100vh - 62px);
       overflow-x: scroll;
       width: 360px;
+      padding: govuk-spacing(4);
+      padding-bottom: 0;
+    }
+  }
+
+  &__footer {
+    margin-left: -1 * govuk-spacing(3);
+    margin-right: -1 * govuk-spacing(3);
+    margin-bottom: 0;
+
+    @include mq($from: desktop) {
+      margin-left: -1 * govuk-spacing(4);
+      margin-right: -1 * govuk-spacing(4);
+      margin-bottom: 0;
+
+      .govuk-footer {
+        padding: govuk-spacing(4);
+
+        &__content-container {
+          width: 100%;
+        }
+
+        &__meta {
+          display: block;
+        }
+
+        &__meta_item--logo {
+          text-align: center;
+        }
+      }
     }
   }
 }
@@ -238,7 +270,7 @@ $govuk-global-styles: true;
   margin: govuk-spacing(4);
   padding: govuk-spacing(4);
 
-  @include mq ($from: tablet) {
+  @include mq($from: tablet) {
     display: block;
   }
 
