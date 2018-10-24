@@ -2,7 +2,6 @@
 using System.Net.Http;
 using System.Reflection;
 using GovUk.Education.SearchAndCompare.Domain.Client;
-using GovUk.Education.SearchAndCompare.Services.Http;
 using GovUk.Education.SearchAndCompare.UI.ActionFilters;
 using GovUk.Education.SearchAndCompare.UI.Middleware;
 using GovUk.Education.SearchAndCompare.UI.Services;
@@ -48,16 +47,20 @@ namespace GovUk.Education.SearchAndCompare.UI
 
             services.Configure<RazorViewEngineOptions>(o => o.FileProviders.Add(new EmbeddedFileProvider(sharedAssembly, "GovUk.Education.SearchAndCompare.UI.Shared")));
 
-            var apiUri = Environment.GetEnvironmentVariable("API_URI") ?? Configuration.GetSection("ApiConnection").GetValue<string>("Uri");
-            _logger.LogInformation("Using API base URL: " + apiUri);
-            services.AddSingleton<ISearchAndCompareApi>(provider => new SearchAndCompareApi(new HttpClient(), apiUri));
+            services.AddSingleton<SearchUiConfig, SearchUiConfig>();
+
+            services.AddSingleton<ISearchAndCompareApi>(serviceProvider =>
+            {
+                var config = serviceProvider.GetService<SearchUiConfig>();
+                return new SearchAndCompareApi(new HttpClient(), config.ApiUrl);
+            });
+
             services.AddScoped<IFeatureFlags, FeatureFlags>();
             services.AddSingleton<IGeocoder>(provider => new Geocoder(Configuration["google_cloud_platform_key_geocoding"], new HttpClient()));
-            services.AddScoped<IMapProvider>(provider => new MapProvider(new HttpClientProvider(), Configuration.GetSection("ApiKeys").GetValue<string>("GoogleMapsStatic")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -82,6 +85,10 @@ namespace GovUk.Education.SearchAndCompare.UI
             app.UseStatusCodePagesWithReExecute("/error/{0}");
 
             app.AddContentLanguageHeaders("en");
+
+            var config = serviceProvider.GetService<SearchUiConfig>();
+            config.Validate();
+            _logger.LogInformation($"Using API base URL: {config.ApiUrl}");
 
             app.UseMvc(routes =>
             {
