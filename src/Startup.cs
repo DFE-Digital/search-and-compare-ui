@@ -2,7 +2,6 @@
 using System.Net.Http;
 using System.Reflection;
 using GovUk.Education.SearchAndCompare.Domain.Client;
-using GovUk.Education.SearchAndCompare.Services.Http;
 using GovUk.Education.SearchAndCompare.UI.ActionFilters;
 using GovUk.Education.SearchAndCompare.UI.Middleware;
 using GovUk.Education.SearchAndCompare.UI.Services;
@@ -58,7 +57,6 @@ namespace GovUk.Education.SearchAndCompare.UI
 
             services.AddScoped<IFeatureFlags, FeatureFlags>();
             services.AddSingleton<IGeocoder>(provider => new Geocoder(Configuration["google_cloud_platform_key_geocoding"], new HttpClient()));
-            services.AddScoped<IMapProvider>(provider => new MapProvider(new HttpClientProvider(), Configuration.GetSection("ApiKeys").GetValue<string>("GoogleMapsStatic")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

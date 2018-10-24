@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using GovUk.Education.SearchAndCompare.Domain.Client;
 using GovUk.Education.SearchAndCompare.Domain.Filters.Enums;
 using GovUk.Education.SearchAndCompare.Domain.Lists;
@@ -20,13 +19,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
     public class ResultsController : Controller
     {
         private readonly ISearchAndCompareApi _api;
-        private readonly IMapProvider mapProvider;
         private readonly IFeatureFlags _featureFlags;
 
-        public ResultsController(ISearchAndCompareApi api, IMapProvider mapProvider, IFeatureFlags featureFlags)
+        public ResultsController(ISearchAndCompareApi api, IFeatureFlags featureFlags)
         {
             _api = api;
-            this.mapProvider = mapProvider;
             _featureFlags = featureFlags;
         }
 
@@ -47,20 +44,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                     Coordinates = key
                 }
             ).ToList();
-        }
-
-        [HttpGet("results/mapimage")]
-        public async Task<IActionResult> MapImage(ResultsFilter filter)
-        {
-            var courses = _api.GetCourses(filter.ToQueryFilter());
-            var courseGroups = GroupByProvider(courses);
-
-            var mapProjection = mapProvider.GetMapProjection<CourseGroup>(
-                courseGroups, filter.Coordinates, 400, filter.zoomlevel);
-
-            byte[] content = await mapProvider.GetStaticMapImageAsync(mapProjection);
-            //return "data:image/png;base64," + Convert.ToBase64String(content);
-            return File(content, "image/png");
         }
 
         [HttpGet("results")]
@@ -140,15 +123,13 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             courses = _api.GetCourses(queryFilter);
             var courseGroups = GroupByProvider(courses);
 
-            var mapProjection = mapProvider.GetMapProjection<CourseGroup>(
-                courseGroups, filter.Coordinates, 400, filter.zoomlevel);
+            IMapProjection<CourseGroup> mapProjection = new MapProjection<CourseGroup>(courseGroups, filter.Coordinates, 400, filter.zoomlevel);
 
             viewModel.Map = new MapViewModel
             {
                 CourseGroups = mapProjection.MarkersWithAreas,
                 MyLocation = filter.Coordinates,
                 Map = mapProjection,
-                MapsApiKey = mapProvider.ApiKey
             };
             viewModel.Courses = courses;
 
