@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using GovUk.Education.SearchAndCompare.Domain.Client;
 using GovUk.Education.SearchAndCompare.Domain.Filters.Enums;
 using GovUk.Education.SearchAndCompare.Domain.Lists;
@@ -5,27 +9,23 @@ using GovUk.Education.SearchAndCompare.Domain.Models;
 using GovUk.Education.SearchAndCompare.UI.Filters;
 using GovUk.Education.SearchAndCompare.UI.Services.Maps;
 using GovUk.Education.SearchAndCompare.UI.Services.Maps.Models;
+using GovUk.Education.SearchAndCompare.UI.Shared.Features;
 using GovUk.Education.SearchAndCompare.UI.ViewModels;
 using GovUk.Education.SearchAndCompare.ViewFormatters;
 using GovUk.Education.SearchAndCompare.ViewModels;
-using GovUk.Education.SearchAndCompare.UI.Shared.Features;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
     public class ResultsController : Controller
     {
-        private readonly ISearchAndCompareApi api;
+        private readonly ISearchAndCompareApi _api;
         private readonly IMapProvider mapProvider;
         private readonly IFeatureFlags _featureFlags;
 
         public ResultsController(ISearchAndCompareApi api, IMapProvider mapProvider, IFeatureFlags featureFlags)
         {
-            this.api = api;
+            _api = api;
             this.mapProvider = mapProvider;
             _featureFlags = featureFlags;
         }
@@ -52,7 +52,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [HttpGet("results/mapimage")]
         public async Task<IActionResult> MapImage(ResultsFilter filter)
         {
-            var courses = api.GetCourses(filter.ToQueryFilter());
+            var courses = _api.GetCourses(filter.ToQueryFilter());
             var courseGroups = GroupByProvider(courses);
 
             var mapProjection = mapProvider.GetMapProjection<CourseGroup>(
@@ -66,12 +66,12 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [HttpGet("results")]
         public IActionResult Index(ResultsFilter filter)
         {
-            var subjects = api.GetSubjects();
+            var subjects = _api.GetSubjects();
             if (subjects == null)
             {
                 throw new Exception("Failed to retrieve subject list from api");
             }
-            filter.qualification = filter.qualification.Any() ? filter.qualification : new List<QualificationOption>{QualificationOption.QtsOnly, QualificationOption.PgdePgceWithQts, QualificationOption.Other};
+            filter.qualification = filter.qualification.Any() ? filter.qualification : new List<QualificationOption> { QualificationOption.QtsOnly, QualificationOption.PgdePgceWithQts, QualificationOption.Other };
 
             FilteredList<Subject> filteredSubjects;
             if (filter.SelectedSubjects.Count > 0)
@@ -100,7 +100,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
             queryFilter.pageSize = 10;
 
-            viewModel.Courses = api.GetCourses(queryFilter);
+            viewModel.Courses = _api.GetCourses(queryFilter);
 
             return View(viewModel);
         }
@@ -108,8 +108,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [HttpGet("resultsmap")]
         public IActionResult ResultsMap(ResultsFilter filter)
         {
-            var subjects = api.GetSubjects();
-            filter.qualification = filter.qualification.Any() ? filter.qualification : new List<QualificationOption>{QualificationOption.QtsOnly, QualificationOption.PgdePgceWithQts, QualificationOption.Other};
+            var subjects = _api.GetSubjects();
+            filter.qualification = filter.qualification.Any() ? filter.qualification : new List<QualificationOption> { QualificationOption.QtsOnly, QualificationOption.PgdePgceWithQts, QualificationOption.Other };
 
             FilteredList<Subject> filteredSubjects;
             if (filter.SelectedSubjects.Count > 0)
@@ -137,7 +137,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             };
 
             queryFilter.pageSize = 0;
-            courses = api.GetCourses(queryFilter);
+            courses = _api.GetCourses(queryFilter);
             var courseGroups = GroupByProvider(courses);
 
             var mapProjection = mapProvider.GetMapProjection<CourseGroup>(
