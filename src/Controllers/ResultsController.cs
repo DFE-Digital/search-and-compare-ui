@@ -37,7 +37,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         {
             return courses.Items
                 .SelectMany(c => c.Campuses)
-                .Where(c => c.Location != null)
+                .Where(c => c.Location?.Latitude != null && c.Location?.Longitude != null)
                 .GroupBy(
                     campus => campus.Location.AsCoordinates(),
                     campus => campus.Course,
@@ -125,6 +125,10 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             queryFilter.pageSize = 0;
             courses = _api.GetCourses(queryFilter);
             var courseGroups = GroupCoursesByCampusLocation(courses);
+            if (!courseGroups.Any())
+            {
+                throw new Exception("No locations found");
+            }
 
             IMapProjection<CourseGroup> mapProjection = new MapProjection<CourseGroup>(courseGroups, filter.Coordinates, 400, filter.zoomlevel);
 

@@ -6,7 +6,7 @@ using GovUk.Education.SearchAndCompare.UI.Services.Maps.Models;
 
 namespace GovUk.Education.SearchAndCompare.UI.Services.Maps
 {
-    public class MapProjection<T> : IMapProjection<T> where T: IMapMarker
+    public class MapProjection<T> : IMapProjection<T> where T : IMapMarker
     {
         private int _pinRadius = 9;
 
@@ -70,14 +70,14 @@ namespace GovUk.Education.SearchAndCompare.UI.Services.Maps
             get { return (Math.Min(ZoomLevel + 1, _maxZoomLevel)); }
         }
 
-        public MapProjection(IEnumerable<T> markers, Coordinates myLocation, int? height, int? zoomLevel)
+        public MapProjection(IList<T> markers, Coordinates myLocation, int? height, int? zoomLevel)
         {
             _markers = markers;
             MyLocation = myLocation;
             Centre = CalculateMapCentre(markers);
             Width = _defaultWidth;
             Height = height ?? _defaultHeight;
-            ZoomLevel = zoomLevel?? FitZoomLevel(markers);
+            ZoomLevel = zoomLevel ?? FitZoomLevel(markers);
         }
 
         public IEnumerable<T> MarkersWithAreas
@@ -97,7 +97,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Services.Maps
 
         private void AddMapMarker(IMapMarker marker, char? label)
         {
-            marker.Area = AreaFromCoordinates(marker.Coordinates, string.Format("{0}", label?? '.'));
+            marker.Area = AreaFromCoordinates(marker.Coordinates, string.Format("{0}", label ?? '.'));
         }
 
         private IHtmlArea AreaFromCoordinates(Coordinates coordinates, string name)
@@ -137,7 +137,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Services.Maps
                 && pixelCoordinates.Y > (_pinRadius * 2 + _pinOffset);
         }
 
-        private int FitZoomLevel(IEnumerable<T> markers)
+        private int FitZoomLevel(IList<T> markers)
         {
             // Find max and min coords in pixel space at a given zoom level
             // Determine if these fall within +/- size of map in pixels
@@ -181,8 +181,12 @@ namespace GovUk.Education.SearchAndCompare.UI.Services.Maps
             }
         }
 
-        private Coordinates CalculateMapCentre(IEnumerable<T> markerCoordinates)
+        private Coordinates CalculateMapCentre(IList<T> markerCoordinates)
         {
+            if (markerCoordinates == null || !markerCoordinates.Any())
+            {
+                throw new ArgumentException("Can't calculate map centre when there aren't any markers", nameof(markerCoordinates));
+            }
             // Halfway between minimum and maximum
             var minLatitude = markerCoordinates.Min(x => x.Coordinates.Latitude);
             var maxLatitude = markerCoordinates.Max(x => x.Coordinates.Latitude);
