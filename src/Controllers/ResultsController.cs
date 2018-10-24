@@ -10,7 +10,6 @@ using GovUk.Education.SearchAndCompare.UI.Services.Maps;
 using GovUk.Education.SearchAndCompare.UI.Services.Maps.Models;
 using GovUk.Education.SearchAndCompare.UI.Shared.Features;
 using GovUk.Education.SearchAndCompare.UI.ViewModels;
-using GovUk.Education.SearchAndCompare.ViewFormatters;
 using GovUk.Education.SearchAndCompare.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,22 +30,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         public IActionResult Map(ResultsFilter filter)
         {
             return RedirectToAction("Index", "Results", filter.ToRouteValues());
-        }
-
-        private static List<CourseGroup> GroupCoursesByCampusLocation(PaginatedList<Course> courses)
-        {
-            return courses.Items
-                .SelectMany(c => c.Campuses)
-                .Where(c => c.Location?.Latitude != null && c.Location?.Longitude != null)
-                .GroupBy(
-                    campus => campus.Location.AsCoordinates(),
-                    campus => campus.Course,
-                    (key, groupedCourses) => new CourseGroup
-                    {
-                        Coordinates = key,
-                        Courses = groupedCourses.ToList(),
-                    }
-                ).ToList();
         }
 
         [HttpGet("results")]
@@ -124,7 +107,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
             queryFilter.pageSize = 0;
             courses = _api.GetCourses(queryFilter);
-            var courseGroups = GroupCoursesByCampusLocation(courses);
+            var courseGroups = courses.Items.GroupCoursesByCampusLocation().ToList();
             if (!courseGroups.Any())
             {
                 throw new Exception("No locations found");
@@ -148,6 +131,5 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         {
             return RedirectToAction("Index", "Results", filter.ToRouteValues());
         }
-
     }
 }
