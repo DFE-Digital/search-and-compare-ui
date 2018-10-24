@@ -31,7 +31,7 @@
 
         <div class="course-basicinfo govuk-!-margin-bottom-8">
           <dl class="govuk-list--description">
-            @if(!string.IsNullOrEmpty(Model.Course.Mod) && Model.Course.Mod.Length > 1)
+            @if (!string.IsNullOrEmpty(Model.Course.Mod) && Model.Course.Mod.Length > 1)
             {
               <dt class="govuk-list--description__label">Course offered</dt>
               <dd>@Model.Course.Mod</dd>
@@ -42,24 +42,34 @@
             <dd>
               @await Html.PartialAsync("_Qualification.cshtml")
             </dd>
-            @if (!string.IsNullOrEmpty(Model.Course.Duration)) {
+            @if (!string.IsNullOrEmpty(Model.Course.Duration))
+            {
               <dt class="govuk-list--description__label">Course length</dt>
               <dd>@Model.Course.Duration</dd>
             }
-            @if (!string.IsNullOrEmpty(@Model.Course.FormattedEarliestApplicationDate())) {
+            @if (!string.IsNullOrEmpty(@Model.Course.FormattedEarliestApplicationDate()))
+            {
               <dt class="govuk-list--description__label">Date you can apply from</dt>
               <dd>@Model.Course.FormattedEarliestApplicationDate()</dd>
             }
-            @if (!string.IsNullOrEmpty(@Model.Course.FormattedStartDate())) {
+            @if (!string.IsNullOrEmpty(@Model.Course.FormattedStartDate()))
+            {
               <dt class="govuk-list--description__label">Date course starts</dt>
               <dd>@Model.Course.FormattedStartDate()</dd>
             }
-            @if (Model.ShowWebsite) {
+            @if (Model.ShowWebsite)
+            {
               <dt class="govuk-list--description__label">Website</dt>
               <dd>
                 <a href="@Model.Course.FormattedWebsite()" title="Go to course website" aria-label="Go to course website" class="govuk-link">@Model.Course.FormattedWebsite()</a>
               </dd>
             }
+            @if (Model.Course.HasVacancies == false)
+            {
+              <dt class="govuk-list--description__label">Vacancies</dt>
+              <dd>No</dd>
+            }
+
           </dl>
         </div>
       </div>

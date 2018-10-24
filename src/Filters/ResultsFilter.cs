@@ -16,6 +16,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
         public ResultsFilter()
         {
             qualification = new List<QualificationOption>();
+            this.hasvacancies = true;
         }
         public int? page { get; set; }
 
@@ -50,6 +51,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
         public bool fulltime { get; set; }
 
         public bool parttime { get; set; }
+        public bool hasvacancies { get; set; }
         public IList<QualificationOption> qualification { get; set; }
 
         public List<int> SelectedSubjects {
@@ -154,7 +156,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 query = this.query,
                 qualification = resQualification,
                 fulltime = this.fulltime,
-                parttime = this.parttime
+                parttime = this.parttime,
+                hasvacanciesonly = this.hasvacancies
             };
         }
 
@@ -179,7 +182,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 offlat,
                 qualification,
                 fulltime,
-                parttime
+                parttime,
+                hasvacancies
             };
         }
 
@@ -197,6 +201,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 qualification = this.qualification,
                 fulltime = this.fulltime,
                 parttime = this.parttime,
+                hasvacancies = this.hasvacancies,
                 l = this.l
             };
         }
@@ -222,7 +227,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 offlat = this.offlat,
                 qualification = this.qualification,
                 fulltime = this.fulltime,
-                parttime = this.parttime
+                parttime = this.parttime,
+                hasvacancies = this.hasvacancies,
             };
         }
 
@@ -247,7 +253,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 offlat = this.offlat,
                 qualification = this.qualification,
                 fulltime = this.fulltime,
-                parttime = this.parttime
+                parttime = this.parttime,
+                hasvacancies = this.hasvacancies,
             };
         }
 
@@ -282,6 +289,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 qualification = this.qualification,
                 fulltime = this.fulltime,
                 parttime = this.parttime,
+                hasvacancies = this.hasvacancies,
                 sortby = resultingSortBy,
                 page = withPage ? this.page : null
             };
@@ -309,7 +317,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 offlat = this.offlat,
                 qualification = this.qualification,
                 fulltime = this.fulltime,
-                parttime = this.parttime
+                parttime = this.parttime,
+                hasvacancies = this.hasvacancies,
             };
         }
 
@@ -346,6 +355,17 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
             if (!fulltime || parttime)
             {
                 yield return "Part time (18 - 24 months)";
+            }
+        }
+        public IEnumerable<string> GetVacancyStrings()
+        {
+            if (hasvacancies)
+            {
+                yield return "Only courses with vacancies";
+            }
+            else
+            {
+                yield return "Courses with and without vacancies";
             }
         }
 
