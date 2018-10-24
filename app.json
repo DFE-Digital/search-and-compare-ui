@@ -3,7 +3,7 @@
   "scripts": {
   },
   "env": {
-    "API_URI": {
+    "API_URL": {
       "required": true
     },
     "FEATURE_MAPS": {
