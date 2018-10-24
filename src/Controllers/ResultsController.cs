@@ -37,6 +37,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         {
             return courses.Items
                 .SelectMany(c => c.Campuses)
+                .Where(c => c.Location != null)
                 .GroupBy(
                     campus => campus.Location.AsCoordinates(),
                     campus => campus.Course,
