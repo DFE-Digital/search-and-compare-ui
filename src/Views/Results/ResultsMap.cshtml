@@ -1,10 +1,11 @@
+@using GovUk.Education.SearchAndCompare.UI.Controllers
 @model ResultsViewModel
 
 @{
   ViewBag.HideFooter = true;
   Layout = "~/Views/Shared/_Layout.cshtml";
 
-  var mapModel = Model.Map;
+  var mapModel = Model.MapViewModel;
 
   ViewBag.Title =
     (Model.Courses != null && Model.Courses.TotalCount > 0
@@ -109,34 +110,40 @@
 
 <script>
   window.mapSettings = {
-    "search_lat": @(mapModel.Map.MyLocation.Latitude),
-    "search_lng": @(mapModel.Map.MyLocation.Longitude),
+    "search_lat": @(mapModel.MapProjection.MyLocation.Latitude),
+    "search_lng": @(mapModel.MapProjection.MyLocation.Longitude),
     "zoom": @(Model.FilterModel.rad)
   }
 
   window.locations = [
-    @foreach (var courseGroup in Model.Map.CourseGroups)
+  @{
+      var pins = Model.MapViewModel.MapProjection.Markers.OfType<CourseMapPin>();
+      var locationGroups = pins.GroupBy(pin => pin.Location, pin => pin);
+  }
+    @foreach (var locationGroup in locationGroups)
     {
+        var location = locationGroup.Key;
       <text>
         {
-          "title": "@(courseGroup.Courses.First().Provider.Name)",
-          "lat": "@(courseGroup.Coordinates.Latitude)",
-          "lng": "@(courseGroup.Coordinates.Longitude)",
-          "no_of_courses": @(courseGroup.Courses.Count()),
-          "distance": "@(courseGroup.Courses.First().Distance.FormattedDistance())",
+          //"title": "todo",
+          "lat": "@location.Latitude",
+          "lng": "@location.Longitude",
+          "no_of_courses": @locationGroup.Count(),
+          //"distance": "todo",
           "courses":
           [
-            @foreach (var course in courseGroup.Courses)
-            {
-              <text>
-                {
-                  "name": "@(course.Name)",
-                  "code": "@(course.ProgrammeCode)",
-                  "qual": "@(course.Mod)",
-                  "url": "@(Url.Action("Index", "Course", new {courseCode = course.ProgrammeCode, providerCode = course.Provider.ProviderCode}))"
-                },
-              </text>
-            }
+              @foreach(var pin in locationGroup)
+              {
+                  var course = pin.Course;
+                  <text>
+                    {
+                      "name": "@(course.Name)",
+                      "code": "@(course.ProgrammeCode)",
+                      "qual": "@(course.Mod)",
+                      "url": "@(Url.Action("Index", "Course", new {courseCode = course.ProgrammeCode, providerCode = course.Provider.ProviderCode}))"
+                    },
+                  </text>
+              }
           ]
         },
       </text>

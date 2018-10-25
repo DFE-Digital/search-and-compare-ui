@@ -21,7 +21,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.ViewComponents
         {
             var empty = new ResultsViewModel
             {
-                Map = new MapViewModel(),
+                MapViewModel = new MapViewModel(),
                 Courses = new PaginatedList<Course>(),
                 Subjects = new FilteredList<Subject>(),
                 FilterModel = new ResultsFilter()

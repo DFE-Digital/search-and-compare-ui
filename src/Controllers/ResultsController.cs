@@ -7,10 +7,8 @@ using GovUk.Education.SearchAndCompare.Domain.Lists;
 using GovUk.Education.SearchAndCompare.Domain.Models;
 using GovUk.Education.SearchAndCompare.UI.Filters;
 using GovUk.Education.SearchAndCompare.UI.Services.Maps;
-using GovUk.Education.SearchAndCompare.UI.Services.Maps.Models;
 using GovUk.Education.SearchAndCompare.UI.Shared.Features;
 using GovUk.Education.SearchAndCompare.UI.ViewModels;
-using GovUk.Education.SearchAndCompare.ViewFormatters;
 using GovUk.Education.SearchAndCompare.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,19 +29,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         public IActionResult Map(ResultsFilter filter)
         {
             return RedirectToAction("Index", "Results", filter.ToRouteValues());
-        }
-
-        private static List<CourseGroup> GroupByProvider(PaginatedList<Course> courses)
-        {
-            return courses.Items.GroupBy(
-                course => course.ProviderLocation.AsCoordinates(),
-                course => course,
-                (key, groupedCourses) => new CourseGroup
-                {
-                    Courses = groupedCourses.ToList(),
-                    Coordinates = key
-                }
-            ).ToList();
         }
 
         [HttpGet("results")]
@@ -121,15 +106,25 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
             queryFilter.pageSize = 0;
             courses = _api.GetCourses(queryFilter);
-            var courseGroups = GroupByProvider(courses);
 
-            IMapProjection<CourseGroup> mapProjection = new MapProjection<CourseGroup>(courseGroups, filter.Coordinates, 400, filter.zoomlevel);
+            var pins = courses.Items
+                .Where(course => course.ProviderLocation?.Latitude != null && course.ProviderLocation?.Longitude != null)
+                .Select(course => new CourseMapPin { Location = course.ProviderLocation, Course = course, Provider = course.Provider })
+                .ToList();
 
-            viewModel.Map = new MapViewModel
+            var campusPins = courses.Items.SelectMany(
+                course => course.Campuses
+                    .Where(campus => campus.Location?.Latitude != null && campus.Location?.Longitude != null)
+                    .Select(campus => new CourseMapPin { Location = campus.Location, Campus = campus, Course = course })
+            );
+            pins.AddRange(campusPins);
+
+            var mapProjection = new MapProjection<CourseMapPin>(pins, filter.Coordinates, 400, filter.zoomlevel);
+
+            viewModel.MapViewModel = new MapViewModel
             {
-                CourseGroups = mapProjection.Markers,
                 MyLocation = filter.Coordinates,
-                Map = mapProjection,
+                MapProjection = mapProjection,
             };
             viewModel.Courses = courses;
 
@@ -141,6 +136,5 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         {
             return RedirectToAction("Index", "Results", filter.ToRouteValues());
         }
-
     }
 }
