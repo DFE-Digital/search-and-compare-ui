@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
-    public class ResultsController : Controller
+    public partial class ResultsController : Controller
     {
         private readonly ISearchAndCompareApi _api;
         private readonly IFeatureFlags _featureFlags;
@@ -107,11 +107,19 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
             queryFilter.pageSize = 0;
             courses = _api.GetCourses(queryFilter);
-            var courseGroups = courses.Items.GroupCoursesByCampusLocation().ToList();
-            if (!courseGroups.Any())
-            {
-                throw new Exception("No locations found");
-            }
+
+
+            var pins = courses.Items
+                .Where(course => course.ProviderLocation?.Latitude != null && course.ProviderLocation?.Longitude != null)
+                .Select(course => new CourseMapPin {Location = course.ProviderLocation, Course = course, Provider = course.Provider})
+                .ToList();
+
+            var campusPins = courses.Items.SelectMany(
+                course => course.Campuses
+                    .Where(campus => campus.Location?.Latitude != null && campus.Location?.Longitude != null)
+                    .Select(campus => new CourseMapPin {Location = campus.Location, Campus = campus, Course = course})
+            );
+            pins.AddRange(campusPins);
 
             IMapProjection<CourseGroup> mapProjection = new MapProjection<CourseGroup>(courseGroups, filter.Coordinates, 400, filter.zoomlevel);
 

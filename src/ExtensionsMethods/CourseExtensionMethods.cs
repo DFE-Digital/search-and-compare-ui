@@ -7,8 +7,10 @@ namespace GovUk.Education.SearchAndCompare.Domain.Models
 {
     public static class CourseExtensionMethods
     {
-        public static IEnumerable<CourseGroup> GroupCoursesByCampusLocation(this IEnumerable<Course> courses)
+        public static IEnumerable<CourseGroup> GroupCoursesByLocation(this IEnumerable<Course> courses)
         {
+            // find all the locations regardless of whether it was a campus or location
+
             return courses
                 .SelectMany(c => c.Campuses)
                 .Where(c => c.Location?.Latitude != null && c.Location?.Longitude != null)

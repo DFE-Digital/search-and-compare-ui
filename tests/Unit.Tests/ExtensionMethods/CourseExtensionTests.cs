@@ -25,7 +25,7 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.ExtensionMethods
             };
 
             // act
-            var courseGroups = courses.GroupCoursesByCampusLocation().ToList();
+            var courseGroups = courses.GroupCoursesByLocation().ToList();
 
             // assert
             courseGroups.Should().NotBeNull();
@@ -51,7 +51,7 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.ExtensionMethods
             };
 
             // act
-            var courseGroups = courses.GroupCoursesByCampusLocation().ToList();
+            var courseGroups = courses.GroupCoursesByLocation().ToList();
 
             // assert
             courseGroups.Should().NotBeNull();
