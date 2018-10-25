@@ -1,6 +1,8 @@
-import MarkerWithLabel from "@google/markerwithlabel"
+import MarkerWithLabelFactory from "markerwithlabel"
 
 const initGoogleMaps = () => {
+  const MarkerWithLabel = MarkerWithLabelFactory(google.maps)
+
   const bounds = new google.maps.LatLngBounds()
 
   let $zoomLevel
@@ -57,7 +59,6 @@ const initGoogleMaps = () => {
 
   const locations = window.locations
   const infoWindow = new google.maps.InfoWindow()
-  const markers = []
 
   google.maps.event.addListener(map, "click", function() {
     infoWindow.close()
@@ -68,14 +69,16 @@ const initGoogleMaps = () => {
     const latLng = new google.maps.LatLng(data.lat, data.lng)
 
     const marker = new MarkerWithLabel({
-      map: map,
+      map,
       position: latLng,
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 0.1
+      },
       title: data.title,
       labelContent: data.title,
-      labelAnchor: new google.maps.Point(0, 0),
-      labelClass: "map-marker-label",
-      labelInBackground: true,
-      zIndex: 2
+      labelAnchor: new google.maps.Point(52, 20),
+      labelClass: "map-marker-label"
     })
     ;((marker, data) => {
       google.maps.event.addListener(marker, "click", e => {
@@ -107,8 +110,6 @@ const initGoogleMaps = () => {
         infoWindow.open(map, marker)
       })
     })(marker, data)
-
-    markers.push(marker)
 
     // Extend the bounds by the first 10 locations so we get a decent number as part of the first view.
     if (i < 10) {
@@ -156,10 +157,6 @@ const initGoogleMaps = () => {
     search_location: {
       name: "Your location",
       icon: searchMarker.url
-    },
-    campus: {
-      name: "Training locations",
-      icon: locationMarker.url
     }
   }
 

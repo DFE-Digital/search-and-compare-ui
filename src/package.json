@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "@google/markerwithlabel": "^1.2.3",
-    "accessible-autocomplete": "^1.6.1"
+    "accessible-autocomplete": "^1.6.1",
+    "markerwithlabel": "^2.0.2"
   }
 }

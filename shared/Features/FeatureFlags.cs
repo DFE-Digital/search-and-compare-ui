@@ -15,7 +15,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.Features
         }
 
         public bool Apply2019 => ShouldShow("FEATURE_APPLY_2019");
-        public bool Maps => ShouldShow("FEATURE_MAPS");
+        public bool Maps => true;
 
         public bool ShouldShow(string key)
         {

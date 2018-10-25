@@ -324,22 +324,28 @@ $govuk-global-styles: true;
 }
 
 .map-marker-label {
-  background: rgba(255, 255, 255, 0.9);
-  border: 5px solid black;
+  background: white;
+  border: 2px solid black;
   color: black;
   font-family: $govuk-font-family;
   font-size: 14px;
   height: 20px;
   line-height: 22px;
   max-width: 100px;
-  overflow: hidden;
   padding: 2px;
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  &:hover {
-    max-width: none;
-    background: white;
+  &:after {
+    background: black;
+    content: "";
+    display: block;
+    height: 20px;
+    left: 42px;
+    position: absolute;
+    transform: rotate(45deg);
+    top: 20px;
+    width: 20px;
   }
 }
