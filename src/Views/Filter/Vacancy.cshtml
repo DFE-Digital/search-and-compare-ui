@@ -1,0 +1,52 @@
+@model ResultsFilter
+
+@{
+  ViewBag.Title = $"Find courses by vacancies";
+  var errors = ViewBag.Errors as ErrorViewModel;
+}
+
+<div class="govuk-width-container">
+  @await Html.PartialAsync("Back", new BackLinkViewModel {
+    Href = Url.Action("Index", "Results", Model.ToRouteValues()),
+    Title = "Back to search results"
+  })
+</div>
+
+<main class="govuk-main-wrapper" id="main-content" role="main">
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        @await Html.PartialAsync("Error", errors)
+      </div>
+    </div>
+
+    <form action='@Url.Action("Vacancy", "Filter", Model.ToRouteValues())' method="POST" data-ga-event-form="Vacancy">
+      <fieldset role="radiogroup" aria-required="true" class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+          <h1 class="govuk-heading-xl">Find courses by vacancies</h1>
+        </legend>
+        <div class="govuk-form-group" id="vacancy-container">
+          <div class="govuk-radios" data-module="radios">
+            <div class="govuk-radios__item">
+              <input id="vacancy" class="govuk-radios__input" type="radio" name="hasvacancies" value="true" checked="@(Model.hasvacancies)" data-ga-event-form-input="Only courses with vacancies">
+              <label for="vacancy" class="govuk-label govuk-radios__label">
+                Only courses with vacancies
+              </label>
+            </div>
+            <div class="govuk-radios__item">
+              <input id="vacancyAll" class="govuk-radios__input" type="radio" name="hasvacancies" value="false" checked="@(!Model.hasvacancies)" data-ga-event-form-input="Courses with and without vacancies">
+              <label for="vacancyAll" class="govuk-label govuk-radios__label">
+                Courses with and without vacancies
+              </label>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+      <div class="govuk-form-group">
+        <input class="govuk-button" type="submit" value="Find courses">
+      </div>
+  </div>
+  </div>
+  </form>
+  </div>
+</main>

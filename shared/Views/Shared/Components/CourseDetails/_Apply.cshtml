@@ -16,73 +16,85 @@
 
 <div class="govuk-!-margin-bottom-8">
   <h2 class="govuk-heading-l" id="section-apply">Apply</h2>
-
-  @if (show2019Apply)
-  {
-    <p class="govuk-body">
-      <a href="https://2019.teachertraining.apply.ucas.com/apply/student/login.do">Apply on the UCAS website</a>. You’ll need to register with UCAS before you can apply.
-    </p>
-    <p class="govuk-body">
-      Visit Get into Teaching for <a href="https://getintoteaching.education.gov.uk/how-to-apply/apply">guidance on applying for teacher training</a>.
-    </p>
-  }
-  else
+  @if (Model.Course.HasVacancies == false)
   {
     <div class="govuk-warning-text">
       <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
       <strong class="govuk-warning-text__text">
         <span class="govuk-warning-text__assistive">Warning</span>
-        You can’t apply for this course until 9 October 2018
+        You can't apply for this course because it currently has no vacancies. To find courses with vacancies, change your search settings to 'Only courses with vacancies'.
       </strong>
     </div>
-    <p class="govuk-body">
-      Apply on the UCAS website from 9 October. You’ll need to register with UCAS before you can apply. Visit Get into Teaching for <a href="https://getintoteaching.education.gov.uk/how-to-apply/apply">guidance on applying for teacher training</a>.
-    </p>
   }
-
-  <p class="govuk-body">
-    When you apply you’ll need these codes for the Choices section of your application form:
-  </p>
-  <div class="govuk-inset-text">
-    <ul class="govuk-list">
-      <li class="govuk-!-margin-bottom-2">
-        Training provider code:
-        <span class="govuk-!-display-block govuk-!-font-size-36 govuk-!-font-weight-bold">@Model.Course.Provider.ProviderCode</span>
-      </li>
-      <li>
-        Training programme code:
-        <span class="govuk-!-display-block govuk-!-font-size-36 govuk-!-font-weight-bold">@Model.Course.ProgrammeCode</span>
-      </li>
-    </ul>
-  </div>
-
-  @if (Model.Course.Campuses.Count() > 0)
+  else
   {
+    if (show2019Apply)
+    {
+      <p class="govuk-body">
+        <a href="https://2019.teachertraining.apply.ucas.com/apply/student/login.do">Apply on the UCAS website</a>. You’ll need to register with UCAS before you can apply.
+      </p>
+      <p class="govuk-body">
+        Visit Get into Teaching for <a href="https://getintoteaching.education.gov.uk/how-to-apply/apply">guidance on applying for teacher training</a>.
+      </p>
+    }
+    else
+    {
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+          <span class="govuk-warning-text__assistive">Warning</span>
+          You can’t apply for this course until 9 October 2018
+        </strong>
+      </div>
+      <p class="govuk-body">
+        Apply on the UCAS website from 9 October. You’ll need to register with UCAS before you can apply. Visit Get into Teaching for <a href="https://getintoteaching.education.gov.uk/how-to-apply/apply">guidance on applying for teacher training</a>.
+      </p>
+    }
+
+    <p class="govuk-body">
+      When you apply you’ll need these codes for the Choices section of your application form:
+    </p>
+    <div class="govuk-inset-text">
+      <ul class="govuk-list">
+        <li class="govuk-!-margin-bottom-2">
+          Training provider code:
+          <span class="govuk-!-display-block govuk-!-font-size-36 govuk-!-font-weight-bold">@Model.Course.Provider.ProviderCode</span>
+        </li>
+        <li>
+          Training programme code:
+          <span class="govuk-!-display-block govuk-!-font-size-36 govuk-!-font-weight-bold">@Model.Course.ProgrammeCode</span>
+        </li>
+      </ul>
+    </div>
+
+    if (Model.Course.Campuses.Count() > 0)
+    {
     <h3 class="govuk-heading-m">Choose a training location</h3>
     <p class="govuk-body">You’ll also need to choose a training location and give the relevant training location code.</p>
-    @if (showMap)
+    if (showMap)
     {
       <div id="locations-map" class="google-map--locations"></div>
     }
-    <table class="govuk-table">
-      <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th class="govuk-table__header" scope="col">Code</th>
-          <th class="govuk-table__header" scope="col">Name</th>
-          <th class="govuk-table__header" scope="col">Address</th>
-        </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-        @foreach (var campus in Model.Course.Campuses)
-        {
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <td class="govuk-table__cell govuk-!-font-size-24 govuk-!-font-weight-bold">@campus.CampusCode</td>
-            <td class="govuk-table__cell">@campus.Name</td>
-            <td class="govuk-table__cell">@campus.Location?.Address</td>
+            <th class="govuk-table__header" scope="col">Code</th>
+            <th class="govuk-table__header" scope="col">Name</th>
+            <th class="govuk-table__header" scope="col">Address</th>
           </tr>
-        }
-      </tbody>
-    </table>
+        </thead>
+        <tbody class="govuk-table__body">
+          @foreach (var campus in Model.Course.Campuses)
+          {
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell govuk-!-font-size-24 govuk-!-font-weight-bold">@campus.CampusCode</td>
+              <td class="govuk-table__cell">@campus.Name</td>
+              <td class="govuk-table__cell">@campus.Location?.Address</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
   }
 </div>
 

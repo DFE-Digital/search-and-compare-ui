@@ -34,15 +34,19 @@
             Filter the results
           </button>
           <div class="govuk-toggle__target" id="searchFilters">
-            @if (!string.IsNullOrWhiteSpace(Model.FilterModel.query)) {
+            @if (!string.IsNullOrWhiteSpace(Model.FilterModel.query))
+            {
               @await Html.PartialAsync("Filters/Query", Model.FilterModel)
-            } else {
+            }
+            else
+            {
               @await Html.PartialAsync("Filters/Location", Model.FilterModel)
             }
             @await Html.PartialAsync("Filters/Subject", Model)
             @await Html.PartialAsync("Filters/StudyType", Model.FilterModel)
             @await Html.PartialAsync("Filters/Qualification", Model.FilterModel)
             @await Html.PartialAsync("Filters/Funding", Model.FilterModel)
+            @await Html.PartialAsync("Filters/Vacancy", Model.FilterModel)
           </div>
         </div>
       </div>

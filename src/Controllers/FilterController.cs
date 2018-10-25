@@ -259,6 +259,21 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             return RedirectToAction("Index", "Results", model.ToRouteValues());
         }
 
+        [HttpGet("results/filter/vacancy")]
+        [ActionName("Vacancy")]
+        public IActionResult Vacancy(ResultsFilter model)
+        {
+            return View(model);
+        }
+
+        [HttpPost("results/filter/vacancy")]
+        [ActionName("Vacancy")]
+        public IActionResult VacancyPost(bool hasvacancies, ResultsFilter filter)
+        {
+            filter.hasvacancies = hasvacancies;
+            filter.page = null;
+            return RedirectToAction("Index", "Results", filter.ToRouteValues());
+        }
         private async Task<Coordinates> ResolvePostCodeAsync(string lq)
         {
             Coordinates coords = null;
