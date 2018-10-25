@@ -18,13 +18,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Services.Maps
 
         private int _defaultHeight = 640;
 
-        private string alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
         private Coordinates _centre;
 
         private Coordinates _centreOffset = new Coordinates(0, 0);
 
-        private IEnumerable<T> _markers;
+        public IEnumerable<T> Markers { get; }
 
         public int ZoomLevel { get; set; }
 
@@ -72,45 +70,12 @@ namespace GovUk.Education.SearchAndCompare.UI.Services.Maps
 
         public MapProjection(IEnumerable<T> markers, Coordinates myLocation, int? height, int? zoomLevel)
         {
-            _markers = markers;
+            Markers = markers;
             MyLocation = myLocation;
             Centre = CalculateMapCentre(markers);
             Width = _defaultWidth;
             Height = height ?? _defaultHeight;
             ZoomLevel = zoomLevel?? FitZoomLevel(markers);
-        }
-
-        public IEnumerable<T> MarkersWithAreas
-        {
-            get
-            {
-                _markers.Zip(LabelsFromString(alphabet), (m, l) => new { Marker = m, Label = l }).ToList()
-                    .ForEach(ml => AddMapMarker(ml.Marker, ml.Label));
-                return _markers;
-            }
-        }
-
-        public IHtmlArea MyLocationArea
-        {
-            get { return AreaFromCoordinates(MyLocation, ""); }
-        }
-
-        private void AddMapMarker(IMapMarker marker, char? label)
-        {
-            marker.Area = AreaFromCoordinates(marker.Coordinates, string.Format("{0}", label?? '.'));
-        }
-
-        private IHtmlArea AreaFromCoordinates(Coordinates coordinates, string name)
-        {
-            var markerPixelCoords = GetMarkerPixelCoordinates(coordinates, ZoomLevel);
-
-            var area = new CircleArea(
-                name,
-                (int)(Math.Round(markerPixelCoords.X)),
-                (int)(Math.Round(markerPixelCoords.Y)) - _pinOffset,
-                _pinRadius);
-
-            return area;
         }
 
         private PixelCoordinates GetPixelCentre(int zoomLevel)
@@ -167,18 +132,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Services.Maps
             while (zoomLevel < _maxZoomLevel);
 
             return zoomLevel;
-        }
-
-        private IEnumerable<char> LabelsFromString(string alphabet)
-        {
-            for (int i = 0; i < alphabet.Length; i++)
-            {
-                yield return alphabet[i];
-            }
-            while (true)
-            {
-                yield return '-';
-            }
         }
 
         private Coordinates CalculateMapCentre(IEnumerable<T> markerCoordinates)

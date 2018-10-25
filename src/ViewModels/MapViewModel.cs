@@ -9,8 +9,6 @@ namespace GovUk.Education.SearchAndCompare.ViewModels
     {
         public IEnumerable<CourseGroup> CourseGroups { get; set; }
 
-        public IHtmlArea MyLocationArea { get; set; }
-
         public Coordinates MyLocation { get; set; }
 
         public IMapProjection<IMapMarker> Map { get; set; }

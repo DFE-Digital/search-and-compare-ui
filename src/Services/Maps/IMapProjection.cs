@@ -4,7 +4,7 @@ using GovUk.Education.SearchAndCompare.UI.Services.Maps.Models;
 
 namespace GovUk.Education.SearchAndCompare.UI.Services.Maps
 {
-    public interface IMapProjection<out T> where T: IMapMarker
+    public interface IMapProjection<out T> where T : IMapMarker
     {
         int ZoomLevel { get; set; }
 
@@ -24,8 +24,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Services.Maps
 
         Coordinates Centre { get; set; }
 
-        IEnumerable<T> MarkersWithAreas { get; }
-
-        IHtmlArea MyLocationArea { get; }
+        IEnumerable<T> Markers { get; }
     }
 }
