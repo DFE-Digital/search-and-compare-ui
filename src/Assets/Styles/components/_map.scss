@@ -141,14 +141,14 @@ $TIP_HEIGHT: 8px;
   top: 0;
   left: 0;
   /* Center the tip horizontally. */
-  transform: translate(-50%, 0);
+  transform: translate(-50%, -2px);
   /* The tip is a https://css-tricks.com/snippets/css/css-triangle/ */
   width: 0;
   height: 0;
   /* The tip is 8px high, and 12px wide. */
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
-  border-top: $TIP_HEIGHT solid black;
+  border-top: $TIP_HEIGHT solid white;
 }
 
 /* The popup bubble itself. */
@@ -164,7 +164,7 @@ $TIP_HEIGHT: 8px;
   max-height: 60px;
   overflow-y: auto;
   box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.2);
-  border: 2px solid #000;
+  border: 1px solid $govuk-border-colour;
   max-width: 120px;
 }
 
@@ -175,10 +175,13 @@ $TIP_HEIGHT: 8px;
 }
 
 .popup-bubble__open-content {
-  min-width: 300px;
+  @include mq($from: desktop) {
+    min-width: 300px;
+  }
 
   .govuk-heading-s {
     @include govuk-responsive-margin(2, "bottom");
+    padding-right: 20px;
   }
 
   .govuk-body,
@@ -209,6 +212,7 @@ $TIP_HEIGHT: 8px;
   .popup-bubble__closed-content {
     display: block;
     cursor: pointer;
+    font-weight: bold;
   }
 
   .popup-bubble__open-content {

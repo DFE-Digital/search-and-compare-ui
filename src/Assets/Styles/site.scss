@@ -178,8 +178,8 @@ $govuk-global-styles: true;
   }
 
   &__map {
-    height: 300px;
-    padding: govuk-spacing(4) govuk-spacing(4) 0 govuk-spacing(4);
+    height: 360px;
+    padding: govuk-spacing(4) 0 0 0;
 
     @include mq($from: desktop) {
       height: 100%;
@@ -191,7 +191,7 @@ $govuk-global-styles: true;
     }
 
     .google-map {
-      height: 300px;
+      height: 360px;
       width: 100%;
 
       @include mq($from: desktop) {

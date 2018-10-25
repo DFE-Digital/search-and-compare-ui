@@ -190,8 +190,8 @@ const initGoogleMaps = () => {
     const popup = new Popup(latLng, closedContent, openContent)
     popup.setMap(map)
 
-    // Extend the bounds by the first 10 locations so we get a decent number as part of the first view.
-    if (i < 10) {
+    // Extend the bounds by the first 5 locations so we get a decent number as part of the first view.
+    if (i < 5) {
       bounds.extend(latLng)
     }
   }
