@@ -145,7 +145,26 @@ const initGoogleMaps = () => {
     center: {
       lat: centerLat,
       lng: centerLng
-    }
+    },
+    styles: [
+      {
+        featureType: "poi.business",
+        stylers: [
+          {
+            visibility: "off"
+          }
+        ]
+      },
+      {
+        featureType: "poi.park",
+        elementType: "labels.text",
+        stylers: [
+          {
+            visibility: "off"
+          }
+        ]
+      }
+    ]
   })
 
   const textMarker = {
