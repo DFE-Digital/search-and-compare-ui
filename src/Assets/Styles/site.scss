@@ -246,23 +246,6 @@ $govuk-global-styles: true;
   }
 }
 
-// Google maps info window
-.search-info-window {
-  .govuk-heading-s {
-    @include govuk-responsive-margin(2, "bottom");
-  }
-
-  .govuk-body,
-  .govuk-list {
-    @include govuk-font($size: 16, $line-height: 1.5);
-    @include govuk-responsive-margin(2, "bottom");
-  }
-
-  .govuk-list {
-    margin-bottom: -10px;
-  }
-}
-
 // Google maps legend
 .google-map-legend {
   background: govuk-colour("white");
