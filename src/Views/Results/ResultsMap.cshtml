@@ -116,37 +116,24 @@
   }
 
   window.locations = [
-  @{
-      var pins = Model.MapViewModel.MapProjection.Markers.OfType<CourseMapPin>();
-      var locationGroups = pins.GroupBy(pin => pin.Location, pin => pin);
-  }
-    @foreach (var locationGroup in locationGroups)
+    @{ var pins = Model.MapViewModel.MapProjection.Markers.OfType<CourseMapPin>(); }
+    @foreach (var pin in pins)
     {
-        var location = locationGroup.Key;
       <text>
         {
-          //"title": "todo",
-          "lat": "@location.Latitude",
-          "lng": "@location.Longitude",
-          "no_of_courses": @locationGroup.Count(),
-          //"distance": "todo",
-          "courses":
-          [
-              @foreach(var pin in locationGroup)
-              {
-                  var course = pin.Course;
-                  <text>
-                    {
-                      "name": "@(course.Name)",
-                      "code": "@(course.ProgrammeCode)",
-                      "qual": "@(course.Mod)",
-                      "url": "@(Url.Action("Index", "Course", new {courseCode = course.ProgrammeCode, providerCode = course.Provider.ProviderCode}))"
-                    },
-                  </text>
-              }
-          ]
+            "lat": "@pin.Location.Latitude",
+            "lng": "@pin.Location.Longitude",
+            "distance": "@pin.Course.Distance.FormattedDistance()",
+            "course_name": "@pin.Course.Name",
+            "course_programmeCode": "@(pin.Course.ProgrammeCode)",
+            "qual": "@(pin.Course.Mod)",
+            "url": "@Url.Action("Index", "Course", new {courseCode = pin.Course.ProgrammeCode, providerCode = pin.Course.Provider.ProviderCode})",
+            "is_provider_location": "@(pin.Provider == null ? "false" : "true")",
+            "is_campus_location": "@(pin.Campus == null ? "false" : "true")",
+            "campus_name": "@pin.Campus?.Name", @* will be blank if this is a provider location *@
+            "provider_name": "@pin.Course.Provider.Name"
         },
       </text>
     }
-  ]
+  ];
 </script>
