@@ -114,5 +114,131 @@
   height: 56px;
   background-size: 30%;
   left: -30px;
-  top: 0
+  top: 0;
+}
+
+$TIP_HEIGHT: 8px;
+
+.popup-tip-anchor {
+  height: 0;
+  position: absolute;
+  /* The max width of the info window. */
+  width: 200px;
+}
+
+/* The bubble is anchored above the tip. */
+.popup-bubble-anchor {
+  position: absolute;
+  width: 100%;
+  bottom: $TIP_HEIGHT;
+  left: 0;
+}
+
+/* Draw the tip. */
+.popup-bubble-anchor::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* Center the tip horizontally. */
+  transform: translate(-50%, -2px);
+  /* The tip is a https://css-tricks.com/snippets/css/css-triangle/ */
+  width: 0;
+  height: 0;
+  /* The tip is 8px high, and 12px wide. */
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: $TIP_HEIGHT solid white;
+}
+
+/* The popup bubble itself. */
+.popup-bubble-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -100%);
+  /* Style the info window. */
+  background-color: white;
+  padding: 5px 8px;
+  font-size: 14px;
+  max-height: 60px;
+  overflow-y: auto;
+  box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.2);
+  border: 1px solid $govuk-border-colour;
+  max-width: 120px;
+}
+
+.popup-bubble__closed-content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.search-info-window,
+.popup-bubble__open-content {
+  @include mq($from: desktop) {
+    min-width: 300px;
+  }
+
+  .govuk-heading-s {
+    @include govuk-responsive-margin(2, "bottom");
+    padding-right: 20px;
+  }
+
+  .govuk-body,
+  .govuk-list {
+    @include govuk-font($size: 16, $line-height: 1.5);
+    @include govuk-responsive-margin(2, "bottom");
+  }
+
+  .govuk-list {
+    margin-bottom: -10px;
+  }
+}
+
+.popup-bubble__close {
+  background: none;
+  border: none;
+  color: #0b0c0c;
+  font-size: 25px;
+  height: 44px;
+  position: absolute;
+  right: -12px;
+  top: -12px;
+  width: 44px;
+  cursor: pointer;
+}
+
+.popup-tip-anchor {
+  .popup-bubble__closed-content {
+    display: block;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .popup-bubble__open-content {
+    display: none;
+    position: relative;
+  }
+
+  &.open {
+    .popup-bubble-anchor {
+      z-index: 1;
+    }
+
+    .popup-bubble-content {
+      max-width: none;
+      max-height: none;
+      font-size: 16px;
+      padding: 10px;
+    }
+
+    .popup-bubble__closed-content {
+      display: none;
+    }
+
+    .popup-bubble__open-content {
+      display: block;
+    }
+  }
 }

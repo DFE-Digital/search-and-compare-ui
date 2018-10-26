@@ -101,37 +101,10 @@
       </div>
     </div>
     @RenderBody()
-    <footer class="govuk-footer " role="contentinfo">
-      <div class="govuk-width-container ">
-        <div class="govuk-grid-row">
-          <div class="govuk-grid-column-two-thirds">
-            <p class="govuk-footer__content">For advice about teaching or teacher training you can call <a href="https://getintoteaching.education.gov.uk/" class="govuk-footer__link">Get into Teaching</a> on Freephone 0800 389 2500 or chat to an adviser using their <a href="https://ta-chat.education.gov.uk/chat/chatstart.aspx?domain=www.education.gov.uk&department=GetIntoTeaching%27,%27new_win%27,%27width=0,height=0%27);return%20false;%22&SID=1" class="govuk-footer__link">online chat service</a> between 8am and 8pm, Monday to Friday.</p>
-          </div>
-        </div>
-        <div class="govuk-footer__meta">
-          <div class="govuk-footer__meta-item govuk-footer__meta-item--grow">
-          <h2 class="govuk-visually-hidden">Support links</h2>
-          <ul class="govuk-footer__inline-list">
-            <li class="govuk-footer__inline-list-item">
-              <a class="govuk-footer__link" href="mailto:becomingateacher@digital.education.gov.uk?subject=Search%20beta%20feedback">Give feedback or report a problem</a>
-            </li>
-            <li class="govuk-footer__inline-list-item">
-              <a class="govuk-footer__link" href="/cookies">Cookies</a>
-            </li>
-            <li class="govuk-footer__inline-list-item">
-              <a class="govuk-footer__link" href="/privacy-policy">Privacy Policy</a>
-            </li>
-            <li class="govuk-footer__inline-list-item">
-              <a class="govuk-footer__link" href="/terms-conditions">Terms and conditions</a>
-            </li>
-          </ul>
-          </div>
-          <div class="govuk-footer__meta-item">
-            <a class="govuk-footer__link govuk-footer__copyright-logo" href="https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/">© Crown copyright</a>
-          </div>
-        </div>
-      </div>
-    </footer>
+    @if (ViewBag.HideFooter == null || !ViewBag.HideFooter)
+    {
+      @await Html.PartialAsync("_Footer")
+    }
     <script src="~/application.js" asp-append-version="true"></script>
     @RenderSection("bodyEnd", required: false)
   </body>

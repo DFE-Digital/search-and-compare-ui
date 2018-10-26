@@ -1,4 +1,114 @@
+const createPopupClass = () => {
+  const panToWithOffset = function(map, latlng, offsetX, offsetY) {
+    const ov = new google.maps.OverlayView()
+    ov.onAdd = function() {
+      const proj = this.getProjection()
+      const aPoint = proj.fromLatLngToContainerPixel(latlng)
+      aPoint.x = aPoint.x + offsetX
+      aPoint.y = aPoint.y + offsetY
+      map.panTo(proj.fromContainerPixelToLatLng(aPoint))
+    }
+    ov.draw = function() {}
+    ov.setMap(map)
+  }
+
+  // Based on: https://developers.google.com/maps/documentation/javascript/examples/overlay-popup
+  /**
+   * A customized popup on the map.
+   * @param {!google.maps.LatLng} position
+   * @param {!Element} content
+   * @constructor
+   * @extends {google.maps.OverlayView}
+   */
+  const Popup = function(position, closedContent, openContent) {
+    this.position = position
+    const content = document.createElement("div")
+    content.classList.add("popup-bubble-content")
+    closedContent.classList.add("popup-bubble__closed-content")
+    openContent.classList.add("popup-bubble__open-content")
+    content.appendChild(closedContent)
+    content.appendChild(openContent)
+
+    var pixelOffset = document.createElement("div")
+    pixelOffset.classList.add("popup-bubble-anchor")
+    pixelOffset.appendChild(content)
+
+    this.anchor = document.createElement("div")
+    this.anchor.classList.add("popup-tip-anchor")
+    this.anchor.appendChild(pixelOffset)
+
+    // Optionally stop clicks, etc., from bubbling up to the map.
+    this.stopEventPropagation()
+
+    closedContent.addEventListener("click", e => {
+      panToWithOffset(this.getMap(), this.position, 0, -150)
+      this.closeOpenPopups()
+      this.anchor.classList.toggle("open")
+      e.stopPropagation()
+    })
+
+    const $closeButton = openContent.querySelector(".popup-bubble__close")
+    $closeButton.addEventListener("click", e => {
+      this.closeOpenPopups()
+    })
+  }
+  // NOTE: google.maps.OverlayView is only defined once the Maps API has
+  // loaded. That is why Popup is defined inside createPopupClass().
+  Popup.prototype = Object.create(google.maps.OverlayView.prototype)
+
+  /** Called when the popup is added to the map. */
+  Popup.prototype.onAdd = function() {
+    this.getPanes().floatPane.appendChild(this.anchor)
+  }
+
+  /** Called when the popup is removed from the map. */
+  Popup.prototype.onRemove = function() {
+    if (this.anchor.parentElement) {
+      this.anchor.parentElement.removeChild(this.anchor)
+    }
+  }
+
+  /** Called when the popup needs to draw itself. */
+  Popup.prototype.draw = function() {
+    var divPosition = this.getProjection().fromLatLngToDivPixel(this.position)
+    // Hide the popup when it is far out of view.
+    var display = Math.abs(divPosition.x) < 4000 && Math.abs(divPosition.y) < 4000 ? "block" : "none"
+
+    if (display === "block") {
+      this.anchor.style.left = divPosition.x + "px"
+      this.anchor.style.top = divPosition.y + "px"
+    }
+    if (this.anchor.style.display !== display) {
+      this.anchor.style.display = display
+    }
+  }
+
+  Popup.prototype.closeOpenPopups = () => {
+    const $anchors = document.querySelectorAll(".popup-tip-anchor.open")
+    for (let i = 0; i < $anchors.length; i++) {
+      $anchors[i].classList.remove("open")
+    }
+  }
+
+  /** Stops clicks/drags from bubbling up to the map. */
+  Popup.prototype.stopEventPropagation = function() {
+    var anchor = this.anchor
+    anchor.style.cursor = "auto"
+    ;[("click", "dblclick", "contextmenu", "wheel", "mousedown", "touchstart", "pointerdown")].forEach(function(event) {
+      anchor.addEventListener(event, function(e) {
+        e.stopPropagation()
+      })
+    })
+  }
+
+  return Popup
+}
+
 const initGoogleMaps = () => {
+  const Popup = createPopupClass()
+
+  const bounds = new google.maps.LatLngBounds()
+
   let $zoomLevel
   switch (window.mapSettings.zoom) {
     case 5:
@@ -17,7 +127,10 @@ const initGoogleMaps = () => {
       $zoomLevel = 8
   }
 
-  const map = new google.maps.Map(document.getElementById('map'), {
+  const centerLat = window.mapSettings.search_lat
+  const centerLng = window.mapSettings.search_lng
+
+  const map = new google.maps.Map(document.getElementById("map"), {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     mapTypeControl: false,
     scaleControl: false,
@@ -29,84 +142,81 @@ const initGoogleMaps = () => {
     },
     zoom: $zoomLevel,
     center: {
-      lat: window.mapSettings.search_lat,
-      lng: window.mapSettings.search_lng
-    }
+      lat: centerLat,
+      lng: centerLng
+    },
+    styles: [
+      {
+        featureType: "poi.business",
+        stylers: [
+          {
+            visibility: "off"
+          }
+        ]
+      },
+      {
+        featureType: "poi.park",
+        elementType: "labels.text",
+        stylers: [
+          {
+            visibility: "off"
+          }
+        ]
+      }
+    ]
   })
 
-  const locationMarker = {
-    url: '/images/map-marker-black.png',
-    scaledSize: new google.maps.Size(20, 32),
-    origin: new google.maps.Point(0, 0),
-    anchor: new google.maps.Point(0, 32)
-  }
-
-  const searchMarker = {
-    url: '/images/map-marker-red.png',
-    scaledSize: new google.maps.Size(30, 44),
-    origin: new google.maps.Point(0, 0),
-    anchor: new google.maps.Point(12, 32)
-  }
-
   const textMarker = {
-    url: '/images/map-marker-text.png',
+    url: "/images/map-marker-text.png",
     scaledSize: new google.maps.Size(60, 22),
     origin: new google.maps.Point(0, 0),
     anchor: new google.maps.Point(25, 10)
   }
 
   const locations = window.locations
-  const infoWindow = new google.maps.InfoWindow()
-  const markers = []
-
-  google.maps.event.addListener(map, 'click', function () {
-    infoWindow.close()
-  })
 
   for (let i = 0, length = locations.length; i < length; i++) {
     const data = locations[i]
     const latLng = new google.maps.LatLng(data.lat, data.lng)
 
-    const marker = new google.maps.Marker({
-      position: latLng,
-      map,
-      title: data.title,
-      icon: locationMarker,
-      zIndex: 2
-    });
+    const closedContent = document.createElement("div")
+    closedContent.innerHTML = data.title
 
-    (((marker, data) => {
-      google.maps.event.addListener(marker, 'click', e => {
-        const windowsContent = `
-          <div class="search-info-window">
-            ${ data.no_of_courses > 1 ? `<h3 class="govuk-heading-s">${data.title}</h3>` : `<h3 class="govuk-heading-s">${data.courses[0].name} with ${data.title}</h3>`}
-            ${ data.no_of_courses > 1 ? `<h4 class="govuk-heading-s">${data.no_of_courses} courses</h4>` : ''}
-            <ul class="govuk-list">
-              ${data.courses.map(course =>
-                `<li>
-                  <a href="${course.url}">${course.name} (${course.code})</a>
-                  <br>
-                  ${course.qual}
-                </li>`
-              ).join('')}
-            </ul>
-          </div>
-        `
+    const openContent = document.createElement("div")
+    const coursesHtml = data.courses
+      .map(
+        course =>
+          `<li>
+            <a href="${course.url}">${course.name} (${course.code})</a>
+            <br>
+            ${course.qual}
+          </li>`
+      )
+      .join("")
+    openContent.innerHTML = `
+      ${
+        data.no_of_courses > 1
+          ? `<h3 class="govuk-heading-s">${data.title}</h3>`
+          : `<h3 class="govuk-heading-s">${data.courses[0].name} with ${data.title}</h3>`
+      }
+      ${data.no_of_courses > 1 ? `<h4 class="govuk-heading-s">${data.no_of_courses} courses</h4>` : ""}
+      <ul class="govuk-list">${coursesHtml}</ul>
+      <button class="popup-bubble__close">&times;<span class="govuk-visually-hidden">Close this popup</span></button>
+    `
 
-        infoWindow.setContent(windowsContent)
-        infoWindow.setOptions({maxWidth:250})
-        infoWindow.open(map, marker)
-      })
-    }))(marker, data)
+    const popup = new Popup(latLng, closedContent, openContent)
+    popup.setMap(map)
 
-    markers.push(marker)
+    // Extend the bounds by the first 5 locations so we get a decent number as part of the first view.
+    if (i < 5) {
+      bounds.extend(latLng)
+    }
   }
 
   // Add marker for search location
   new google.maps.Marker({
     position: map.getCenter(),
-    map: map,
-    icon: searchMarker
+    map: map
   })
 
   // 5 miles, 10 miles, 20 miles
@@ -115,7 +225,7 @@ const initGoogleMaps = () => {
   const $circles = [5, 10, 20]
   for (let i = 0; i < $circles.length; i++) {
     new google.maps.Circle({
-      strokeColor: '#000000',
+      strokeColor: "#000000",
       strokeOpacity: 0.3,
       strokeWeight: 1,
       fillOpacity: 0,
@@ -127,7 +237,10 @@ const initGoogleMaps = () => {
     // Add label for each radius
     // https://stackoverflow.com/questions/7477003/calculating-new-longitude-latitude-from-old-n-meters
     new google.maps.Marker({
-      position: new google.maps.LatLng((window.mapSettings.search_lat + ($circles[i] * 1.609 / 111.111)), window.mapSettings.search_lng),
+      position: new google.maps.LatLng(
+        window.mapSettings.search_lat + ($circles[i] * 1.609) / 111.111,
+        window.mapSettings.search_lng
+      ),
       map: map,
       icon: textMarker,
       label: `${$circles[i]} miles`,
@@ -135,29 +248,10 @@ const initGoogleMaps = () => {
     })
   }
 
-  const $icons = {
-    search_location: {
-      name: 'Your location',
-      icon: searchMarker.url
-    },
-    campus: {
-      name: 'Training locations',
-      icon: locationMarker.url
-    }
+  if (locations.length > 1) {
+    map.fitBounds(bounds)
+    map.panTo(new google.maps.LatLng(centerLat, centerLng))
   }
-
-  const legend = document.getElementById('legend')
-  const legendList = legend.querySelector('ul')
-  for (let key in $icons) {
-    var type = $icons[key]
-    var name = type.name
-    var icon = type.icon
-    var listItem = document.createElement('li')
-    listItem.innerHTML = `<img width="20" src="${icon}"> ${name}`
-    legendList.appendChild(listItem)
-  }
-
-  map.controls[google.maps.ControlPosition.RIGHT_TOP].push(legend)
 }
 
 export default initGoogleMaps
