@@ -49,7 +49,6 @@ const createPopupClass = () => {
 
     const $closeButton = openContent.querySelector(".popup-bubble__close")
     $closeButton.addEventListener("click", e => {
-      console.log("hello", e)
       this.closeOpenPopups()
     })
   }
@@ -97,7 +96,6 @@ const createPopupClass = () => {
     anchor.style.cursor = "auto"
     ;[("click", "dblclick", "contextmenu", "wheel", "mousedown", "touchstart", "pointerdown")].forEach(function(event) {
       anchor.addEventListener(event, function(e) {
-        console.log(event, e)
         e.stopPropagation()
       })
     })
@@ -185,6 +183,16 @@ const initGoogleMaps = () => {
     closedContent.innerHTML = data.title
 
     const openContent = document.createElement("div")
+    const coursesHtml = data.courses
+      .map(
+        course =>
+          `<li>
+            <a href="${course.url}">${course.name} (${course.code})</a>
+            <br>
+            ${course.qual}
+          </li>`
+      )
+      .join("")
     openContent.innerHTML = `
       ${
         data.no_of_courses > 1
@@ -192,18 +200,7 @@ const initGoogleMaps = () => {
           : `<h3 class="govuk-heading-s">${data.courses[0].name} with ${data.title}</h3>`
       }
       ${data.no_of_courses > 1 ? `<h4 class="govuk-heading-s">${data.no_of_courses} courses</h4>` : ""}
-      <ul class="govuk-list">
-        ${data.courses
-          .map(
-            course =>
-              `<li>
-            <a href="${course.url}">${course.name} (${course.code})</a>
-            <br>
-            ${course.qual}
-          </li>`
-          )
-          .join("")}
-      </ul>
+      <ul class="govuk-list">${coursesHtml}</ul>
       <button class="popup-bubble__close">&times;<span class="govuk-visually-hidden">Close this popup</span></button>
     `
 
