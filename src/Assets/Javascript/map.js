@@ -1,9 +1,9 @@
 const createPopupClass = () => {
   const panToWithOffset = function(map, latlng, offsetX, offsetY) {
-    var ov = new google.maps.OverlayView()
+    const ov = new google.maps.OverlayView()
     ov.onAdd = function() {
-      var proj = this.getProjection()
-      var aPoint = proj.fromLatLngToContainerPixel(latlng)
+      const proj = this.getProjection()
+      const aPoint = proj.fromLatLngToContainerPixel(latlng)
       aPoint.x = aPoint.x + offsetX
       aPoint.y = aPoint.y + offsetY
       map.panTo(proj.fromContainerPixelToLatLng(aPoint))
@@ -12,6 +12,7 @@ const createPopupClass = () => {
     ov.setMap(map)
   }
 
+  // Based on: https://developers.google.com/maps/documentation/javascript/examples/overlay-popup
   /**
    * A customized popup on the map.
    * @param {!google.maps.LatLng} position
@@ -53,7 +54,7 @@ const createPopupClass = () => {
     })
   }
   // NOTE: google.maps.OverlayView is only defined once the Maps API has
-  // loaded. That is why Popup is defined inside initMap().
+  // loaded. That is why Popup is defined inside createPopupClass().
   Popup.prototype = Object.create(google.maps.OverlayView.prototype)
 
   /** Called when the popup is added to the map. */
