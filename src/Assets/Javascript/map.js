@@ -1,3 +1,24 @@
+const toRadians = n => (n * Math.PI) / 180
+
+// From here: https://www.movable-type.co.uk/scripts/latlong.html
+const distanceBetweenLatLng = (lat1, lng1, lat2, lng2) => {
+  var R = 6371e3 // Earth’s radius in metres.
+  var φ1 = toRadians(lat1)
+  var φ2 = toRadians(lat2)
+  var Δφ = toRadians(lat2 - lat1)
+  var Δλ = toRadians(lng2 - lng1)
+
+  var a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2)
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+
+  var d = R * c
+  return d
+}
+
+distanceBetweenLatLng(50.854259, 0.573453, 51.5001754, -0.1332326)
+
+let numberOfPins = 0
+
 const createPopupClass = () => {
   const panToWithOffset = function(map, latlng, offsetX, offsetY) {
     const ov = new google.maps.OverlayView()
@@ -35,6 +56,7 @@ const createPopupClass = () => {
 
     this.anchor = document.createElement("div")
     this.anchor.classList.add("popup-tip-anchor")
+    this.anchor.classList.add("zoomed")
     this.anchor.appendChild(pixelOffset)
 
     // Optionally stop clicks, etc., from bubbling up to the map.
@@ -70,10 +92,17 @@ const createPopupClass = () => {
 
   /** Called when the popup needs to draw itself. */
   Popup.prototype.draw = function() {
+    var zoom = this.getMap().getZoom()
+
     var divPosition = this.getProjection().fromLatLngToDivPixel(this.position)
     // Hide the popup when it is far out of view.
     var display = Math.abs(divPosition.x) < 4000 && Math.abs(divPosition.y) < 4000 ? "block" : "none"
 
+    if (zoom > 12) {
+      this.anchor.classList.add("zoomed")
+    } else {
+      this.anchor.classList.remove("zoomed")
+    }
     if (display === "block") {
       this.anchor.style.left = divPosition.x + "px"
       this.anchor.style.top = divPosition.y + "px"
@@ -175,32 +204,136 @@ const initGoogleMaps = () => {
 
   const locations = window.locations
 
-  for (let i = 0, length = locations.length; i < length; i++) {
+  // pins = {
+  //   'lat,lng': {
+  //       distance: meters,
+  //       locations: []
+  //   }
+  // }
+  const pins = locations.reduce((pins, location) => {
+    const key = `${location.lat},${location.lng}`
+    const pin = pins[key] || {}
+    pin.distance = distanceBetweenLatLng(centerLat, centerLng, location.lat, location.lng)
+    pin.locations = (pin.locations || []).concat([location])
+    pin.providers = pin.providers || {}
+    const currentProvider = location["provider_name"]
+    pin.providers[currentProvider] = (pin.providers[currentProvider] || []).concat([location])
+    pins[key] = pin
+    return pins
+  }, {})
+
+  // pinsByProviders = {
+  //   'lat,lng': {
+  //       distance: meters,
+  //       locations: []
+  //   }
+  // }
+
+  console.log("pins", pins)
+  console.log("sorted", Object.values(pins).sort((left, right) => left.distance - right.distance))
+
+  Object.values(pins)
+    .sort((left, right) => left.distance - right.distance)
+    .forEach((pin, idx) => {
+      const twentyMilesInMeters = 32186.88
+      if (pin.distance > twentyMilesInMeters) {
+        return
+      }
+      numberOfPins++
+      const lat = pin.locations[0].lat
+      const lng = pin.locations[0].lng
+      const latLng = new google.maps.LatLng(lat, lng)
+
+      const closedContent = document.createElement("div")
+      closedContent.innerHTML = `
+        <span class="full-content">${
+          Object.keys(pin.providers).length === 1
+            ? Object.keys(pin.providers)[0]
+            : `${Object.keys(pin.providers).length} providers`
+        }</span>
+        <span class="condensed-content">${
+          Object.keys(pin.providers).length === 1
+            ? Object.values(pin.providers)[0][0].url.split("/")[2]
+            : `${Object.keys(pin.providers).length} providers`
+        }</span>
+      `
+
+      const openContent = document.createElement("div")
+      openContent.innerHTML = `
+        ${Object.keys(pin.providers)
+          .map(
+            provider => `
+            <h3 class="govuk-heading-s">${provider} (${pin.providers[provider][0].url.split("/")[2]})</h3>
+            ${
+              pin.providers[provider].length > 1
+                ? `<h4 class="govuk-heading-s">${pin.providers[provider].length} courses</h4>`
+                : ""
+            }
+            <ul class="govuk-list">
+              ${pin.providers[provider]
+                .map(
+                  course => `
+                  <li>
+                    <a href="${course["url"]}">${course["course_name"]} ${course["course_programmeCode"]}</a><br>
+                    ${course["qual"]}
+                  </li>
+                `
+                )
+                .join("")}
+            </ul>
+          `
+          )
+          .join("<hr class='govuk-section-break--m'>")}
+        <button class="popup-bubble__close">&times;<span class="govuk-visually-hidden">Close this popup</span></button>
+      `
+      // <ul class="govuk-list">
+      //   ${pin.locations
+      //     .map(
+      //       location => `
+      //       <li>distance: ${location["distance"]}</li>
+      //       <li>course_name: ${location["course_name"]}</li>
+      //       <li>course_programmeCode: ${location["course_programmeCode"]}</li>
+      //       <li>qual: ${location["qual"]}</li>
+      //       <li>url: ${location["url"]}</li>
+      //       <li>is_provider_location: ${location["is_provider_location"]}</li>
+      //       <li>is_campus_location: ${location["is_campus_location"]}</li>
+      //       <li>campus_name: ${location["campus_name"]}</li>
+      //       <li>provider_name: ${location["provider_name"]}</li>
+      //     `
+      //     )
+      //     .join("")}
+      // </ul>
+
+      const popup = new Popup(latLng, closedContent, openContent)
+      popup.setMap(map)
+
+      // Extend the bounds by the first 5 locations so we get a decent number as part of the first view.
+      if (idx < 5) {
+        bounds.extend(latLng)
+      }
+    })
+
+  console.log("numberOfPins", numberOfPins)
+
+  for (let i = 0, length = locations.length; false; i++) {
     const data = locations[i]
     const latLng = new google.maps.LatLng(data.lat, data.lng)
 
     const closedContent = document.createElement("div")
-    closedContent.innerHTML = data.title
+    closedContent.innerHTML = data["provider_name"]
 
     const openContent = document.createElement("div")
-    const coursesHtml = data.courses
-      .map(
-        course =>
-          `<li>
-            <a href="${course.url}">${course.name} (${course.code})</a>
-            <br>
-            ${course.qual}
-          </li>`
-      )
-      .join("")
     openContent.innerHTML = `
-      ${
-        data.no_of_courses > 1
-          ? `<h3 class="govuk-heading-s">${data.title}</h3>`
-          : `<h3 class="govuk-heading-s">${data.courses[0].name} with ${data.title}</h3>`
-      }
-      ${data.no_of_courses > 1 ? `<h4 class="govuk-heading-s">${data.no_of_courses} courses</h4>` : ""}
-      <ul class="govuk-list">${coursesHtml}</ul>
+      <h3 class="govuk-heading-s">${data["provider_name"]}</h3>
+      <ul class="govuk-list">
+        <li>${data["course_name"]}</li>
+        <li>${data["course_programmeCode"]}</li>
+        <li>${data["qual"]}</li>
+        <li>${data["url"]}</li>
+        <li>Provider: ${data["is_provider_location"]}</li>
+        <li>Campus: ${data["is_campus_location"]}</li>
+        <li>campus_name: ${data["campus_name"]}</li>
+      </ul>
       <button class="popup-bubble__close">&times;<span class="govuk-visually-hidden">Close this popup</span></button>
     `
 

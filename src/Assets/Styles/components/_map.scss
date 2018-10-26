@@ -241,4 +241,22 @@ $TIP_HEIGHT: 8px;
       display: block;
     }
   }
+
+  .full-content {
+    display: none;
+  }
+
+  .condensed-content {
+    display: block;
+  }
+
+  &.zoomed {
+    .full-content {
+      display: block;
+    }
+
+    .condensed-content {
+      display: none;
+    }
+  }
 }
