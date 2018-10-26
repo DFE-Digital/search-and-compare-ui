@@ -6,7 +6,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.Features
 {
     public interface IFeatureFlags
     {
-        bool Apply2019 { get; }
         bool Maps { get; }
     }
 }
