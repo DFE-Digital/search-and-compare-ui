@@ -7,8 +7,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Services.Maps.Models
     {
         public Coordinates Coordinates { get; set; }
 
-        public IHtmlArea Area { get; set; }
-
         public IEnumerable<Course> Courses { get; set; }
     }
 }

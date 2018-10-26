@@ -1,8 +1,7 @@
 using GovUk.Education.SearchAndCompare.Domain.Lists;
 using GovUk.Education.SearchAndCompare.Domain.Models;
-using GovUk.Education.SearchAndCompare.Domain.Filters;
-using GovUk.Education.SearchAndCompare.ViewModels;
 using GovUk.Education.SearchAndCompare.UI.Filters;
+using GovUk.Education.SearchAndCompare.ViewModels;
 
 namespace GovUk.Education.SearchAndCompare.UI.ViewModels
 {

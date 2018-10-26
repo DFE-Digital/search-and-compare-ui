@@ -5,7 +5,5 @@ namespace GovUk.Education.SearchAndCompare.UI.Services.Maps.Models
     public interface IMapMarker
     {
         Coordinates Coordinates { get; }
-
-        IHtmlArea Area { get; set; }
     }
 }

@@ -127,7 +127,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
             viewModel.Map = new MapViewModel
             {
-                CourseGroups = mapProjection.MarkersWithAreas,
+                CourseGroups = mapProjection.Markers,
                 MyLocation = filter.Coordinates,
                 Map = mapProjection,
             };
