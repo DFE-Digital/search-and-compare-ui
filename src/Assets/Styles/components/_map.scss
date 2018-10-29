@@ -168,7 +168,7 @@ $TIP_HEIGHT: 8px;
   max-width: 120px;
 }
 
-.popup-bubble__closed-content {
+.popup-bubble__closed-content .full-content {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -250,7 +250,7 @@ $TIP_HEIGHT: 8px;
     display: block;
   }
 
-  &.zoomed {
+  &.expanded-label {
     .full-content {
       display: block;
     }

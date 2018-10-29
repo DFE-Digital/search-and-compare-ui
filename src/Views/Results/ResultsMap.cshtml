@@ -126,6 +126,8 @@
             "distance": "@pin.Course.Distance.FormattedDistance()",
             "course_name": "@pin.Course.Name",
             "course_programmeCode": "@(pin.Course.ProgrammeCode)",
+            "course_contactAddress": "@(pin.Course.ContactDetails.Address)",
+            "campus_address": "@pin.Campus?.Location?.Address",
             "qual": "@(pin.Course.Mod)",
             "url": "@Url.Action("Index", "Course", new {courseCode = pin.Course.ProgrammeCode, providerCode = pin.Course.Provider.ProviderCode})",
             "is_provider_location": "@(pin.Provider == null ? "false" : "true")",

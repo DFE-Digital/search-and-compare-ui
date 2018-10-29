@@ -1,3 +1,5 @@
+import uniqBy from "lodash.uniqby"
+
 const toRadians = n => (n * Math.PI) / 180
 
 // From here: https://www.movable-type.co.uk/scripts/latlong.html
@@ -56,7 +58,7 @@ const createPopupClass = () => {
 
     this.anchor = document.createElement("div")
     this.anchor.classList.add("popup-tip-anchor")
-    this.anchor.classList.add("zoomed")
+    this.anchor.classList.add("expanded-label")
     this.anchor.appendChild(pixelOffset)
 
     // Optionally stop clicks, etc., from bubbling up to the map.
@@ -98,10 +100,13 @@ const createPopupClass = () => {
     // Hide the popup when it is far out of view.
     var display = Math.abs(divPosition.x) < 4000 && Math.abs(divPosition.y) < 4000 ? "block" : "none"
 
-    if (zoom > 12) {
-      this.anchor.classList.add("zoomed")
+    const isZoomedIn = zoom > 13
+    const tooManyPins = numberOfPins > 50
+    const expandTheLabel = isZoomedIn || !tooManyPins
+    if (expandTheLabel) {
+      this.anchor.classList.add("expanded-label")
     } else {
-      this.anchor.classList.remove("zoomed")
+      this.anchor.classList.remove("expanded-label")
     }
     if (display === "block") {
       this.anchor.style.left = divPosition.x + "px"
@@ -204,6 +209,22 @@ const initGoogleMaps = () => {
 
   const locations = window.locations
 
+  const postcodeRegex = /([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\s?[0-9][A-Za-z]{2})/
+
+  const foundPostcodes = new Set()
+  const foundLocationsWithoutPostcode = new Set()
+
+  const extractPostcodeIfExists = addressToUse => {
+    const postcodeResults = postcodeRegex.exec(addressToUse)
+    const postcode = (postcodeResults || []).filter(Boolean).shift()
+    if (postcode) {
+      foundPostcodes.add(postcode)
+    } else {
+      foundLocationsWithoutPostcode.add(addressToUse)
+    }
+    return postcode ? postcode.replace(" ", "") : null
+  }
+
   // pins = {
   //   'lat,lng': {
   //       distance: meters,
@@ -211,9 +232,12 @@ const initGoogleMaps = () => {
   //   }
   // }
   const pins = locations.reduce((pins, location) => {
-    const key = `${location.lat},${location.lng}`
+    const isCampus = location["is_campus_location"] === "true"
+    const addressToUse = isCampus ? location["campus_address"] : location["course_contactAddress"]
+    const postcode = extractPostcodeIfExists(addressToUse)
+    const key = postcode || `${location.lat},${location.lng}`
     const pin = pins[key] || {}
-    pin.distance = distanceBetweenLatLng(centerLat, centerLng, location.lat, location.lng)
+    pin.distance = Math.floor(distanceBetweenLatLng(centerLat, centerLng, location.lat, location.lng) / 1609.344)
     pin.locations = (pin.locations || []).concat([location])
     pin.providers = pin.providers || {}
     const currentProvider = location["provider_name"]
@@ -231,12 +255,13 @@ const initGoogleMaps = () => {
 
   console.log("pins", pins)
   console.log("sorted", Object.values(pins).sort((left, right) => left.distance - right.distance))
+  console.log("foundPostcodes", foundPostcodes)
+  console.log("foundLocationsWithoutPostcode", foundLocationsWithoutPostcode)
 
   Object.values(pins)
     .sort((left, right) => left.distance - right.distance)
     .forEach((pin, idx) => {
-      const twentyMilesInMeters = 32186.88
-      if (pin.distance > twentyMilesInMeters) {
+      if (pin.distance >= 20) {
         return
       }
       numberOfPins++
@@ -261,28 +286,42 @@ const initGoogleMaps = () => {
       const openContent = document.createElement("div")
       openContent.innerHTML = `
         ${Object.keys(pin.providers)
-          .map(
-            provider => `
-            <h3 class="govuk-heading-s">${provider} (${pin.providers[provider][0].url.split("/")[2]})</h3>
-            ${
-              pin.providers[provider].length > 1
-                ? `<h4 class="govuk-heading-s">${pin.providers[provider].length} courses</h4>`
-                : ""
-            }
-            <ul class="govuk-list">
-              ${pin.providers[provider]
-                .map(
-                  course => `
-                  <li>
-                    <a href="${course["url"]}">${course["course_name"]} ${course["course_programmeCode"]}</a><br>
-                    ${course["qual"]}
-                  </li>
-                `
-                )
-                .join("")}
-            </ul>
-          `
-          )
+          .map(provider => {
+            const sortedCourses = pin.providers[provider].sort(
+              (c1, c2) => (c1["is_campus_location"] === "true" ? -1 : 1)
+            )
+            const courses = uniqBy(sortedCourses, course => course["url"])
+            const campusLocation = courses.find(course => course["is_campus_location"] === "true")
+            const showCampusName = campusLocation && campusLocation["campus_name"] !== "Main Site"
+            const anyOfTheLocationsAreCampuses = !!campusLocation
+            const firstCourse = courses[0]
+            const firstCourseIsCampus = firstCourse["is_campus_location"] === "true"
+            const address = firstCourseIsCampus ? firstCourse["campus_address"] : firstCourse["course_contactAddress"]
+
+            return `
+              <h3 class="govuk-heading-s">${provider} (${pin.providers[provider][0].url.split("/")[2]})</h3>
+              <p class="govuk-body">${showCampusName ? `${campusLocation["campus_name"]} ` : ""}${address}</p>
+              <p class="govuk-body">Distance: ${pin.distance} ${pin.distance === 1 ? "mile" : "miles"} away</p>
+              ${
+                anyOfTheLocationsAreCampuses
+                  ? `<p class="govuk-body">You can apply to train at this location.</p>`
+                  : `<p class="govuk-body">This is the provider’s contact address. Your training might not take place at this location.</p>`
+              }
+              ${courses.length > 1 ? `<h4 class="govuk-heading-s">${courses.length} courses</h4>` : ""}
+              <ul class="govuk-list">
+                ${courses
+                  .map(
+                    course => `
+                    <li>
+                      <a href="${course["url"]}">${course["course_name"]} ${course["course_programmeCode"]}</a><br>
+                      ${course["qual"]}
+                    </li>
+                  `
+                  )
+                  .join("")}
+              </ul>
+            `
+          })
           .join("<hr class='govuk-section-break--m'>")}
         <button class="popup-bubble__close">&times;<span class="govuk-visually-hidden">Close this popup</span></button>
       `
