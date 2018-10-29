@@ -79,13 +79,19 @@
 
             <li>
               <h3 class="govuk-heading-s">
-                <a href='@Url.Action("Index", "Course", new {courseCode = item.ProgrammeCode, providerCode = item.Provider.ProviderCode})' class="link">@item.Name with @item.Provider.Name</a>
+                <a href='@Url.Action("Index", "Course", new {courseCode = item.ProgrammeCode, providerCode = item.Provider.ProviderCode})' class="link map-course-link">@item.Name with @item.Provider.Name</a>
               </h3>
               <dl class="govuk-list--description">
                 @if (item.Distance != null) {
                   <dt class="govuk-list--description__label">Distance</dt>
                   <dd>
                     @item.Distance.FormattedDistance()
+                  </dd>
+                }
+                @if (item.DistanceAddress != null) {
+                  <dt class="govuk-list--description__label">Nearest address</dt>
+                  <dd>
+                    @item.DistanceAddress.Replace("\n", ", ")
                   </dd>
                 }
                 @if(!string.IsNullOrEmpty(item.Mod) && item.Mod.Length > 1)

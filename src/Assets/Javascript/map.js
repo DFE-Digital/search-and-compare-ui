@@ -237,7 +237,7 @@ const initGoogleMaps = () => {
     const postcode = extractPostcodeIfExists(addressToUse)
     const key = postcode || `${location.lat},${location.lng}`
     const pin = pins[key] || {}
-    pin.distance = Math.floor(distanceBetweenLatLng(centerLat, centerLng, location.lat, location.lng) / 1609.344)
+    pin.distance = distanceBetweenLatLng(centerLat, centerLng, location.lat, location.lng) / 1609.344
     pin.locations = (pin.locations || []).concat([location])
     pin.providers = pin.providers || {}
     const currentProvider = location["provider_name"]
@@ -261,7 +261,7 @@ const initGoogleMaps = () => {
   Object.values(pins)
     .sort((left, right) => left.distance - right.distance)
     .forEach((pin, idx) => {
-      if (pin.distance >= 20) {
+      if (pin.distance >= window.mapSettings.zoom) {
         return
       }
       numberOfPins++
@@ -301,7 +301,7 @@ const initGoogleMaps = () => {
             return `
               <h3 class="govuk-heading-s">${provider} (${pin.providers[provider][0].url.split("/")[2]})</h3>
               <p class="govuk-body">
-                ${pin.distance} ${pin.distance === 1 ? "mile" : "miles"} away
+                ${pin.distance.toFixed(1)} ${pin.distance === 1 ? "mile" : "miles"} away
               </p>
               <p class="govuk-body">
                 ${showCampusName ? `<span class="campus-name">${campusLocation["campus_name"]}</span><br />` : ""}
@@ -312,7 +312,9 @@ const initGoogleMaps = () => {
                   .map(
                     course => `
                     <li>
-                      <a href="${course["url"]}" class="govuk-!-font-weight-bold">${course["course_name"]} ${course["course_programmeCode"]}</a><br>
+                      <a href="${course["url"]}" class="govuk-!-font-weight-bold">${course["course_name"]} ${
+                      course["course_programmeCode"]
+                    }</a><br>
                       ${course["qual"]}
                     </li>
                   `
@@ -423,6 +425,19 @@ const initGoogleMaps = () => {
     map.fitBounds(bounds)
     map.panTo(new google.maps.LatLng(centerLat, centerLng))
   }
+
+  const $courseLinks = document.querySelectorAll(".map-course-link")
+  Array.from($courseLinks).forEach($link => {
+    $link.addEventListener("click", evt => {
+      evt.preventDefault()
+      const href = evt.target.href
+      const popupLink = document.querySelector(`.popup-bubble-content [href="${"/course" + href.split("course")[1]}"]`)
+      // ⚠️ PROTOTYPE CODE QUARANTINE ZONE ️️⚠️
+      popupLink.parentElement.parentElement.parentElement.parentElement
+        .querySelector(".popup-bubble__closed-content")
+        .dispatchEvent(new Event("click"))
+    })
+  })
 }
 
 export default initGoogleMaps
