@@ -300,20 +300,19 @@ const initGoogleMaps = () => {
 
             return `
               <h3 class="govuk-heading-s">${provider} (${pin.providers[provider][0].url.split("/")[2]})</h3>
-              <p class="govuk-body">${showCampusName ? `${campusLocation["campus_name"]} ` : ""}${address}</p>
-              <p class="govuk-body">Distance: ${pin.distance} ${pin.distance === 1 ? "mile" : "miles"} away</p>
-              ${
-                anyOfTheLocationsAreCampuses
-                  ? `<p class="govuk-body">You can apply to train at this location.</p>`
-                  : `<p class="govuk-body">This is the provider’s contact address. Your training might not take place at this location.</p>`
-              }
-              ${courses.length > 1 ? `<h4 class="govuk-heading-s">${courses.length} courses</h4>` : ""}
+              <p class="govuk-body">
+                ${pin.distance} ${pin.distance === 1 ? "mile" : "miles"} away
+              </p>
+              <p class="govuk-body">
+                ${showCampusName ? `<span class="campus-name">${campusLocation["campus_name"]}</span><br />` : ""}
+                <span class="address">${address}</span>
+              </p>
               <ul class="govuk-list">
                 ${courses
                   .map(
                     course => `
                     <li>
-                      <a href="${course["url"]}">${course["course_name"]} ${course["course_programmeCode"]}</a><br>
+                      <a href="${course["url"]}" class="govuk-!-font-weight-bold">${course["course_name"]} ${course["course_programmeCode"]}</a><br>
                       ${course["qual"]}
                     </li>
                   `
