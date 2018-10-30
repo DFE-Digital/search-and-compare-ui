@@ -34,6 +34,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [HttpGet("results")]
         public IActionResult Index(ResultsFilter filter)
         {
+            if (filter.DisplayAsMap)
+            {
+                return RedirectToAction("ResultsMap", "Results", filter.ToRouteValues());
+            }
+
             var subjects = _api.GetSubjects();
             if (subjects == null)
             {
