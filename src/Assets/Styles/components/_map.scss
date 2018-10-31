@@ -260,3 +260,10 @@ $TIP_HEIGHT: 8px;
     }
   }
 }
+
+.focused {
+  color: #0b0c0c;
+  outline: 3px solid #ffbf47;
+  outline-offset: 0;
+  background-color: #ffbf47;
+}

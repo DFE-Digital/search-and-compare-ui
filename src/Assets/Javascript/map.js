@@ -432,6 +432,9 @@ const initGoogleMaps = () => {
       evt.preventDefault()
       const href = evt.target.href
       const popupLink = document.querySelector(`.popup-bubble-content [href="${"/course" + href.split("course")[1]}"]`)
+      const allFocusedPopupLinks = document.querySelectorAll('.popup-bubble-content a[href].focused')
+      Array.from(allFocusedPopupLinks).forEach((focusedPopupLink) => focusedPopupLink.classList.remove('focused'))
+      popupLink.classList.add('focused')
       // ⚠️ PROTOTYPE CODE QUARANTINE ZONE ️️⚠️
       popupLink.parentElement.parentElement.parentElement.parentElement
         .querySelector(".popup-bubble__closed-content")
