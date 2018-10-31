@@ -34,7 +34,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [HttpGet("results")]
         public IActionResult Index(ResultsFilter filter)
         {
-            if (filter.DisplayAsMap)
+            if (filter.DisplayAsMap || filter.display == null)
             {
                 return RedirectToAction("ResultsMap", "Results", filter.ToRouteValues());
             }
