@@ -19,7 +19,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [HttpGet("course/{providerCode}/{courseCode}", Name = "Course")]
         public IActionResult Index(string providerCode, string courseCode, ResultsFilter filter, bool previewMap)
         {
-            ViewBag.showMap = previewMap;
+            ViewBag.showMap = true;
             var course = _api.GetCourse(providerCode, courseCode);
             var feeCaps = _api.GetFeeCaps();
 
