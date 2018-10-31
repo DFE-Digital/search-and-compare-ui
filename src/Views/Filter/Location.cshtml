@@ -50,7 +50,7 @@
                     <input class="govuk-input" data-url="@Url.Action("LocationSuggest", "Dynamic")" name="lq" type="text" id="location" value="@Model.FilterModel.lq">
                     <div id="location-autocomplete"></div>
                   </div>
-                  <div class="govuk-form-group">
+                  <div class="govuk-form-group govuk-visually-hidden">
                     <label class="govuk-label" for="radius">Within</label>
                     <select class="govuk-select govuk-!-width-one-half" id="radius" name="rad">
                       @foreach(int option in Enum.GetValues(typeof(RadiusOption)))
