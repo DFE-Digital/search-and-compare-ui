@@ -73,7 +73,29 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
             queryFilter.pageSize = 10;
 
-            viewModel.Courses = _api.GetCourses(queryFilter);
+            PaginatedList<Course> courses;
+            courses = _api.GetCourses(queryFilter);
+
+            var pins = courses.Items
+                .Where(course => course.ProviderLocation?.Latitude != null && course.ProviderLocation?.Longitude != null)
+                .Select(course => new CourseMapPin { Location = course.ProviderLocation, Course = course, Provider = course.Provider })
+                .ToList();
+
+            var campusPins = courses.Items.SelectMany(
+                course => course.Campuses
+                    .Where(campus => campus.Location?.Latitude != null && campus.Location?.Longitude != null)
+                    .Select(campus => new CourseMapPin { Location = campus.Location, Campus = campus, Course = course })
+            );
+            pins.AddRange(campusPins);
+
+            var mapProjection = new MapProjection<CourseMapPin>(pins, filter.Coordinates, 400, filter.zoomlevel);
+
+            viewModel.MapViewModel = new MapViewModel
+            {
+                MyLocation = filter.Coordinates,
+                MapProjection = mapProjection,
+            };
+            viewModel.Courses = courses;
 
             return View(viewModel);
         }

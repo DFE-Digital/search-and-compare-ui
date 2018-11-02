@@ -267,3 +267,39 @@ $TIP_HEIGHT: 8px;
   outline-offset: 0;
   background-color: #ffbf47;
 }
+
+.minimap-link .google-map {
+  border: 8px solid white;
+  cursor: pointer;
+  pointer-events: none;
+}
+
+.map-close-button {
+  background: white;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 3px 12px 8px 12px;
+  font-size: 19px;
+  border: 3px solid #0b0c0c;
+  font-weight: bold;
+  cursor: pointer;
+
+  &:active {
+    top: 22px;
+  }
+
+  &:focus {
+    outline: 3px solid #ffbf47;
+    outline-offset: 0;
+  }
+
+  &__close-icon {
+    font-size: 24px;
+    padding-right: 10px;
+  }
+
+  @include mq($from: desktop) {
+    padding: 10px 15px 15px 15px;
+  }
+}

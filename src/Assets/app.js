@@ -5,12 +5,13 @@ import Accordion from "./Javascript/accordion"
 import Toggle from "./Javascript/toggle"
 import { initFormAnalytics, initExternalLinkAnalytics, initNavigationAnalytics } from "./Javascript/analytics.js"
 import initAutocomplete from "./Javascript/autocomplete"
-import initGoogleMaps from "./Javascript/map.js"
-import initLocationsMap from './Javascript/locations-map';
+import initGoogleMaps, { resultsListMiniMap } from "./Javascript/map.js"
+import initLocationsMap from "./Javascript/locations-map"
 import "./Styles/site.scss"
 
 initAll()
 
+window.resultsListMiniMap = resultsListMiniMap
 window.initGoogleMaps = initGoogleMaps
 window.initLocationsMap = initLocationsMap
 

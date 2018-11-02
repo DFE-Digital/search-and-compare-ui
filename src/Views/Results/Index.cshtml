@@ -1,13 +1,20 @@
+@using GovUk.Education.SearchAndCompare.UI.Controllers
 @model ResultsViewModel
 
 @{
   Layout = "~/Views/Shared/_Layout.cshtml";
+
+  var mapModel = Model.MapViewModel;
 
   ViewBag.Title =
     (Model.Courses != null && Model.Courses.TotalCount > 0
     ? $"{string.Format(System.Globalization.CultureInfo.InvariantCulture, "{0:n0}", Model.Courses.TotalCount)} courses"
     : "No courses found")
     + (string.IsNullOrWhiteSpace(Model.FilterModel.query) ? "" : $" - {Model.FilterModel.query}");
+}
+
+@section bodyEnd {
+  <script src="https://maps.googleapis.com/maps/api/js?key=@(Environment.GetEnvironmentVariable("google_cloud_platform_key_maps"))&callback=resultsListMiniMap" async defer></script>
 }
 
 <main class="govuk-main-wrapper" id="main-content" role="main">
@@ -40,7 +47,23 @@
             }
             else
             {
-              @await Html.PartialAsync("Filters/Location", Model.FilterModel)
+              <div class="filter-form">
+                <h2 class="govuk-heading-s filter-form__title">
+                  Location<span class="govuk-visually-hidden">:</span>
+                </h2>
+                <a href="@Url.Action("ResultsMap", "Results", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new { display = "map" }))" class="govuk-link minimap-link" title="View results on a map">
+                  <div class="google-map" id="map" style="height: 200px"></div>
+                  <span class="govuk-visually-hidden">View results on a map</span>
+                </a>
+                <p class="govuk-body filter-form__value">
+                  @if(Model.FilterModel.Coordinates != null && Model.FilterModel.RadiusOption != null) {
+                    <text>@Model.FilterModel.rad miles around @Model.FilterModel.loc</text>
+                  } else {
+                    <text>Across England</text>
+                  }
+                </p>
+                <a href='@Url.Action("Location", "Filter", Model.FilterModel.ToRouteValues())' class="govuk-link">Change location or choose a provider</a>
+              </div>
             }
             @await Html.PartialAsync("Filters/Subject", Model)
             @await Html.PartialAsync("Filters/StudyType", Model.FilterModel)
@@ -64,3 +87,35 @@
     </div>
   </main>
 </div>
+
+<script>
+  window.mapSettings = {
+    "search_lat": @(mapModel.MapProjection.MyLocation.Latitude),
+    "search_lng": @(mapModel.MapProjection.MyLocation.Longitude),
+    "zoom": @(Model.FilterModel.rad)
+  }
+
+  window.locations = [
+    @{ var pins = Model.MapViewModel.MapProjection.Markers.OfType<CourseMapPin>(); }
+    @foreach (var pin in pins)
+    {
+      <text>
+        {
+            "lat": "@pin.Location.Latitude",
+            "lng": "@pin.Location.Longitude",
+            "distance": "@pin.Course.Distance.FormattedDistance()",
+            "course_name": "@pin.Course.Name",
+            "course_programmeCode": "@(pin.Course.ProgrammeCode)",
+            "course_contactAddress": "@(pin.Course.ContactDetails.Address)",
+            "campus_address": "@pin.Campus?.Location?.Address",
+            "qual": "@(pin.Course.Mod)",
+            "url": "@Url.Action("Index", "Course", new {courseCode = pin.Course.ProgrammeCode, providerCode = pin.Course.Provider.ProviderCode})",
+            "is_provider_location": "@(pin.Provider == null ? "false" : "true")",
+            "is_campus_location": "@(pin.Campus == null ? "false" : "true")",
+            "campus_name": "@pin.Campus?.Name", @* will be blank if this is a provider location *@
+            "provider_name": "@pin.Course.Provider.Name"
+        },
+      </text>
+    }
+  ];
+</script>

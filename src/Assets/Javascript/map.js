@@ -432,9 +432,9 @@ const initGoogleMaps = () => {
       evt.preventDefault()
       const href = evt.target.href
       const popupLink = document.querySelector(`.popup-bubble-content [href="${"/course" + href.split("course")[1]}"]`)
-      const allFocusedPopupLinks = document.querySelectorAll('.popup-bubble-content a[href].focused')
-      Array.from(allFocusedPopupLinks).forEach((focusedPopupLink) => focusedPopupLink.classList.remove('focused'))
-      popupLink.classList.add('focused')
+      const allFocusedPopupLinks = document.querySelectorAll(".popup-bubble-content a[href].focused")
+      Array.from(allFocusedPopupLinks).forEach(focusedPopupLink => focusedPopupLink.classList.remove("focused"))
+      popupLink.classList.add("focused")
       // ⚠️ PROTOTYPE CODE QUARANTINE ZONE ️️⚠️
       popupLink.parentElement.parentElement.parentElement.parentElement
         .querySelector(".popup-bubble__closed-content")
@@ -443,4 +443,70 @@ const initGoogleMaps = () => {
   })
 }
 
+const resultsListMiniMap = () => {
+  const bounds = new google.maps.LatLngBounds()
+
+  let $zoomLevel
+  switch (window.mapSettings.zoom) {
+    case 5:
+      $zoomLevel = 11
+      break
+    case 10:
+      $zoomLevel = 10
+      break
+    case 20:
+      $zoomLevel = 9
+      break
+    case 50:
+      $zoomLevel = 8
+      break
+    case 100:
+      $zoomLevel = 7
+  }
+
+  const centerLat = window.mapSettings.search_lat
+  const centerLng = window.mapSettings.search_lng
+
+  const map = new google.maps.Map(document.getElementById("map"), {
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    disableDefaultUI: true,
+    mapTypeControl: false,
+    scaleControl: false,
+    streetViewControl: false,
+    rotateControl: false,
+    fullscreenControl: false,
+    zoom: $zoomLevel,
+    center: {
+      lat: centerLat,
+      lng: centerLng
+    },
+    styles: [
+      {
+        featureType: "poi.business",
+        stylers: [
+          {
+            visibility: "off"
+          }
+        ]
+      },
+      {
+        featureType: "poi.park",
+        elementType: "labels.text",
+        stylers: [
+          {
+            visibility: "off"
+          }
+        ]
+      }
+    ]
+  })
+
+  // Add marker for search location
+  new google.maps.Marker({
+    position: map.getCenter(),
+    map: map
+  })
+}
+
+export { resultsListMiniMap }
 export default initGoogleMaps

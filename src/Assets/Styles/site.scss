@@ -178,25 +178,16 @@ $govuk-global-styles: true;
   }
 
   &__map {
-    height: 70vh;
+    height: 100vh;
+    width: 100vw;
     padding: 0;
-
-    @include mq($from: desktop) {
-      height: 100%;
-      left: 360px;
-      position: absolute;
-      right: 0;
-      top: 0;
-    }
+    position: fixed;
+    right: 0;
+    top: 0;
 
     .google-map {
       height: 100%;
       width: 100%;
-
-      @include mq($from: desktop) {
-        height: 100%;
-        position: absolute;
-      }
     }
   }
 
