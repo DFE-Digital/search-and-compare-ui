@@ -47,7 +47,7 @@
             </a>
             <p class="govuk-body filter-form__value">
               @if(Model.FilterModel.Coordinates != null && Model.FilterModel.RadiusOption != null) {
-                <text>@Model.FilterModel.loc<br /><span class="govuk-hint govuk-!-margin-bottom-0">Within @Model.FilterModel.rad miles of the pin</span></text>
+                <text>@Model.FilterModel.loc<span class="govuk-hint govuk-!-margin-bottom-0">Within @Model.FilterModel.rad miles of the pin</span><a href="@Url.Action("ResultsMap", "Results", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new { display = "map" }))" class="govuk-link minimap-link" title="View results on a map">View results on a map</a></text>
               } else {
                 <text>Across England</text>
               }
