@@ -9,7 +9,7 @@
 @inject IFeatureFlags FeatureFlags
 
 @{
-  var showMap = ViewBag.showMap;
+  var showMap = ViewBag.showMap is bool showMapBool && showMapBool;
 }
 
 
