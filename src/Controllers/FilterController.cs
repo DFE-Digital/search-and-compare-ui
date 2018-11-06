@@ -176,7 +176,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         public IActionResult LocationWizardGet(ResultsFilter filter)
         {
             ViewBag.IsInWizard = true;
-            filter.qualification = filter.qualification.Any() ? filter.qualification : new List<QualificationOption>{QualificationOption.QtsOnly, QualificationOption.PgdePgceWithQts, QualificationOption.Other};
+            filter.qualification = filter.qualification.Any() ? filter.qualification : new List<QualificationOption> { QualificationOption.QtsOnly, QualificationOption.PgdePgceWithQts, QualificationOption.Other };
             return LocationGet(filter);
         }
 
@@ -239,7 +239,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         public IActionResult QualificationPost(ResultsFilter model)
         {
             model.page = null;
-            model.qualification = model.qualification.Any() ? model.qualification : new List<QualificationOption>{QualificationOption.QtsOnly, QualificationOption.PgdePgceWithQts, QualificationOption.Other};
+            model.qualification = model.qualification.Any() ? model.qualification : new List<QualificationOption> { QualificationOption.QtsOnly, QualificationOption.PgdePgceWithQts, QualificationOption.Other };
 
             return RedirectToAction("Index", "Results", model.ToRouteValues());
         }
@@ -277,10 +277,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         private async Task<Coordinates> ResolvePostCodeAsync(string lq)
         {
             Coordinates coords = null;
-            try {
+            try
+            {
                 coords = await _geocoder.ResolvePostCodeAsync(lq);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _telemetryClient.TrackException(ex);
             }
