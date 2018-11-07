@@ -87,6 +87,23 @@
                 </div>
               }
             </div>
+            <details class="govuk-details">
+              <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                  Do you want to teach special educational needs (SEN)?
+                </span>
+              </summary>
+              <div class="govuk-details__text">
+                <div class="govuk-checkboxes">
+                  <div class="govuk-checkboxes__item">
+                    <input id="show-sen-courses" type="checkbox" name="show-sen-courses" value="Show only SEN courses for the subjects you’ve selected above" class="govuk-checkboxes__input">
+                    <label for="show-sen-courses" class="govuk-label govuk-checkboxes__label">
+                      Show only SEN courses for the subjects you’ve selected above
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </details>
             <div class="govuk-form-group">
               <input class="govuk-button" type="submit" value="@(isInWizard ? "Continue" : "Find courses")" role="button">
             </div>
