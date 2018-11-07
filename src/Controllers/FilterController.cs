@@ -84,16 +84,31 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         private IActionResult FullTextPost(ResultsFilter filter)
         {
             filter = filter.WithoutLocation();
+            var queryIsEmpty = string.IsNullOrWhiteSpace(filter.query);
 
-            if (string.IsNullOrWhiteSpace(filter.query))
+            if (queryIsEmpty)
             {
                 TempData.Put("Errors", new ErrorViewModel("query", "Training provider", "Please enter the name of a training provider", Url.Action("Location")));
                 return RedirectToAction("Location", filter.ToRouteValues());
             }
-            else if (false == _api.GetProviderSuggestions(filter.query).Any(x => string.Compare(filter.query, x.Name, CultureInfo.InvariantCulture, CompareOptions.IgnoreCase) == 0))
+
+            var suggestions = _api.GetProviderSuggestions(filter.query);
+            var noSuggestions = suggestions.Count == 0;
+
+            // Note: this is the same block of code as the above. It's repeated because hoisting the logic for
+            // the _api.GetProviderSuggestions call would make it call needlessly on queries which are empty.
+            if (noSuggestions)
             {
                 TempData.Put("Errors", new ErrorViewModel("query", "Training provider", "Please enter the name of a training provider", Url.Action("Location")));
                 return RedirectToAction("Location", filter.ToRouteValues());
+            }
+
+            var queryIsExactMatch = suggestions.Any(x => x.Name.Equals(filter.query, StringComparison.InvariantCultureIgnoreCase));
+
+            if (!queryIsExactMatch)
+            {
+                TempData.Put("Suggestions", suggestions);
+                return RedirectToAction("Provider", filter.ToRouteValues());
             }
 
             return RedirectToAction("Index", "Results", filter.ToRouteValues());
@@ -274,6 +289,20 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             filter.page = null;
             return RedirectToAction("Index", "Results", filter.ToRouteValues());
         }
+
+        [HttpGet("results/filter/provider")]
+        [ActionName("Provider")]
+        public IActionResult Provider(ResultsFilter filter)
+        {
+            List<Provider> suggestions = TempData.Get<List<Provider>>("Suggestions");
+            if (suggestions == null)
+            {
+                suggestions = _api.GetProviderSuggestions(filter.query);
+            }
+            ViewBag.suggestions = suggestions;
+            return View("Provider", filter);
+        }
+
         private async Task<Coordinates> ResolvePostCodeAsync(string lq)
         {
             Coordinates coords = null;
