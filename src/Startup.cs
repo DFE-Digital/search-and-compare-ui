@@ -49,10 +49,15 @@ namespace GovUk.Education.SearchAndCompare.UI
 
             services.AddSingleton<SearchUiConfig, SearchUiConfig>();
 
+            var REQUEST_TIMEOUT = 15;
+            services.AddHttpClient<IHttpClient, HttpClientWrapper>(x => x.Timeout = TimeSpan.FromSeconds(REQUEST_TIMEOUT))
+                 .SetHandlerLifetime(TimeSpan.FromMinutes(5));
+
             services.AddSingleton<ISearchAndCompareApi>(serviceProvider =>
             {
                 var config = serviceProvider.GetService<SearchUiConfig>();
-                return new SearchAndCompareApi(new HttpClient(), config.ApiUrl);
+                var wrapper = serviceProvider.GetService<IHttpClient>();
+                return new SearchAndCompareApi(wrapper, config.ApiUrl);
             });
 
             services.AddScoped<IFeatureFlags, FeatureFlags>();
@@ -99,7 +104,7 @@ namespace GovUk.Education.SearchAndCompare.UI
                 routes.MapRoute("tandc", "terms-conditions",
                     defaults: new { controller = "Legal", action = "TandC" });
                 routes.MapRoute("sitemap", "sitemap.txt",
-                    defaults: new { controller = "Sitemap", action = "Index"});
+                    defaults: new { controller = "Sitemap", action = "Index" });
             });
         }
     }
