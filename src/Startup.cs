@@ -18,6 +18,8 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using GovUk.Education.SearchAndCompare.UI.Shared.Features;
 using Polly;
+using Polly.Extensions.Http;
+using Polly.Timeout;
 
 namespace GovUk.Education.SearchAndCompare.UI
 {
@@ -49,17 +51,25 @@ namespace GovUk.Education.SearchAndCompare.UI
 
             services.AddSingleton<SearchUiConfig, SearchUiConfig>();
 
-            var REQUEST_TIMEOUT = 15;
-            services.AddHttpClient<IHttpClient, HttpClientWrapper>(x => x.Timeout = TimeSpan.FromSeconds(REQUEST_TIMEOUT))
-                .SetHandlerLifetime(TimeSpan.FromMinutes(5))
-                // Handles 5XX, 408, and other errors "typical of HTTP calls" https://github.com/App-vNext/Polly/wiki/Polly-and-HttpClientFactory#using-addtransienthttperrorpolicy
-                // Retries after specified intervals.
-                .AddTransientHttpErrorPolicy(builder => builder.WaitAndRetryAsync(new[]
+            // Handles 5XX, 408, and other errors "typical of HTTP calls".
+            // Retries after specified intervals.
+            var retryPolicy = HttpPolicyExtensions
+                .HandleTransientHttpError()
+                .Or<TimeoutRejectedException>() // thrown by Polly's TimeoutPolicy if the inner call times out
+                .WaitAndRetryAsync(new[]
                 {
                     TimeSpan.FromSeconds(1),
                     TimeSpan.FromSeconds(5),
                     TimeSpan.FromSeconds(10)
-                }));
+                });
+
+            var INDIVIDUAL_REQUEST_TIMEOUT = 15;
+            var timeoutPolicy = Policy.TimeoutAsync<HttpResponseMessage>(INDIVIDUAL_REQUEST_TIMEOUT);
+
+            services.AddHttpClient<IHttpClient, HttpClientWrapper>()
+                .SetHandlerLifetime(TimeSpan.FromMinutes(5))
+                .AddPolicyHandler(retryPolicy)
+                .AddPolicyHandler(timeoutPolicy);
 
             services.AddSingleton<ISearchAndCompareApi>(serviceProvider =>
             {
