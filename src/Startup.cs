@@ -17,7 +17,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using GovUk.Education.SearchAndCompare.UI.Shared.Features;
-
+using Polly;
 
 namespace GovUk.Education.SearchAndCompare.UI
 {
@@ -51,7 +51,15 @@ namespace GovUk.Education.SearchAndCompare.UI
 
             var REQUEST_TIMEOUT = 15;
             services.AddHttpClient<IHttpClient, HttpClientWrapper>(x => x.Timeout = TimeSpan.FromSeconds(REQUEST_TIMEOUT))
-                 .SetHandlerLifetime(TimeSpan.FromMinutes(5));
+                .SetHandlerLifetime(TimeSpan.FromMinutes(5))
+                // Handles 5XX, 408, and other errors "typical of HTTP calls" https://github.com/App-vNext/Polly/wiki/Polly-and-HttpClientFactory#using-addtransienthttperrorpolicy
+                // Retries after specified intervals.
+                .AddTransientHttpErrorPolicy(builder => builder.WaitAndRetryAsync(new[]
+                {
+                    TimeSpan.FromSeconds(1),
+                    TimeSpan.FromSeconds(5),
+                    TimeSpan.FromSeconds(10)
+                }));
 
             services.AddSingleton<ISearchAndCompareApi>(serviceProvider =>
             {
