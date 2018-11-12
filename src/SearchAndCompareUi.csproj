@@ -26,8 +26,4 @@
   <ItemGroup>
     <ProjectReference Include="..\shared\SearchAndCompareUi.Shared.csproj" />
   </ItemGroup>
-  <Target Name="Webpack" Condition="'$(Configuration)'=='Release'" BeforeTargets="AfterBuild">
-    <Exec Command="npm ci" />
-    <Exec Command="npm run build" />
-  </Target>
 </Project>
