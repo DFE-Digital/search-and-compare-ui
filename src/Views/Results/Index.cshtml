@@ -41,17 +41,17 @@
             <h2 class="govuk-heading-s filter-form__title">
               Location<span class="govuk-visually-hidden">:</span>
             </h2>
-            <a href="@Url.Action("ResultsMap", "Results", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new { display = "map" }))" class="govuk-link minimap-link" title="View results on a map">
-              <div class="google-map" id="map" style="height: 200px"></div>
-              <span class="govuk-visually-hidden">View results on a map</span>
-            </a>
-            <p class="govuk-body filter-form__value">
-              @if(Model.FilterModel.Coordinates != null && Model.FilterModel.RadiusOption != null) {
-                <text>@Model.FilterModel.loc<span class="govuk-hint govuk-!-margin-bottom-0">Within @Model.FilterModel.rad miles of the pin</span><a href="@Url.Action("ResultsMap", "Results", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new { display = "map" }))" class="govuk-link minimap-link" title="View results on a map">View results on a map</a></text>
-              } else {
+            <a href="@Url.Action("ResultsMap", "Results", RoutingUtil.Combine(Model.FilterModel.ToRouteValues(), new { display = "map" }))" class="govuk-link minimap-link" title="Open map of courses">
+              @if(Model.FilterModel.Coordinates != null && Model.FilterModel.RadiusOption != null)
+              {
+                <text>@Model.FilterModel.loc<span class="govuk-hint govuk-!-margin-bottom-1">Within @Model.FilterModel.rad miles of the pin</span></text>
+              } else
+              {
                 <text>Across England</text>
               }
-            </p>
+              <div class="google-map" id="map" style="height: 200px"></div>
+              <button class="govuk-button" style="width: 100%">Open map of courses</button>
+            </a>
             <a href='@Url.Action("Location", "Filter", Model.FilterModel.ToRouteValues())' class="govuk-link">Change location or choose a provider</a>
           </div>
           <button class="govuk-toggle__link js-toggle" aria-expanded="false" aria-controls="searchFilters">

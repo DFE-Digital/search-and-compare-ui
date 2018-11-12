@@ -268,8 +268,20 @@ $TIP_HEIGHT: 8px;
   background-color: #ffbf47;
 }
 
-.minimap-link .google-map {
+.minimap-link {
+  background: white;
   border: 8px solid white;
+  display: block;
+  margin-bottom: 10px;
+  text-decoration: none;
+  &,
+  &:visited,
+  &:hover {
+    color: #0b0c0c;
+  }
+}
+
+.minimap-link .google-map {
   cursor: pointer;
   pointer-events: none;
 }
