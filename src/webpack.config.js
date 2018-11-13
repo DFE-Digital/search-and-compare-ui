@@ -1,8 +1,8 @@
-const path = require("path")
-const webpack = require("webpack")
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin")
-const MiniCssExtractPlugin = require("mini-css-extract-plugin")
-const CopyWebpackPlugin = require("copy-webpack-plugin")
+const path = require("path");
+const webpack = require("webpack");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   devtool: process.env.NODE_ENV === "development" ? "inline-source-map" : "",
@@ -71,6 +71,10 @@ module.exports = {
         from: "Public/robots.txt",
         to: "."
       },
+      {
+        from: "Public/app_offline.htm.example",
+        to: "."
+      }
     ])
   ],
   module: {
@@ -95,4 +99,4 @@ module.exports = {
       }
     ]
   }
-}
+};
