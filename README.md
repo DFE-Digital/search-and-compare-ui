@@ -72,3 +72,5 @@ To run in watch mode (which also allows you to specify grep patterns to focus on
 ```bash
 npm run test:watch
 ```
+## Shutting down the service and showing the off line page.
+Rename the file "app_offline.htm.example" in the root folder to "app_offline.htm"
