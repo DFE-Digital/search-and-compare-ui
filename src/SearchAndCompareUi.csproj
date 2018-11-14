@@ -26,6 +26,11 @@
   <ItemGroup>
     <ProjectReference Include="..\shared\SearchAndCompareUi.Shared.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="Public\app_offline.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
   <Target Name="Webpack" Condition="'$(Configuration)'=='Release'" BeforeTargets="AfterBuild">
     <Exec Command="npm install" />
     <Exec Command="npm run build" />
