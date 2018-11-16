@@ -27,7 +27,7 @@
         <ul class="govuk-list govuk-list--bullet">
           @foreach (var suggestion in suggestions)
           {
-            <li><a class="govuk-link" href="@Url.Action("Index", "Results", RoutingUtil.Combine(Model.ToRouteValues(), new { query = @suggestion.Name }))">@suggestion.Name</a></li>
+            <li><a class="govuk-link" href="@Url.Action("Index", "Results", RoutingUtil.Combine(Model.ToRouteValues(), new { query = @suggestion.Name }))">@suggestion.Name (@suggestion.ProviderCode)</a></li>
           }
         </ul>
 
