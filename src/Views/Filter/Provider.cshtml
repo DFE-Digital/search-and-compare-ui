@@ -1,0 +1,60 @@
+@model ResultsFilter
+
+@{
+  ViewBag.Title = $"Pick a provider";
+  var suggestions = ViewBag.suggestions;
+}
+
+<div class="govuk-width-container">
+  @await Html.PartialAsync("Back", new BackLinkViewModel {
+    Href = Url.Action("LocationWizard", "Filter", Model.ToRouteValues()),
+    Title = "Back"
+  })
+</div>
+
+<main class="govuk-main-wrapper" id="main-content" role="main">
+  <div class="govuk-width-container">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+          <h1 class="govuk-heading-xl">Pick a provider</h1>
+        </legend>
+
+        <p>You searched for ‘@Model.query’.</p>
+
+        <p>We found these providers which matched your search:</p>
+
+        <ul class="govuk-list govuk-list--bullet">
+          @foreach (var suggestion in suggestions)
+          {
+            <li><a class="govuk-link" href="@Url.Action("Index", "Results", RoutingUtil.Combine(Model.ToRouteValues(), new { query = @suggestion.Name }))">@suggestion.Name (@suggestion.ProviderCode)</a></li>
+          }
+        </ul>
+
+        <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+
+        <details class="govuk-details">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">Try another provider</span>
+          </summary>
+          <div class="govuk-details__text">
+            <form action='@Url.Action("Location", "Filter", Model.ToRouteValues())' method="POST" data-ga-event-form="Provider">
+              <fieldset aria-required="true" class="govuk-fieldset">
+                <div class="govuk-form-group">
+                  <label class="govuk-label" for="query">
+                    <strong>School, university or other training provider</strong>
+                    <span class="govuk-hint govuk-!-margin-bottom-0">Enter the name or provider code</span>
+                  </label>
+                  <input class="govuk-input" data-url="@Url.Action("ProviderSuggest", "Dynamic")" name="query" type="text" id="query" value="@Model.query">
+                  <div id="provider-autocomplete"></div>
+                </div>
+              </fieldset>
+
+              <input class="govuk-button govuk-!-margin-bottom-0" type="submit" value="Search again">
+            </form>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+</main>
