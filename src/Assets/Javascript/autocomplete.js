@@ -1,39 +1,39 @@
-import accessibleAutocomplete from "accessible-autocomplete"
-import "accessible-autocomplete/dist/accessible-autocomplete.min.css"
+import accessibleAutocomplete from "accessible-autocomplete";
+import "accessible-autocomplete/dist/accessible-autocomplete.min.css";
 
 export const requestFromApi = endpoint => {
-  let xhr = null // Hoist this call so that we can abort previous requests.
+  let xhr = null; // Hoist this call so that we can abort previous requests.
 
   return (query, callback) => {
     if (xhr && xhr.readyState !== XMLHttpRequest.DONE) {
-      xhr.abort()
+      xhr.abort();
     }
-    const path = endpoint + "?query=" + query
+    const path = `${endpoint}?query=${query}`;
 
-    xhr = new XMLHttpRequest()
-    xhr.addEventListener("load", function(evt) {
-      let results = []
+    xhr = new XMLHttpRequest();
+    xhr.addEventListener("load", evt => {
+      let results = [];
       try {
-        results = JSON.parse(xhr.responseText)
+        results = JSON.parse(xhr.responseText);
       } catch (err) {
-        console.error("Failed to parse results from endpoint " + path + ", error is:", err)
+        console.error(`Failed to parse results from endpoint ${path}, error is:`, err);
       }
-      callback(results)
-    })
-    xhr.open("GET", path)
-    xhr.send()
-  }
-}
+      callback(results);
+    });
+    xhr.open("GET", path);
+    xhr.send();
+  };
+};
 
-const inputValueTemplate = result => (typeof result === "string" ? result : result && result.name)
+const inputValueTemplate = result => (typeof result === "string" ? result : result && result.name);
 const suggestionTemplate = result =>
-  typeof result === "string" ? result : result && `${result.name} (${result.providerCode})`
+  typeof result === "string" ? result : result && `${result.name} (${result.providerCode})`;
 
 const initAutocomplete = ($el, $input) => {
   accessibleAutocomplete({
     element: $el,
     id: $input.id,
-    showNoOptionsFound: false,
+    showNoOptionsFound: true,
     name: $input.getAttribute("name"),
     defaultValue: $input.value,
     minLength: 3,
@@ -42,9 +42,9 @@ const initAutocomplete = ($el, $input) => {
       inputValue: inputValueTemplate,
       suggestion: suggestionTemplate
     }
-  })
+  });
 
-  $input.parentNode.removeChild($input)
-}
+  $input.parentNode.removeChild($input);
+};
 
-export default initAutocomplete
+export default initAutocomplete;
