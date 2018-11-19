@@ -48,7 +48,7 @@ const initLocationsMap = () => {
       google.maps.event.addListener(marker, 'click', e => {
         const windowsContent = `
           <div class="search-info-window">
-            <h3 class="govuk-heading-s">${location.name} ${ location.code ? `(${location.code})` : '' }</h3>
+            <h3 class="govuk-heading-s">${location.name}</h3>
             ${ location.address ? `<p class="govuk-body">Address: ${location.address}</p>` : '' }
           </div>
         `
