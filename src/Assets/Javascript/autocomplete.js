@@ -33,7 +33,7 @@ const initAutocomplete = ($el, $input) => {
   accessibleAutocomplete({
     element: $el,
     id: $input.id,
-    showNoOptionsFound: false,
+    showNoOptionsFound: true,
     name: $input.getAttribute("name"),
     defaultValue: $input.value,
     minLength: 3,
