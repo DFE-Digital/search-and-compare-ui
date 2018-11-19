@@ -5,6 +5,7 @@ import Accordion from "./Javascript/accordion";
 import Toggle from "./Javascript/toggle";
 import { initFormAnalytics, initExternalLinkAnalytics, initNavigationAnalytics } from "./Javascript/analytics.js";
 import ScrollTracking from "./Javascript/scroll-tracking";
+import CopyTracking from "./Javascript/copy-tracking";
 import initAutocomplete from "./Javascript/autocomplete";
 import initGoogleMaps from "./Javascript/map.js";
 import initLocationsMap from "./Javascript/locations-map";
@@ -73,8 +74,11 @@ if (typeof ga !== "undefined") {
   initExternalLinkAnalytics();
   initNavigationAnalytics();
 
-  var $page = document.querySelector('[data-module="track-scrolling"]');
+  var $page = document.querySelector('[data-module*="track-scrolling"]');
   new ScrollTracking($page).init();
+
+  var $page = document.querySelector('[data-module*="track-copying"]');
+  new CopyTracking($page).init();
 } else {
   /* istanbul ignore next */
   console.log("Google Analytics `window.ga` object not found. Skipping analytics.");
