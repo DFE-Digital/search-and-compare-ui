@@ -6,6 +6,7 @@ import Toggle from "./Javascript/toggle";
 import { initFormAnalytics, initExternalLinkAnalytics, initNavigationAnalytics } from "./Javascript/analytics.js";
 import ScrollTracking from "./Javascript/scroll-tracking";
 import CopyTracking from "./Javascript/copy-tracking";
+import NoResultsTracking from "./Javascript/no-results-tracking";
 import initAutocomplete from "./Javascript/autocomplete";
 import initGoogleMaps from "./Javascript/map.js";
 import initLocationsMap from "./Javascript/locations-map";
@@ -79,6 +80,9 @@ if (typeof ga !== "undefined") {
   const $page = document.querySelector('[data-module*="ga-track"]');
   new ScrollTracking($page).init();
   new CopyTracking($page).init();
+
+  const $searchInput = document.querySelector('[data-module="track-no-provider-results"]');
+  new NoResultsTracking($searchInput).init();
 } else {
   /* istanbul ignore next */
   console.log("Google Analytics `window.ga` object not found. Skipping analytics.");
