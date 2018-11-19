@@ -7,69 +7,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0b0c0c" />
 
-    <base href="https://unpkg.com/govuk-frontend@2.3.0/" />
-
-    <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon" asp-append-version="true" />
-    <link rel="mask-icon" href="assets/images/govuk-mask-icon.svg" color="#0b0c0c" asp-append-version="true" />
+    <link rel="shortcut icon" href="https://unpkg.com/govuk-frontend@2.3.0/assets/images/favicon.ico" type="image/x-icon" asp-append-version="true" />
+    <link rel="mask-icon" href="https://unpkg.com/govuk-frontend@2.3.0/assets/images/govuk-mask-icon.svg" color="#0b0c0c" asp-append-version="true" />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
-      href="assets/images/govuk-apple-touch-icon-180x180.png"
+      href="https://unpkg.com/govuk-frontend@2.3.0/assets/images/govuk-apple-touch-icon-180x180.png"
       asp-append-version="true"
     />
     <link
       rel="apple-touch-icon"
       sizes="167x167"
-      href="assets/images/govuk-apple-touch-icon-167x167.png"
+      href="https://unpkg.com/govuk-frontend@2.3.0/assets/images/govuk-apple-touch-icon-167x167.png"
       asp-append-version="true"
     />
     <link
       rel="apple-touch-icon"
       sizes="152x152"
-      href="assets/images/govuk-apple-touch-icon-152x152.png"
+      href="https://unpkg.com/govuk-frontend@2.3.0/assets/images/govuk-apple-touch-icon-152x152.png"
       asp-append-version="true"
     />
-    <link rel="apple-touch-icon" href="assets/images/govuk-apple-touch-icon.png" asp-append-version="true" />
+    <link rel="apple-touch-icon" href="https://unpkg.com/govuk-frontend@2.3.0/assets/images/govuk-apple-touch-icon.png" asp-append-version="true" />
 
     <!-- [if !IE 8]><! -->
     <style>
       /*! Copyright (c) 2011 by Margaret Calvert & Henrik Kubel. All rights reserved. The font has been customised for exclusive use on gov.uk. This cut is not commercially available. */
       @font-face {
         font-family: "nta";
-        src: url("assets/fonts/light-2c037cf7e1-v1.eot");
-        src: url("assets/fonts/light-2c037cf7e1-v1.eot?#iefix") format("embedded-opentype"),
-          url("assets/fonts/light-f38ad40456-v1.woff2") format("woff2"),
-          url("assets/fonts/light-458f8ea81c-v1.woff") format("woff");
+        src: url("https://unpkg.com/govuk-frontend@2.3.0/assets/fonts/light-2c037cf7e1-v1.eot");
+        src: url("https://unpkg.com/govuk-frontend@2.3.0/assets/fonts/light-2c037cf7e1-v1.eot?#iefix") format("embedded-opentype"),
+          url("https://unpkg.com/govuk-frontend@2.3.0/assets/fonts/light-f38ad40456-v1.woff2") format("woff2"),
+          url("https://unpkg.com/govuk-frontend@2.3.0/assets/fonts/light-458f8ea81c-v1.woff") format("woff");
         font-weight: normal;
         font-style: normal;
         font-display: fallback;
       }
       @font-face {
         font-family: "nta";
-        src: url("assets/fonts/bold-fb2676462a-v1.eot");
-        src: url("assets/fonts/bold-fb2676462a-v1.eot?#iefix") format("embedded-opentype"),
-          url("assets/fonts/bold-a2452cb66f-v1.woff2") format("woff2"),
-          url("assets/fonts/bold-f38c792ac2-v1.woff") format("woff");
+        src: url("https://unpkg.com/govuk-frontend@2.3.0/assets/fonts/bold-fb2676462a-v1.eot");
+        src: url("https://unpkg.com/govuk-frontend@2.3.0/assets/fonts/bold-fb2676462a-v1.eot?#iefix") format("embedded-opentype"),
+          url("https://unpkg.com/govuk-frontend@2.3.0/assets/fonts/bold-a2452cb66f-v1.woff2") format("woff2"),
+          url("https://unpkg.com/govuk-frontend@2.3.0/assets/fonts/bold-f38c792ac2-v1.woff") format("woff");
         font-weight: bold;
         font-style: normal;
         font-display: fallback;
       }
       @font-face {
         font-family: "ntatabularnumbers";
-        src: url("assets/fonts/light-tabular-498ea8ffe2-v1.eot");
-        src: url("assets/fonts/light-tabular-498ea8ffe2-v1.eot?#iefix") format("embedded-opentype"),
-          url("assets/fonts/light-tabular-851b10ccdd-v1.woff2") format("woff2"),
-          url("assets/fonts/light-tabular-62cc6f0a28-v1.woff") format("woff");
+        src: url("https://unpkg.com/govuk-frontend@2.3.0/assets/fonts/light-tabular-498ea8ffe2-v1.eot");
+        src: url("https://unpkg.com/govuk-frontend@2.3.0/assets/fonts/light-tabular-498ea8ffe2-v1.eot?#iefix") format("embedded-opentype"),
+          url("https://unpkg.com/govuk-frontend@2.3.0/assets/fonts/light-tabular-851b10ccdd-v1.woff2") format("woff2"),
+          url("https://unpkg.com/govuk-frontend@2.3.0/assets/fonts/light-tabular-62cc6f0a28-v1.woff") format("woff");
         font-weight: normal;
         font-style: normal;
         font-display: fallback;
       }
       @font-face {
         font-family: "ntatabularnumbers";
-        src: url("assets/fonts/bold-tabular-357fdfbcc3-v1.eot");
-        src: url("assets/fonts/bold-tabular-357fdfbcc3-v1.eot?#iefix") format("embedded-opentype"),
-          url("assets/fonts/bold-tabular-b89238d840-v1.woff2") format("woff2"),
-          url("assets/fonts/bold-tabular-784c21afb8-v1.woff") format("woff");
+        src: url("https://unpkg.com/govuk-frontend@2.3.0/assets/fonts/bold-tabular-357fdfbcc3-v1.eot");
+        src: url("https://unpkg.com/govuk-frontend@2.3.0/assets/fonts/bold-tabular-357fdfbcc3-v1.eot?#iefix") format("embedded-opentype"),
+          url("https://unpkg.com/govuk-frontend@2.3.0/assets/fonts/bold-tabular-b89238d840-v1.woff2") format("woff2"),
+          url("https://unpkg.com/govuk-frontend@2.3.0/assets/fonts/bold-tabular-784c21afb8-v1.woff") format("woff");
         font-weight: bold;
         font-style: normal;
         font-display: fallback;
@@ -277,7 +275,7 @@
         display: inline-block;
         min-width: 125px;
         padding-top: 112px;
-        background-image: url("assets/images/govuk-crest.png");
+        background-image: url("https://unpkg.com/govuk-frontend@2.3.0/assets/images/govuk-crest.png");
         background-repeat: no-repeat;
         background-position: 50% 0%;
         background-size: 125px 102px;
@@ -291,7 +289,7 @@
         only screen and (min-resolution: 192dpi),
         only screen and (min-resolution: 2dppx) {
         .govuk-footer__copyright-logo {
-          background-image: url("assets/images/govuk-crest-2x.png");
+          background-image: url("https://unpkg.com/govuk-frontend@2.3.0/assets/images/govuk-crest-2x.png");
         }
       }
       .govuk-footer__inline-list {
@@ -579,12 +577,12 @@
     <!-- <![endif] -->
 
     <!--[if IE 8]>
-      <link href="vendor/govuk-frontend-ie8.min.css" rel="stylesheet" asp-append-version="true" />
+      <link href="https://unpkg.com/govuk-frontend@2.3.0/vendor/govuk-frontend-ie8.min.css" rel="stylesheet" asp-append-version="true" />
     <![endif]-->
 
-    <!--[if lt IE 9]> <script src="vendor/html5shiv.min.js" asp-append-version="true"></script> <![endif]-->
+    <!--[if lt IE 9]> <script src="https://unpkg.com/govuk-frontend@2.3.0/vendor/html5shiv.min.js" asp-append-version="true"></script> <![endif]-->
 
-    <meta property="og:image" content="images/govuk-opengraph-image.png" />
+    <meta property="og:image" content="https://unpkg.com/govuk-frontend@2.3.0/images/govuk-opengraph-image.png" />
 
     <script>
       (function(i, s, o, g, r, a, m) {
@@ -731,13 +729,6 @@
                   href="mailto:becomingateacher@digital.education.gov.uk?subject=Search%20beta%20feedback"
                   >Give feedback or report a problem</a
                 >
-              </li>
-              <li class="govuk-footer__inline-list-item"><a class="govuk-footer__link" href="/cookies">Cookies</a></li>
-              <li class="govuk-footer__inline-list-item">
-                <a class="govuk-footer__link" href="/privacy-policy">Privacy Policy</a>
-              </li>
-              <li class="govuk-footer__inline-list-item">
-                <a class="govuk-footer__link" href="/terms-conditions">Terms and conditions</a>
               </li>
             </ul>
           </div>
