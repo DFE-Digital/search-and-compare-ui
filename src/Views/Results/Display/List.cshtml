@@ -20,10 +20,19 @@
   @foreach (var item in Model.Courses.Items) {
     var subjects = @item.CourseSubjects.Select(courseSubject => courseSubject.Subject.Name).ToArray();
 
-    <li>
-      <h3 class="govuk-heading-m">
-        <a href='@Url.Action("Index", "Course", new {courseCode = item.ProgrammeCode, providerCode = item.Provider.ProviderCode})' class="link">@item.Name with @item.Provider.Name</a>
+    <li style="padding: 40px 0 20px">
+      <h3 class="govuk-heading-m govuk-!-margin-bottom-6">
+        <a style="text-decoration: none" href='@Url.Action("Index", "Course", new {courseCode = item.ProgrammeCode, providerCode = item.Provider.ProviderCode})' class="link">
+          <span class="govuk-!-font-size-24">@item.Provider.Name</span><br />
+          <span style="text-decoration: underline" class="govuk-!-font-size-27">@item.Name <span title="Course code">(@item.ProgrammeCode)</span></span>
+        </a>
       </h3>
+
+      @if (!string.IsNullOrEmpty(item.Mod) && item.Mod.Length > 1)
+      {
+        <p class="govuk-!-font-weight-bold">@item.Mod</p>
+      }
+
       <dl class="govuk-list--description">
         @if (item.Distance != null)
         {
@@ -39,11 +48,6 @@
             <dt class="govuk-list--description__label">Nearest address</dt>
             <dd>@(item.DistanceAddress.Replace("\n", ", "))</dd>
           }
-        }
-        @if (!string.IsNullOrEmpty(item.Mod) && item.Mod.Length > 1)
-        {
-          <dt class="govuk-list--description__label">Course offered</dt>
-          <dd>@item.Mod</dd>
         }
         <dt class="govuk-list--description__label">Financial support</dt>
         <dd>@item.FundingOptions()</dd>
