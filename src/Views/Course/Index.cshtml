@@ -2,10 +2,14 @@
 
 @{
   ViewBag.Title = $"{Model.Course.Name} with {Model.Provider.Name}";
+  var showMap = ViewBag.showMap is bool showMapBool && showMapBool;
 }
 
-@section bodyEnd {
-  <script src="https://maps.googleapis.com/maps/api/js?key=@(Environment.GetEnvironmentVariable("google_cloud_platform_key_maps"))&callback=initLocationsMap" async defer></script>
+@if (showMap)
+{
+  @section bodyEnd {
+    <script src="https://maps.googleapis.com/maps/api/js?key=@(Environment.GetEnvironmentVariable("google_cloud_platform_key_maps"))&callback=initLocationsMap" async defer></script>
+  }
 }
 
 @await Component.InvokeAsync("CourseDetails", new { course = Model })
