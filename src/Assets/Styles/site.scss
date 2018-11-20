@@ -79,13 +79,9 @@ $govuk-global-styles: true;
   border-top: 1px solid $govuk-border-colour;
 
   > li {
-    @include govuk-responsive-padding(6, "top");
-    border-top: 1px solid $govuk-border-colour;
+    @include govuk-responsive-padding(4, "top");
+    border-bottom: 1px solid $govuk-border-colour;
     margin: 0;
-  }
-
-  li:first-child {
-    border-top: 0;
   }
 
   &__count {
@@ -94,6 +90,14 @@ $govuk-global-styles: true;
 
   &__new-search {
     float: right;
+  }
+}
+
+.search-result-link {
+  text-decoration: none;
+
+  .search-result-link-name {
+    text-decoration: underline;
   }
 }
 
