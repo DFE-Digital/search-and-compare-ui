@@ -52,14 +52,18 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
             {
                 if (status.Equals(okStatus, StringComparison.InvariantCultureIgnoreCase) && ((JArray) json.results).Any())
                 {
-                    JArray addressComponents = json.results[0].address_components;
+                    var result = json.results[0];
+                    var types = result.address_components[0].types;
+                    if (Array.IndexOf(types.ToObject<string[]>(), "country") > -1) {
+                        return null;
+                    }
 
-                    string formatted = json.results[0].formatted_address;
-                    double lat = json.results[0].geometry.location.lat;
-                    double lng = json.results[0].geometry.location.lng;
+                    string formatted = result.formatted_address;
+                    double lat = result.geometry.location.lat;
+                    double lng = result.geometry.location.lng;
 
-                    string granularity = json.results[0].address_components[0].types[0];
-                    string region = ((JArray)json.results[0].address_components)
+                    string granularity = result.address_components[0].types[0];
+                    string region = ((JArray)result.address_components)
                         .Where(x => ((JArray)x["types"]).Any(y => (string)y == "administrative_area_level_2"))
                         .Select(x => x["long_name"].Value<string>())
                         .FirstOrDefault() ?? "";
