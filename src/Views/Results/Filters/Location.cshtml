@@ -8,7 +8,7 @@
     @if(Model.Coordinates != null && Model.RadiusOption != null) {
       @Model.loc
       <span class="govuk-caption-m">Within @Model.rad miles of the pin</span>
-      <img src="https://maps.googleapis.com/maps/api/staticmap?key=@(Environment.GetEnvironmentVariable("google_cloud_platform_key_maps"))&center=@(Model.Coordinates.Latitude),@(Model.Coordinates.Longitude)&zoom=@(Model.GetGoogleMapRadius())&size=300x200&markers=@(Model.Coordinates.Latitude),@(Model.Coordinates.Longitude)" alt="Map showing @Model.rad miles of @Model.loc" class="google-map-static"/>
+      <img src="https://maps.googleapis.com/maps/api/staticmap?key=@(Environment.GetEnvironmentVariable("google_cloud_platform_key_maps"))&center=@(Model.Coordinates.Latitude),@(Model.Coordinates.Longitude)&zoom=@(Model.GetGoogleMapRadius())&size=300x200&scale=2&markers=@(Model.Coordinates.Latitude),@(Model.Coordinates.Longitude)" alt="Map showing @Model.rad miles of @Model.loc" class="google-map-static"/>
     } else {
       <text>Across England</text>
     }
