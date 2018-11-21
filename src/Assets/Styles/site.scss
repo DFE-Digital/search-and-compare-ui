@@ -263,6 +263,12 @@ $govuk-global-styles: true;
   }
 }
 
+.google-map-static {
+  display: block;
+  margin-bottom: 3px;
+  max-width: 100%;
+}
+
 .govuk-caption-xl {
   margin-top: govuk-spacing(2);
 }

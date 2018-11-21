@@ -54,9 +54,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
         public bool hasvacancies { get; set; }
         public IList<QualificationOption> qualification { get; set; }
 
-        public List<int> SelectedSubjects {
-            get {
-                List<int> subjectFilterIds = new List<int> ();
+        public List<int> SelectedSubjects
+        {
+            get
+            {
+                List<int> subjectFilterIds = new List<int>();
                 if (!string.IsNullOrEmpty(subjects))
                 {
                     subjectFilterIds = subjects.Split(',')?.Select(int.Parse).ToList();
@@ -64,7 +66,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 return subjectFilterIds;
             }
 
-            set {
+            set
+            {
                 subjects = string.Join(",", value);
             }
         }
@@ -77,7 +80,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
 
         public Coordinates Coordinates
         {
-            get {
+            get
+            {
                 return lng.HasValue && lat.HasValue && rad.HasValue
                     ? new Coordinates(lat.Value, lng.Value, null, loc)
                     : null;
@@ -86,7 +90,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
 
         public Coordinates OffsetCoordinates
         {
-            get {
+            get
+            {
                 return offlat.HasValue && offlng.HasValue
                     ? new Coordinates(offlat.Value, offlng.Value)
                     : null;
@@ -95,21 +100,24 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
 
         public RadiusOption? RadiusOption
         {
-            get {
-                return rad.HasValue ? (RadiusOption?) rad.Value : null;
+            get
+            {
+                return rad.HasValue ? (RadiusOption?)rad.Value : null;
             }
         }
 
         public SortByOption? SortBy
         {
-            get {
-                return sortby.HasValue ? (SortByOption?) sortby.Value : null;
+            get
+            {
+                return sortby.HasValue ? (SortByOption?)sortby.Value : null;
             }
         }
 
         public IEnumerable<SortByOption> ValidSortings
         {
-            get {
+            get
+            {
                 return Enum.GetValues(typeof(SortByOption)).Cast<SortByOption>()
                            .Where(x => x != SortByOption.Distance || LocationFilterActive);
             }
@@ -122,7 +130,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
 
         public LocationOption LocationOption
         {
-            get{ return this.l.HasValue ? (LocationOption)this.l : LocationOption.Unset; }
+            get { return this.l.HasValue ? (LocationOption)this.l : LocationOption.Unset; }
             set { this.l = (int)value; }
         }
 
@@ -139,9 +147,9 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
         public QueryFilter ToQueryFilter()
         {
             byte resQualification = 0;
-            foreach(var qual in this.qualification)
+            foreach (var qual in this.qualification)
             {
-                resQualification ^= (byte) qual;
+                resQualification ^= (byte)qual;
             }
 
             return new QueryFilter
@@ -232,7 +240,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
             };
         }
 
-        public  ResultsFilter WithPage(int? page)
+        public ResultsFilter WithPage(int? page)
         {
             return new ResultsFilter
             {
@@ -261,7 +269,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
         public ResultsFilter Clone(bool withLocation = false, bool withSortby = false, bool withPage = false)
         {
             int? resultingSortBy = null;
-            if(withSortby)
+            if (withSortby)
             {
                 var isSortedByDistance = this.SortBy == SortByOption.Distance;
                 var shouldResetSortByBecauseWeDropLocation = !withLocation && isSortedByDistance;
@@ -380,6 +388,25 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
             if (SelectedFunding.Value.HasFlag(FundingOption.Salary))
             {
                 yield return "Only courses with a salary";
+            }
+        }
+
+        public string GetGoogleMapRadius()
+        {
+            switch (rad)
+            {
+                case 5:
+                    return "12";
+                case 10:
+                    return "11";
+                case 20:
+                    return "10";
+                case 50:
+                    return "9";
+                case 100:
+                    return "8";
+                default:
+                    return "14";
             }
         }
     }
