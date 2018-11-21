@@ -30,12 +30,12 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
             this.client = client;
         }
 
-        public async Task<GeocodingResult> ResolveAddressAsync(string postCode)
+        public async Task<GeocodingResult> ResolveAddressAsync(string address)
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["key"] = apiKey;
             query["region"] = "uk";
-            query["address"] = postCode;
+            query["address"] = address;
 
             var url = "https://maps.googleapis.com/maps/api/geocode/json?" + query.ToString();
             var response = await client.GetAsync(url);
@@ -46,7 +46,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
             var status = (string)json.status;
             if (badStatus.Any(x => x.Equals(status, StringComparison.InvariantCultureIgnoreCase)))
             {
-                throw new GoogleMapsApiServiceException($"postCode: {postCode}, url: {url}, content: {content}");
+                throw new GoogleMapsApiServiceException($"address: {address}, url: {url}, content: {content}");
             }
             else
             {
@@ -70,7 +70,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
                         .Select(x => x["long_name"].Value<string>())
                         .FirstOrDefault() ?? "";
 
-                    return new GeocodingResult(lat, lng, postCode, formatted, granularity, region);
+                    return new GeocodingResult(lat, lng, address, formatted, granularity, region);
                 }
                 else
                 {
