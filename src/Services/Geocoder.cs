@@ -34,7 +34,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["key"] = apiKey;
-            query["region"] = "uk";
+            query["components"] = "country:uk";
             query["address"] = address;
 
             var url = "https://maps.googleapis.com/maps/api/geocode/json?" + query.ToString();
@@ -53,12 +53,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
                 if (status.Equals(okStatus, StringComparison.InvariantCultureIgnoreCase))
                 {
                     JArray addressComponents = json.results[0].address_components;
-                    var isInUk = addressComponents.Any(IsIndicativeOfUk);
-
-                    if (isInUk == false)
-                    {
-                        return null;
-                    }
 
                     string formatted = json.results[0].formatted_address;
                     double lat = json.results[0].geometry.location.lat;
@@ -114,13 +108,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
             }
 
             return res;
-        }
-
-        private static bool IsIndicativeOfUk(JToken addressComponent)
-        {
-            JArray types = (JArray)addressComponent["types"];
-            return types.Any(x => "country" == (string)x) &&
-                (string)addressComponent["short_name"] == "GB";
         }
     }
 }

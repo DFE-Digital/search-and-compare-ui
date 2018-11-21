@@ -76,14 +76,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Services
         }
 
         [Test]
-        public void NotInUk()
-        {
-            var res = geocoder.ResolveAddressAsync("Sweden");
-            res.Wait();
-            Assert.IsNull(res.Result);
-        }
-
-        [Test]
         public void Autocomplete()
         {
             var res = geocoder.SuggestLocationsAsync("Cambr");
