@@ -30,7 +30,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
             this.client = client;
         }
 
-        public async Task<GeocodingResult> ResolvePostCodeAsync(string postCode)
+        public async Task<GeocodingResult> ResolveAddressAsync(string postCode)
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["key"] = apiKey;

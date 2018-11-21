@@ -169,7 +169,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                 return RedirectToAction(isInWizard ? "LocationWizard" : "Location", filter.ToRouteValues());
             }
 
-            var coords = await ResolvePostCodeAsync(filter.lq);
+            var coords = await ResolveAddressAsync(filter.lq);
             if (coords == null)
             {
                 TempData.Put("Errors", new ErrorViewModel("lq", "Postcode, town or city", "We couldn't find this location, please check your input and try again.", Url.Action("Location")));
@@ -312,12 +312,12 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             return View("Provider", filter);
         }
 
-        private async Task<GeocodingResult> ResolvePostCodeAsync(string lq)
+        private async Task<GeocodingResult> ResolveAddressAsync(string lq)
         {
             GeocodingResult coords = null;
             try
             {
-                coords = await _geocoder.ResolvePostCodeAsync(lq);
+                coords = await _geocoder.ResolveAddressAsync(lq);
 
             }
             catch (Exception ex)
