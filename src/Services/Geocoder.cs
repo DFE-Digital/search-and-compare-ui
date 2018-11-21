@@ -30,7 +30,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
             this.client = client;
         }
 
-        public async Task<Coordinates> ResolvePostCodeAsync(string postCode)
+        public async Task<GeocodingResult> ResolvePostCodeAsync(string postCode)
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["key"] = apiKey;
@@ -43,12 +43,14 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
             var content = await response.Content.ReadAsStringAsync();
             dynamic json = JsonConvert.DeserializeObject(content);
 
-            var status = (string) json.status;
+            var status = (string)json.status;
             if (badStatus.Any(x => x.Equals(status, StringComparison.InvariantCultureIgnoreCase)))
             {
                 throw new GoogleMapsApiServiceException($"postCode: {postCode}, url: {url}, content: {content}");
-            } else {
-                if(status.Equals(okStatus, StringComparison.InvariantCultureIgnoreCase))
+            }
+            else
+            {
+                if (status.Equals(okStatus, StringComparison.InvariantCultureIgnoreCase))
                 {
                     JArray addressComponents = json.results[0].address_components;
                     var isInUk = addressComponents.Any(IsIndicativeOfUk);
@@ -62,8 +64,16 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
                     double lat = json.results[0].geometry.location.lat;
                     double lng = json.results[0].geometry.location.lng;
 
-                    return new Coordinates(lat, lng, postCode, formatted);
-                } else {
+                    string granularity = json.results[0].address_components[0].types[0];
+                    string region = ((JArray)json.results[0].address_components)
+                        .Where(x => ((JArray)x["types"]).Any(y => (string)y == "administrative_area_level_2"))
+                        .Select(x => x["long_name"].Value<string>())
+                        .FirstOrDefault() ?? "";
+
+                    return new GeocodingResult(lat, lng, postCode, formatted, granularity, region);
+                }
+                else
+                {
                     return null;
                 }
 
@@ -85,18 +95,20 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
 
             var content = await response.Content.ReadAsStringAsync();
             dynamic json = JsonConvert.DeserializeObject(content);
-            var status = (string) json.status;
+            var status = (string)json.status;
 
             var res = new List<string>();
             if (badStatus.Any(x => x.Equals(status, StringComparison.InvariantCultureIgnoreCase)))
             {
                 throw new GoogleMapsApiServiceException($"input: {input}, url: {url}, content: {content}");
-            } else {
-                if(status.Equals(okStatus, StringComparison.InvariantCultureIgnoreCase))
+            }
+            else
+            {
+                if (status.Equals(okStatus, StringComparison.InvariantCultureIgnoreCase))
                 {
                     foreach (var prediction in json.predictions)
                     {
-                        res.Add((string) prediction.description);
+                        res.Add((string)prediction.description);
                     }
                 }
             }
@@ -106,9 +118,9 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
 
         private static bool IsIndicativeOfUk(JToken addressComponent)
         {
-            JArray types = (JArray) addressComponent["types"];
-            return types.Any(x => "country" == (string) x) &&
-                (string) addressComponent["short_name"] == "GB";
+            JArray types = (JArray)addressComponent["types"];
+            return types.Any(x => "country" == (string)x) &&
+                (string)addressComponent["short_name"] == "GB";
         }
     }
 }

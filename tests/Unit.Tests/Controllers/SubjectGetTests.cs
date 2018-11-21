@@ -13,6 +13,7 @@ using NUnit.Framework;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.Extensibility;
+using GovUk.Education.SearchAndCompare.Services;
 
 namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
 {
@@ -49,7 +50,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             var mockApi = GetMockApi(_subjectAreas);
             var mockGeocoder = new Mock<IGeocoder>();
 
-            _filterController = new FilterController(mockApi.Object, mockGeocoder.Object, TelemetryClientHelper.GetMocked());
+            _filterController = new FilterController(mockApi.Object, mockGeocoder.Object, TelemetryClientHelper.GetMocked(),
+                new GoogleAnalyticsClient(AnalyticsPolicy.No, null, null));
             var tempDataMock = new Mock<ITempDataDictionary>();
             _filterController.TempData = tempDataMock.Object;
 
