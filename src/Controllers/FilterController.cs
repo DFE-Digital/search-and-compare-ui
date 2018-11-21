@@ -1,6 +1,7 @@
 using GovUk.Education.SearchAndCompare.Domain.Client;
 using GovUk.Education.SearchAndCompare.Domain.Filters.Enums;
 using GovUk.Education.SearchAndCompare.Domain.Models;
+using GovUk.Education.SearchAndCompare.Services;
 using GovUk.Education.SearchAndCompare.UI.Filters;
 using GovUk.Education.SearchAndCompare.UI.Filters.Enums;
 using GovUk.Education.SearchAndCompare.UI.Services;
@@ -25,11 +26,14 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
         private readonly TelemetryClient _telemetryClient;
 
-        public FilterController(ISearchAndCompareApi api, IGeocoder geocoder, TelemetryClient telemetryClient)
+        private readonly GoogleAnalyticsClient _gaClient;
+
+        public FilterController(ISearchAndCompareApi api, IGeocoder geocoder, TelemetryClient telemetryClient, GoogleAnalyticsClient gaClient)
         {
             _api = api;
             _geocoder = geocoder;
             _telemetryClient = telemetryClient;
+            _gaClient = gaClient;
         }
 
         [HttpGet("results/filter/subject")]
@@ -179,6 +183,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                 filter.loc = coords.FormattedLocation;
                 filter.page = null;
                 filter.sortby = (int)SortByOption.Distance;
+
+                var cid = Request.Cookies.TryGetValue("_gid", out string gid) ? gid : "";
+
+                _gaClient.TrackEvent(cid, "Form: Location", "Selected Granularity", coords.Granularity);
+                _gaClient.TrackEvent(cid, "Form: Location", "Selected Region", coords.Region);
             }
 
             return isInWizard
@@ -303,12 +312,13 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             return View("Provider", filter);
         }
 
-        private async Task<Coordinates> ResolvePostCodeAsync(string lq)
+        private async Task<GeocodingResult> ResolvePostCodeAsync(string lq)
         {
-            Coordinates coords = null;
+            GeocodingResult coords = null;
             try
             {
                 coords = await _geocoder.ResolvePostCodeAsync(lq);
+
             }
             catch (Exception ex)
             {

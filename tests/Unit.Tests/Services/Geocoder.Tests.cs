@@ -45,6 +45,9 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Services
 
             Assert.LessOrEqual(0.1, res.Result.Longitude);
             Assert.GreaterOrEqual(0.2, res.Result.Longitude);
+
+            Assert.AreEqual("postal_code", res.Result.Granularity);
+            Assert.AreEqual("Cambridgeshire", res.Result.Region);
         }
 
         [Test]
