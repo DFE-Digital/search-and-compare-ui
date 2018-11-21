@@ -1,7 +1,7 @@
 @model GovUk.Education.SearchAndCompare.UI.Shared.ViewModels.CourseDetailsViewModel
 
 @{
-  ViewBag.Title = $"{Model.Course.Name} with {Model.Provider.Name}";
+  ViewBag.Title = $"{Model.Course.Name} ({Model.Course.ProgrammeCode}) with {Model.Provider.Name}";
   var showMap = ViewBag.showMap is bool showMapBool && showMapBool;
 }
 

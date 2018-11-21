@@ -21,20 +21,21 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-full">
         <h1 class="govuk-heading-xl">
-          @Model.Course.Name with @Model.Provider.Name
-
-          @if (!string.IsNullOrEmpty(Model.Course.AccreditingProvider?.Name) && Model.Provider.Name != Model.Course.AccreditingProvider?.Name)
-          {
-            <span class="govuk-caption-xl">Accredited provider: @Model.Course.AccreditingProvider?.Name</span>
-          }
+          <span class="govuk-!-font-size-36">@Model.Provider.Name</span><br />
+          @Model.Course.Name (@Model.Course.ProgrammeCode)
         </h1>
+
+        @if (!string.IsNullOrEmpty(Model.Course.Mod) && Model.Course.Mod.Length > 1)
+        {
+          <p class="govuk-body-l">@Model.Course.Mod</p>
+        }
 
         <div class="course-basicinfo govuk-!-margin-bottom-8">
           <dl class="govuk-list--description">
-            @if (!string.IsNullOrEmpty(Model.Course.Mod) && Model.Course.Mod.Length > 1)
+            @if (!string.IsNullOrEmpty(Model.Course.AccreditingProvider?.Name) && Model.Provider.Name != Model.Course.AccreditingProvider?.Name)
             {
-              <dt class="govuk-list--description__label">Course offered</dt>
-              <dd>@Model.Course.Mod</dd>
+              <dt class="govuk-list--description__label">Accredited provider</dt>
+              <dd>@Model.Course.AccreditingProvider?.Name</dd>
             }
             <dt class="govuk-list--description__label">Financial support</dt>
             <dd>@Model.Course.FundingOptions()</dd>

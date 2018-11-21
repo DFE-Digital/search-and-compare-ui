@@ -21,10 +21,23 @@
     var subjects = @item.CourseSubjects.Select(courseSubject => courseSubject.Subject.Name).ToArray();
 
     <li>
-      <h3 class="govuk-heading-m">
-        <a href='@Url.Action("Index", "Course", new {courseCode = item.ProgrammeCode, providerCode = item.Provider.ProviderCode})' class="link">@item.Name with @item.Provider.Name</a>
+      <h3 class="govuk-heading-m govuk-!-margin-bottom-6">
+        <a href='@Url.Action("Index", "Course", new {courseCode = item.ProgrammeCode, providerCode = item.Provider.ProviderCode})' class="search-result-link">
+          <span class="govuk-!-font-size-19">
+            @item.Provider.Name
+          </span><br />
+          <span class="search-result-link-name govuk-!-font-size-24">
+            <span class="govuk-visually-hidden"> – </span>@item.Name <span title="Course code">(<span class="govuk-visually-hidden"> – Course code: </span>@item.ProgrammeCode)</span>
+          </span>
+        </a>
       </h3>
+
       <dl class="govuk-list--description">
+        @if (!string.IsNullOrEmpty(item.Mod) && item.Mod.Length > 1)
+        {
+          <dt class="govuk-list--description__label">Course</dt>
+          <dd>@item.Mod</dd>
+        }
         @if (item.Distance != null)
         {
           <dt class="govuk-list--description__label">Distance</dt>
@@ -39,11 +52,6 @@
             <dt class="govuk-list--description__label">Nearest address</dt>
             <dd>@(item.DistanceAddress.Replace("\n", ", "))</dd>
           }
-        }
-        @if (!string.IsNullOrEmpty(item.Mod) && item.Mod.Length > 1)
-        {
-          <dt class="govuk-list--description__label">Course offered</dt>
-          <dd>@item.Mod</dd>
         }
         <dt class="govuk-list--description__label">Financial support</dt>
         <dd>@item.FundingOptions()</dd>
