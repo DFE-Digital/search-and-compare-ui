@@ -53,6 +53,10 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
                 if (status.Equals(okStatus, StringComparison.InvariantCultureIgnoreCase) && ((JArray) json.results).Any())
                 {
                     var result = json.results[0];
+
+                    // This is a workaround for when a non-existent gibberish address is fed into the
+                    // geocoder. For some reason, it returns "the UK" as a result. We detect this by looking
+                    // at the types of the first address component
                     var types = result.address_components[0].types;
                     if (Array.IndexOf(types.ToObject<string[]>(), "country") > -1) {
                         return null;
