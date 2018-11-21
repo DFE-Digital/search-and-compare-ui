@@ -60,8 +60,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
                         return null;
                     }
 
-                    ((JArray)json.results).Any();
-
                     string formatted = json.results[0].formatted_address;
                     double lat = json.results[0].geometry.location.lat;
                     double lng = json.results[0].geometry.location.lng;

@@ -20,11 +20,14 @@ using GovUk.Education.SearchAndCompare.UI.Shared.Features;
 using Polly;
 using Polly.Extensions.Http;
 using Polly.Timeout;
+using GovUk.Education.SearchAndCompare.Services;
 
 namespace GovUk.Education.SearchAndCompare.UI
 {
     public class Startup
     {
+        private const string magicStringForGoogleAnalytics = "UA-112932657-1";
+
         private readonly Microsoft.Extensions.Logging.ILogger _logger;
 
         public Startup(IConfiguration configuration, ILoggerFactory logFactory)
@@ -79,6 +82,7 @@ namespace GovUk.Education.SearchAndCompare.UI
             });
 
             services.AddScoped<IFeatureFlags, FeatureFlags>();
+            services.AddScoped<GoogleAnalyticsClient>(p => new GoogleAnalyticsClient(AnalyticsPolicy.FromEnv(), p.GetService<IHttpClient>(), magicStringForGoogleAnalytics));
             services.AddSingleton<IGeocoder>(provider => new Geocoder(Configuration["google_cloud_platform_key_geocoding"], new HttpClient()));
         }
 
