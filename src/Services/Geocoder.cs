@@ -50,7 +50,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
             }
             else
             {
-                if (status.Equals(okStatus, StringComparison.InvariantCultureIgnoreCase))
+                if (status.Equals(okStatus, StringComparison.InvariantCultureIgnoreCase) && ((JArray) json.results).Any())
                 {
                     JArray addressComponents = json.results[0].address_components;
 
