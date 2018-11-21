@@ -9,24 +9,17 @@ namespace GovUk.Education.SearchAndCompare.Services
 {
     public class GoogleAnalyticsClient
     {
-        private readonly AnalyticsPolicy analyticsPolicy;
         private IHttpClient httpClient;
         private string tid;
 
-        public GoogleAnalyticsClient(AnalyticsPolicy analyticsPolicy, IHttpClient httpClient, string tid)
+        public GoogleAnalyticsClient(IHttpClient httpClient, string tid)
         {
-            this.analyticsPolicy = analyticsPolicy;
             this.httpClient = httpClient;
             this.tid = tid;
         }
 
         public async Task TrackEvent(string cid, string eventCategory, string eventAction, string eventLabel)
         {
-            if (analyticsPolicy == AnalyticsPolicy.No)
-            {
-                return;
-            }
-
             var res = await httpClient.PostAsync(new System.Uri("http://www.google-analytics.com/collect"), new StringContent(new FormUrlEncodedContent(new[] {
                 KeyValuePair.Create("v", "1"),
                 KeyValuePair.Create("tid", tid),

@@ -82,7 +82,7 @@ namespace GovUk.Education.SearchAndCompare.UI
             });
 
             services.AddScoped<IFeatureFlags, FeatureFlags>();
-            services.AddScoped<GoogleAnalyticsClient>(p => new GoogleAnalyticsClient(AnalyticsPolicy.FromEnv(), p.GetService<IHttpClient>(), magicStringForGoogleAnalytics));
+            services.AddScoped<GoogleAnalyticsClient>(p => new GoogleAnalyticsClient(p.GetService<IHttpClient>(), magicStringForGoogleAnalytics));
             services.AddSingleton<IGeocoder>(provider => new Geocoder(Configuration["google_cloud_platform_key_geocoding"], new HttpClient()));
         }
 
