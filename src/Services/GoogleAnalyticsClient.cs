@@ -20,7 +20,7 @@ namespace GovUk.Education.SearchAndCompare.Services
 
         public async Task TrackEvent(string cid, string eventCategory, string eventAction, string eventLabel)
         {
-            var res = await httpClient.PostAsync(new System.Uri("http://www.google-analytics.com/collect"), new StringContent(new FormUrlEncodedContent(new[] {
+            var payload = new FormUrlEncodedContent(new[] {
                 KeyValuePair.Create("v", "1"),
                 KeyValuePair.Create("tid", tid),
                 KeyValuePair.Create("cid", cid),
@@ -28,7 +28,13 @@ namespace GovUk.Education.SearchAndCompare.Services
                 KeyValuePair.Create("ec", eventCategory),
                 KeyValuePair.Create("ea", eventAction),
                 KeyValuePair.Create("el", eventLabel)
-            }).ToString()));
+            });
+
+            var payloadString = await payload.ReadAsStringAsync();
+
+            var res = await httpClient.PostAsync(
+                new System.Uri("https://www.google-analytics.com/collect"), 
+                new StringContent(payloadString));
         }
     }
 }
