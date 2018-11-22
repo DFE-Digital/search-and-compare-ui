@@ -24,7 +24,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Services
         public void Throws_GoogleMapsApiServiceException()
         {
             var nullApiGeocoder = new Geocoder("bad_key", new HttpClient());
-            Action act1 = () => nullApiGeocoder.ResolvePostCodeAsync("asdasdasdasd").Wait();
+            Action act1 = () => nullApiGeocoder.ResolveAddressAsync("asdasdasdasd").Wait();
             act1.Should().ThrowExactly<GoogleMapsApiServiceException>();
 
             Action act2 = () => nullApiGeocoder.SuggestLocationsAsync("asdasdasdasd").Wait();
@@ -34,7 +34,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Services
         [Test]
         public void Cambridge()
         {
-            var res = geocoder.ResolvePostCodeAsync("CB4 1FJ");
+            var res = geocoder.ResolveAddressAsync("CB4 1FJ");
             res.Wait();
 
             Assert.IsTrue(res.Result.FormattedLocation.StartsWith("Stott Gardens"));
@@ -54,7 +54,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Services
         public void UkRegionBias()
         {
             // normally resolves to Haverhill, MA, USA. We want the one in Cambridgeshire.
-            var res = geocoder.ResolvePostCodeAsync("Haverhill");
+            var res = geocoder.ResolveAddressAsync("Haverhill");
             res.Wait();
 
             Assert.IsTrue(res.Result.FormattedLocation.StartsWith("Haverhill CB9"));
@@ -70,15 +70,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Services
         [Test]
         public void Nonsense()
         {
-            var res = geocoder.ResolvePostCodeAsync("waeojfawei");
-            res.Wait();
-            Assert.IsNull(res.Result);
-        }
-
-        [Test]
-        public void NotInUk()
-        {
-            var res = geocoder.ResolvePostCodeAsync("Sweden");
+            var res = geocoder.ResolveAddressAsync("waeojfawei");
             res.Wait();
             Assert.IsNull(res.Result);
         }

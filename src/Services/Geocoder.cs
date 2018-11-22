@@ -30,12 +30,12 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
             this.client = client;
         }
 
-        public async Task<GeocodingResult> ResolvePostCodeAsync(string postCode)
+        public async Task<GeocodingResult> ResolveAddressAsync(string address)
         {
             var query = HttpUtility.ParseQueryString(string.Empty);
             query["key"] = apiKey;
-            query["region"] = "uk";
-            query["address"] = postCode;
+            query["components"] = "country:uk";
+            query["address"] = address;
 
             var url = "https://maps.googleapis.com/maps/api/geocode/json?" + query.ToString();
             var response = await client.GetAsync(url);
@@ -46,31 +46,33 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
             var status = (string)json.status;
             if (badStatus.Any(x => x.Equals(status, StringComparison.InvariantCultureIgnoreCase)))
             {
-                throw new GoogleMapsApiServiceException($"postCode: {postCode}, url: {url}, content: {content}");
+                throw new GoogleMapsApiServiceException($"address: {address}, url: {url}, content: {content}");
             }
             else
             {
-                if (status.Equals(okStatus, StringComparison.InvariantCultureIgnoreCase))
+                if (status.Equals(okStatus, StringComparison.InvariantCultureIgnoreCase) && ((JArray) json.results).Any())
                 {
-                    JArray addressComponents = json.results[0].address_components;
-                    var isInUk = addressComponents.Any(IsIndicativeOfUk);
+                    var result = json.results[0];
 
-                    if (isInUk == false)
-                    {
+                    // This is a workaround for when a non-existent gibberish address is fed into the
+                    // geocoder. For some reason, it returns "the UK" as a result. We detect this by looking
+                    // at the types of the first address component
+                    var types = result.address_components[0].types;
+                    if (Array.IndexOf(types.ToObject<string[]>(), "country") > -1) {
                         return null;
                     }
 
-                    string formatted = json.results[0].formatted_address;
-                    double lat = json.results[0].geometry.location.lat;
-                    double lng = json.results[0].geometry.location.lng;
+                    string formatted = result.formatted_address;
+                    double lat = result.geometry.location.lat;
+                    double lng = result.geometry.location.lng;
 
-                    string granularity = json.results[0].address_components[0].types[0];
-                    string region = ((JArray)json.results[0].address_components)
+                    string granularity = result.address_components[0].types[0];
+                    string region = ((JArray)result.address_components)
                         .Where(x => ((JArray)x["types"]).Any(y => (string)y == "administrative_area_level_2"))
                         .Select(x => x["long_name"].Value<string>())
                         .FirstOrDefault() ?? "";
 
-                    return new GeocodingResult(lat, lng, postCode, formatted, granularity, region);
+                    return new GeocodingResult(lat, lng, address, formatted, granularity, region);
                 }
                 else
                 {
@@ -114,13 +116,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Services
             }
 
             return res;
-        }
-
-        private static bool IsIndicativeOfUk(JToken addressComponent)
-        {
-            JArray types = (JArray)addressComponent["types"];
-            return types.Any(x => "country" == (string)x) &&
-                (string)addressComponent["short_name"] == "GB";
         }
     }
 }
