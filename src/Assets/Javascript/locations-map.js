@@ -13,13 +13,6 @@ const createPopupClass = () => {
   };
 
   // Based on: https://developers.google.com/maps/documentation/javascript/examples/overlay-popup
-  /**
-   * A customized popup on the map.
-   * @param {!google.maps.LatLng} position
-   * @param {!Element} content
-   * @constructor
-   * @extends {google.maps.OverlayView}
-   */
   const Popup = function(position, closedContent, openContent) {
     this.position = position;
     const content = document.createElement("div");
@@ -174,7 +167,7 @@ const initLocationsMap = () => {
   // Use provider address to center and zoom when only one location
   if (locations.length > 1) {
     map.fitBounds(bounds);
-    map.panTo(new google.maps.LatLng(centerLat, centerLng));
+    map.panToBounds(bounds);
   }
 };
 
