@@ -48,19 +48,19 @@ const createPopupClass = () => {
   // loaded. That is why Popup is defined inside createPopupClass().
   Popup.prototype = Object.create(google.maps.OverlayView.prototype);
 
-  /** Called when the popup is added to the map. */
+  // Called when the popup is added to the map.
   Popup.prototype.onAdd = function() {
     this.getPanes().floatPane.appendChild(this.anchor);
   };
 
-  /** Called when the popup is removed from the map. */
+  // Called when the popup is removed from the map.
   Popup.prototype.onRemove = function() {
     if (this.anchor.parentElement) {
       this.anchor.parentElement.removeChild(this.anchor);
     }
   };
 
-  /** Called when the popup needs to draw itself. */
+  // Called when the popup needs to draw itself.
   Popup.prototype.draw = function() {
     var divPosition = this.getProjection().fromLatLngToDivPixel(this.position);
     // Hide the popup when it is far out of view.
@@ -82,7 +82,7 @@ const createPopupClass = () => {
     }
   };
 
-  /** Stops clicks/drags from bubbling up to the map. */
+  // Stops clicks/drags from bubbling up to the map.
   Popup.prototype.stopEventPropagation = function() {
     var anchor = this.anchor;
     anchor.style.cursor = "auto";
