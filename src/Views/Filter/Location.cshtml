@@ -83,14 +83,14 @@
 
                 <div class="govuk-radios__conditional govuk-radios__conditional--hidden @(Model.Errors.HasError(" query ") ? "form-group--error " : " ")" id="query-container" data-module="track-no-provider-results">
                   <div class="form-group">
-                    <label class="govuk-label" for="query">
+                    <label class="govuk-label" for="provider">
                       School, university or other training provider
                       @if (@Model.Errors.HasError("query")) {
                         <span class="govuk-error-message">@Model.Errors.GetError("query").Message</span>
                       }
                     </label>
                     <span class="govuk-hint">Enter the name or provider code</span>
-                    <input class="govuk-input" data-url="@Url.Action("ProviderSuggest", "Dynamic")" name="query" type="text" id="query" value="@Model.FilterModel.query">
+                    <input class="govuk-input" data-url="@Url.Action("ProviderSuggest", "Dynamic")" name="query" type="text" id="provider" value="@Model.FilterModel.query">
                     <div id="provider-autocomplete"></div>
                   </div>
                 </div>

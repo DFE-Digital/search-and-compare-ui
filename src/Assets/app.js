@@ -64,7 +64,7 @@ try {
 
 try {
   const $providerAutocomplete = document.getElementById("provider-autocomplete");
-  const $providerInput = document.getElementById("query");
+  const $providerInput = document.getElementById("provider");
   if ($providerAutocomplete) {
     initAutocomplete($providerAutocomplete, $providerInput);
   }
