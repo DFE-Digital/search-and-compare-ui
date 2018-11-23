@@ -19,6 +19,10 @@ const createPopupClass = () => {
     content.classList.add("popup-bubble-content");
     closedContent.classList.add("popup-bubble__closed-content");
     openContent.classList.add("popup-bubble__open-content");
+    openContent.insertAdjacentHTML(
+      "beforeend",
+      `${`<button class="popup-bubble__close">&times;<span class="govuk-visually-hidden">Close this popup</span></button>`}`
+    );
     content.appendChild(closedContent);
     content.appendChild(openContent);
 
@@ -149,11 +153,12 @@ const initLocationsMap = () => {
     closedContent.innerHTML = location.name;
 
     const openContent = document.createElement("div");
-    openContent.innerHTML = `
-      ${`<h3 class="govuk-heading-s">${location.name}</h3>`}
+    openContent.insertAdjacentHTML(
+      "afterbegin",
+      `${`<h3 class="govuk-heading-s">${location.name}</h3>`}
       ${location.address ? `<p class="govuk-body">Address:<br> ${location.address}</p>` : ""}
-      <button class="popup-bubble__close">&times;<span class="govuk-visually-hidden">Close this popup</span></button>
-    `;
+      `
+    );
 
     const popup = new Popup(latLng, closedContent, openContent);
     popup.setMap(map);
