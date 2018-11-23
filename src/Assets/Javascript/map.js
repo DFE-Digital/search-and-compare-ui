@@ -90,11 +90,6 @@ const initGoogleMaps = () => {
       )
       .join("");
     openContent.innerHTML = `
-      ${
-        data.no_of_courses > 1
-          ? `<h3 class="govuk-heading-s">${data.title}</h3>`
-          : `<h3 class="govuk-heading-s">${data.courses[0].name} with ${data.title}</h3>`
-      }
       ${data.no_of_courses > 1 ? `<h4 class="govuk-heading-s">${data.no_of_courses} courses</h4>` : ""}
       <ul class="govuk-list">${coursesHtml}</ul>
     `;

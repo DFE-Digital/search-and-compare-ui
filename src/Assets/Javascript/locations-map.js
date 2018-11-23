@@ -55,9 +55,7 @@ const initLocationsMap = () => {
     const openContent = document.createElement("div");
     openContent.insertAdjacentHTML(
       "afterbegin",
-      `${`<h3 class="govuk-heading-s">${location.name}</h3>`}
-      ${location.address ? `<p class="govuk-body">Address:<br> ${location.address}</p>` : ""}
-      `
+      `${location.address ? `<p class="govuk-body">Address:<br> ${location.address}</p>` : ""}`
     );
 
     const popup = new Popup(latLng, closedContent, openContent);
