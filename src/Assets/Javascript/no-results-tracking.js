@@ -21,7 +21,7 @@ NoResultsTracking.prototype.init = function() {
   const $errorMessage = $module.querySelector("span.govuk-error-message");
 
   if ($errorMessage) {
-    const searchTerm = document.querySelector("#query").value;
+    const searchTerm = document.querySelector("#provider").value;
     triggerAnalyticsEvent("Search by provider: No Results", searchTerm);
   }
 };
