@@ -90,7 +90,7 @@ const createPopupClass = () => {
   Popup.prototype.stopEventPropagation = function() {
     var anchor = this.anchor;
     anchor.style.cursor = "auto";
-    [("click", "dblclick", "contextmenu", "wheel", "mousedown", "touchstart", "pointerdown")].forEach(function(event) {
+    ["click", "dblclick", "contextmenu", "wheel", "mousedown", "touchstart", "pointerdown"].forEach(function(event) {
       anchor.addEventListener(event, function(e) {
         e.stopPropagation();
       });

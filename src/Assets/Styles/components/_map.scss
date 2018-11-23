@@ -166,6 +166,7 @@ $TIP_HEIGHT: 8px;
   box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.2);
   border: 1px solid $govuk-border-colour;
   max-width: 120px;
+  overflow-x: hidden;
 }
 
 .popup-bubble__closed-content {
