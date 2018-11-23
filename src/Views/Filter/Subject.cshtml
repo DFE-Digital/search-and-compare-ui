@@ -53,34 +53,34 @@
                               string txt = null;
                               if (subject.Funding?.Scholarship != null && subject.Funding?.BursaryFirst != null)
                               {
-                                  txt = $"Scholarships of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.Scholarship.Value)} and bursaries of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.BursaryFirst.Value)} are available";
+                                txt = $"Scholarships of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.Scholarship.Value)} and bursaries of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.BursaryFirst.Value)} are available";
                               }
                               else if (subject.Funding?.Scholarship != null)
                               {
-                                  txt = $"Scholarships of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.Scholarship.Value)} are available";
+                                txt = $"Scholarships of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.Scholarship.Value)} are available";
                               }
                               else if (subject.Funding?.BursaryFirst != null)
                               {
-                                  txt = $"Bursaries of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.BursaryFirst.Value)} available";
+                                txt = $"Bursaries of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.BursaryFirst.Value)} available";
                               }
 
                               if (txt != null && subject.Funding?.EarlyCareerPayments != null)
                               {
-                                  txt += $", with early career payments of £5,000 each in your third and fifth year of teaching (£7,500 each in some areas of England).";
+                                txt += $", with early career payments of £5,000 each in your third and fifth year of teaching (£7,500 each in some areas of England).";
                               }
                               else if (txt != null)
                               {
-                                  txt += ".";
+                                txt += ".";
                               }
                             }
                             <span class="govuk-!-display-block">@txt</span>
                           </label>
                           @if (subject.IsSubjectKnowledgeEnhancementAvailable)
-                            {
-                              <p class="govuk-body">
-                                You can@(subject.Funding?.Scholarship != null || subject.Funding?.BursaryFirst != null ? " also " : " ")take a <a href="https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses">subject knowledge enhancement (SKE) course</a>.
-                              </p>
-                            }
+                          {
+                            <p class="govuk-body">
+                              You can@(subject.Funding?.Scholarship != null || subject.Funding?.BursaryFirst != null ? " also " : " ")take a <a href="https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses">subject knowledge enhancement (SKE) course</a>.
+                            </p>
+                          }
                         </div>
                       }
                     </div>
@@ -88,6 +88,22 @@
                 </div>
               }
             </div>
+            <details class="govuk-details">
+              <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">Do you want to teach special educational needs (SEN)?</span>
+              </summary>
+              <div class="govuk-details__text">
+                <div class="govuk-checkboxes__item">
+                  <input id="chkSenCourses" name="senCourses" type="checkbox" value="@Model.FilterModel.senCourses" checked="@Model.FilterModel.senCourses" class="govuk-checkboxes__input" data-ga-event-form-input="Show SEN courses for the subjects you've selected above">
+                  <label for="chkSenCourses" class="govuk-label govuk-checkboxes__label">
+                    <span class="govuk-checkboxes__label_text">
+                      Show SEN courses for the subjects you've selected above
+                    </span>                                        
+                  </label>
+                </div>
+              </div>
+            </details>
+
           </fieldset>
           <div class="govuk-form-group">
             <input class="govuk-button" type="submit" value="@(isInWizard ? "Continue" : "Find courses")" role="button">
