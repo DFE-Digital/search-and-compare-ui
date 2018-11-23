@@ -14,6 +14,7 @@ You will need to have Version 2.1.5 of the dotnet SDK installed in order to buil
 
 Run
 
+    cd src
     npm install
 
 Runs from vscode and Visual Studio 2017 with F5.
