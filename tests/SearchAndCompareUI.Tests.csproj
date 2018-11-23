@@ -11,12 +11,13 @@
     <PackageReference Include="Moq" Version="4.8.0" />
     <PackageReference Include="nunit" Version="3.9.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.9.0" />
-    <PackageReference Include="DFE.SearchAndCompare.Domain" Version="0.10.3-beta" />
+    <!--<PackageReference Include="DFE.SearchAndCompare.Domain" Version="0.10.3-beta" />-->
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\src\SearchAndCompareUi.csproj" />
     <ProjectReference Include="..\shared\SearchAndCompareUi.Shared.csproj" />
+    <ProjectReference Include="..\..\search-and-compare-api\src\domain\SearchAndCompareApiClient.csproj" />
   </ItemGroup>
 
 </Project>

@@ -167,7 +167,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 fulltime = this.fulltime,
                 parttime = this.parttime,
                 hasvacanciesonly = this.hasvacancies,
-                //senCourses = this.senCourses,
+                senCourses = this.senCourses,
             };
         }
 
