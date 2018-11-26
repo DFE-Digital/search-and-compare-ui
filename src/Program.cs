@@ -3,6 +3,7 @@ using System.IO;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Serilog;
 
 namespace GovUk.Education.SearchAndCompare.UI
@@ -43,6 +44,10 @@ namespace GovUk.Education.SearchAndCompare.UI
                 .UseKestrel(options =>
                 {
                     options.AddServerHeader = false;
+                })
+                .ConfigureLogging((hostingContext, logging) =>
+                {
+                    logging.AddConsole();
                 })
                 .UseStartup<Startup>()
                 .Build();
