@@ -1,183 +1,93 @@
-.found-heading {
-  border-bottom: 1px solid $govuk-border-colour;
-  position: relative;
-  clear: both;
-  min-height: 48px;
-  margin-bottom: 10px;
-}
-
-.map-results-list {
-  margin-left: 30px;
-}
-
-.resultsmap {
-  position: relative;
-  text-align: center;
-}
-
-.mapimage::before {
-  content: "Loading...";
-  position: absolute;
-  z-index: 1;
-  top: 50%;
-  left: 0;
-  right: 0;
-  font-size: 18px;
-  margin-top: -9px;
-}
-
-.mapimage {
-  z-index: 2;
-  position: relative;
-}
-
-.mapimage img {
-  z-index: 2;
-  position: relative;
-}
-
-.mapcontrols {
-  z-index: 3;
-  position: absolute;
-  right: 10px;
-  bottom: 38px;
-  width: 28px;
-  height: 55px;
-  user-select: none;
-  -webkit-user-select: none;
-  -webkit-box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
-  box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px;
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
-  border-bottom-right-radius: 2px;
-  border-bottom-left-radius: 2px;
-  cursor: pointer;
-  background-color: rgb(255, 255, 255);
-  width: 28px;
-  height: 55px;
-}
-
-.mapzoombutton {
-  background-color: transparent;
-  background-image: none;
-  display: block;
-  border: 0px;
-  margin: 0px;
-  padding: 0px;
-  position: relative;
-  cursor: pointer;
-  user-select: none;
-  -webkit-user-select: none;
-  width: 27px;
-  height: 27px;
-  top: 0px;
-  left: 0px;
-  background-position: initial initial;
-  background-repeat: initial initial;
-}
-
-.mapzoomdivider {
-  position: relative;
-  overflow: hidden;
-  width: 67%;
-  height: 1px;
-  left: 16%;
-  background-color: rgb(230, 230, 230);
-  top: 0px;
-}
-
-.view-list-link,
-.view-map-link {
-  position: relative;
-  background: transparent;
-  display: inline-block;
-  line-height: 35px;
-  margin-left: 30px;
-}
-
-.view-list-link::before {
-  position: absolute;
-  content: "";
-  background: transparent url("/images/maps/icon-burger.png") no-repeat 0 0;
-  width: 71px;
-  height: 56px;
-  background-size: 30%;
-  left: -30px;
-  top: 6px;
-}
-
-.view-map-link::before {
-  position: absolute;
-  content: "";
-  background: transparent url("/images/maps/icon-map.png") no-repeat 0 0;
-  width: 75px;
-  height: 56px;
-  background-size: 30%;
-  left: -30px;
-  top: 0;
-}
-
-$TIP_HEIGHT: 8px;
-
-.popup-tip-anchor {
+.map-marker {
   height: 0;
   position: absolute;
-  /* The max width of the info window. */
   width: 200px;
-}
 
-/* The bubble is anchored above the tip. */
-.popup-bubble-anchor {
-  position: absolute;
-  width: 100%;
-  bottom: $TIP_HEIGHT;
-  left: 0;
-}
+  &:after {
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 8px solid govuk-colour("white");
+    bottom: 0;
+    content: "";
+    height: 0;
+    left: 0;
+    position: absolute;
+    top: 0;
+    transform: translate(-50%, -1px);
+    width: 0;
+    z-index: 1;
+  }
 
-/* Draw the tip. */
-.popup-bubble-anchor::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  /* Center the tip horizontally. */
-  transform: translate(-50%, -2px);
-  /* The tip is a https://css-tricks.com/snippets/css/css-triangle/ */
-  width: 0;
-  height: 0;
-  /* The tip is 8px high, and 12px wide. */
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-top: $TIP_HEIGHT solid white;
-}
+  &__close {
+    background: none;
+    border: none;
+    color: govuk-colour("black");
+    cursor: pointer;
+    display: none;
+    font-size: 25px;
+    height: 30px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 30px;
+    z-index: 1;
+  }
 
-/* The popup bubble itself. */
-.popup-bubble-content {
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: translate(-50%, -100%);
-  /* Style the info window. */
-  background-color: white;
-  padding: 5px 8px;
-  font-size: 14px;
-  max-height: 60px;
-  overflow-y: auto;
-  box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.2);
-  border: 1px solid $govuk-border-colour;
-  max-width: 120px;
-}
+  &__title {
+    @include govuk-font($size: 14, $line-height: 1.2, $weight: bold);
+    cursor: pointer;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
-.popup-bubble__closed-content {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
+  &__content {
+    background-color: govuk-colour("white");
+    border: 1px solid $govuk-border-colour;
+    box-shadow: 0 1px 2px 1px rgba(govuk-colour("black"), 0.2);
+    left: 0;
+    max-height: 60px;
+    max-width: 120px;
+    padding: govuk-spacing(1);
+    position: absolute;
+    top: 0;
+    transform: translate(-50%, -100%);
+    overflow-x: hidden;
+    z-index: 1;
+  }
 
-.search-info-window,
-.popup-bubble__open-content {
-  @include mq($from: desktop) {
-    min-width: 300px;
+  &__body {
+    display: none;
+    position: relative;
+
+    @include mq($from: desktop) {
+      min-width: 300px;
+    }
+  }
+
+  &.open {
+    z-index: 2;
+
+    .map-marker__content {
+      max-width: none;
+      max-height: none;
+      padding: govuk-spacing(2);
+    }
+
+    .map-marker__title {
+      @include govuk-font($size: 19, $line-height: 1.5, $weight: bold);
+      @include govuk-responsive-margin(2, "bottom");
+      padding-right: 20px;
+    }
+
+    .map-marker__body {
+      display: block;
+    }
+
+    .map-marker__close {
+      display: inline-block;
+    }
   }
 
   .govuk-heading-s {
@@ -193,52 +103,5 @@ $TIP_HEIGHT: 8px;
 
   .govuk-list {
     margin-bottom: -10px;
-  }
-}
-
-.popup-bubble__close {
-  background: none;
-  border: none;
-  color: #0b0c0c;
-  font-size: 25px;
-  height: 44px;
-  position: absolute;
-  right: -12px;
-  top: -12px;
-  width: 44px;
-  cursor: pointer;
-}
-
-.popup-tip-anchor {
-  .popup-bubble__closed-content {
-    display: block;
-    cursor: pointer;
-    font-weight: bold;
-  }
-
-  .popup-bubble__open-content {
-    display: none;
-    position: relative;
-  }
-
-  &.open {
-    .popup-bubble-anchor {
-      z-index: 1;
-    }
-
-    .popup-bubble-content {
-      max-width: none;
-      max-height: none;
-      font-size: 16px;
-      padding: 10px;
-    }
-
-    .popup-bubble__closed-content {
-      display: none;
-    }
-
-    .popup-bubble__open-content {
-      display: block;
-    }
   }
 }
