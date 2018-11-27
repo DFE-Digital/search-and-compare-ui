@@ -19,7 +19,7 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="2.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.4" />
-    <!--<PackageReference Include="DFE.SearchAndCompare.Domain" Version="0.10.3-beta" />-->
+    <PackageReference Include="GovUk.Education.SearchAndCompare.ApiClient" Version="0.11.1" />
     <PackageReference Include="Serilog.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Serilog.Settings.Configuration" Version="2.6.1" />
     <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="2.6.0" />
@@ -30,7 +30,6 @@
 </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\shared\SearchAndCompareUi.Shared.csproj" />
-    <ProjectReference Include="..\..\search-and-compare-api\src\domain\SearchAndCompareApiClient.csproj" />
   </ItemGroup>
   <Target Name="Webpack" Condition="'$(Configuration)'=='Release'" BeforeTargets="AfterBuild">
     <Exec Command="npm install" />
