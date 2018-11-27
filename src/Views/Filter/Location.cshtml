@@ -1,7 +1,6 @@
 @model LocationFilterViewModel
 
 @{
-  ViewBag.Title = $"Find courses by location or by training provider";
   var isInWizard = ViewBag.IsInWizard == true;
   var selectedRadius = (Model.FilterModel.rad.HasValue) ? Model.FilterModel.rad : (int)RadiusOption.TwentyMiles;
 }
