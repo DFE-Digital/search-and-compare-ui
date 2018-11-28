@@ -52,6 +52,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
 
         public bool parttime { get; set; }
         public bool hasvacancies { get; set; }
+        public bool senCourses { get; set; }
         public IList<QualificationOption> qualification { get; set; }
 
         public List<int> SelectedSubjects
@@ -165,7 +166,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 qualification = resQualification,
                 fulltime = this.fulltime,
                 parttime = this.parttime,
-                hasvacanciesonly = this.hasvacancies
+                hasvacanciesonly = this.hasvacancies,
+                senCourses = this.senCourses,
             };
         }
 
@@ -191,7 +193,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 qualification,
                 fulltime,
                 parttime,
-                hasvacancies
+                hasvacancies,
+                senCourses
             };
         }
 
@@ -210,6 +213,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 fulltime = this.fulltime,
                 parttime = this.parttime,
                 hasvacancies = this.hasvacancies,
+                senCourses = this.senCourses,
                 l = this.l
             };
         }
@@ -237,6 +241,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 fulltime = this.fulltime,
                 parttime = this.parttime,
                 hasvacancies = this.hasvacancies,
+                senCourses = this.senCourses,
             };
         }
 
@@ -263,6 +268,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 fulltime = this.fulltime,
                 parttime = this.parttime,
                 hasvacancies = this.hasvacancies,
+                senCourses = this.senCourses,
             };
         }
 
@@ -298,6 +304,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 fulltime = this.fulltime,
                 parttime = this.parttime,
                 hasvacancies = this.hasvacancies,
+                senCourses = this.senCourses,
                 sortby = resultingSortBy,
                 page = withPage ? this.page : null
             };
@@ -327,6 +334,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 fulltime = this.fulltime,
                 parttime = this.parttime,
                 hasvacancies = this.hasvacancies,
+                senCourses = this.senCourses,
             };
         }
 
