@@ -16,6 +16,12 @@ $govuk-global-styles: true;
 @import "patterns/filters";
 @import "patterns/pagination";
 
+// Low baseline on NTA causes the dotted line to render oddly
+// when using Chrome. Don't put gaps around descenders in line.
+abbr {
+  text-decoration-skip-ink: none;
+}
+
 // Add brackets around user name in header
 .govuk-header__link--profile {
   @extend .govuk-header__link;
