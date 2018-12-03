@@ -152,7 +152,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
             if (filter.LocationOption == LocationOption.Unset)
             {
-                TempData.Put("Errors", new ErrorViewModel("l", "Please choose an option", null, Url.Action("Location")));
+                TempData.Put("Errors", new ErrorViewModel("l", "Enter a location or training provider", null, Url.Action("Location")));
                 return RedirectToAction(isInWizard ? "LocationWizard" : "Location", filter.WithoutLocation().ToRouteValues());
             }
 
