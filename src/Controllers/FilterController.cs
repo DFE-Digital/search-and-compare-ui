@@ -92,7 +92,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
             if (queryIsEmpty)
             {
-                TempData.Put("Errors", new ErrorViewModel("query", "Training provider", "Please enter the name of a training provider", Url.Action("Location")));
+                TempData.Put("Errors", new ErrorViewModel("query", "Enter the name of a training provider", "Enter the name of a training provider", Url.Action("Location")));
                 return RedirectToAction("Location", filter.ToRouteValues());
             }
 
@@ -103,7 +103,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             // the _api.GetProviderSuggestions call would make it call needlessly on queries which are empty.
             if (noSuggestions)
             {
-                TempData.Put("Errors", new ErrorViewModel("query", "Training provider", "Please enter the name of a training provider", Url.Action("Location")));
+                TempData.Put("Errors", new ErrorViewModel("query", "Enter the name of a training provider", "Enter the name of a training provider", Url.Action("Location")));
                 return RedirectToAction("Location", filter.ToRouteValues());
             }
 
@@ -165,14 +165,14 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
 
             if (string.IsNullOrWhiteSpace(filter.lq))
             {
-                TempData.Put("Errors", new ErrorViewModel("lq", "Postcode, town or city", "Please enter a postcode, city or town in England", Url.Action("Location")));
+                TempData.Put("Errors", new ErrorViewModel("lq", "Enter a postcode, city or town", "Enter a postcode, city or town in England", Url.Action("Location")));
                 return RedirectToAction(isInWizard ? "LocationWizard" : "Location", filter.ToRouteValues());
             }
 
             var coords = await ResolveAddressAsync(filter.lq);
             if (coords == null)
             {
-                TempData.Put("Errors", new ErrorViewModel("lq", "Postcode, town or city", "We couldn't find this location, please check your input and try again.", Url.Action("Location")));
+                TempData.Put("Errors", new ErrorViewModel("lq", "We couldn't find your postcode, town or city", "We couldn't find this location, please check your input and try again.", Url.Action("Location")));
 
                 return RedirectToAction(isInWizard ? "LocationWizard" : "Location", filter.ToRouteValues());
             }
