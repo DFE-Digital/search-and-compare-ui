@@ -1,10 +1,7 @@
 using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Security.Policy;
 using FluentAssertions;
 using GovUk.Education.SearchAndCompare.Domain.Client;
 using GovUk.Education.SearchAndCompare.Domain.Models;
-using GovUk.Education.SearchAndCompare.UI;
 using GovUk.Education.SearchAndCompare.UI.Controllers;
 using GovUk.Education.SearchAndCompare.UI.Filters;
 using GovUk.Education.SearchAndCompare.UI.Services;
@@ -13,9 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Moq;
 using NUnit.Framework;
-using Microsoft.ApplicationInsights;
-using Microsoft.ApplicationInsights.Channel;
-using Microsoft.ApplicationInsights.Extensibility;
 using GovUk.Education.SearchAndCompare.Services;
 using GovUk.Education.SearchAndCompare.UI.Utils;
 using Microsoft.AspNetCore.Http;
@@ -24,7 +18,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
 {
 
     [TestFixture]
-    public class SubjectGetTests
+    public class SubjectPostTests
     {
 
         private readonly List<SubjectArea> _subjectAreas = new List<SubjectArea>
@@ -62,52 +56,57 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             _filterController.TempData = tempDataMock.Object;
             _filterController.Url = tempUrlMock.Object;
         }
-
         [Test]
-        public void GivenSomeSubjects_WhenSubjectGetCalledWithNullSubjectFilter_ThenViewModelHasAllSubjects()
+        public void GivenSubjectAction_WhenSenCoursesSelectedWithNoSubjects_ThenNoErrorMessage()
         {
-            var inputSubjectFilter = string.Empty;
-            var expectedSelected = new List<int> { 1, 2};
+            var inputPage = 1;
+            var expectedSelected = new List<int>();//no subjects selected
 
-            var result = _filterController.SubjectGet(new ResultsFilter { subjects = inputSubjectFilter, SelectedSubjects = expectedSelected}) as ViewResult;
-            ViewDataDictionary viewData = result.ViewData;
-            var resultsViewModel = (SubjectFilterViewModel)result.Model;
+            _filterController.TempData = new TempDataDictionary(new DefaultHttpContext(), Mock.Of<ITempDataProvider>());
+            var result = _filterController.SubjectPost(new ResultsFilter
+            {
+                page = inputPage,
+                SelectedSubjects = expectedSelected,
+                senCourses = true
+            }) as ViewResult;
 
-            resultsViewModel.SubjectAreas.Count.Should().Be(2);
-            resultsViewModel.SubjectAreas.Should().BeSameAs(_subjectAreas);
-            resultsViewModel.FilterModel.SelectedSubjects.Should().BeEquivalentTo(expectedSelected);
-            viewData.Count.Should().Be(1);
+            _filterController.TempData.Count.Should().Be(0);
         }
-
         [Test]
-        public void GivenSomeSubjects_WhenSubjectGetCalledWithSubjectFilter_ThenViewModelHasSubjectsSelected()
+        public void GivenSubjectAction_WhenSenCoursesNotSelectedWithNoSubjects_ThenErrorMessage()
         {
-            var inputSubjectFilter = "1,2";
-            var expectedSelected = new List<int> { 1, 2 };
+            var inputPage = 1;
+            var expectedSelected = new List<int>();//no subjects selected
 
-            var result = _filterController.SubjectGet(new ResultsFilter { subjects = inputSubjectFilter }) as ViewResult;
-            ViewDataDictionary viewData = result.ViewData;
-            var resultsViewModel = (SubjectFilterViewModel)result.Model;
+            _filterController.TempData = new TempDataDictionary(new DefaultHttpContext(), Mock.Of<ITempDataProvider>());
+            var result = _filterController.SubjectPost(new ResultsFilter
+            {
+                page = inputPage,
+                SelectedSubjects = expectedSelected,
+                senCourses = false
+            }) as ViewResult;
 
-            resultsViewModel.FilterModel.SelectedSubjects.Should().BeEquivalentTo(expectedSelected);
-            resultsViewModel.FilterModel.subjects.Should().BeSameAs(inputSubjectFilter);
-            viewData.Count.Should().Be(1);
+            _filterController.TempData.Count.Should().Be(1);
+            var error = _filterController.TempData.Get<ErrorViewModel>("Errors");
+
+            error.Messages.Count.Should().Be(1);
+            error.Messages[0].Name.Should().Be("Please choose at least one subject");
         }
-
         [Test]
-        public void GivenSubjectAction_WhenSubjectGetCalledWithPageIndex_ThenViewDataHasPageIndexSet()
+        public void GivenSubjectAction_WhenSenCoursesIsSelectedWithSubjects_ThenNoErrorMessage()
         {
             var inputPage = 1;
             var expectedSelected = new List<int> { 1, 2 };
 
-            var result = _filterController.SubjectGet(new ResultsFilter
+            _filterController.TempData = new TempDataDictionary(new DefaultHttpContext(), Mock.Of<ITempDataProvider>());
+            var result = _filterController.SubjectPost(new ResultsFilter
             {
-                page = inputPage
+                page = inputPage,
+                SelectedSubjects = expectedSelected,
+                senCourses = true
             }) as ViewResult;
-            ViewDataDictionary viewData = result.ViewData;
-            var resultsViewModel = (SubjectFilterViewModel)result.Model;
 
-            Assert.That(resultsViewModel.FilterModel.page, Is.EqualTo(inputPage));
+            _filterController.TempData.Count.Should().Be(0);
         }
         private Mock<ISearchAndCompareApi> GetMockApi(List<SubjectArea> subjectAreas)
         {
