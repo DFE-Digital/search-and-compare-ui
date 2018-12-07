@@ -58,9 +58,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             _filterController = new FilterController(mockApi.Object, mockGeocoder.Object, TelemetryClientHelper.GetMocked(),
                 new GoogleAnalyticsClient(null, null));
             var tempDataMock = new Mock<ITempDataDictionary>();
-            var tempUrlMock = new Mock<IUrlHelper>();
             _filterController.TempData = tempDataMock.Object;
-            _filterController.Url = tempUrlMock.Object;
         }
 
         [Test]
