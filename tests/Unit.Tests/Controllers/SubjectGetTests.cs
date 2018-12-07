@@ -65,7 +65,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
         public void GivenSomeSubjects_WhenSubjectGetCalledWithNullSubjectFilter_ThenViewModelHasAllSubjects()
         {
             var inputSubjectFilter = string.Empty;
-            var expectedSelected = new List<int> { 1, 2};
+            var expectedSelected = new List<int> { 1, 2, 3, 4 };
 
             var result = _filterController.SubjectGet(new ResultsFilter { subjects = inputSubjectFilter, SelectedSubjects = expectedSelected}) as ViewResult;
             ViewDataDictionary viewData = result.ViewData;
