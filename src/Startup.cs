@@ -9,6 +9,7 @@ using GovUk.Education.SearchAndCompare.UI.Services.Maps;
 using GovUk.Education.SearchAndCompare.UI.Shared.ViewComponents;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
@@ -48,7 +49,13 @@ namespace GovUk.Education.SearchAndCompare.UI
             var sharedAssembly = typeof(CourseDetailsViewComponent).GetTypeInfo().Assembly;
             services.AddMvc(options =>
                 options.Filters.Add(typeof(SearchAndCompareApiExceptionFilter))
-            ).AddApplicationPart(sharedAssembly);
+            ).AddCookieTempDataProvider(options => {
+                options.Cookie.SecurePolicy= CookieSecurePolicy.Always;
+            }).AddApplicationPart(sharedAssembly);
+
+            services.AddAntiforgery(options => {
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+            });
 
             services.Configure<RazorViewEngineOptions>(o => o.FileProviders.Add(new EmbeddedFileProvider(sharedAssembly, "GovUk.Education.SearchAndCompare.UI.Shared")));
 
