@@ -108,6 +108,22 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
 
             _filterController.TempData.Count.Should().Be(0);
         }
+        [Test]
+        public void GivenSubjectAction_WhenSenCoursesNotSelectedWithSubjects_ThenNoErrorMessage()
+        {
+            var inputPage = 1;
+            var expectedSelected = new List<int> { 1, 2 };
+
+            _filterController.TempData = new TempDataDictionary(new DefaultHttpContext(), Mock.Of<ITempDataProvider>());
+            var result = _filterController.SubjectPost(new ResultsFilter
+            {
+                page = inputPage,
+                SelectedSubjects = expectedSelected,
+                senCourses = false
+            }) as ViewResult;
+
+            _filterController.TempData.Count.Should().Be(0);
+        }
         private Mock<ISearchAndCompareApi> GetMockApi(List<SubjectArea> subjectAreas)
         {
             var mockApi = new Mock<ISearchAndCompareApi>();
