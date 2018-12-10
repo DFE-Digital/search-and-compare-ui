@@ -60,7 +60,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             filter.page = null;
 
             var isInWizard = ViewBag.IsInWizard == true;
-            if (!filter.SelectedSubjects.Any())
+            if (!filter.SelectedSubjects.Any() && !filter.senCourses)
             {
                 TempData.Put("Errors", new ErrorViewModel("subjects", "Please choose at least one subject", null, Url.Action("Subject")));
                 return RedirectToAction(isInWizard ? "SubjectWizard" : "Subject", filter.ToRouteValues());
