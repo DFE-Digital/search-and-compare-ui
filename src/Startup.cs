@@ -9,6 +9,7 @@ using GovUk.Education.SearchAndCompare.UI.Services.Maps;
 using GovUk.Education.SearchAndCompare.UI.Shared.ViewComponents;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
@@ -30,10 +31,13 @@ namespace GovUk.Education.SearchAndCompare.UI
 
         private readonly Microsoft.Extensions.Logging.ILogger _logger;
 
-        public Startup(IConfiguration configuration, ILoggerFactory logFactory)
+        private readonly IHostingEnvironment _env;
+
+        public Startup(IConfiguration configuration, ILoggerFactory logFactory, IHostingEnvironment env)
         {
             _logger = logFactory.CreateLogger<Startup>();
             Configuration = configuration;
+            _env = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -45,10 +49,18 @@ namespace GovUk.Education.SearchAndCompare.UI
 
             services.AddMemoryCache();
 
+            var cookieSecurePolicy = _env.IsDevelopment() ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
+
             var sharedAssembly = typeof(CourseDetailsViewComponent).GetTypeInfo().Assembly;
             services.AddMvc(options =>
                 options.Filters.Add(typeof(SearchAndCompareApiExceptionFilter))
-            ).AddApplicationPart(sharedAssembly);
+            ).AddCookieTempDataProvider(options => {
+                options.Cookie.SecurePolicy= cookieSecurePolicy;
+            }).AddApplicationPart(sharedAssembly);
+
+            services.AddAntiforgery(options => {
+                options.Cookie.SecurePolicy = cookieSecurePolicy;
+            });
 
             services.Configure<RazorViewEngineOptions>(o => o.FileProviders.Add(new EmbeddedFileProvider(sharedAssembly, "GovUk.Education.SearchAndCompare.UI.Shared")));
 
@@ -87,9 +99,9 @@ namespace GovUk.Education.SearchAndCompare.UI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
+        public void Configure(IApplicationBuilder app, IServiceProvider serviceProvider)
         {
-            if (env.IsDevelopment())
+            if (_env.IsDevelopment())
             {
                 app.UseWebpackDevMiddleware(new WebpackDevMiddlewareOptions
                 {
