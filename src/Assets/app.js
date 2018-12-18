@@ -33,6 +33,7 @@ for (let i = $accordions.length - 1; i >= 0; i--) {
       '.govuk-checkboxes input[type="checkbox"]:checked'
     );
     if (sectionContainsCheckedCheckboxes) {
+      $section.classList.remove("accordion-section--hidden");
       $section.classList.add("accordion-section--expanded");
     }
   }
