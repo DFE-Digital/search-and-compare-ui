@@ -57,7 +57,7 @@
         <dd>@item.FundingOptions()</dd>
         @if (!string.IsNullOrEmpty(item.AccreditingProvider?.Name) && item.Provider.Name != item.AccreditingProvider?.Name)
         {
-          <dt class="govuk-list--description__label">Accredited provider</dt>
+          <dt class="govuk-list--description__label">Accredited body</dt>
           <dd>@item.AccreditingProvider.Name</dd>
         }
         @if (item.DistanceAddress == null && item.ProviderLocation != null)

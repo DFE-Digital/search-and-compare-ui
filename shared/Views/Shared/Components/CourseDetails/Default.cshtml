@@ -34,7 +34,7 @@
           <dl class="govuk-list--description">
             @if (!string.IsNullOrEmpty(Model.Course.AccreditingProvider?.Name) && Model.Provider.Name != Model.Course.AccreditingProvider?.Name)
             {
-              <dt class="govuk-list--description__label">Accredited provider</dt>
+              <dt class="govuk-list--description__label">Accredited body</dt>
               <dd>@Model.Course.AccreditingProvider?.Name</dd>
             }
             <dt class="govuk-list--description__label">Financial support</dt>
