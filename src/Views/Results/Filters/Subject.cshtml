@@ -7,8 +7,8 @@
   <ul class="filter-form__value--list">
     @if (Model.FilterModel.senCourses)
     {
-    <li>Only <abbr title="Special Educational Needs">SEN</abbr> courses</li>
-    }    
+    <li>Only <abbr title="Special educational needs and disability">SEND</abbr> courses</li>
+    }
     @foreach (var item in Model.Subjects.Items.OrderBy(x => x.Name).Take(4).Select(x => x.Name))
     {
       <li>@item</li>
