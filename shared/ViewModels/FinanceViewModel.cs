@@ -70,9 +70,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewModels
         }
 
         public bool HasEarlyCareerPayments => GetEarlyCareerPaymentsFlag();
-        //public bool HasEarlyCareerPayments {
-        //    get { return GetEarlyCareerPaymentsFlag(); }
-        //}
         public string CurrencyMaxScholarship => String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", MaxScholarship);
         public string FormattedMaxScholarship =>  $"Up to {CurrencyMaxScholarship} tax free scholarship while you train";
 
