@@ -69,7 +69,20 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewModels
             }
         }
 
-        public bool HasEarlyCareerPayments => GetEarlyCareerPaymentsFlag();
+        public bool HasEarlyCareerPayments
+        {
+            get
+            {
+                //do not apply when the course is tagged with both physics and mathematics.
+                if (this.Course.CourseSubjects.Any(cs => cs.Subject.Name.Equals("Mathematics", StringComparison.InvariantCultureIgnoreCase))
+                    && this.Course.CourseSubjects.Any(cs => cs.Subject.Name.Equals("Physics", StringComparison.InvariantCultureIgnoreCase)))
+                {
+                    return false;
+                }
+
+                return Course.CourseSubjects.Any(cs => cs.Subject.Funding?.EarlyCareerPayments != null);
+            }
+        }
         public string CurrencyMaxScholarship => String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", MaxScholarship);
         public string FormattedMaxScholarship =>  $"Up to {CurrencyMaxScholarship} tax free scholarship while you train";
 
@@ -94,19 +107,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewModels
 
             Course = course;
             FeeCaps = feeCaps;
-        }
-        private bool GetEarlyCareerPaymentsFlag()
-        {
-            var hasMaths = this.Course.CourseSubjects.Any(cs => cs.Subject.Name.Equals("Mathematics", StringComparison.InvariantCultureIgnoreCase));
-            var hasPhysics = this.Course.CourseSubjects.Any(cs => cs.Subject.Name.Equals("Physics", StringComparison.InvariantCultureIgnoreCase));
-
-            //do not apply when the course is tagged with both physics and mathematics.
-            if (hasMaths && hasPhysics)
-            {
-                return false;
-            }
-
-            return Course.CourseSubjects.Any(cs => cs.Subject.Funding?.EarlyCareerPayments != null);
         }
     }
 }
