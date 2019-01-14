@@ -30,6 +30,32 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.SharedViewModels
         };
 
         [Test]
+        [TestCase(1990, 2010, "1990/2010")]
+        [TestCase(0, 2010, "this year")]
+        [TestCase(2011, 2010, "this year")]
+        [TestCase(0, 0, "this year")]
+        //the tests below are for edge cases
+        //is this the behavior we want?
+        [TestCase(123, 456, "123/456")]
+        [TestCase(123456, 456789, "123456/456789")]
+        [TestCase(-123, -456, "this year")]
+        [TestCase(-123456, -456789, "this year")]
+        [TestCase(-456, -123, "this year")]
+        [TestCase(-456789, -123456, "this year")]
+        public void TestFormattedYear(int startYear, int endYear, string expectedResult)
+        {
+            var viewModel = new FinanceViewModel(_emptyCourse, new FeeCaps
+            {
+                StartYear = startYear,
+                EndYear = endYear
+            });
+
+            var result = viewModel.FormattedYear;
+            result.Should().NotBeNullOrEmpty(result);
+            result.Should().Be(expectedResult);
+        }
+
+        [Test]
         public void CtorThrowsWithNullCourse()
         {
             Assert.Throws(typeof(ArgumentNullException), () => new FinanceViewModel(null, _feeCaps));
@@ -40,7 +66,6 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.SharedViewModels
         {
             Assert.Throws(typeof(ArgumentNullException), () => new FinanceViewModel(_emptyCourse, null));
         }
-
 
         /// <summary>
         /// This tests the new path and ensures early payments flag is set to false

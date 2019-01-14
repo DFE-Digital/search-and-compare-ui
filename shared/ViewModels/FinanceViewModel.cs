@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using GovUk.Education.SearchAndCompare.Domain.Models;
-using GovUk.Education.SearchAndCompare.Domain.Models.Joins;
 
 namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewModels
 {
