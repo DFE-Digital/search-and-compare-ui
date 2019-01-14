@@ -1,6 +1,6 @@
 # Search and Compare - UI
 
-[![Build Status](https://travis-ci.com/DFE-Digital/search-and-compare-ui.svg?token=3fqqELBNRC5ecwar1xHq&branch=master)](https://travis-ci.com/DFE-Digital/search-and-compare-ui)
+[![Build Status](https://travis-ci.org/DFE-Digital/search-and-compare-ui.svg?token=3fqqELBNRC5ecwar1xHq&branch=master)](https://travis-ci.org/DFE-Digital/search-and-compare-ui)
 
 See the [Search and Compare](https://github.com/DFE-Digital/search-and-compare) repo for details if you have access
 
@@ -14,25 +14,33 @@ You will need to have Version 2.1.5 of the dotnet SDK installed in order to buil
 
 Run
 
-    cd src
-    npm install
+```bash
+cd src
+npm install
+```
 
 Runs from vscode and Visual Studio 2017 with F5.
 
 Runs from command line with `cd src && dotnet run`
 
-    cd src
-    dotnet run
+```bash
+cd src
+dotnet run
+```
 
 Defaults to published development API backend to make it easier to get started, override this with an environment variable to work against a local copy of the API or to alter for production environments. E.g.:
 
-    cd src
-    set API_URL=http://localhost:5001 && dotnet run
+```bash
+cd src
+set API_URL=http://localhost:5001 && dotnet run
+```
 
 ### Set maps config
 
-    dotnet user-secrets set google_cloud_platform_key_geocoding [the-key]
-    dotnet user-secrets set google_cloud_platform_key_maps [the-key]
+```bash
+dotnet user-secrets set google_cloud_platform_key_geocoding [the-key]
+dotnet user-secrets set google_cloud_platform_key_maps [the-key]
+```
 
 ## Logging
 
@@ -40,13 +48,17 @@ Logging is configured in `appsettings.json`, and values in there can be overridd
 
 Powershell:
 
-    $env:Serilog:MinimumLevel="Debug"
-    dotnet run
+```bash
+$env:Serilog:MinimumLevel="Debug"
+dotnet run
+```
 
 Command prompt
 
-    set Serilog:MinimumLevel=Debug
-    dotnet run
+```bash
+set Serilog:MinimumLevel=Debug
+dotnet run
+```
 
 For more information see:
 
@@ -73,5 +85,7 @@ To run in watch mode (which also allows you to specify grep patterns to focus on
 ```bash
 npm run test:watch
 ```
+
 ## Shutting down the service and showing the off line page.
+
 Rename the file "app_offline.htm.example" in the root folder to "app_offline.htm"
