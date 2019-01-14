@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
@@ -8,7 +9,7 @@ using NUnit.Framework;
 
 namespace SearchAndCompareUI.Tests.Unit.Tests.SharedViewModels
 {
-    [Category("SharedFinanceViewModel")]
+    [Category("FinanceViewModel")]
     public class FinanceViewModelTests
     {
         private readonly FeeCaps _feeCaps = new FeeCaps {
@@ -27,6 +28,19 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.SharedViewModels
             Scholarship = 2,
             BursaryFirst = 1
         };
+
+        [Test]
+        public void CtorThrowsWithNullCourse()
+        {
+            Assert.Throws(typeof(ArgumentNullException), () => new FinanceViewModel(null, _feeCaps));
+        }
+
+        [Test]
+        public void CtorThrowsWithNullFeeCaps()
+        {
+            Assert.Throws(typeof(ArgumentNullException), () => new FinanceViewModel(_emptyCourse, null));
+        }
+
 
         /// <summary>
         /// This tests the new path and ensures early payments flag is set to false
