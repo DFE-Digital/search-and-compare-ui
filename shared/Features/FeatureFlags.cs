@@ -15,7 +15,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.Features
         }
 
         public bool Maps => ShouldShow("FEATURE_MAPS");
-        public bool SearchSenCourses => ShouldShow("SEARCH_SEN_COURSES");
 
         public bool ShouldShow(string key)
         {
