@@ -1,14 +1,12 @@
 @model SubjectFilterViewModel
 @using GovUk.Education.SearchAndCompare.UI.Shared.Features
 @using Microsoft.AspNetCore.Mvc.Razor.Extensions
-@inject IFeatureFlags FeatureFlags
 
 @{
   ViewBag.Title = $"Find courses by subject";
   var selected = Model.FilterModel.SelectedSubjects;
   var isInWizard = ViewBag.IsInWizard == true;
   var errors = ViewBag.Errors as ErrorViewModel;
-  var showSenFilter = FeatureFlags.SearchSenCourses;
 }
 
 <div class="govuk-width-container">
@@ -98,25 +96,24 @@
                 </div>
               }
             </div>
-            @if (showSenFilter == true) {
-              <details class="govuk-details" open="@Model.FilterModel.senCourses">
-                <summary class="govuk-details__summary">
-                  <span class="govuk-details__summary-text">Do you want to teach Special educational needs and disability (SEND)?</span>
-                </summary>
-                <div class="govuk-details__text">
-                  <div class="govuk-checkboxes__item">
-                    @{var senCourses = Model.FilterModel.senCourses;}
-                    <input asp-for="@senCourses" class="govuk-checkboxes__input" data-ga-event-form-input="Show SEN courses"/>
 
-                    <label for="senCourses" class="govuk-label govuk-checkboxes__label">
-                      <span class="govuk-checkboxes__label_text">
-                        Show only <abbr title="Special educational needs and disability">SEND</abbr> courses
-                      </span>
-                    </label>
-                  </div>
+            <details class="govuk-details" open="@Model.FilterModel.senCourses">
+              <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">Do you want to teach Special educational needs and disability (SEND)?</span>
+              </summary>
+              <div class="govuk-details__text">
+                <div class="govuk-checkboxes__item">
+                  @{var senCourses = Model.FilterModel.senCourses;}
+                  <input asp-for="@senCourses" class="govuk-checkboxes__input" data-ga-event-form-input="Show SEN courses"/>
+
+                  <label for="senCourses" class="govuk-label govuk-checkboxes__label">
+                    <span class="govuk-checkboxes__label_text">
+                      Show only <abbr title="Special educational needs and disability">SEND</abbr> courses
+                    </span>
+                  </label>
                 </div>
-              </details>
-            }
+              </div>
+            </details>
 
           </fieldset>
           <div class="govuk-form-group">
