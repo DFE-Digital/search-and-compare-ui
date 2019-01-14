@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using GovUk.Education.SearchAndCompare.Domain.Models;
 using GovUk.Education.SearchAndCompare.Domain.Models.Joins;
-using GovUk.Education.SearchAndCompare.UI.ViewModels;
+using GovUk.Education.SearchAndCompare.UI.Shared.ViewModels;
 using NUnit.Framework;
 
 namespace SearchAndCompareUI.Tests.Unit.Tests.SharedViewModels
@@ -29,75 +28,62 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.SharedViewModels
             BursaryFirst = 1
         };
 
+        /// <summary>
+        /// This tests the new path and ensures early payments flag is set to false
+        /// where there is a both physics and maths subjects and the early paymants flag
+        /// subjects funding object set to a value or to null
+        /// </summary>
+        /// <param name="subjects">comma separated list of subjects</param>
+        /// <param name="earlyPaymentsFlag">value for flag that normally sets the early payments</param>
         [Test]
-        [TestCase("Physics", "Biology")]
-        [TestCase("Mathematics", "Biology")]
-        [TestCase("Music", "Drama")]
-        public void EarlyCareerPaymentsFlag_On_Course_With_Maths_Or_Physics_And_Null_Setting_Should_Be_False(string subject1, string subject2)
-        {
-            var subjects = new List<string> { subject1, subject2 };
-            _subjectFunding.EarlyCareerPayments = null;
-            _emptyCourse.CourseSubjects = SetupSUbjects(subjects, _subjectFunding);
-            var sut = new GovUk.Education.SearchAndCompare.UI.Shared.ViewModels.FinanceViewModel(_emptyCourse, _feeCaps);
-            sut.HasEarlyCareerPayments.Should().Be(false);
+        [TestCase("Physics,Mathematics", 1)]
+        [TestCase("Mathematics,Physics", 1)]
+        [TestCase("physics,mathematics", 1)]
+        [TestCase("mathematics,physics", 1)]
+        [TestCase("PHYSICS,MATHEMATICS", 1)]
+        [TestCase("MATHEMATICS,PHYSICS", 1)]
+        [TestCase("Physics,Mathematics", null)]
+        [TestCase("Mathematics,Physics", null)]
+        [TestCase("Physics,Mathematics,Frisby Aerodynamics", 1)]
+        [TestCase("Frisby Aerodynamics,Mathematics,Physics", 1)]
+        [TestCase("physics,Frisby Aerodynamics,mathematics", 1)]
+        [TestCase("Physics,Mathematics,Frisby Aerodynamics", null)]
+        [TestCase("Frisby Aerodynamics,Mathematics,Physics", null)]
+        [TestCase("physics,Frisby Aerodynamics,mathematics", null)]
+        [TestCase("music,drama", null)]//test edge cases
+        [TestCase("music,drama,physics", null)]
+        [TestCase("music,drama,mathematics", null)]
+        public void EarlyCareerPaymentsFlag_On_Course_With_Maths_And_Physics_Should_Be_False(string subjects, int? earlyPaymentsFlag)
+        {            
+            _subjectFunding.EarlyCareerPayments = earlyPaymentsFlag;//here is the "not null" setting refered to in the name of the test
+            _emptyCourse.CourseSubjects = SetupSubjects(subjects, _subjectFunding);
+            var financeViewModel = new FinanceViewModel(_emptyCourse, _feeCaps);
+            financeViewModel.HasEarlyCareerPayments.Should().Be(false);
         }
+
+        /// <summary>
+        /// This tests that the happy path still works ok
+        /// </summary>
+        /// <param name="subjects">comma separated list of subjects</param>
+        /// <param name="earlyPaymentsFlag">value for flag that normally sets the early payments</param>
         [Test]
-        [TestCase("Physics", "Mathematics", "Frisby Aerodynamics")]
-        [TestCase("Mathematics", "Physics", "Frisby Aerodynamics")]
-        [TestCase("Frisby Aerodynamics", "Mathematics", "Physics")]
-        [TestCase("Mathematics", "Frisby Aerodynamics", "Physics")]
-        public void EarlyCareerPaymentsFlag_On_Course_Containing_Maths_And_Physics_And_Not_Null_Setting_Should_Be_False(string subject1, string subject2, string subject3)
+        [TestCase("Physics,Biology", 123)]
+        [TestCase("Mathematics,Biology", 234)]
+        [TestCase("Music,Drama", 345)]
+        [TestCase("Physics", 345)]
+        [TestCase("Mathematics", 345)]
+        public void EarlyCareerPaymentsFlag_On_Course_With_Not_Null_Setting_Should_Be_True(string subjects, int? earlyPaymentsFlag)
         {
-            var subjects = new List<string> { subject1, subject2, subject3 };
-            _subjectFunding.EarlyCareerPayments = 1;
-            _emptyCourse.CourseSubjects = SetupSUbjects(subjects, _subjectFunding);
-            var sut = new GovUk.Education.SearchAndCompare.UI.Shared.ViewModels.FinanceViewModel(_emptyCourse, _feeCaps);
-            sut.HasEarlyCareerPayments.Should().Be(false);
+            _subjectFunding.EarlyCareerPayments = earlyPaymentsFlag;
+            _emptyCourse.CourseSubjects = SetupSubjects(subjects, _subjectFunding);
+            var financeViewModel = new FinanceViewModel(_emptyCourse, _feeCaps);
+            financeViewModel.HasEarlyCareerPayments.Should().Be(true);
         }
-        [Test]
-        [TestCase("Physics", "Mathematics")]
-        [TestCase("Mathematics", "Physics")]
-        [TestCase("physics", "mathematics")]
-        [TestCase("mathematics", "physics")]
-        [TestCase("PHYSICS", "MATHEMATICS")]
-        [TestCase("MATHEMATICS", "PHYSICS")]
-        public void EarlyCareerPaymentsFlag_On_Course_With_Only_Maths_And_Physics_And_Not_Null_Setting_Should_Be_False(string subject1, string subject2)
-        {
-            var subjects = new List<string> {subject1, subject2};
-            _subjectFunding.EarlyCareerPayments = 1;
-            _emptyCourse.CourseSubjects = SetupSUbjects(subjects, _subjectFunding);
-            var sut = new GovUk.Education.SearchAndCompare.UI.Shared.ViewModels.FinanceViewModel( _emptyCourse, _feeCaps);
-            sut.HasEarlyCareerPayments.Should().Be(false);
-        }
-        [Test]
-        [TestCase("Physics", "Biology")]
-        [TestCase("Mathematics", "Biology")]
-        [TestCase("Music", "Drama")]
-        public void EarlyCareerPaymentsFlag_On_Course_With_Two_Subjects_And_Not_Null_Setting_Should_Be_True(string subject1, string subject2)
-        {
-            var subjects = new List<string> { subject1, subject2 };
-            _subjectFunding.EarlyCareerPayments = 1;
-            _emptyCourse.CourseSubjects = SetupSUbjects(subjects, _subjectFunding);
-            var sut = new GovUk.Education.SearchAndCompare.UI.Shared.ViewModels.FinanceViewModel(_emptyCourse, _feeCaps);
-            sut.HasEarlyCareerPayments.Should().Be(true);
-        }
-        [Test]
-        [TestCase("Physics")]
-        [TestCase("Mathematics")]
-        [TestCase("Frisby Aerodynamics")]
-        public void EarlyCareerPaymentsFlag_On_Course_With_One_Subject_And_Not_Null_Setting_Should_Be_True(string subject)
-        {
-            var subjects = new List<string> {subject};
-            _subjectFunding.EarlyCareerPayments = 1;
-            _emptyCourse.CourseSubjects = SetupSUbjects(subjects, _subjectFunding);
-            var sut = new GovUk.Education.SearchAndCompare.UI.Shared.ViewModels.FinanceViewModel(_emptyCourse, _feeCaps);
-            sut.HasEarlyCareerPayments.Should().Be(true);
-        }
-        private static List<CourseSubject> SetupSUbjects(IEnumerable<string> subjects, SubjectFunding subjectFunding)
+
+        private static List<CourseSubject> SetupSubjects(string subjects, SubjectFunding subjectFunding)
         {
             var subjectId = 1;
-
-            return subjects.Select(subjectName => new CourseSubject
+            return subjects.Split(",").ToList().Select(subjectName => new CourseSubject
                 {
                     SubjectId = subjectId++,
                     Subject = new Subject
