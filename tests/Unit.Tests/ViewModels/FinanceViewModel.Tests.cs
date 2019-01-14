@@ -10,7 +10,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.ViewModels
     [Category("FinanceViewModel")]
     public class FinanceViewModelTests
     {
-        private FeeCaps _feeCaps = new FeeCaps {
+        private FeeCaps _feeCaps = new FeeCaps
+        {
             Id = 0,
             StartYear = 1990,
             EndYear = 2010,
@@ -19,7 +20,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.ViewModels
             InternationalFees = 800000
         };
 
-        private Course _emptyCourse = new Course ();
+        private Course _emptyCourse = new Course();
 
         private IEnumerable<Subject> MakeSubjects() => new List<Subject> {
             new Subject {
