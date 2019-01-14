@@ -42,9 +42,15 @@
 
             <div class="accordion govuk-form-group" data-module="accordion">
               @foreach (var area in Model.SubjectAreas) {
-                <div class="@("accordion-section " + (@area.Subjects.Any(subject => selected.Contains(subject.Id)) ? "accordion-section--expanded" : "accordion-section--hidden"))">
-                  <div class="accordion-section-header">@area.Name</div>
-                  <div class="accordion-section-body">
+                <div class="@("govuk-accordion__section " + (@area.Subjects.Any(subject => selected.Contains(subject.Id)) ? "govuk-accordion__section--expanded" : "govuk-accordion__section--hidden"))">
+                  <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading">
+                      <span class="govuk-accordion__section-button" id="@("accordion-heading-" + @area.Name.ToLower().Replace(" ", ""))">
+                        @area.Name
+                      </span>
+                    </h2>
+                  </div>
+                  <div class="govuk-accordion__section-content" aria-labelledby="@("accordion-heading-" + @area.Name.ToLower().Replace(" ", ""))">
                     <div class="govuk-checkboxes">
                       @foreach (var subject in area.Subjects.OrderBy(x => x.Name)) {
                         <div class="govuk-checkboxes__item">
