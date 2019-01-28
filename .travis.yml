@@ -9,16 +9,13 @@ matrix:
     - "./travis-build.sh --quiet verify"
     deploy:
     - provider: script
-      script: git fetch --unshallow && git remote add deploy https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-dev-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-dev-search-and-compare-ui-app.git
-        && git push --force deploy HEAD:refs/heads/master
+      script: "./deploy.sh dev"
       on: master
     - provider: script
-      script: git fetch --unshallow && git remote add deploy https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-staging-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-staging-search-and-compare-ui-app.git
-        && git push --force deploy HEAD:refs/heads/master
+      script: "./deploy.sh staging"
       on: staging
     - provider: script
-      script: git fetch --unshallow && git remote add deploy https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-prod-2018-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-prod-2018-search-and-compare-ui-app.git
-        && git push --force deploy HEAD:refs/heads/master
+      script: "./deploy.sh prod"
       on: production
     - provider: script
       skip_cleanup: true
