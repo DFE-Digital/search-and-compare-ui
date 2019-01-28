@@ -1,48 +1,51 @@
 matrix:
   include:
-    - language: csharp
-      dist: trusty
-      sudo: required
-      mono: none
-      dotnet: 2.1
-      script:
-        - "./travis-build.sh --quiet verify"
-      deploy:
-        - provider: script
-          script: git fetch --unshallow && git remote add deploy https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-dev-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-dev-search-and-compare-ui-app.git && git push --force deploy HEAD:refs/heads/master
-          on: master
-        - provider: script
-          script: git fetch --unshallow && git remote add deploy https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-staging-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-staging-search-and-compare-ui-app.git && git push --force deploy HEAD:refs/heads/master
-          on: staging
-        - provider: script
-          script: git fetch --unshallow && git remote add deploy https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-prod-2018-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-prod-2018-search-and-compare-ui-app.git && git push --force deploy HEAD:refs/heads/master
-          on: production
-        - provider: script
-          skip_cleanup: true
-          script: chmod +x ./travis-nuget-deploy.sh && ./travis-nuget-deploy.sh $NUGET_API_KEY
-            $NUGET_SOURCE
-          on:
-            all_branches: true
-    - language: node_js
-      node_js:
-        - 10.8
-      cache:
-        directories:
-          - "~/.npm"
-          - "~/.cache"
-        override:
-          - npm ci
-      before_script:
-        - cd src
-        - npm ci
-      script:
-        - npm test
-        - cd ..
+  - language: csharp
+    dist: trusty
+    sudo: required
+    mono: none
+    dotnet: 2.1
+    script:
+    - "./travis-build.sh --quiet verify"
+    deploy:
+    - provider: script
+      script: git fetch --unshallow && git remote add deploy https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-dev-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-dev-search-and-compare-ui-app.git
+        && git push --force deploy HEAD:refs/heads/master
+      on: master
+    - provider: script
+      script: git fetch --unshallow && git remote add deploy https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-staging-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-staging-search-and-compare-ui-app.git
+        && git push --force deploy HEAD:refs/heads/master
+      on: staging
+    - provider: script
+      script: git fetch --unshallow && git remote add deploy https://govuk-dfe-bat-deployment-user:$AZURE_WA_PASSWORD@bat-prod-2018-search-and-compare-ui-app.scm.azurewebsites.net:443/bat-prod-2018-search-and-compare-ui-app.git
+        && git push --force deploy HEAD:refs/heads/master
+      on: production
+    - provider: script
+      skip_cleanup: true
+      script: chmod +x ./travis-nuget-deploy.sh && ./travis-nuget-deploy.sh $NUGET_API_KEY
+        $NUGET_SOURCE
+      on:
+        all_branches: true
+  - language: node_js
+    node_js:
+    - 10.8
+    cache:
+      directories:
+      - "~/.npm"
+      - "~/.cache"
+      override:
+      - npm ci
+    before_script:
+    - cd src
+    - npm ci
+    script:
+    - npm test
+    - cd ..
 env:
   global:
-    - secure: MoOTHg1BuQF6ERP2uyGXSr5ADwOdMfg3q0HpxrKcI7T04OUpodmDN05gW3WlYTQ20iiT+SkZRsxOzL9fpIoQvXNaHQfQ+589nmxla8ZcpwAZvp29LEXuYq3K1BfqiGOGAkwZlxGKqfWjK6ttGiMCXufDAkMknx3PlL8OvdGLQkyYby2NcTMOAZsf4Rjc0UKNjUS7OD213Ej+HE1MQUgAz9S128srfGmWoPMSokXYJcEpMhzJbS2deZ1PN1kRw0Y60HiaT6judePWT6YHadqgGZlSF+B8zd62eGu04D32B8otvK4VpyjKmAdlNTgL+wiNhiLtSsaczpX65WY3Zt3neAb+msggATpYF8lvVjwdeyZv5RnxfQJIAi6Ohapqa1yRYxuSfPfgEHzbjNKnjjh9u+NTLoYNWy1cA0By2fxdK6LMV+2Th1jt7SMVAo007NSb/q1R6tLo8BE4r2RA2m7oXpP95CLboI9+Vs6kxVZEoPxKS8VWgfNSc3Bt+QAoitygChVMzS6dXzYUfLmwh/v96Xi8jOq0zEAgT23sxwflODMsZe6fKdS+GAy9pxfGLxJGN2vkyzhVqQ6asD/dcIFYr+6bnAheCqSxQ5xoy8kLTy86bBYclDDvLPxt+j0BTIIk9wEAzkDvvIiPnxnQ1iiFgxEAodGrs5/6ZVX0Qc3hUis=
-    - NUGET_SOURCE=https://www.nuget.org
-    - secure: smCYdgwSuPOlGvtFntqRjAgylc+MRP/ITJqC1ClP+X8ed/zlM5Fgda7OFAsIZBGvmD7c5g2sft/WXEjIeBZ8W7Oz9v975RG3sdt+g8VYQfB4oscyvHzteAbIDVbnoPEPiPKHAp+8oG3yVmzbxVsEcxlR8kN2dgbbHRlE1F82lT7e78CST1FvKV+wNemVC4cITBLR8SFPxy35I8FL8d7R7zQUGeeKqGenK72i9YvE9Zb3QAEe49HZ1JzdZyAQfxQLCYgip3h+e7Jp8TnnJwHDIrMd6VYjPEnDkfgwl1AqLw1jSbALit0ScfieQy0tZt+FlugQbzgv5gRoFQO48WPpk0Q90Xr9a4IUviiCMowGxUvZYwOJxQzz9cDeC7hjc7YH8z2IDDIXtIcDdMjiQIdY+u4hqWXkoJ5O7flB7QzBTI/a5TVuftgMW3G3Vr3bw6wMswTmFruxnanLhbVCgZ0xy0H7O/1M0KtdhLEAvEEmwQF/tje+yNhJJhiXz/S2yWQI62U6nkWbDXuz6q/U0S6Y6j46hU/5m2xoobo9MA017FSppGb0RF3VzYp3a8ez5PHe+fHQwSeQo168j5dy6tgLWRspD8fNEBfe/knSVZltQdNq74/xBGtytrjfQcl3lltaVrwD6uNRISPzK27YAVtzuNnIeqWhQJJonA0jglu6/w8=
+  - secure: MoOTHg1BuQF6ERP2uyGXSr5ADwOdMfg3q0HpxrKcI7T04OUpodmDN05gW3WlYTQ20iiT+SkZRsxOzL9fpIoQvXNaHQfQ+589nmxla8ZcpwAZvp29LEXuYq3K1BfqiGOGAkwZlxGKqfWjK6ttGiMCXufDAkMknx3PlL8OvdGLQkyYby2NcTMOAZsf4Rjc0UKNjUS7OD213Ej+HE1MQUgAz9S128srfGmWoPMSokXYJcEpMhzJbS2deZ1PN1kRw0Y60HiaT6judePWT6YHadqgGZlSF+B8zd62eGu04D32B8otvK4VpyjKmAdlNTgL+wiNhiLtSsaczpX65WY3Zt3neAb+msggATpYF8lvVjwdeyZv5RnxfQJIAi6Ohapqa1yRYxuSfPfgEHzbjNKnjjh9u+NTLoYNWy1cA0By2fxdK6LMV+2Th1jt7SMVAo007NSb/q1R6tLo8BE4r2RA2m7oXpP95CLboI9+Vs6kxVZEoPxKS8VWgfNSc3Bt+QAoitygChVMzS6dXzYUfLmwh/v96Xi8jOq0zEAgT23sxwflODMsZe6fKdS+GAy9pxfGLxJGN2vkyzhVqQ6asD/dcIFYr+6bnAheCqSxQ5xoy8kLTy86bBYclDDvLPxt+j0BTIIk9wEAzkDvvIiPnxnQ1iiFgxEAodGrs5/6ZVX0Qc3hUis=
+  - NUGET_SOURCE=https://www.nuget.org
+  - secure: smCYdgwSuPOlGvtFntqRjAgylc+MRP/ITJqC1ClP+X8ed/zlM5Fgda7OFAsIZBGvmD7c5g2sft/WXEjIeBZ8W7Oz9v975RG3sdt+g8VYQfB4oscyvHzteAbIDVbnoPEPiPKHAp+8oG3yVmzbxVsEcxlR8kN2dgbbHRlE1F82lT7e78CST1FvKV+wNemVC4cITBLR8SFPxy35I8FL8d7R7zQUGeeKqGenK72i9YvE9Zb3QAEe49HZ1JzdZyAQfxQLCYgip3h+e7Jp8TnnJwHDIrMd6VYjPEnDkfgwl1AqLw1jSbALit0ScfieQy0tZt+FlugQbzgv5gRoFQO48WPpk0Q90Xr9a4IUviiCMowGxUvZYwOJxQzz9cDeC7hjc7YH8z2IDDIXtIcDdMjiQIdY+u4hqWXkoJ5O7flB7QzBTI/a5TVuftgMW3G3Vr3bw6wMswTmFruxnanLhbVCgZ0xy0H7O/1M0KtdhLEAvEEmwQF/tje+yNhJJhiXz/S2yWQI62U6nkWbDXuz6q/U0S6Y6j46hU/5m2xoobo9MA017FSppGb0RF3VzYp3a8ez5PHe+fHQwSeQo168j5dy6tgLWRspD8fNEBfe/knSVZltQdNq74/xBGtytrjfQcl3lltaVrwD6uNRISPzK27YAVtzuNnIeqWhQJJonA0jglu6/w8=
 notifications:
   slack:
     secure: XdmOobsi4wzrlcJWjWis3zfdk04/y3sdgYk0U2O2P5owGFW4cJk3ZX0yFaTgxuM+hiWiN425Zd8RLGDNl9VaX5Gf4tWRGoNtNHUemUTg2FtT2wFH6Z+EBGLrjqcdy39rKrEIU7S5Z2xaUnrrgR0a7j7sJGe25dG9j4vhmbAl0wKBzxnZQUmD0/Zvd09tHOjh3fHnsVvkhGQvH9BcISDWU0jwYdvZV03FPVDY2fgF25rbinuYA3nkL21lodevJNCVrBF8WKWzRgLty0yuX/aSAMIAKM+XtZykPbMql2xLFO7B8lVjWmg0JoO7TayXaG5WQkaz3BlLg2olZFkpL4ar3hi2xAE84ChR0VYXt2weSLFl94jd6M/UeSINJoR8AaaS845T6xwfpSddzCTtZ6+Ts72wLfVN27J0yiDYViRHL9EP7EZOYdYYVvx0mNl24XWop2MmpWX0fWiJWpmPbhHH3Y7UomzMpQVjD+raoZIE0R6wwa5oVX2krooT0bEzo8VmdCrzgDO8YXFOy7krG0LFfoeJQwE5cYbodWebTydNzGL6z/qtCM1dFXl87Q9I61vhLa0XbttyLEALNimjEcrMW6boxLbuwxpuCX6RWHNP8JrZxNbxrFHjY9Oq1NRIb+z5oJ0ljLaBsaUymToEHXYrmB6RRVi15dBoklnSFo1ldq4=
