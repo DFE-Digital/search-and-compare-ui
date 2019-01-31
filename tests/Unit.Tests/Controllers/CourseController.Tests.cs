@@ -21,7 +21,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             mockApi.Setup(x=>x.GetFeeCaps()).Returns(new List<FeeCaps>());
             var controller = new CourseController(mockApi.Object);
 
-            var res = controller.Index("abc", "def", new ResultsFilter(), false);
+            var res = controller.Index("abc", "def", new ResultsFilter());
 
             Assert.That(res is StatusCodeResult);
             Assert.AreEqual(404, (res as StatusCodeResult).StatusCode);
@@ -35,7 +35,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             mockApi.Setup(x => x.GetFeeCaps()).Returns(new List<FeeCaps> {new FeeCaps {UkFees = 123}}).Verifiable();
             var controller = new CourseController(mockApi.Object);
 
-            var res = controller.Index("abc", "def", new ResultsFilter(), false);
+            var res = controller.Index("abc", "def", new ResultsFilter());
 
             Assert.That(res is ViewResult);
             Assert.That((res as ViewResult).Model is CourseDetailsViewModel);
