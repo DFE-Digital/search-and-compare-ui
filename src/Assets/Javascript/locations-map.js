@@ -61,10 +61,8 @@ const initLocationsMap = () => {
     const popup = new Popup(latLng, closedContent, openContent);
     popup.setMap(map);
 
-    // Extend the bounds by the first 5 locations so we get a decent number as part of the first view.
-    if (i < 5) {
-      bounds.extend(latLng);
-    }
+    // Extend the bounds by the locations so we get a decent number as part of the first view.
+    bounds.extend(latLng);
   }
 
   // Use provider address to center and zoom when only one location
