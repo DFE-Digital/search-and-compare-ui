@@ -16,6 +16,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
         public ResultsFilter()
         {
             qualification = new List<QualificationOption>();
+            qualifications = null;
             this.hasvacancies = true;
         }
         public int? page { get; set; }
@@ -53,6 +54,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
         public bool parttime { get; set; }
         public bool hasvacancies { get; set; }
         public bool senCourses { get; set; }
+        public string qualifications { get; set; }
         public IList<QualificationOption> qualification { get; set; }
 
         public List<int> SelectedSubjects
@@ -148,9 +150,14 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
         public QueryFilter ToQueryFilter()
         {
             byte resQualification = 0;
-            foreach (var qual in this.qualification)
+            //foreach (var qual in this.qualification)
+            //{
+            //    resQualification ^= (byte)qual;
+            //}
+            foreach (var qualstr in this.qualifications.Split(","))
             {
-                resQualification ^= (byte)qual;
+                var qual = (int)Enum.Parse(typeof(QualificationOption), qualstr);
+                resQualification ^= (byte) qual;
             }
 
             return new QueryFilter
@@ -191,6 +198,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 offlng,
                 offlat,
                 qualification,
+                qualifications,
                 fulltime,
                 parttime,
                 hasvacancies,
@@ -209,7 +217,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 zoomlevel = this.zoomlevel,
                 offlng = this.offlng,
                 offlat = this.offlat,
-                qualification = this.qualification,
+                //qualification = this.qualification,
+                qualifications = this.qualifications,
                 fulltime = this.fulltime,
                 parttime = this.parttime,
                 hasvacancies = this.hasvacancies,
@@ -237,7 +246,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 zoomlevel = this.zoomlevel,
                 offlng = this.offlng,
                 offlat = this.offlat,
-                qualification = this.qualification,
+                //qualification = this.qualification,
+                qualifications = this.qualifications,
                 fulltime = this.fulltime,
                 parttime = this.parttime,
                 hasvacancies = this.hasvacancies,
@@ -264,7 +274,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 zoomlevel = this.zoomlevel,
                 offlng = this.offlng,
                 offlat = this.offlat,
-                qualification = this.qualification,
+                //qualification = this.qualification,
+                qualifications = this.qualifications,
                 fulltime = this.fulltime,
                 parttime = this.parttime,
                 hasvacancies = this.hasvacancies,
@@ -300,7 +311,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 zoomlevel = this.zoomlevel,
                 offlng = this.offlng,
                 offlat = this.offlat,
-                qualification = this.qualification,
+                //qualification = this.qualification,
+                qualifications = this.qualifications,
                 fulltime = this.fulltime,
                 parttime = this.parttime,
                 hasvacancies = this.hasvacancies,
@@ -330,7 +342,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
                 zoomlevel = this.zoomlevel,
                 offlng = this.offlng,
                 offlat = this.offlat,
-                qualification = this.qualification,
+                //qualification = this.qualification,
+                qualifications = this.qualifications,
                 fulltime = this.fulltime,
                 parttime = this.parttime,
                 hasvacancies = this.hasvacancies,
@@ -340,23 +353,30 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
 
         public IEnumerable<string> GetQualificationStrings()
         {
-            if (qualification.Any(x => x == QualificationOption.PgdePgceWithQts)
-                && qualification.Any(x => x == QualificationOption.QtsOnly)
-                && qualification.Any(x => x == QualificationOption.Other))
+            //if (qualification.Any(x => x == QualificationOption.PgdePgceWithQts)
+            //    && qualification.Any(x => x == QualificationOption.QtsOnly)
+            //    && qualification.Any(x => x == QualificationOption.Other))
+            if (qualifications.Contains(Enum.GetName(typeof(QualificationOption), QualificationOption.PgdePgceWithQts))
+                && qualifications.Contains(Enum.GetName(typeof(QualificationOption), QualificationOption.QtsOnly))
+                && qualifications.Contains(Enum.GetName(typeof(QualificationOption), QualificationOption.Other))
+            )
             {
                 yield return "All qualifications";
             }
             else
             {
-                if (qualification.Any(x => x == QualificationOption.PgdePgceWithQts))
+                //if (qualification.Any(x => x == QualificationOption.PgdePgceWithQts))
+                if(qualifications.Contains(Enum.GetName(typeof(QualificationOption), QualificationOption.PgdePgceWithQts)))
                 {
                     yield return "PGCE (or PGDE) with QTS";
                 }
-                if (qualification.Any(x => x == QualificationOption.QtsOnly))
+                //if (qualification.Any(x => x == QualificationOption.QtsOnly))
+                if (qualifications.Contains(Enum.GetName(typeof(QualificationOption), QualificationOption.QtsOnly)))
                 {
                     yield return "QTS only";
                 }
-                if (qualification.Any(x => x == QualificationOption.Other))
+                //if (qualification.Any(x => x == QualificationOption.Other))
+                if (qualifications.Contains(Enum.GetName(typeof(QualificationOption), QualificationOption.Other)))
                 {
                     yield return "Further Education (PGCE or PGDE without QTS)";
                 }

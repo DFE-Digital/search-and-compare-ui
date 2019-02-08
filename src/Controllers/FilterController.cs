@@ -200,7 +200,9 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         public IActionResult LocationWizardGet(ResultsFilter filter)
         {
             ViewBag.IsInWizard = true;
-            filter.qualification = filter.qualification.Any() ? filter.qualification : new List<QualificationOption> { QualificationOption.QtsOnly, QualificationOption.PgdePgceWithQts, QualificationOption.Other };
+            //filter.qualification = filter.qualification.Any() ? filter.qualification : new List<QualificationOption> { QualificationOption.QtsOnly, QualificationOption.PgdePgceWithQts, QualificationOption.Other };
+            filter.qualifications = !string.IsNullOrWhiteSpace(filter.qualifications) ? filter.qualifications : string.Join(",", Enum.GetNames(typeof(QualificationOption)));
+
             return LocationGet(filter);
         }
 
@@ -263,8 +265,10 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         public IActionResult QualificationPost(ResultsFilter model)
         {
             model.page = null;
-            model.qualification = model.qualification.Any() ? model.qualification : new List<QualificationOption> { QualificationOption.QtsOnly, QualificationOption.PgdePgceWithQts, QualificationOption.Other };
-
+            //model.qualification = model.qualification.Any() ? model.qualification : new List<QualificationOption> { QualificationOption.QtsOnly, QualificationOption.PgdePgceWithQts, QualificationOption.Other };
+            //model.qualifications = ! string.IsNullOrWhiteSpace(model.qualifications) ? model.qualifications : string.Join(",", Enum.GetNames(typeof(QualificationOption)));
+            model.qualifications = model.qualification.Any() ? string.Join(",", model.qualification.Select(q => Enum.GetName(typeof(QualificationOption), q)))  : string.Join(",", Enum.GetNames(typeof(QualificationOption)));
+            model.qualification = new List<QualificationOption>();
             return RedirectToAction("Index", "Results", model.ToRouteValues());
         }
 

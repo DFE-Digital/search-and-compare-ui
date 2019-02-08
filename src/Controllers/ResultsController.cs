@@ -54,8 +54,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             {
                 throw new Exception("Failed to retrieve subject list from api");
             }
-            filter.qualification = filter.qualification.Any() ? filter.qualification : new List<QualificationOption> { QualificationOption.QtsOnly, QualificationOption.PgdePgceWithQts, QualificationOption.Other };
-
+            //filter.qualification = filter.qualification.Any() ? filter.qualification : new List<QualificationOption> { QualificationOption.QtsOnly, QualificationOption.PgdePgceWithQts, QualificationOption.Other };
+            filter.qualifications = !string.IsNullOrWhiteSpace(filter.qualifications) ? filter.qualifications : string.Join(",", Enum.GetNames(typeof(QualificationOption)));
             FilteredList<Subject> filteredSubjects;
             if (filter.SelectedSubjects.Count > 0)
             {
@@ -92,7 +92,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         public IActionResult ResultsMap(ResultsFilter filter)
         {
             var subjects = _api.GetSubjects();
-            filter.qualification = filter.qualification.Any() ? filter.qualification : new List<QualificationOption> { QualificationOption.QtsOnly, QualificationOption.PgdePgceWithQts, QualificationOption.Other };
+            //filter.qualification = filter.qualification.Any() ? filter.qualification : new List<QualificationOption> { QualificationOption.QtsOnly, QualificationOption.PgdePgceWithQts, QualificationOption.Other };
+            filter.qualifications = !string.IsNullOrWhiteSpace(filter.qualifications) ? filter.qualifications : string.Join(",", Enum.GetNames(typeof(QualificationOption)));
 
             FilteredList<Subject> filteredSubjects;
             if (filter.SelectedSubjects.Count > 0)
