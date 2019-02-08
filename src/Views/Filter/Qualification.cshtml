@@ -21,7 +21,7 @@
             <div class="govuk-form-group">
               <div class="govuk-checkboxes">
                 <div class="govuk-checkboxes__item">
-                  <input id="applyFilter-qts-only" class="govuk-checkboxes__input" type="checkbox" name="qualification" value="@QualificationOption.QtsOnly" checked="@Model.qualification.Any(x => x == QualificationOption.QtsOnly)" data-ga-event-form-input="QTS only">
+                  <input id="applyFilter-qts-only" class="govuk-checkboxes__input" type="checkbox" name="qualification" value="@QualificationOption.QtsOnly" checked="@Model.qualifications.Contains(Enum.GetName(typeof(QualificationOption), QualificationOption.QtsOnly))" data-ga-event-form-input="QTS only">
                   <label for="applyFilter-qts-only" class="govuk-label govuk-checkboxes__label">
                     <span class="govuk-!-font-weight-bold govuk-!-margin-bottom-2 govuk-!-display-block">
                       QTS only
@@ -39,7 +39,7 @@
                 </div>
 
                 <div class="govuk-checkboxes__item">
-                  <input id="applyFilter-pgce-pgde-with-qts" class="govuk-checkboxes__input" type="checkbox" name="qualification" value="@QualificationOption.PgdePgceWithQts" checked="@Model.qualification.Any(x => x == QualificationOption.PgdePgceWithQts)" data-ga-event-form-input="PGCE / PGDE with QTS">
+                  <input id="applyFilter-pgce-pgde-with-qts" class="govuk-checkboxes__input" type="checkbox" name="qualification" value="@QualificationOption.PgdePgceWithQts" checked="@Model.qualifications.Contains(Enum.GetName(typeof(QualificationOption), QualificationOption.PgdePgceWithQts))" data-ga-event-form-input="PGCE / PGDE with QTS">
                   <label for="applyFilter-pgce-pgde-with-qts" class="govuk-label govuk-checkboxes__label">
                     <span class="govuk-!-font-weight-bold govuk-!-margin-bottom-2 govuk-!-display-block">
                       PGCE (or PGDE) with QTS
@@ -59,7 +59,7 @@
                 </div>
 
                 <div class="govuk-checkboxes__item">
-                  <input id="applyFilter-other" class="govuk-checkboxes__input" type="checkbox" name="qualification" value="@QualificationOption.Other" checked="@Model.qualification.Any(x => x == QualificationOption.Other)" data-ga-event-form-input="Further Education">
+                  <input id="applyFilter-other" class="govuk-checkboxes__input" type="checkbox" name="qualification" value="@QualificationOption.Other" checked="@Model.qualifications.Contains(Enum.GetName(typeof(QualificationOption), QualificationOption.Other))" data-ga-event-form-input="Further Education">
                   <label for="applyFilter-other" class="govuk-label govuk-checkboxes__label">
                     <span class="govuk-!-font-weight-bold govuk-!-margin-bottom-2 govuk-!-display-block">
                       Further education (PGCE or PGDE without QTS)
