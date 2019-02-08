@@ -150,10 +150,14 @@ namespace GovUk.Education.SearchAndCompare.UI.Filters
         public QueryFilter ToQueryFilter()
         {
             byte resQualification = 0;
-            foreach (var qualstr in this.qualifications.Split(","))
+
+            if (!string.IsNullOrWhiteSpace(this.qualifications))
             {
-                var qual = (int)Enum.Parse(typeof(QualificationOption), qualstr);
-                resQualification ^= (byte) qual;
+                foreach (var qualstr in this.qualifications.Split(","))
+                {
+                    var qual = (int)Enum.Parse(typeof(QualificationOption), qualstr);
+                    resQualification ^= (byte)qual;
+                }
             }
 
             return new QueryFilter
