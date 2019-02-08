@@ -95,25 +95,31 @@
                   </div>
                 </div>
               }
-            </div>
 
-            <details class="govuk-details" open="@Model.FilterModel.senCourses">
-              <summary class="govuk-details__summary">
-                <span class="govuk-details__summary-text">Do you want to train to teach pupils with Special educational needs and disability (SEND)?</span>
-              </summary>
-              <div class="govuk-details__text">
-                <div class="govuk-checkboxes__item">
-                  @{var senCourses = Model.FilterModel.senCourses;}
-                  <input asp-for="@senCourses" class="govuk-checkboxes__input" data-ga-event-form-input="Show SEN courses"/>
-
-                  <label for="senCourses" class="govuk-label govuk-checkboxes__label">
-                    <span class="govuk-checkboxes__label_text">
-                      Show only courses with an additional specialism in <abbr title="Special educational needs and disability">SEND</abbr>
+              <div class="@("govuk-accordion__section " + (@Model.FilterModel.senCourses ? "govuk-accordion__section--expanded" : "govuk-accordion__section--hidden"))">
+                <div class="govuk-accordion__section-header">
+                  <h2 class="govuk-accordion__section-heading">
+                    <span class="govuk-accordion__section-button" id="accordion-heading-send">
+                      Special educational needs and disability (SEND)
                     </span>
-                  </label>
+                  </h2>
+                </div>
+                <div class="govuk-accordion__section-content" aria-labelledby="accordion-heading-send">
+                  <div class="govuk-checkboxes">
+                    <div class="govuk-checkboxes__item">
+                      @{var senCourses = Model.FilterModel.senCourses;}
+                      <input asp-for="@senCourses" class="govuk-checkboxes__input" data-ga-event-form-input="Show SEN courses"/>
+
+                      <label for="senCourses" class="govuk-label govuk-checkboxes__label">
+                        <span class="govuk-checkboxes__label_text">
+                          Show only courses with a <abbr title="Special educational needs and disability">SEND</abbr> specialism
+                        </span>
+                      </label>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </details>
+            </div>
 
           </fieldset>
           <div class="govuk-form-group">
