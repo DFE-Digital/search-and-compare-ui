@@ -6,7 +6,7 @@
 @using GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters;
 @using GovUk.Education.SearchAndCompare.UI.Shared.ViewModels;
 
-@if(Model.Course.IncludesPgce.Equals(IncludesPgce.No))
+@if(Model.Course.IncludesPgce.Equals(IncludesPgce.QtsOnly))
 
 {
   <details class="govuk-details">
@@ -26,7 +26,7 @@
     </div>
   </details>
 }
-else if (Model.Course.IncludesPgce.Equals(IncludesPgce.Yes))
+else if (Model.Course.IncludesPgce.Equals(IncludesPgce.QtsWithPgce))
 {
   <details class="govuk-details">
     <summary class="govuk-details__summary">
