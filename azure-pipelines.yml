@@ -1,16 +1,8 @@
-name: '0.1.0-$(Rev:r)'
 trigger:
   batch: true
   branches:
     include:
-      - "*"
-  paths:
-    exclude:
-      - README.md
-pr: none
-
-workspace:
-    clean: all
+      - vsts_build_and_deploy
 
 pool:
   vmImage: 'Ubuntu-16.04'
@@ -20,38 +12,43 @@ variables:
   buildPlatform: 'anycpu'
 
 steps:
+- script: |
+    GIT_SHORT_SHA=$(echo $(Build.SourceVersion) | cut -c 1-7)
+    echo "##vso[build.updatebuildnumber]$GIT_SHORT_SHA"
+  displayName: 'Set version number'
+
 - task: DotNetCoreCLI@2
   displayName: Restore
   inputs:
     command: restore
     projects: 'src/**/*.csproj'
-    noCache: true
 
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
     projects: 'src/**/*.csproj'
     arguments: '--configuration $(buildConfiguration) --no-restore'
-    
-- task: DotNetCoreCLI@2
-  displayName: Test
-  inputs:
-    command: test
-    projects: 'tests/**/*.Tests.csproj'
-    arguments: '--configuration $(buildConfiguration) --no-build'
 
 - task: DotNetCoreCLI@2
-  displayName: 'Publish Website'
+  displayName: Execute Unit Tests
+  inputs:
+    command: test
+    projects: '**/*.Tests.csproj'
+    arguments: '--configuration $(buildConfiguration) --no-restore --no-build'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publish UI'
   inputs:
     command: publish
-    publishWebProjects: true
+    publishWebProjects: false
+    projects: 'src/SearchAndCompareUi.csproj'
     arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore --no-build'
-    
+
 - task: CopyFiles@2
   displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
   inputs:
     Contents: |
-     azure\**
+     azure/**
     TargetFolder: '$(build.artifactstagingdirectory)/publish'
     OverWrite: true
 
