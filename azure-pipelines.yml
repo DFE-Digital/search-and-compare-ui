@@ -21,19 +21,19 @@ steps:
   displayName: Restore
   inputs:
     command: restore
-    projects: 'src/**/*.csproj'
+    projects: '**/*.csproj'
 
 - task: DotNetCoreCLI@2
   displayName: Build
   inputs:
-    projects: 'src/**/*.csproj'
+    projects: '**/*.csproj'
     arguments: '--configuration $(buildConfiguration) --no-restore'
 
 - task: DotNetCoreCLI@2
   displayName: Execute Unit Tests
   inputs:
     command: test
-    projects: '**/*.Tests.csproj'
+    projects: 'tests/**/*.Tests.csproj'
     arguments: '--configuration $(buildConfiguration) --no-restore --no-build'
 
 - task: DotNetCoreCLI@2
