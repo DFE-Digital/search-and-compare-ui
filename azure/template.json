@@ -32,12 +32,61 @@
         },
         "google_cloud_platform_key_geocoding": {
             "type": "securestring"
+        },
+        "keyVaultName": {
+            "type": "string",
+            "metadata": {
+                "description": "The name of the key vault."
+            }
+        },
+        "keyVaultResourceGroup": {
+            "type": "string",
+            "metadata": {
+                "description": "The resource group for the key vault."
+            }
+        },
+        "customHostName": {
+            "type": "string",
+            "metadata": {
+                "description": "The custom hostname to add to the app service."
+            }
+        },
+        "certificateName": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "The name of the certificate in key vault."
+            }
         }
     },
     "variables": {
-        "templateBaseUrl": "https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/templates/"
+        "templateBaseUrl": "https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/templates/",
+        "keyvaultCertificateName": "[if(greater(length(parameters('certificateName')),0), parameters('certificateName'), replace(parameters('customHostName'), '.', '-'))]"
     },
     "resources": [
+        {
+            "name": "app-service-certificate",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('templateBaseUrl'), 'app-service-certificate.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "keyVaultCertificateName": {
+                        "value": "[variables('keyVaultCertificateName')]"
+                    },
+                    "keyVaultName": {
+                        "value": "[parameters('keyVaultName')]"
+                    },
+                    "keyVaultResourceGroup": {
+                        "value": "[parameters('keyVaultResourceGroup')]"
+                    }
+                }
+            }
+        },
         {
             "name": "app-service-plan",
             "type": "Microsoft.Resources/deployments",
@@ -101,6 +150,12 @@
                                 "value": "[parameters('google_cloud_platform_key_geocoding')]"
                             }
                         ]
+                    },
+                    "customHostName": {
+                        "value": "[parameters('customHostName')]"
+                    },
+                    "certificateThumbprint": {
+                        "value": "[reference('app-service-certificate').outputs.certificateThumbprint.value]"
                     }
                 }
             },
