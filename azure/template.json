@@ -35,18 +35,21 @@
         },
         "keyVaultName": {
             "type": "string",
+            "defaultValue": "",
             "metadata": {
                 "description": "The name of the key vault."
             }
         },
         "keyVaultResourceGroup": {
             "type": "string",
+            "defaultValue": "",
             "metadata": {
                 "description": "The resource group for the key vault."
             }
         },
         "customHostName": {
             "type": "string",
+            "defaultValue": "",
             "metadata": {
                 "description": "The custom hostname to add to the app service."
             }
@@ -65,6 +68,7 @@
     },
     "resources": [
         {
+            "condition": "[greater(length(parameters('customHostName')), 0)]",
             "name": "app-service-certificate",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
@@ -155,7 +159,7 @@
                         "value": "[parameters('customHostName')]"
                     },
                     "certificateThumbprint": {
-                        "value": "[reference('app-service-certificate').outputs.certificateThumbprint.value]"
+                        "value": "[if(greater(length(parameters('customHostname')), 0), reference('app-service-certificate', '2018-11-01').outputs.certificateThumbprint.value, '')]"
                     }
                 }
             },
