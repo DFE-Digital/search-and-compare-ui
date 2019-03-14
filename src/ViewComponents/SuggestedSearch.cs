@@ -26,9 +26,9 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewComponents
         {
             var originalTotal = original.Courses?.TotalCount ?? 0;
 
-            var hasSalary = 
-                original.FilterModel.SelectedFunding.HasValue && 
-                original.FilterModel.SelectedFunding.Value != FundingOption.All && 
+            var hasSalary =
+                original.FilterModel.SelectedFunding.HasValue &&
+                original.FilterModel.SelectedFunding.Value != FundingOption.All &&
                 original.FilterModel.SelectedFunding.Value.HasFlag(FundingOption.Salary);
 
             var resultsFilters = GetSuggestedSearchesResultsFiltersForAllFunding(original);
@@ -102,16 +102,20 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewComponents
         {
             var results = new List<SuggestedSearchViewModel>();
 
-            foreach (var resultsFilter in resultsFilters)
-            {
-                if (results.Count != maxResult)
+            try {
+                foreach (var resultsFilter in resultsFilters)
                 {
-                    var result = _api.GetCoursesTotalCount(resultsFilter.ToQueryFilter());
-                    if (result.TotalCount > originalTotal && !results.Any(x => x.TotalCount == result.TotalCount))
+                    if (results.Count != maxResult)
                     {
-                       results.Add(new SuggestedSearchViewModel { ResultsFilter = resultsFilter, TotalCount = result.TotalCount });
+                        var result = _api.GetCoursesTotalCount(resultsFilter.ToQueryFilter());
+                        if (result.TotalCount > originalTotal && !results.Any(x => x.TotalCount == result.TotalCount))
+                        {
+                        results.Add(new SuggestedSearchViewModel { ResultsFilter = resultsFilter, TotalCount = result.TotalCount });
+                        }
                     }
                 }
+            } catch (Exception e) {
+                // Production hotfix.
             }
 
             return results.ToList();
