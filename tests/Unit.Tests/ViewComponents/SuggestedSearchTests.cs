@@ -8,6 +8,7 @@ using GovUk.Education.SearchAndCompare.UI.ViewComponents;
 using GovUk.Education.SearchAndCompare.UI.ViewModels;
 using GovUk.Education.SearchAndCompare.ViewModels;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
+using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 
@@ -30,7 +31,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.ViewComponents
             var mockApi = new Mock<ISearchAndCompareApi>();
             mockApi.Setup(x => x.GetCoursesTotalCount(It.IsAny<QueryFilter>())).Returns(new TotalCountResult());
 
-            var res = new SuggestedSearch(mockApi.Object)
+            var res = new SuggestedSearch(mockApi.Object, new Mock<ILogger<SuggestedSearch>>().Object)
                 .InvokeAsync(empty, 100).Result;
 
             Assert.That(res is ViewViewComponentResult);

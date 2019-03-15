@@ -4,22 +4,23 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using GovUk.Education.SearchAndCompare.UI.ViewModels;
-using GovUk.Education.SearchAndCompare.Domain.Filters;
 using GovUk.Education.SearchAndCompare.Domain.Filters.Enums;
 using GovUk.Education.SearchAndCompare.Domain.Client;
-using GovUk.Education.SearchAndCompare.Domain.Data;
-using GovUk.Education.SearchAndCompare.ViewFormatters;
 using GovUk.Education.SearchAndCompare.UI.Filters;
 using GovUk.Education.SearchAndCompare.UI.Filters.Enums;
+using Microsoft.Extensions.Logging;
 
 namespace GovUk.Education.SearchAndCompare.UI.ViewComponents
 {
     public class SuggestedSearch :ViewComponent
     {
         private readonly ISearchAndCompareApi _api;
-        public SuggestedSearch(ISearchAndCompareApi api)
+        private readonly ILogger<SuggestedSearch> _logger;
+
+        public SuggestedSearch(ISearchAndCompareApi api, ILogger<SuggestedSearch> logger)
         {
             _api = api;
+            _logger = logger;
         }
 
         public Task<IViewComponentResult> InvokeAsync(ResultsViewModel original, int maxResult)
@@ -115,7 +116,7 @@ namespace GovUk.Education.SearchAndCompare.UI.ViewComponents
                     }
                 }
             } catch (Exception e) {
-                // Production hotfix.
+                _logger.LogError("Suggested search failed, exception swallowed to avoid 500 error to user.", e);
             }
 
             return results.ToList();
