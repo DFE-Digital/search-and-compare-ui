@@ -20,6 +20,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.4" />
     <PackageReference Include="GovUk.Education.SearchAndCompare.ApiClient" Version="0.11.3.*" />
+    <PackageReference Include="Sentry.AspNetCore" Version="1.1.1" />
     <PackageReference Include="Serilog.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Serilog.Settings.Configuration" Version="2.6.1" />
     <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="2.6.0" />
