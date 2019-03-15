@@ -257,6 +257,9 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("Qualification")]
         public IActionResult QualificationGet(ResultsFilter model)
         {
+            // Put the posted qualifications into a comma separated string
+            model.qualifications = model.qualification.Any() ? string.Join(",", model.qualification.Select(q => Enum.GetName(typeof(QualificationOption), q))) : string.Join(",", Enum.GetNames(typeof(QualificationOption)));
+            model.qualification = new List<QualificationOption>(); // Remove this from the url
             return View(model);
         }
 
@@ -265,9 +268,9 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         public IActionResult QualificationPost(ResultsFilter model)
         {
             model.page = null;
-            //put the posted qualifications into a comma separated string
-            model.qualifications = model.qualification.Any() ? string.Join(",", model.qualification.Select(q => Enum.GetName(typeof(QualificationOption), q)))  : string.Join(",", Enum.GetNames(typeof(QualificationOption)));
-            model.qualification = new List<QualificationOption>();//remove this from the url
+            // Put the posted qualifications into a comma separated string
+            model.qualifications = model.qualification.Any() ? string.Join(",", model.qualification.Select(q => Enum.GetName(typeof(QualificationOption), q))) : string.Join(",", Enum.GetNames(typeof(QualificationOption)));
+            model.qualification = new List<QualificationOption>(); // Remove this from the url
             return RedirectToAction("Index", "Results", model.ToRouteValues());
         }
 
