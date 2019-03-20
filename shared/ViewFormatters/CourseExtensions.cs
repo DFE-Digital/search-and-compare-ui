@@ -108,12 +108,53 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters
 
         public static bool HasScholarshipAndBursary(this Course course)
         {
+            if (course.OverrideFunding())
+            {
+                return false;
+            }
             return course.CourseSubjects.Any(cs => cs.Subject.Funding != null && cs.Subject.Funding.Scholarship != null);
         }
 
         public static bool HasBursary(this Course course)
         {
+            if (course.OverrideFunding())
+            {
+                return false;
+            }
             return course.CourseSubjects.Any(cs => cs.Subject.Funding != null);
+        }
+
+        /// <summary>
+        /// Some of the course-subject combinations indicate there is funding,
+        /// but that is for the second subject in "Foo with Bar" style courses
+        /// and in that case there is not funding.
+        /// We can't easily change the data model so until transition of course management
+        /// to us is done we're overriding this here.
+        /// </summary>
+        /// <returns>true if funding information from course_subject should *not* apply</returns>
+        private static bool OverrideFunding(this Course course)
+        {
+            if (!course.Name.Contains("with"))
+            {
+                // "Foo and Bar" courses are fine, it's just the "Foo with Bar" where we need to ignore Bar subject's funding info
+                return false;
+            }
+
+            if (course.CourseSubjects.Count < 2)
+            {
+                // incorrect funding issue only shows up on multi-subject courses
+                return false;
+            }
+
+            var problematicCoursePrefixes = new []
+            {
+                "Drama",
+                "Media Studies",
+                "PE",
+                "Physical Education",
+            };
+            return problematicCoursePrefixes.Any(prefix =>
+                course.Name.StartsWith(prefix, StringComparison.InvariantCultureIgnoreCase));
         }
 
         public static string FundingOptions(this Course course)

@@ -17,15 +17,21 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.ViewFormatters
 
         }
 
-        public static Course AddBursaryAndScholarshipSubject(this Course course)
+        public static Course AddSubject(this Course course)
         {
-            course.CourseSubjects.Add(new CourseSubject {Subject = new Subject {Funding = new SubjectFunding {BursaryFirst = 123, Scholarship = 666}}});
+            course.CourseSubjects.Add(new CourseSubject {Subject = new Subject()});
             return course;
         }
 
         public static Course AddBursarySubject(this Course course)
         {
             course.CourseSubjects.Add(new CourseSubject {Subject = new Subject {Funding = new SubjectFunding {BursaryFirst = 777}}});
+            return course;
+        }
+
+        public static Course AddBursaryAndScholarshipSubject(this Course course)
+        {
+            course.CourseSubjects.Add(new CourseSubject {Subject = new Subject {Funding = new SubjectFunding {BursaryFirst = 123, Scholarship = 666}}});
             return course;
         }
 
