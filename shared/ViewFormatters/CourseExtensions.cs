@@ -10,6 +10,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters
 {
     public static class CourseExtensions
     {
+        public const string FundingOption_Salary = "Salary";
+        public const string FundingOption_Scholarship = "Scholarship, bursary or student finance if you’re eligible";
+        public const string FundingOption_Bursary = "Bursary or student finance if you’re eligible";
+        public const string FundingOption_StudentFinance = "Student finance if you’re eligible";
+
         private static Regex websiteRegex = new Regex("^https?:\\/\\/");
 
         public static string FormattedWebsite(this Course course)
@@ -115,19 +120,19 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters
         {
             if (course.Route.IsSalaried)
             {
-                return "Salary";
+                return FundingOption_Salary;
             }
             else if (course.HasScholarshipAndBursary())
             {
-                return "Scholarship, bursary or student finance if you’re eligible";
+                return FundingOption_Scholarship;
             }
             else if (course.HasBursary())
             {
-                return "Bursary or student finance if you’re eligible";
+                return FundingOption_Bursary;
             }
             else
             {
-                return "Student finance if you’re eligible";
+                return FundingOption_StudentFinance;
             }
         }
 

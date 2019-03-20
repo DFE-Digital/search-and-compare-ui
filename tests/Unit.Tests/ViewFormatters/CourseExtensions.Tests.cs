@@ -1,7 +1,10 @@
+using System.Collections.Generic;
 using FluentAssertions;
 using GovUk.Education.SearchAndCompare.Domain.Models;
+using GovUk.Education.SearchAndCompare.Domain.Models.Joins;
 using GovUk.Education.SearchAndCompare.UI.Shared.ViewFormatters;
 using NUnit.Framework;
+using SearchAndCompareUI.Tests.Unit.Tests.ViewFormatters;
 
 namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.ViewFormatters
 {
@@ -59,6 +62,83 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.ViewFormatters
         {
             var formattedDistance = input.FormattedDistance();
             formattedDistance.Should().Be(expectedDisplayValue, $"for input of {input} metres");
+        }
+
+        [Test]
+        public void CourseWithoutFunding_HasScholarshipAndBursary_IsFalse()
+        {
+            var course = CourseBuilder.BuildCourse("No funding");
+            course.HasScholarshipAndBursary().Should().BeFalse("There is no funding on the course");
+        }
+
+        [Test]
+        public void CourseWithBursary_HasScholarshipAndBursary_IsFalse()
+        {
+            var course = CourseBuilder.BuildCourse("Bursary")
+                .AddBursarySubject();
+            course.HasScholarshipAndBursary().Should().BeFalse("There is only a bursary on the course");
+        }
+
+        [Test]
+        public void CourseWithBursaryAndScholarship_HasScholarshipAndBursary_IsTrue()
+        {
+            var course = CourseBuilder.BuildCourse("Scholarship")
+                .AddBursaryAndScholarshipSubject();
+            course.HasScholarshipAndBursary().Should().BeTrue("There is scholarship funding on the course");
+        }
+
+        [Test]
+        public void CourseWithoutFunding_HasBursary_IsFalse()
+        {
+            var course = CourseBuilder.BuildCourse("No funding");
+            course.HasBursary().Should().BeFalse("There is no funding on the course");
+        }
+
+        [Test]
+        public void CourseWithBursary_HasBursary_IsTrue()
+        {
+            var course = CourseBuilder.BuildCourse("Bursary")
+                .AddBursarySubject();
+            course.HasBursary().Should().BeTrue("There is funding on the course");
+        }
+
+        [Test]
+        public void CourseWithBursaryAndScholarship_HasBursary_IsTrue()
+        {
+            var course = CourseBuilder.BuildCourse("Scholarship")
+                .AddBursaryAndScholarshipSubject();
+            course.HasBursary().Should().BeTrue("There is scholarship funding on the course");
+        }
+
+        [Test]
+        public void FundingOptions_Scholarship()
+        {
+            var course = CourseBuilder.BuildCourse("Scholarship")
+                .AddBursaryAndScholarshipSubject();
+            course.FundingOptions().Should().Be(CourseExtensions.FundingOption_Scholarship);
+        }
+
+        [Test]
+        public void FundingOptions_Bursary()
+        {
+            var course = CourseBuilder.BuildCourse("Bursary")
+                .AddBursarySubject();
+            course.FundingOptions().Should().Be(CourseExtensions.FundingOption_Bursary);
+        }
+
+        [Test]
+        public void FundingOptions_StudentFinance()
+        {
+            var course = CourseBuilder.BuildCourse("StudentFinance");
+            course.FundingOptions().Should().Be(CourseExtensions.FundingOption_StudentFinance);
+        }
+
+        [Test]
+        public void FundingOptions_Salary()
+        {
+            var course = CourseBuilder.BuildCourse("Salary")
+                .AddSalary();
+            course.FundingOptions().Should().Be(CourseExtensions.FundingOption_Salary);
         }
     }
 }
