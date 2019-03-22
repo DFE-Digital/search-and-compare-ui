@@ -19,7 +19,7 @@ matrix:
       on: production
     - provider: script
       skip_cleanup: true
-      script: chmod +x ./travis-nuget-deploy.sh && ./travis-nuget-deploy.sh $NUGET_API_KEY
+      script: "./travis-nuget-deploy.sh"
       on:
         all_branches: true
   - language: node_js
