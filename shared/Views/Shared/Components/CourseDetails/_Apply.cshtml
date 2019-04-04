@@ -53,8 +53,8 @@
       <table class="govuk-table">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <th class="govuk-table__header" scope="col">Name</th>
-            <th class="govuk-table__header" scope="col">Address</th>
+            <th class="govuk-table__header" scope="col">Location</th>
+            <th class="govuk-table__header" scope="col">Vacancies</th>
             <th class="govuk-table__header" scope="col">Code</th>
           </tr>
         </thead>
@@ -62,8 +62,15 @@
           @foreach (var campus in Model.Course.Campuses)
           {
             <tr class="govuk-table__row">
-              <td class="govuk-table__cell">@campus.Name</td>
-              <td class="govuk-table__cell">@campus.Location?.Address</td>
+              <td class="govuk-table__cell">
+                <strong>@campus.Name</strong>
+                <br/>
+                @campus.Location?.Address
+              </td>
+
+              <td class="govuk-table__cell">
+                @(string.IsNullOrWhiteSpace(campus.VacStatus) ? "No" : "Yes")
+                </td>
               <td class="govuk-table__cell">@campus.CampusCode</td>
             </tr>
           }
