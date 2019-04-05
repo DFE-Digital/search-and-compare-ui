@@ -90,7 +90,8 @@
           "name": "@campus.Name",
           "lat": @(campus.Location == null ? Model.Course.ProviderLocation.Latitude : campus.Location.Latitude),
           "lng": @(campus.Location == null ? Model.Course.ProviderLocation.Longitude : campus.Location.Longitude),
-          "address": "@campus.Location?.Address"
+          "address": "@campus.Location?.Address",
+          "vacancies": "@(string.IsNullOrWhiteSpace(campus.VacStatus) ? "No" : "Yes") vacancies"
         },
       </text>
     }
