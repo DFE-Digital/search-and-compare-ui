@@ -53,10 +53,18 @@ const initLocationsMap = () => {
     closedContent.innerHTML = location.name;
 
     const openContent = document.createElement("div");
-    openContent.insertAdjacentHTML(
-      "afterbegin",
-      `<p class="govuk-tag">${location.vacancies}</p> ${location.address ? `<p class="govuk-body">${location.address}</p>` : ""}`
-    );
+    if (location.vacancies) {
+      openContent.insertAdjacentHTML(
+        "beforeend",
+        `<div class="govuk-tag govuk-tag--no-content govuk-!-margin-bottom-2">${ location.vacancies }</div>`
+      );
+    }
+    if (location.address) {
+      openContent.insertAdjacentHTML(
+        "beforeend",
+        `<p class="govuk-body">${location.address}</p>`
+      );
+    }
 
     const popup = new Popup(latLng, closedContent, openContent);
     popup.setMap(map);
