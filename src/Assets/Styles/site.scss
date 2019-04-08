@@ -321,3 +321,8 @@ abbr {
 .autocomplete__wrapper {
   font-family: $govuk-font-family;
 }
+
+.govuk-tag--no-content {
+  background-color: govuk-colour("grey-3");
+  color: govuk-colour("black");
+}
