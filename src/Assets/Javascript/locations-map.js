@@ -1,13 +1,28 @@
 import createPopupClass from "./map-popup";
 
 const initLocationsMap = () => {
+  const $map = document.getElementById("locations-map");
+  const trainingLocations = window.trainingLocations
+    .filter(({lat, lng}) => lat !== "" && lng !== "")
+    .map(location => {
+      location.lat = parseFloat(location.lat);
+      location.lng = parseFloat(location.lng);
+      return location;
+    })
+
+  if (trainingLocations.length === 0) {
+    console.error("Failed to initialise map: center is impossible to display, because none of the locations have a lat/lng.");
+    $map.style.display = 'none';
+    return;
+  }
+
   const Popup = createPopupClass();
   const bounds = new google.maps.LatLngBounds();
 
-  const centerLat = window.trainingLocations[0].lat;
-  const centerLng = window.trainingLocations[0].lng;
+  const centerLat = trainingLocations[0].lat;
+  const centerLng = trainingLocations[0].lng;
 
-  const map = new google.maps.Map(document.getElementById("locations-map"), {
+  const map = new google.maps.Map($map, {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     mapTypeControl: false,
     scaleControl: false,
