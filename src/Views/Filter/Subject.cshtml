@@ -56,6 +56,10 @@
                           <label for="@("subject-" + subject.Id)" class="govuk-label govuk-checkboxes__label">
                             <span class="govuk-checkboxes__label_text">
                               @subject.Name
+                              @if (subject.Name == "Design and technology")
+                              {
+                                <span> – also includes food, product design, textiles, and systems and control</span>
+                              }
                             </span>
                             @{
                               string txt = null;
