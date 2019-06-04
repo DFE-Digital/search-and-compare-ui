@@ -27,7 +27,7 @@
     "merge": "^1.2.1",
     "mini-css-extract-plugin": "^0.4.1",
     "node-sass": "^4.9.2",
-    "regenerator-runtime": "^0.12.1",
+    "regenerator-runtime": "^0.13.2",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.22.0",
     "uglifyjs-webpack-plugin": "^1.2.7",
