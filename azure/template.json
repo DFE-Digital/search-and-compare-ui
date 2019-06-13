@@ -62,10 +62,23 @@
             }
         },
         "sentryDSN": {
-          "type": "string",
-          "metadata": {
-            "description": "Connection string for Sentry monitoring."
-          }
+            "type": "string",
+            "metadata": {
+                "description": "Connection string for Sentry monitoring."
+            }
+        },
+        "appServicePlanSize": {
+            "type": "string",
+            "allowedValues": [
+                "1",
+                "2",
+                "3"
+            ],
+            "defaultValue": "1"
+        },
+        "appServicePlanInstances": {
+            "type": "int",
+            "defaultValue": 1
         }
     },
     "variables": {
@@ -116,6 +129,12 @@
                     },
                     "appServicePlanOS": {
                         "value": "Windows"
+                    },
+                    "appServicePlanSize": {
+                        "value": "[parameters('appServicePlanSize')]"
+                    },
+                    "appServicePlanInstances": {
+                        "value": "[parameters('appServicePlanInstances')]"
                     }
                 }
             }
