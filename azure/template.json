@@ -153,7 +153,16 @@
                     "appServiceName": {
                         "value": "[variables('appServiceName')]"
                     },
+                    "applicationLogsFileSystem": {
+                        "value": "Error"
+                    },
                     "httpLoggingEnabled": {
+                        "value": true
+                    },
+                    "requestTracingEnabled": {
+                        "value": true
+                    },
+                    "detailedErrorLoggingEnabled": {
                         "value": true
                     }
                 }
