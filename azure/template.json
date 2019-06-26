@@ -140,6 +140,38 @@
             }
         },
         {
+            "name": "app-service-logs",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'), 'app-service-logs.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "appServiceName": {
+                        "value": "[variables('appServiceName')]"
+                    },
+                    "applicationLogsFileSystem": {
+                        "value": "Error"
+                    },
+                    "httpLoggingEnabled": {
+                        "value": true
+                    },
+                    "requestTracingEnabled": {
+                        "value": true
+                    },
+                    "detailedErrorLoggingEnabled": {
+                        "value": true
+                    }
+                }
+            },
+            "dependsOn": [
+                "app-service"
+            ]
+        },
+        {
             "name": "app-service",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
