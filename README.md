@@ -1,6 +1,6 @@
 # Search and Compare - UI
 
-[![Build Status](https://travis-ci.org/DFE-Digital/search-and-compare-ui.svg?token=3fqqELBNRC5ecwar1xHq&branch=master)](https://travis-ci.org/DFE-Digital/search-and-compare-ui)
+[![Build Status](https://dfe-ssp.visualstudio.com/Become-A-Teacher/_apis/build/status/Find/search-and-compare-ui?branchName=master)](https://dfe-ssp.visualstudio.com/Become-A-Teacher/_build/latest?definitionId=56&branchName=master)
 
 See the [Search and Compare](https://github.com/DFE-Digital/search-and-compare) repo for details if you have access
 
