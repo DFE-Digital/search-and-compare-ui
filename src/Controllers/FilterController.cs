@@ -195,7 +195,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
                 : RedirectToAction("Index", "Results", filter.ToRouteValues());
         }
 
-        [HttpGet("/")]
+        [HttpGet("start/location")]
         [ActionName("LocationWizard")]
         public IActionResult LocationWizardGet(ResultsFilter filter)
         {
@@ -206,7 +206,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
             return LocationGet(filter);
         }
 
-        [HttpPost("/")]
+        [HttpPost("start/location")]
         [ActionName("LocationWizard")]
         public async Task<IActionResult> LocationWizardPost(ResultsFilter filter)
         {
