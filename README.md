@@ -94,3 +94,7 @@ npm run test:watch
 ## Shutting down the service and showing the off line page.
 
 Rename the file "app_offline.htm.example" in the root folder to "app_offline.htm"
+
+## Shutting down the service for when "Apply" is closed.
+
+Rename the file "app_offline.rollover.example" in the root folder to "app_offline.htm"
