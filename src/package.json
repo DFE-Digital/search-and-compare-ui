@@ -37,7 +37,7 @@
     "webpack-hot-middleware": "^2.25.0"
   },
   "dependencies": {
-    "accessible-autocomplete": "^1.6.2",
+    "accessible-autocomplete": "^2.0.0",
     "lodash.throttle": "^4.1.1"
   }
 }
