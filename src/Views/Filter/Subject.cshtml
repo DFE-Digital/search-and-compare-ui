@@ -37,6 +37,7 @@
             <h2 class="govuk-heading-m">Get financial support</h2>
             <p class="govuk-body">You’ll have to pay a fee for most courses. You can get financial support to cover this, and to help with your living costs while you study. The amount of financial support available to you will depend on the subject you choose.</p>
             <p class="govuk-body">Visit Get into Teaching to find out more about <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview/postgraduate-loans">postgraduate loans</a>, <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview">bursaries and scholarships</a>, and <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview/funding-by-subject">funding by subject</a>.</p>
+            <p class="govuk-body">Bursaries, scholarships and financial support for 2020/21 will be announced soon.</p>
 
             <div class="accordion govuk-form-group" data-module="accordion">
               @foreach (var area in Model.SubjectAreas) {
@@ -65,24 +66,15 @@
                               string txt = null;
                               if (subject.Funding?.Scholarship != null && subject.Funding?.BursaryFirst != null)
                               {
-                                txt = $"Scholarships of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.Scholarship.Value)} and bursaries of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.BursaryFirst.Value)} are available";
+                                txt = $"Scholarships and bursaries are available.";
                               }
                               else if (subject.Funding?.Scholarship != null)
                               {
-                                txt = $"Scholarships of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.Scholarship.Value)} are available";
+                                txt = $"Scholarships are available.";
                               }
                               else if (subject.Funding?.BursaryFirst != null)
                               {
-                                txt = $"Bursaries of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.BursaryFirst.Value)} available";
-                              }
-
-                              if (txt != null && subject.Funding?.EarlyCareerPayments != null)
-                              {
-                                txt += $", with early career payments of £5,000 each in your third and fifth year of teaching (£7,500 each in some areas of England).";
-                              }
-                              else if (txt != null)
-                              {
-                                txt += ".";
+                                txt = $"Bursaries are available.";
                               }
                             }
                             <span class="govuk-!-display-block">@txt</span>
