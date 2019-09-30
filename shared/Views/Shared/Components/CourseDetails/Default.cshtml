@@ -126,12 +126,16 @@
 
           @await Html.PartialAsync("_AboutSchools.cshtml")
 
-          <div class="govuk-!-margin-bottom-8">
-            <h2 class="govuk-heading-l" id="section-financial-support">Financial support</h2>
-            <div class="govuk-inset-text">
-              <p class="govuk-body">Bursaries, scholarships and financial support for 2020/21 will be announced soon.</p>
-            </div>
-          </div>
+          @if (Model.Course.IsSalaried)
+          {
+            @await Html.PartialAsync("_Salary.cshtml")
+          }
+          else
+          {
+            @await Html.PartialAsync("_Fees.cshtml")
+          }
+
+          @await Html.PartialAsync("FinancialSupport/_FinancialSupport.cshtml")
 
           @await Html.PartialAsync("_EntryRequirementsQualifications.cshtml")
 
