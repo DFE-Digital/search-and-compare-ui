@@ -21,5 +21,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         {
             return View();
         }
+
+        [HttpGet("accessibility")]
+        public IActionResult  Accessibility()
+        {
+            return View();
+        }
     }
 }

@@ -1,7 +1,6 @@
 {
   "name": "search-and-compare-ui",
-  "scripts": {
-  },
+  "scripts": {},
   "env": {
     "API_URL": {
       "required": true
@@ -26,7 +25,7 @@
       "url": "https://github.com/heroku/heroku-buildpack-nodejs"
     },
     {
-      "url": "https://github.com/jincod/dotnetcore-buildpack"
+      "url": "https://github.com/jincod/dotnetcore-buildpack#v2.2.402"
     }
   ]
 }
