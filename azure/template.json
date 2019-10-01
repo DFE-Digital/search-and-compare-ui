@@ -79,6 +79,13 @@
         "appServicePlanInstances": {
             "type": "int",
             "defaultValue": 1
+        },
+        "deployFrontDoor": {
+          "type": "string",
+          "defaultValue": "false",
+          "metadata": {
+            "description": "Control Azure Front Door service deployment."
+          }
         }
     },
     "variables": {
@@ -86,7 +93,14 @@
         "keyvaultCertificateName": "[if(greater(length(parameters('certificateName')),0), parameters('certificateName'), replace(parameters('customHostName'), '.', '-'))]",
         "resourceNamePrefix": "[toLower(concat(parameters('resourceEnvironmentName'),'-', parameters('serviceName')))]",
         "appServiceName": "[concat(variables('resourceNamePrefix'), '-as')]",
-        "appServicePlanName": "[concat(variables('resourceNamePrefix'), '-asp')]"
+        "appServicePlanName": "[concat(variables('resourceNamePrefix'), '-asp')]",
+        "frontDoorName": "[concat(variables('resourceNamePrefix'),'-fd')]",
+        "frontDoorAppServiceName": "[concat(variables('appServiceName'), '.azurewebsites.net')]",
+        "frontDoorWafPolicyName": "[replace(concat(variables('resourceNamePrefix'), '-waf'),'-', '')]",
+        "storageAccountName": "[replace(concat(variables('frontDoorName'), 'str'), '-', '')]",
+        "workspaceName": "[concat(variables('resourceNamePrefix'),'la')]",
+        "logAnalyticsResourceGroupName": "[toLower(concat(parameters('resourceEnvironmentName'),'-monitoring'))]",
+        "deploymentUrlBasetemp": "https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/131-secure-webapps-using-front-door-and-waf/templates/"
     },
     "resources": [
         {
@@ -250,6 +264,77 @@
                     }
                 }
             }
+        },
+        {
+            "name": "storage-account",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'), 'storage-account.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "storageAccountName": {
+                        "value": "[variables('storageAccountName')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "loganalytics-workspace",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "resourceGroup": "[variables('logAnalyticsResourceGroupName')]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'), 'loganalytics-workspace.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "workspaceName": {
+                        "value": "[variables('workspaceName')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "front-door-with-waf",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "condition": "[equals(parameters('deployFrontDoor'), 'True')]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBasetemp'), 'front-door-service.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "frontDoorName": {
+                        "value": "[variables('frontDoorName')]"
+                    },
+                    "backendAppServiceName": {
+                        "value": "[variables('frontDoorAppServiceName')]"
+                    },
+                    "wafPolicyName": {
+                        "value": "[variables('frontDoorWafPolicyName')]"
+                    },
+                    "customDomainName": {
+                        "value": "[parameters('customHostName')]"
+                    },
+                    "storageAccountName": {
+                        "value": "[variables('storageAccountName')]"
+                    },
+                    "workspaceId": {
+                        "value": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',variables('logAnalyticsResourceGroupName'),'/providers/Microsoft.OperationalInsights/workspaces/',variables('workspaceName'))]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "app-service"
+            ]
         }
     ],
     "outputs": {
