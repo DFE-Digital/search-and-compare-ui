@@ -97,6 +97,7 @@
         "frontDoorName": "[concat(variables('resourceNamePrefix'),'-fd')]",
         "frontDoorAppServiceName": "[concat(variables('appServiceName'), '.azurewebsites.net')]",
         "frontDoorWafPolicyName": "[replace(concat(variables('resourceNamePrefix'), '-waf'),'-', '')]",
+        "frontDoorWafMode": "Detection",
         "storageAccountName": "[replace(concat(variables('frontDoorName'), 'str'), '-', '')]",
         "workspaceName": "[concat(variables('resourceNamePrefix'),'-la')]",
         "logAnalyticsResourceGroupName": "[toLower(concat(parameters('resourceEnvironmentName'),'-monitoring'))]",
@@ -322,6 +323,9 @@
                     },
                     "wafPolicyName": {
                         "value": "[variables('frontDoorWafPolicyName')]"
+                    },
+                    "wafMode": {
+                        "value": "[variables('frontDoorWafMode')]"
                     },
                     "customDomainName": {
                         "value": "[parameters('customHostName')]"
