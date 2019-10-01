@@ -98,9 +98,9 @@
         "frontDoorAppServiceName": "[concat(variables('appServiceName'), '.azurewebsites.net')]",
         "frontDoorWafPolicyName": "[replace(concat(variables('resourceNamePrefix'), '-waf'),'-', '')]",
         "storageAccountName": "[replace(concat(variables('frontDoorName'), 'str'), '-', '')]",
-        "workspaceName": "[concat(variables('resourceNamePrefix'),'la')]",
+        "workspaceName": "[concat(variables('resourceNamePrefix'),'-la')]",
         "logAnalyticsResourceGroupName": "[toLower(concat(parameters('resourceEnvironmentName'),'-monitoring'))]",
-        "deploymentUrlBasetemp": "https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/131-secure-webapps-using-front-door-and-waf/templates/"
+        "deployFrontDoor": "[toLower(parameters('deployFrontDoor'))]"
     },
     "resources": [
         {
@@ -269,6 +269,7 @@
             "name": "storage-account",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
+            "condition": "[equals(variables('deployFrontDoor'), 'true')]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -286,6 +287,7 @@
             "name": "loganalytics-workspace",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
+            "condition": "[equals(variables('deployFrontDoor'), 'true')]",
             "resourceGroup": "[variables('logAnalyticsResourceGroupName')]",
             "properties": {
                 "mode": "Incremental",
@@ -304,11 +306,11 @@
             "name": "front-door-with-waf",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
-            "condition": "[equals(parameters('deployFrontDoor'), 'True')]",
+            "condition": "[equals(variables('deployFrontDoor'), 'true')]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBasetemp'), 'front-door-service.json')]",
+                    "uri": "[concat(variables('deploymentUrlBase'), 'front-door-service.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
