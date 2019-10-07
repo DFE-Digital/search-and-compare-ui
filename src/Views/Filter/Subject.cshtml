@@ -65,15 +65,24 @@
                               string txt = null;
                               if (subject.Funding?.Scholarship != null && subject.Funding?.BursaryFirst != null)
                               {
-                                txt = $"Scholarships and bursaries are available.";
+                                txt = $"Scholarships of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.Scholarship.Value)} and bursaries of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.BursaryFirst.Value)} are available";
                               }
                               else if (subject.Funding?.Scholarship != null)
                               {
-                                txt = $"Scholarships are available.";
+                                txt = $"Scholarships of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.Scholarship.Value)} are available";
                               }
                               else if (subject.Funding?.BursaryFirst != null)
                               {
-                                txt = $"Bursaries are available.";
+                              txt = $"Bursaries of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.BursaryFirst.Value)} available";
+                              }
+
+                              if (txt != null && subject.Funding?.EarlyCareerPayments != null)
+                              {
+                                txt += $", with early career payments of £2,000 each in your second, third and fourth year of teaching (£3,000 in some areas of England).";
+                              }
+                              else if (txt != null)
+                              {
+                                txt += ".";
                               }
                             }
                             <span class="govuk-!-display-block">@txt</span>
