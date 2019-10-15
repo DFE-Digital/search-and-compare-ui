@@ -23,6 +23,15 @@
   else
   {
     <p class="govuk-body">
+      <a href="https://apply-beta-prototype.herokuapp.com/apply/from-find?provider=@Model.Course.Provider.ProviderCode&course=@Model.Course.ProgrammeCode" class="govuk-button govuk-button=--start">
+      Apply for this course
+      <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" role="presentation" focusable="false">
+        <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+      </svg>
+      </a>
+    </p>
+
+    <!-- <p class="govuk-body">
       <a href="https://2020.teachertraining.apply.ucas.com/apply/student/login.do">Apply on the UCAS website</a>. You’ll need to register with UCAS before you can apply.
     </p>
     <p class="govuk-body">
@@ -43,7 +52,7 @@
           <span class="govuk-!-display-block govuk-!-font-size-36 govuk-!-font-weight-bold">@Model.Course.ProgrammeCode</span>
         </li>
       </ul>
-    </div>
+    </div> -->
 
     if (Model.Course.Campuses.Count() > 0)
     {
