@@ -22,28 +22,38 @@
   }
   else
   {
-    <p class="govuk-body">
-      <a href="https://2020.teachertraining.apply.ucas.com/apply/student/login.do">Apply on the UCAS website</a>. You’ll need to register with UCAS before you can apply.
-    </p>
-    <p class="govuk-body">
-      Visit Get into Teaching for <a href="https://getintoteaching.education.gov.uk/how-to-apply/apply">guidance on applying for teacher training</a>.
-    </p>
 
-    <p class="govuk-body">
-      When you apply you’ll need these codes for the Choices section of your application form:
-    </p>
-    <div class="govuk-inset-text">
-      <ul class="govuk-list">
-        <li class="govuk-!-margin-bottom-2">
-          Training provider code:
-          <span class="govuk-!-display-block govuk-!-font-size-36 govuk-!-font-weight-bold">@Model.Course.Provider.ProviderCode</span>
-        </li>
-        <li>
-          Training programme code:
-          <span class="govuk-!-display-block govuk-!-font-size-36 govuk-!-font-weight-bold">@Model.Course.ProgrammeCode</span>
-        </li>
-      </ul>
-    </div>
+    @if (Model.Course.Provider.ProviderCode == "R55" || Model.Course.Provider.ProviderCode == "1N1" || Model.Course.Provider.ProviderCode == "S31")
+    {
+      <p class="govuk-body">
+        <a href="https://www.apply-for-teacher-training.education.gov.uk/candidate/apply?providerCode=@Model.Course.Provider.ProviderCode&courseCode=@Model.Course.ProgrammeCode" class="govuk-button govuk-button--start">Apply for this course</a>
+      </p>
+    }
+    else
+    {
+      <p class="govuk-body">
+        <a href="https://2020.teachertraining.apply.ucas.com/apply/student/login.do">Apply on the UCAS website</a>. You’ll need to register with UCAS before you can apply.
+      </p>
+      <p class="govuk-body">
+        Visit Get into Teaching for <a href="https://getintoteaching.education.gov.uk/how-to-apply/apply">guidance on applying for teacher training</a>.
+      </p>
+
+      <p class="govuk-body">
+        When you apply you’ll need these codes for the Choices section of your application form:
+      </p>
+      <div class="govuk-inset-text">
+        <ul class="govuk-list">
+          <li class="govuk-!-margin-bottom-2">
+            Training provider code:
+            <span class="govuk-!-display-block govuk-!-font-size-36 govuk-!-font-weight-bold">@Model.Course.Provider.ProviderCode</span>
+          </li>
+          <li>
+            Training programme code:
+            <span class="govuk-!-display-block govuk-!-font-size-36 govuk-!-font-weight-bold">@Model.Course.ProgrammeCode</span>
+          </li>
+        </ul>
+      </div>
+    }
 
     if (Model.Course.Campuses.Count() > 0)
     {
