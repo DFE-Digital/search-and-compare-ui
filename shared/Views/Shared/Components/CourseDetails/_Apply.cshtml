@@ -23,7 +23,17 @@
   else
   {
 
-    @if (Model.Course.Provider.ProviderCode == "R55" || Model.Course.Provider.ProviderCode == "1N1" || Model.Course.Provider.ProviderCode == "S31")
+    @if (
+      Model.Course.Provider.ProviderCode == "R55" ||
+      Model.Course.Provider.ProviderCode == "1N1" ||
+      Model.Course.Provider.ProviderCode == "S31" ||
+      Model.Course.Provider.ProviderCode == "24L" ||
+      Model.Course.Provider.ProviderCode == "1HQ" ||
+      Model.Course.Provider.ProviderCode == "L06" ||
+      Model.Course.Provider.ProviderCode == "2LR" ||
+      Model.Course.Provider.ProviderCode == "254" ||
+      Model.Course.Provider.ProviderCode == "12K"
+    )
     {
       <p class="govuk-body">
         <a href="https://www.apply-for-teacher-training.education.gov.uk/candidate/apply?providerCode=@Model.Course.Provider.ProviderCode&courseCode=@Model.Course.ProgrammeCode" class="govuk-button govuk-button--start">Apply for this course</a>
