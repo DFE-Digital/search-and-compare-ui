@@ -39,68 +39,482 @@
             <p class="govuk-body">Visit Get into Teaching to find out more about <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview/postgraduate-loans">postgraduate loans</a>, <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview">bursaries and scholarships</a>, and <a href="https://getintoteaching.education.gov.uk/funding-and-salary/overview/funding-by-subject">funding by subject</a>.</p>
 
             <div class="accordion govuk-form-group" data-module="accordion">
-              @foreach (var area in Model.SubjectAreas) {
-                <div class="@("govuk-accordion__section " + (@area.Subjects.Any(subject => selected.Contains(subject.Id)) ? "govuk-accordion__section--expanded" : "govuk-accordion__section--hidden"))">
+              
+			                  <div class="govuk-accordion__section govuk-accordion__section--hidden">
                   <div class="govuk-accordion__section-header">
                     <h2 class="govuk-accordion__section-heading">
-                      <span class="govuk-accordion__section-button" id="@("accordion-heading-" + @area.Name.ToLower().Replace(" ", ""))">
-                        @area.Name
+                      <span class="govuk-accordion__section-button" id="accordion-heading-primary">
+                        Primary
                       </span>
                     </h2>
                   </div>
-                  <div class="govuk-accordion__section-content" aria-labelledby="@("accordion-heading-" + @area.Name.ToLower().Replace(" ", ""))">
+                  <div class="govuk-accordion__section-content" aria-labelledby="accordion-heading-primary">
                     <div class="govuk-checkboxes">
-                      @foreach (var subject in area.Subjects.OrderBy(x => x.Name)) {
                         <div class="govuk-checkboxes__item">
-                          <input id="@("subject-" + subject.Id)" name="SelectedSubjects" type="checkbox" checked="@selected.Contains(subject.Id)" value="@(subject.Id)" class="govuk-checkboxes__input" data-ga-event-form-input="@(subject.Name)">
-                          <label for="@("subject-" + subject.Id)" class="govuk-label govuk-checkboxes__label">
+                          <input id="subject-31" name="SelectedSubjects" type="checkbox" value="31" class="govuk-checkboxes__input" data-ga-event-form-input="Primary">
+                          <label for="subject-31" class="govuk-label govuk-checkboxes__label">
                             <span class="govuk-checkboxes__label_text">
-                              @subject.Name
-                              @if (subject.Name == "Design and technology")
-                              {
-                                <span> – also includes food, product design, textiles, and systems and control</span>
-                              }
+                              Primary
                             </span>
-                            @{
-                              string txt = null;
-                              if (subject.Funding?.Scholarship != null && subject.Funding?.BursaryFirst != null)
-                              {
-                                txt = $"Scholarships of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.Scholarship.Value)} and bursaries of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.BursaryFirst.Value)} are available";
-                              }
-                              else if (subject.Funding?.Scholarship != null)
-                              {
-                                txt = $"Scholarships of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.Scholarship.Value)} are available";
-                              }
-                              else if (subject.Funding?.BursaryFirst != null)
-                              {
-                              txt = $"Bursaries of {String.Format(System.Globalization.CultureInfo.InvariantCulture, "£{0:n0}", subject.Funding.BursaryFirst.Value)} available";
-                              }
-
-                              if (txt != null && subject.Funding?.EarlyCareerPayments != null)
-                              {
-                                txt += $", with early career payments of £2,000 each in your second, third and fourth year of teaching (£3,000 in some areas of England).";
-                              }
-                              else if (txt != null)
-                              {
-                                txt += ".";
-                              }
-                            }
-                            <span class="govuk-!-display-block">@txt</span>
+                            <span class="govuk-!-display-block"></span>
                           </label>
-                          @if (subject.IsSubjectKnowledgeEnhancementAvailable)
-                          {
-                            <p class="govuk-body">
-                              You can@(subject.Funding?.Scholarship != null || subject.Funding?.BursaryFirst != null ? " also " : " ")take a <a href="https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses">subject knowledge enhancement (SKE) course</a>.
-                            </p>
-                          }
                         </div>
-                      }
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-32" name="SelectedSubjects" type="checkbox" value="32" class="govuk-checkboxes__input" data-ga-event-form-input="Primary with English">
+                          <label for="subject-32" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Primary with English
+                            </span>
+                            <span class="govuk-!-display-block"></span>
+                          </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-55" name="SelectedSubjects" type="checkbox" value="55" class="govuk-checkboxes__input" data-ga-event-form-input="Primary with geography and history">
+                          <label for="subject-55" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Primary with geography and history
+                            </span>
+                            <span class="govuk-!-display-block"></span>
+                          </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-35" name="SelectedSubjects" type="checkbox" value="35" class="govuk-checkboxes__input" data-ga-event-form-input="Primary with mathematics">
+                          <label for="subject-35" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Primary with mathematics
+                            </span>
+                            <span class="govuk-!-display-block">Bursaries of &#xA3;6,000 available.</span>
+                          </label>
+                            <p class="govuk-body">
+                              You can also take a <a href="https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses">subject knowledge enhancement (SKE) course</a>.
+                            </p>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-36" name="SelectedSubjects" type="checkbox" value="36" class="govuk-checkboxes__input" data-ga-event-form-input="Primary with modern languages">
+                          <label for="subject-36" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Primary with modern languages
+                            </span>
+                            <span class="govuk-!-display-block"></span>
+                          </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-37" name="SelectedSubjects" type="checkbox" value="37" class="govuk-checkboxes__input" data-ga-event-form-input="Primary with physical education">
+                          <label for="subject-37" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Primary with physical education
+                            </span>
+                            <span class="govuk-!-display-block"></span>
+                          </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-38" name="SelectedSubjects" type="checkbox" value="38" class="govuk-checkboxes__input" data-ga-event-form-input="Primary with science">
+                          <label for="subject-38" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Primary with science
+                            </span>
+                            <span class="govuk-!-display-block"></span>
+                          </label>
+                        </div>
                     </div>
                   </div>
                 </div>
-              }
+                <div class="govuk-accordion__section govuk-accordion__section--hidden">
+                  <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading">
+                      <span class="govuk-accordion__section-button" id="accordion-heading-secondary">
+                        Secondary
+                      </span>
+                    </h2>
+                  </div>
+                  <div class="govuk-accordion__section-content" aria-labelledby="accordion-heading-secondary">
+                    <div class="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-0" name="SelectedSubjects" type="checkbox" value="0" class="govuk-checkboxes__input" data-ga-event-form-input="Art and design">
+                          <label for="subject-0" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Art and design
+                            </span>
+                            <span class="govuk-!-display-block">Bursaries of &#xA3;9,000 available.</span>
+                          </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-1" name="SelectedSubjects" type="checkbox" value="1" class="govuk-checkboxes__input" data-ga-event-form-input="Biology">
+                          <label for="subject-1" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Biology
+                            </span>
+                            <span class="govuk-!-display-block">Bursaries of &#xA3;26,000 available.</span>
+                          </label>
+                            <p class="govuk-body">
+                              You can also take a <a href="https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses">subject knowledge enhancement (SKE) course</a>.
+                            </p>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-2" name="SelectedSubjects" type="checkbox" value="2" class="govuk-checkboxes__input" data-ga-event-form-input="Business studies">
+                          <label for="subject-2" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Business studies
+                            </span>
+                            <span class="govuk-!-display-block">Bursaries of &#xA3;9,000 available.</span>
+                          </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-3" name="SelectedSubjects" type="checkbox" value="3" class="govuk-checkboxes__input" data-ga-event-form-input="Chemistry">
+                          <label for="subject-3" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Chemistry
+                            </span>
+                            <span class="govuk-!-display-block">Scholarships of &#xA3;28,000 and bursaries of &#xA3;26,000 are available, with early career payments of &#xA3;2,000 each in your second, third and fourth year of teaching (&#xA3;3,000 in some areas of England).</span>
+                          </label>
+                            <p class="govuk-body">
+                              You can also take a <a href="https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses">subject knowledge enhancement (SKE) course</a>.
+                            </p>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-4" name="SelectedSubjects" type="checkbox" value="4" class="govuk-checkboxes__input" data-ga-event-form-input="Citizenship">
+                          <label for="subject-4" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Citizenship
+                            </span>
+                            <span class="govuk-!-display-block"></span>
+                          </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-5" name="SelectedSubjects" type="checkbox" value="5" class="govuk-checkboxes__input" data-ga-event-form-input="Classics">
+                          <label for="subject-5" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Classics
+                            </span>
+                            <span class="govuk-!-display-block">Bursaries of &#xA3;26,000 available.</span>
+                          </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-47" name="SelectedSubjects" type="checkbox" value="47" class="govuk-checkboxes__input" data-ga-event-form-input="Communication and media studies">
+                          <label for="subject-47" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Communication and media studies
+                            </span>
+                            <span class="govuk-!-display-block"></span>
+                          </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-48" name="SelectedSubjects" type="checkbox" value="48" class="govuk-checkboxes__input" data-ga-event-form-input="Computing">
+                          <label for="subject-48" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Computing
+                            </span>
+                            <span class="govuk-!-display-block">Scholarships of &#xA3;28,000 and bursaries of &#xA3;26,000 are available.</span>
+                          </label>
+                            <p class="govuk-body">
+                              You can also take a <a href="https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses">subject knowledge enhancement (SKE) course</a>.
+                            </p>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-7" name="SelectedSubjects" type="checkbox" value="7" class="govuk-checkboxes__input" data-ga-event-form-input="Dance">
+                          <label for="subject-7" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Dance
+                            </span>
+                            <span class="govuk-!-display-block"></span>
+                          </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-8" name="SelectedSubjects" type="checkbox" value="8" class="govuk-checkboxes__input" data-ga-event-form-input="Design and technology">
+                          <label for="subject-8" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Design and technology
+                                <span> – also includes food, product design, textiles, and systems and control</span>
+                            </span>
+                            <span class="govuk-!-display-block">Bursaries of &#xA3;15,000 available.</span>
+                          </label>
+                            <p class="govuk-body">
+                              You can also take a <a href="https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses">subject knowledge enhancement (SKE) course</a>.
+                            </p>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-9" name="SelectedSubjects" type="checkbox" value="9" class="govuk-checkboxes__input" data-ga-event-form-input="Drama">
+                          <label for="subject-9" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Drama
+                            </span>
+                            <span class="govuk-!-display-block"></span>
+                          </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-11" name="SelectedSubjects" type="checkbox" value="11" class="govuk-checkboxes__input" data-ga-event-form-input="Economics">
+                          <label for="subject-11" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Economics
+                            </span>
+                            <span class="govuk-!-display-block"></span>
+                          </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-12" name="SelectedSubjects" type="checkbox" value="12" class="govuk-checkboxes__input" data-ga-event-form-input="English">
+                          <label for="subject-12" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              English
+                            </span>
+                            <span class="govuk-!-display-block">Bursaries of &#xA3;12,000 available.</span>
+                          </label>
+                            <p class="govuk-body">
+                              You can also take a <a href="https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses">subject knowledge enhancement (SKE) course</a>.
+                            </p>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-15" name="SelectedSubjects" type="checkbox" value="15" class="govuk-checkboxes__input" data-ga-event-form-input="Geography">
+                          <label for="subject-15" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Geography
+                            </span>
+                            <span class="govuk-!-display-block">Scholarships of &#xA3;17,000 and bursaries of &#xA3;15,000 are available.</span>
+                          </label>
+                            <p class="govuk-body">
+                              You can also take a <a href="https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses">subject knowledge enhancement (SKE) course</a>.
+                            </p>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-17" name="SelectedSubjects" type="checkbox" value="17" class="govuk-checkboxes__input" data-ga-event-form-input="Health and social care">
+                          <label for="subject-17" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Health and social care
+                            </span>
+                            <span class="govuk-!-display-block"></span>
+                          </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-18" name="SelectedSubjects" type="checkbox" value="18" class="govuk-checkboxes__input" data-ga-event-form-input="History">
+                          <label for="subject-18" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              History
+                            </span>
+                            <span class="govuk-!-display-block">Bursaries of &#xA3;9,000 available.</span>
+                          </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-24" name="SelectedSubjects" type="checkbox" value="24" class="govuk-checkboxes__input" data-ga-event-form-input="Mathematics">
+                          <label for="subject-24" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Mathematics
+                            </span>
+                            <span class="govuk-!-display-block">Scholarships of &#xA3;28,000 and bursaries of &#xA3;26,000 are available, with early career payments of &#xA3;2,000 each in your second, third and fourth year of teaching (&#xA3;3,000 in some areas of England).</span>
+                          </label>
+                            <p class="govuk-body">
+                              You can also take a <a href="https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses">subject knowledge enhancement (SKE) course</a>.
+                            </p>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-27" name="SelectedSubjects" type="checkbox" value="27" class="govuk-checkboxes__input" data-ga-event-form-input="Music">
+                          <label for="subject-27" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Music
+                            </span>
+                            <span class="govuk-!-display-block">Bursaries of &#xA3;9,000 available.</span>
+                          </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-29" name="SelectedSubjects" type="checkbox" value="29" class="govuk-checkboxes__input" data-ga-event-form-input="Physical education">
+                          <label for="subject-29" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Physical education
+                            </span>
+                            <span class="govuk-!-display-block"></span>
+                          </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-30" name="SelectedSubjects" type="checkbox" value="30" class="govuk-checkboxes__input" data-ga-event-form-input="Physics">
+                          <label for="subject-30" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Physics
+                            </span>
+                            <span class="govuk-!-display-block">Scholarships of &#xA3;28,000 and bursaries of &#xA3;26,000 are available, with early career payments of &#xA3;2,000 each in your second, third and fourth year of teaching (&#xA3;3,000 in some areas of England).</span>
+                          </label>
+                            <p class="govuk-body">
+                              You can also take a <a href="https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses">subject knowledge enhancement (SKE) course</a>.
+                            </p>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-39" name="SelectedSubjects" type="checkbox" value="39" class="govuk-checkboxes__input" data-ga-event-form-input="Psychology">
+                          <label for="subject-39" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Psychology
+                            </span>
+                            <span class="govuk-!-display-block"></span>
+                          </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-40" name="SelectedSubjects" type="checkbox" value="40" class="govuk-checkboxes__input" data-ga-event-form-input="Religious education">
+                          <label for="subject-40" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Religious education
+                            </span>
+                            <span class="govuk-!-display-block">Bursaries of &#xA3;9,000 available.</span>
+                          </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-56" name="SelectedSubjects" type="checkbox" value="56" class="govuk-checkboxes__input" data-ga-event-form-input="Science">
+                          <label for="subject-56" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Science
+                            </span>
+                            <span class="govuk-!-display-block"></span>
+                          </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-43" name="SelectedSubjects" type="checkbox" value="43" class="govuk-checkboxes__input" data-ga-event-form-input="Social sciences">
+                          <label for="subject-43" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Social sciences
+                            </span>
+                            <span class="govuk-!-display-block"></span>
+                          </label>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="govuk-accordion__section govuk-accordion__section--hidden">
+                  <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading">
+                      <span class="govuk-accordion__section-button" id="accordion-heading-secondary:modernlanguages">
+                        Secondary: Modern languages
+                      </span>
+                    </h2>
+                  </div>
+                  <div class="govuk-accordion__section-content" aria-labelledby="accordion-heading-secondary:modernlanguages">
+                    <div class="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-53" name="SelectedSubjects" type="checkbox" value="53" class="govuk-checkboxes__input" data-ga-event-form-input="English as a second or other language">
+                          <label for="subject-53" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              English as a second or other language
+                            </span>
+                            <span class="govuk-!-display-block"></span>
+                          </label>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-13" name="SelectedSubjects" type="checkbox" value="13" class="govuk-checkboxes__input" data-ga-event-form-input="French">
+                          <label for="subject-13" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              French
+                            </span>
+                            <span class="govuk-!-display-block">Scholarships of &#xA3;28,000 and bursaries of &#xA3;26,000 are available, with early career payments of &#xA3;2,000 each in your second, third and fourth year of teaching (&#xA3;3,000 in some areas of England).</span>
+                          </label>
+                            <p class="govuk-body">
+                              You can also take a <a href="https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses">subject knowledge enhancement (SKE) course</a>.
+                            </p>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-16" name="SelectedSubjects" type="checkbox" value="16" class="govuk-checkboxes__input" data-ga-event-form-input="German">
+                          <label for="subject-16" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              German
+                            </span>
+                            <span class="govuk-!-display-block">Scholarships of &#xA3;28,000 and bursaries of &#xA3;26,000 are available, with early career payments of &#xA3;2,000 each in your second, third and fourth year of teaching (&#xA3;3,000 in some areas of England).</span>
+                          </label>
+                            <p class="govuk-body">
+                              You can also take a <a href="https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses">subject knowledge enhancement (SKE) course</a>.
+                            </p>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-20" name="SelectedSubjects" type="checkbox" value="20" class="govuk-checkboxes__input" data-ga-event-form-input="Italian">
+                          <label for="subject-20" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Italian
+                            </span>
+                            <span class="govuk-!-display-block">Bursaries of &#xA3;26,000 available, with early career payments of &#xA3;2,000 each in your second, third and fourth year of teaching (&#xA3;3,000 in some areas of England).</span>
+                          </label>
+                            <p class="govuk-body">
+                              You can also take a <a href="https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses">subject knowledge enhancement (SKE) course</a>.
+                            </p>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-21" name="SelectedSubjects" type="checkbox" value="21" class="govuk-checkboxes__input" data-ga-event-form-input="Japanese">
+                          <label for="subject-21" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Japanese
+                            </span>
+                            <span class="govuk-!-display-block">Bursaries of &#xA3;26,000 available, with early career payments of &#xA3;2,000 each in your second, third and fourth year of teaching (&#xA3;3,000 in some areas of England).</span>
+                          </label>
+                            <p class="govuk-body">
+                              You can also take a <a href="https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses">subject knowledge enhancement (SKE) course</a>.
+                            </p>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-23" name="SelectedSubjects" type="checkbox" value="23" class="govuk-checkboxes__input" data-ga-event-form-input="Mandarin">
+                          <label for="subject-23" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Mandarin
+                            </span>
+                            <span class="govuk-!-display-block">Bursaries of &#xA3;26,000 available, with early career payments of &#xA3;2,000 each in your second, third and fourth year of teaching (&#xA3;3,000 in some areas of England).</span>
+                          </label>
+                            <p class="govuk-body">
+                              You can also take a <a href="https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses">subject knowledge enhancement (SKE) course</a>.
+                            </p>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-49" name="SelectedSubjects" type="checkbox" value="49" class="govuk-checkboxes__input" data-ga-event-form-input="Modern languages (other)">
+                          <label for="subject-49" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Modern languages (other)
+                            </span>
+                            <span class="govuk-!-display-block">Bursaries of &#xA3;26,000 available, with early career payments of &#xA3;2,000 each in your second, third and fourth year of teaching (&#xA3;3,000 in some areas of England).</span>
+                          </label>
+                            <p class="govuk-body">
+                              You can also take a <a href="https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses">subject knowledge enhancement (SKE) course</a>.
+                            </p>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-41" name="SelectedSubjects" type="checkbox" value="41" class="govuk-checkboxes__input" data-ga-event-form-input="Russian">
+                          <label for="subject-41" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Russian
+                            </span>
+                            <span class="govuk-!-display-block">Bursaries of &#xA3;26,000 available, with early career payments of &#xA3;2,000 each in your second, third and fourth year of teaching (&#xA3;3,000 in some areas of England).</span>
+                          </label>
+                            <p class="govuk-body">
+                              You can also take a <a href="https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses">subject knowledge enhancement (SKE) course</a>.
+                            </p>
+                        </div>
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-44" name="SelectedSubjects" type="checkbox" value="44" class="govuk-checkboxes__input" data-ga-event-form-input="Spanish">
+                          <label for="subject-44" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Spanish
+                            </span>
+                            <span class="govuk-!-display-block">Scholarships of &#xA3;28,000 and bursaries of &#xA3;26,000 are available, with early career payments of &#xA3;2,000 each in your second, third and fourth year of teaching (&#xA3;3,000 in some areas of England).</span>
+                          </label>
+                            <p class="govuk-body">
+                              You can also take a <a href="https://getintoteaching.education.gov.uk/explore-my-options/teacher-training-routes/subject-knowledge-enhancement-ske-courses">subject knowledge enhancement (SKE) course</a>.
+                            </p>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="govuk-accordion__section govuk-accordion__section--hidden">
+                  <div class="govuk-accordion__section-header">
+                    <h2 class="govuk-accordion__section-heading">
+                      <span class="govuk-accordion__section-button" id="accordion-heading-furthereducation">
+                        Further education
+                      </span>
+                    </h2>
+                  </div>
+                  <div class="govuk-accordion__section-content" aria-labelledby="accordion-heading-furthereducation">
+                    <div class="govuk-checkboxes">
+                        <div class="govuk-checkboxes__item">
+                          <input id="subject-14" name="SelectedSubjects" type="checkbox" value="14" class="govuk-checkboxes__input" data-ga-event-form-input="Further education">
+                          <label for="subject-14" class="govuk-label govuk-checkboxes__label">
+                            <span class="govuk-checkboxes__label_text">
+                              Further education
+                            </span>
+                            <span class="govuk-!-display-block"></span>
+                          </label>
+                        </div>
+                    </div>
+                  </div>
+                </div>
 
-              <div class="@("govuk-accordion__section " + (@Model.FilterModel.senCourses ? "govuk-accordion__section--expanded" : "govuk-accordion__section--hidden"))">
+              <div class="govuk-accordion__section govuk-accordion__section--hidden">
                 <div class="govuk-accordion__section-header">
                   <h2 class="govuk-accordion__section-heading">
                     <span class="govuk-accordion__section-button" id="accordion-heading-send">
@@ -111,8 +525,7 @@
                 <div class="govuk-accordion__section-content" aria-labelledby="accordion-heading-send">
                   <div class="govuk-checkboxes">
                     <div class="govuk-checkboxes__item">
-                      @{var senCourses = Model.FilterModel.senCourses;}
-                      <input asp-for="@senCourses" class="govuk-checkboxes__input" data-ga-event-form-input="Show SEN courses"/>
+                      <input class="govuk-checkboxes__input" data-ga-event-form-input="Show SEN courses" type="checkbox" data-val="true" data-val-required="The Boolean field is required." id="senCourses" name="senCourses" value="true" />
 
                       <label for="senCourses" class="govuk-label govuk-checkboxes__label">
                         <span class="govuk-checkboxes__label_text">
@@ -123,6 +536,8 @@
                   </div>
                 </div>
               </div>
+
+
             </div>
 
           </fieldset>
