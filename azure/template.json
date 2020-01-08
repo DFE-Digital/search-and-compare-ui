@@ -86,6 +86,13 @@
             "metadata": {
                 "description": "List of resource tags as a JSON object"
             }
+        },
+        "newAppUrl": {
+            "type": "string",
+            "defaultValue": {},
+            "metadata": {
+                "description": "Base URL of new FIND"
+            }
         }
     },
     "variables": {
@@ -232,6 +239,10 @@
                             {
                                 "name": "SENTRY_DSN",
                                 "value": "[parameters('sentryDSN')]"
+                            },
+                            {
+                                "name": "NEW_APP_URL",
+                                "value": "[parameters('newAppUrl')]"
                             }
                         ]
                     },
