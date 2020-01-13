@@ -6,7 +6,6 @@ namespace GovUk.Education.SearchAndCompare.UI
     public class SearchUiConfig
     {
         private const string ConfigKeyApiUrl = "API_URL";
-        private const string NewAppUrl = "NEW_APP_URL";
 
         private readonly IConfiguration _configuration;
 
