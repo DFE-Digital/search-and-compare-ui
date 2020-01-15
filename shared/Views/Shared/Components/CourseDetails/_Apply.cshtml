@@ -10,73 +10,21 @@
 
 <div class="govuk-!-margin-bottom-8">
   <h2 class="govuk-heading-l" id="section-apply">Apply</h2>
-  @if (Model.Course.HasVacancies == false)
-  {
-    <div class="govuk-warning-text">
-      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-      <strong class="govuk-warning-text__text">
-        <span class="govuk-warning-text__assistive">Warning</span>
-        You can't apply for this course because it currently has no vacancies. To find courses with vacancies, change your search settings to 'Only courses with vacancies'.
-      </strong>
-    </div>
-  }
-  else
-  {
-
-    @if (
-      Model.Course.Provider.ProviderCode == "R55" ||
-      Model.Course.Provider.ProviderCode == "1N1" ||
-      Model.Course.Provider.ProviderCode == "S31" ||
-      Model.Course.Provider.ProviderCode == "24L" ||
-      Model.Course.Provider.ProviderCode == "1HQ" ||
-      Model.Course.Provider.ProviderCode == "L06" ||
-      Model.Course.Provider.ProviderCode == "2LR" ||
-      Model.Course.Provider.ProviderCode == "254" ||
-      Model.Course.Provider.ProviderCode == "12K" ||
-      Model.Course.Provider.ProviderCode == "1OT" ||
-      Model.Course.Provider.ProviderCode == "N83" ||
-      Model.Course.Provider.ProviderCode == "2B2" ||
-      Model.Course.Provider.ProviderCode == "255" ||
-      Model.Course.Provider.ProviderCode == "2ET" ||
-      Model.Course.Provider.ProviderCode == "T25" ||
-      Model.Course.Provider.ProviderCode == "1OS" ||
-      Model.Course.Provider.ProviderCode == "S17" ||
-      Model.Course.Provider.ProviderCode == "C76" ||
-      Model.Course.Provider.ProviderCode == "2DB" ||
-      Model.Course.Provider.ProviderCode == "M82" ||
-      Model.Course.Provider.ProviderCode == "2B5" ||
-      Model.Course.Provider.ProviderCode == "2GU" ||
-      Model.Course.Provider.ProviderCode == "1ZN"
-    )
+    @if (Model.Course.HasVacancies == false)
     {
-      <p class="govuk-body">
-        <a href="https://www.apply-for-teacher-training.education.gov.uk/candidate/apply?providerCode=@Model.Course.Provider.ProviderCode&courseCode=@Model.Course.ProgrammeCode" class="govuk-button govuk-button--start">Apply for this course</a>
-      </p>
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+          <span class="govuk-warning-text__assistive">Warning</span>
+          You can't apply for this course because it currently has no vacancies. To find courses with vacancies, change your search settings to 'Only courses with vacancies'.
+        </strong>
+      </div>
     }
     else
     {
       <p class="govuk-body">
-        <a href="https://2020.teachertraining.apply.ucas.com/apply/student/login.do">Apply on the UCAS website</a>. You’ll need to register with UCAS before you can apply.
+        <a href="https://www.apply-for-teacher-training.education.gov.uk/candidate/apply?providerCode=@Model.Course.Provider.ProviderCode&courseCode=@Model.Course.ProgrammeCode" class="govuk-button govuk-button--start">Apply for this course</a>
       </p>
-      <p class="govuk-body">
-        Visit Get into Teaching for <a href="https://getintoteaching.education.gov.uk/how-to-apply/apply">guidance on applying for teacher training</a>.
-      </p>
-
-      <p class="govuk-body">
-        When you apply you’ll need these codes for the Choices section of your application form:
-      </p>
-      <div class="govuk-inset-text">
-        <ul class="govuk-list">
-          <li class="govuk-!-margin-bottom-2">
-            Training provider code:
-            <span class="govuk-!-display-block govuk-!-font-size-36 govuk-!-font-weight-bold">@Model.Course.Provider.ProviderCode</span>
-          </li>
-          <li>
-            Training programme code:
-            <span class="govuk-!-display-block govuk-!-font-size-36 govuk-!-font-weight-bold">@Model.Course.ProgrammeCode</span>
-          </li>
-        </ul>
-      </div>
     }
 
     if (Model.Course.Campuses.Count() > 0)
