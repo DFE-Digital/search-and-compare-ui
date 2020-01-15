@@ -15,6 +15,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.Features
         }
 
         public bool Maps => ShouldShow("FEATURE_MAPS");
+        public bool RedirectToRails => ShouldShow("FEATURE_REDIRECT_TO_RAILS");
 
         public bool ShouldShow(string key)
         {

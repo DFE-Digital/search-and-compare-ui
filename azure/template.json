@@ -93,6 +93,13 @@
             "metadata": {
                 "description": "Base URL of new FIND"
             }
+        },
+        "featureRedirectToRails": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Feature flag to redirect to rails using the new FIND url"
+            }
         }
     },
     "variables": {
@@ -243,6 +250,10 @@
                             {
                                 "name": "NEW_APP_URL",
                                 "value": "[parameters('newAppUrl')]"
+                            },
+                            {
+                                "name": "FEATURE_REDIRECT_TO_RAILS",
+                                "value": "[parameters('featureRedirectToRails')]"
                             }
                         ]
                     },
