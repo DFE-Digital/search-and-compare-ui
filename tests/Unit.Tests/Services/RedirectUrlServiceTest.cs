@@ -4,7 +4,6 @@ using FluentAssertions;
 using Moq;
 using Microsoft.Extensions.Configuration;
 
-
 namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Services
 {
     [TestFixture]
