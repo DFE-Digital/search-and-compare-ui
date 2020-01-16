@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Moq;
 using NUnit.Framework;
 using GovUk.Education.SearchAndCompare.Services;
+using GovUk.Education.SearchAndCompare.UI.Shared.Features;
 using GovUk.Education.SearchAndCompare.UI.Utils;
 using Microsoft.AspNetCore.Http;
 
@@ -49,8 +50,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             var mockApi = GetMockApi(_subjectAreas);
             var mockGeocoder = new Mock<IGeocoder>();
 
-            _filterController = new FilterController(mockApi.Object, mockGeocoder.Object, TelemetryClientHelper.GetMocked(),
-                new GoogleAnalyticsClient(null, null));
+            _filterController = new FilterController(mockApi.Object,mockGeocoder.Object,
+                TelemetryClientHelper.GetMocked(),
+                new GoogleAnalyticsClient(null, null),
+                new Mock<IRedirectUrlService>().Object,
+                new Mock<IFeatureFlags>().Object);
             var tempDataMock = new Mock<ITempDataDictionary>();
             var tempUrlMock = new Mock<IUrlHelper>();
             _filterController.TempData = tempDataMock.Object;

@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using GovUk.Education.SearchAndCompare.UI.Shared.Features;
 
 namespace GovUk.Education.SearchAndCompare.UI.Controllers
 {
@@ -21,19 +22,21 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
     public class FilterController : Controller
     {
         private readonly ISearchAndCompareApi _api;
-
         private readonly IGeocoder _geocoder;
-
         private readonly TelemetryClient _telemetryClient;
-
         private readonly GoogleAnalyticsClient _gaClient;
+        private readonly IRedirectUrlService _redirectUrlService;
+        private readonly IFeatureFlags _featureFlags;
 
-        public FilterController(ISearchAndCompareApi api, IGeocoder geocoder, TelemetryClient telemetryClient, GoogleAnalyticsClient gaClient)
+        public FilterController(ISearchAndCompareApi api, IGeocoder geocoder, TelemetryClient telemetryClient,
+            GoogleAnalyticsClient gaClient, IRedirectUrlService redirectUrlService, IFeatureFlags featureFlags)
         {
             _api = api;
             _geocoder = geocoder;
             _telemetryClient = telemetryClient;
             _gaClient = gaClient;
+            _redirectUrlService = redirectUrlService;
+            _featureFlags = featureFlags;
         }
 
         [HttpGet("results/filter/subject")]
@@ -217,6 +220,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [HttpGet("results/filter/funding")]
         public IActionResult Funding(ResultsFilter filter)
         {
+            if (_featureFlags?.RedirectToRails == true)
+            {
+                return _redirectUrlService.RedirectToNewApp("results/filter/funding?todo");
+            }
+
             ViewBag.Errors = TempData.Get<ErrorViewModel>("Errors") ?? new ErrorViewModel();
             return View("Funding", filter);
         }
