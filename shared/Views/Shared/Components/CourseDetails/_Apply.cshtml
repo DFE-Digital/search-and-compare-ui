@@ -10,25 +10,25 @@
 
 <div class="govuk-!-margin-bottom-8">
   <h2 class="govuk-heading-l" id="section-apply">Apply</h2>
-    @if (Model.Course.HasVacancies == false)
-    {
-      <div class="govuk-warning-text">
-        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-        <strong class="govuk-warning-text__text">
-          <span class="govuk-warning-text__assistive">Warning</span>
-          You can't apply for this course because it currently has no vacancies. To find courses with vacancies, change your search settings to 'Only courses with vacancies'.
-        </strong>
-      </div>
-    }
-    else
-    {
-      <p class="govuk-body">
-        <a href="https://www.apply-for-teacher-training.education.gov.uk/candidate/apply?providerCode=@Model.Course.Provider.ProviderCode&courseCode=@Model.Course.ProgrammeCode" class="govuk-button govuk-button--start">Apply for this course</a>
-      </p>
-    }
+  @if (Model.Course.HasVacancies == false)
+  {
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        You can't apply for this course because it currently has no vacancies. To find courses with vacancies, change your search settings to 'Only courses with vacancies'.
+      </strong>
+    </div>
+  }
+  else
+  {
+    <p class="govuk-body">
+      <a href="https://www.apply-for-teacher-training.education.gov.uk/candidate/apply?providerCode=@Model.Course.Provider.ProviderCode&courseCode=@Model.Course.ProgrammeCode" class="govuk-button govuk-button--start">Apply for this course</a>
+    </p>
+  }
 
-    if (Model.Course.Campuses.Count() > 0)
-    {
+  @if (Model.Course.Campuses.Count() > 0)
+  {
     <h3 class="govuk-heading-m">Choose a training location</h3>
     <p class="govuk-body">You’ll also need to choose a training location – select the relevant location name on the application form.</p>
     <div id="locations-map" class="google-map--locations"></div>
