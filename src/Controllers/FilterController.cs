@@ -222,7 +222,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         {
             if (_featureFlags?.RedirectToRails == true)
             {
-                return _redirectUrlService.RedirectToNewApp("results/filter/funding?todo");
+                return _redirectUrlService.RedirectToNewApp();
             }
 
             ViewBag.Errors = TempData.Get<ErrorViewModel>("Errors") ?? new ErrorViewModel();

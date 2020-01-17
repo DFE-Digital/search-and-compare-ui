@@ -57,16 +57,16 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
         public void FundingRedirectsToNewApp()
         {
             _mockFlag.Setup(x => x.RedirectToRails).Returns(true);
-            var redirectObject = new RedirectResult("frontend");
-            string actualRedirectPath = null;
-            _redirectUrlMock.Setup(x => x.RedirectToNewApp(It.IsAny<string>()))
-                .Callback<string>(x => actualRedirectPath = x)
+            string actualRedirectPath = "results/filter/funding?query";
+
+            var redirectObject = new RedirectResult(actualRedirectPath);
+            _redirectUrlMock.Setup(x => x.RedirectToNewApp())
                 .Returns(redirectObject);
-            var result = _filterController.Funding(_resultsFilter);
+
+            var result = _filterController.Funding(_resultsFilter) as RedirectResult;
             result.Should().Be(redirectObject);
-            _redirectUrlMock.Verify(x => x.RedirectToNewApp(It.IsAny<string>()));
-            // Use callbacks to get expected string when test fails. https://thomasardal.com/using-moq-callbacks-as-verify/
-            actualRedirectPath.Should().Be("results/filter/funding?todo");
+            _redirectUrlMock.Verify(x => x.RedirectToNewApp(), Times.AtLeastOnce);
+            result.Url.Should().Be(actualRedirectPath);
         }
     }
 }
