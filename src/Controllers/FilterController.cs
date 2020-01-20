@@ -286,6 +286,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("StudyType")]
         public IActionResult StudyType(ResultsFilter model)
         {
+            if (_featureFlags?.RedirectToRails == true)
+            {
+                return _redirectUrlService.RedirectToNewApp();
+            }
+
             return View(model);
         }
 
