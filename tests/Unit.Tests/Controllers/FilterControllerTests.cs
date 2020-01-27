@@ -1,11 +1,14 @@
+using System.Collections.Generic;
 using FluentAssertions;
 using GovUk.Education.SearchAndCompare.Domain.Client;
+using GovUk.Education.SearchAndCompare.Domain.Models;
 using GovUk.Education.SearchAndCompare.Services;
 using GovUk.Education.SearchAndCompare.UI.Controllers;
 using GovUk.Education.SearchAndCompare.UI.Filters;
 using GovUk.Education.SearchAndCompare.UI.Services;
 using GovUk.Education.SearchAndCompare.UI.Shared.Features;
 using GovUk.Education.SearchAndCompare.UI.Unit;
+using GovUk.Education.SearchAndCompare.UI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Moq;
@@ -20,16 +23,17 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
         private ResultsFilter _resultsFilter;
         private Mock<IFeatureFlags> _mockFlag;
         private Mock<IRedirectUrlService> _redirectUrlMock;
+        private Mock<ISearchAndCompareApi> _mockApi;
 
         [SetUp]
         public void SetUp()
         {
-            var mockApi = new Mock<ISearchAndCompareApi>();
+            _mockApi = new Mock<ISearchAndCompareApi>();
             _mockFlag = new Mock<IFeatureFlags>();
             var mockGeocoder = new Mock<IGeocoder>();
 
             _redirectUrlMock = new Mock<IRedirectUrlService>();
-            _filterController = new FilterController(mockApi.Object, mockGeocoder.Object,
+            _filterController = new FilterController(_mockApi.Object, mockGeocoder.Object,
                 TelemetryClientHelper.GetMocked(),
                 new GoogleAnalyticsClient(null, null),
                 _redirectUrlMock.Object,
@@ -95,6 +99,20 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
             result.Should().Be(redirectObject);
             _redirectUrlMock.Verify(x => x.RedirectToNewApp(), Times.AtLeastOnce);
             result.Url.Should().Be(actualRedirectPath);
+        }
+
+        [Test]
+        public void SubjectGetHttpGetTest()
+        {
+            var mockSubjectAreas = new List<SubjectArea>();
+            _mockApi.Setup(api => api.GetSubjectAreas()).Returns(mockSubjectAreas);
+            var result = _filterController.SubjectGet(_resultsFilter);
+            result.Should().BeOfType<ViewResult>();
+            var viewResult = result as ViewResult;
+            viewResult?.Model.Should().BeOfType<SubjectFilterViewModel>();
+            var model = (SubjectFilterViewModel)viewResult?.Model;
+            model.FilterModel.Should().Be(_resultsFilter);
+            model.SubjectAreas.Should().BeSameAs(mockSubjectAreas);
         }
 
         [Test]
