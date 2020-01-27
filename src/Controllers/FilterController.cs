@@ -43,6 +43,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("Subject")]
         public IActionResult SubjectGet(ResultsFilter filter)
         {
+            if (_featureFlags?.RedirectToRails == true)
+            {
+                return _redirectUrlService.RedirectToNewApp();
+            }
+
             var subjectAreas = _api.GetSubjectAreas();
 
             var viewModel = new SubjectFilterViewModel
