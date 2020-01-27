@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using FluentAssertions;
 using GovUk.Education.SearchAndCompare.Domain.Client;
+using GovUk.Education.SearchAndCompare.Domain.Models;
 using GovUk.Education.SearchAndCompare.Services;
 using GovUk.Education.SearchAndCompare.UI.Controllers;
 using GovUk.Education.SearchAndCompare.UI.Filters;
@@ -22,6 +24,7 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
         private Mock<IFeatureFlags> _mockFlag;
         private Mock<ISearchAndCompareApi> _mockApi;
         private Mock<IRedirectUrlService> _redirectUrlMock;
+        private Mock<ISearchAndCompareApi> _mockApi;
 
         [SetUp]
         public void SetUp()
@@ -96,6 +99,20 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
             result.Should().Be(redirectObject);
             _redirectUrlMock.Verify(x => x.RedirectToNewApp(), Times.AtLeastOnce);
             result.Url.Should().Be(actualRedirectPath);
+        }
+
+        [Test]
+        public void SubjectGetHttpGetTest()
+        {
+            var mockSubjectAreas = new List<SubjectArea>();
+            _mockApi.Setup(api => api.GetSubjectAreas()).Returns(mockSubjectAreas);
+            var result = _filterController.SubjectGet(_resultsFilter);
+            result.Should().BeOfType<ViewResult>();
+            var viewResult = result as ViewResult;
+            viewResult?.Model.Should().BeOfType<SubjectFilterViewModel>();
+            var model = (SubjectFilterViewModel)viewResult?.Model;
+            model.FilterModel.Should().Be(_resultsFilter);
+            model.SubjectAreas.Should().BeSameAs(mockSubjectAreas);
         }
 
         [Test]
