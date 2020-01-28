@@ -265,6 +265,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("Qualification")]
         public IActionResult QualificationGet(ResultsFilter model)
         {
+            if (_featureFlags?.RedirectToRails == true)
+            {
+                return _redirectUrlService.RedirectToNewApp();
+            }
+
             // Put the posted qualifications into a comma separated string
             model.qualifications = model.qualification.Any() ? string.Join(",", model.qualification.Select(q => Enum.GetName(typeof(QualificationOption), q))) : string.Join(",", Enum.GetNames(typeof(QualificationOption)));
             model.qualification = new List<QualificationOption>(); // Remove this from the url
