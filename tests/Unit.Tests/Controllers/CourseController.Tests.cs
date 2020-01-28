@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using FluentAssertions;
 using GovUk.Education.SearchAndCompare.Domain.Client;
 using GovUk.Education.SearchAndCompare.Domain.Models;
 using GovUk.Education.SearchAndCompare.UI.Controllers;
@@ -58,7 +59,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
         public void IndexRedirectsToNewApp()
         {
             var redirectUrlMock = new Mock<IRedirectUrlService>();
-            redirectUrlMock.Setup(x => x.RedirectToNewApp("/course/abc/def")).Returns(new RedirectResult("frontend"));
+            var redirectObject = new RedirectResult("frontend");
+            redirectUrlMock.Setup(x => x.RedirectToNewApp("/course/abc/def")).Returns(redirectObject);
 
             var mockApi = new Mock<ISearchAndCompareApi>();
             mockApi.Setup(x => x.GetCourse("abc","def")).Returns( new Course {Name = "my course", Fees = new Fees {Uk = 456}}).Verifiable();
@@ -70,7 +72,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
 
             var res = controller.Index("abc", "def", new ResultsFilter());
 
-            Assert.IsTrue(res is RedirectResult);
+            res.Should().Be(redirectObject);
         }
     }
 }

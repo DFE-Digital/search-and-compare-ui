@@ -97,6 +97,7 @@ namespace GovUk.Education.SearchAndCompare.UI
             services.AddScoped<GoogleAnalyticsClient>(p => new GoogleAnalyticsClient(p.GetService<IHttpClient>(), magicStringForGoogleAnalytics));
             services.AddSingleton<IGeocoder>(provider => new Geocoder(Configuration["google_cloud_platform_key_geocoding"], new HttpClient()));
             services.AddSingleton<IRedirectUrlService, RedirectUrlService>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
