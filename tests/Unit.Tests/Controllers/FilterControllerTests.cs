@@ -96,5 +96,30 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
             _redirectUrlMock.Verify(x => x.RedirectToNewApp(), Times.AtLeastOnce);
             result.Url.Should().Be(actualRedirectPath);
         }
+
+        [Test]
+        public void VacancyHttpGetTest()
+        {
+            var result = _filterController.Vacancy(_resultsFilter);
+            result.Should().BeOfType<ViewResult>();
+            var viewResult = result as ViewResult;
+            viewResult?.Model.Should().Be(_resultsFilter);
+        }
+
+        [Test]
+        public void VacancyRedirectsToNewApp()
+        {
+            _mockFlag.Setup(x => x.RedirectToRails).Returns(true);
+            string actualRedirectPath = "results/filter/vacancy?query";
+
+            var redirectObject = new RedirectResult(actualRedirectPath);
+            _redirectUrlMock.Setup(x => x.RedirectToNewApp())
+                .Returns(redirectObject);
+
+            var result = _filterController.Vacancy(_resultsFilter) as RedirectResult;
+            result.Should().Be(redirectObject);
+            _redirectUrlMock.Verify(x => x.RedirectToNewApp(), Times.AtLeastOnce);
+            result.Url.Should().Be(actualRedirectPath);
+        }
     }
 }

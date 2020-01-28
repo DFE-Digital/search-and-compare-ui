@@ -306,6 +306,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("Vacancy")]
         public IActionResult Vacancy(ResultsFilter model)
         {
+            if (_featureFlags?.RedirectToRails == true)
+            {
+                return _redirectUrlService.RedirectToNewApp();
+            }
+
             return View(model);
         }
 
