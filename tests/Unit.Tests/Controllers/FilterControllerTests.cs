@@ -41,6 +41,8 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
             {
                 funding = 2,
                 hasvacancies = true,
+                fulltime = true,
+                parttime = false,
             };
         }
 
@@ -64,6 +66,32 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
                 .Returns(redirectObject);
 
             var result = _filterController.Funding(_resultsFilter) as RedirectResult;
+            result.Should().Be(redirectObject);
+            _redirectUrlMock.Verify(x => x.RedirectToNewApp(), Times.AtLeastOnce);
+            result.Url.Should().Be(actualRedirectPath);
+        }
+
+
+        [Test]
+        public void StudyTypeHttpGetTest()
+        {
+            var result = _filterController.StudyType(_resultsFilter);
+            result.Should().BeOfType<ViewResult>();
+            var viewResult = result as ViewResult;
+            viewResult?.Model.Should().Be(_resultsFilter);
+        }
+
+        [Test]
+        public void StudyTypeRedirectsToNewApp()
+        {
+            _mockFlag.Setup(x => x.RedirectToRails).Returns(true);
+            string actualRedirectPath = "results/filter/studytype?query";
+
+            var redirectObject = new RedirectResult(actualRedirectPath);
+            _redirectUrlMock.Setup(x => x.RedirectToNewApp())
+                .Returns(redirectObject);
+
+            var result = _filterController.StudyType(_resultsFilter) as RedirectResult;
             result.Should().Be(redirectObject);
             _redirectUrlMock.Verify(x => x.RedirectToNewApp(), Times.AtLeastOnce);
             result.Url.Should().Be(actualRedirectPath);
