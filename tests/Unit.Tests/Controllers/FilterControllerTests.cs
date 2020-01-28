@@ -6,6 +6,7 @@ using GovUk.Education.SearchAndCompare.UI.Filters;
 using GovUk.Education.SearchAndCompare.UI.Services;
 using GovUk.Education.SearchAndCompare.UI.Shared.Features;
 using GovUk.Education.SearchAndCompare.UI.Unit;
+using GovUk.Education.SearchAndCompare.UI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Moq;
@@ -117,6 +118,33 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
                 .Returns(redirectObject);
 
             var result = _filterController.Vacancy(_resultsFilter) as RedirectResult;
+            result.Should().Be(redirectObject);
+            _redirectUrlMock.Verify(x => x.RedirectToNewApp(), Times.AtLeastOnce);
+            result.Url.Should().Be(actualRedirectPath);
+        }
+
+        [Test]
+        public void LocationGetHttpGetTest()
+        {
+            var result = _filterController.LocationGet(_resultsFilter);
+            result.Should().BeOfType<ViewResult>();
+            var viewResult = result as ViewResult;
+            viewResult?.Model.Should().BeOfType<LocationFilterViewModel>();
+            var viewModel = (LocationFilterViewModel) viewResult.Model;
+            viewModel.FilterModel.Should().Be(_resultsFilter);
+        }
+
+        [Test]
+        public void LocationGetRedirectsToNewApp()
+        {
+            _mockFlag.Setup(x => x.RedirectToRails).Returns(true);
+            string actualRedirectPath = "results/filter/location?query";
+
+            var redirectObject = new RedirectResult(actualRedirectPath);
+            _redirectUrlMock.Setup(x => x.RedirectToNewApp())
+                .Returns(redirectObject);
+
+            var result = _filterController.LocationGet(_resultsFilter) as RedirectResult;
             result.Should().Be(redirectObject);
             _redirectUrlMock.Verify(x => x.RedirectToNewApp(), Times.AtLeastOnce);
             result.Url.Should().Be(actualRedirectPath);
