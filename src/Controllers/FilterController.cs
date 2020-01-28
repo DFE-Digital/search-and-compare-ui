@@ -131,6 +131,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("LocationGet")]
         public IActionResult LocationGet(ResultsFilter filter)
         {
+            if (_featureFlags?.RedirectToRails == true)
+            {
+                return _redirectUrlService.RedirectToNewApp();
+            }
+
             var viewModel = new LocationFilterViewModel
             {
                 FilterModel = filter
