@@ -76,6 +76,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("SubjectWizard")]
         public IActionResult SubjectWizardGet(ResultsFilter filter)
         {
+            if (_featureFlags?.RedirectToRails == true)
+            {
+                return _redirectUrlService.RedirectToNewApp();
+            }
+
             ViewBag.IsInWizard = true;
             return SubjectGet(filter);
         }
