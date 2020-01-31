@@ -6,6 +6,7 @@ using GovUk.Education.SearchAndCompare.UI.Filters;
 using GovUk.Education.SearchAndCompare.UI.Services;
 using GovUk.Education.SearchAndCompare.UI.Shared.Features;
 using GovUk.Education.SearchAndCompare.UI.Unit;
+using GovUk.Education.SearchAndCompare.UI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Moq;
@@ -19,17 +20,18 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
         private FilterController _filterController;
         private ResultsFilter _resultsFilter;
         private Mock<IFeatureFlags> _mockFlag;
+        private Mock<ISearchAndCompareApi> _mockApi;
         private Mock<IRedirectUrlService> _redirectUrlMock;
 
         [SetUp]
         public void SetUp()
         {
-            var mockApi = new Mock<ISearchAndCompareApi>();
+            _mockApi = new Mock<ISearchAndCompareApi>();
             _mockFlag = new Mock<IFeatureFlags>();
             var mockGeocoder = new Mock<IGeocoder>();
 
             _redirectUrlMock = new Mock<IRedirectUrlService>();
-            _filterController = new FilterController(mockApi.Object, mockGeocoder.Object,
+            _filterController = new FilterController(_mockApi.Object, mockGeocoder.Object,
                 TelemetryClientHelper.GetMocked(),
                 new GoogleAnalyticsClient(null, null),
                 _redirectUrlMock.Object,
@@ -144,6 +146,33 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
             var result = _filterController.QualificationGet(_resultsFilter) as RedirectResult;
             result.Should().Be(redirectObject);
             _redirectUrlMock.Verify(x => x.RedirectToNewApp(), Times.AtLeastOnce);
+            result.Url.Should().Be(actualRedirectPath);
+        }
+
+        [Test]
+        public void SubjectWizardGetHttpGetTest()
+        {
+            var result = _filterController.SubjectWizardGet(_resultsFilter);
+            result.Should().BeOfType<ViewResult>();
+            var viewResult = result as ViewResult;
+            viewResult?.Model.Should().BeOfType(typeof(SubjectFilterViewModel));
+            _mockApi.Verify(x => x.GetSubjectAreas(), Times.Exactly(1));
+            viewResult.ViewData["IsInWizard"].Should().Be(true);
+        }
+
+        [Test]
+        public void SubjectWizardGetRedirectsToNewApp()
+        {
+            _mockFlag.Setup(x => x.RedirectToRails).Returns(true);
+            string actualRedirectPath = "start/subject?query";
+
+            var redirectObject = new RedirectResult(actualRedirectPath);
+            _redirectUrlMock.Setup(x => x.RedirectToNewApp())
+                .Returns(redirectObject);
+
+            var result = _filterController.SubjectWizardGet(_resultsFilter) as RedirectResult;
+            result.Should().Be(redirectObject);
+            _redirectUrlMock.Verify(x => x.RedirectToNewApp(), Times.Exactly(1));
             result.Url.Should().Be(actualRedirectPath);
         }
     }
