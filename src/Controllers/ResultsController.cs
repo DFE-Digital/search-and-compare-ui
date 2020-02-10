@@ -55,11 +55,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [HttpGet("results")]
         public IActionResult Index(ResultsFilter filter)
         {
-            if (_featureFlags.RedirectToRailsPageResults)
-            {
-                return _redirectUrlService.RedirectToNewApp();
-            }
-
             var subjects = _api.GetSubjects();
             if (subjects == null)
             {

@@ -43,11 +43,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("Subject")]
         public IActionResult SubjectGet(ResultsFilter filter)
         {
-            if (_featureFlags.RedirectToRailsPageSubject)
-            {
-                return _redirectUrlService.RedirectToNewApp();
-            }
-
             var subjectAreas = _api.GetSubjectAreas();
 
             var viewModel = new SubjectFilterViewModel
@@ -131,11 +126,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("LocationGet")]
         public IActionResult LocationGet(ResultsFilter filter)
         {
-            if (_featureFlags.RedirectToRailsPageLocation)
-            {
-                return _redirectUrlService.RedirectToNewApp();
-            }
-
             var viewModel = new LocationFilterViewModel
             {
                 FilterModel = filter
@@ -212,10 +202,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("LocationWizard")]
         public IActionResult LocationWizardGet(ResultsFilter filter)
         {
-            if (_featureFlags.RedirectToRailsPageLocationWizard)
-            {
-                return _redirectUrlService.RedirectToNewApp();
-            }
             ViewBag.IsInWizard = true;
             //filter.qualification = filter.qualification.Any() ? filter.qualification : new List<QualificationOption> { QualificationOption.QtsOnly, QualificationOption.PgdePgceWithQts, QualificationOption.Other };
             filter.qualifications = !string.IsNullOrWhiteSpace(filter.qualifications) ? filter.qualifications : string.Join(",", Enum.GetNames(typeof(QualificationOption)));
@@ -346,11 +332,6 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("Provider")]
         public IActionResult Provider(ResultsFilter filter)
         {
-            if (_featureFlags.RedirectToRailsPageProvider)
-            {
-                return _redirectUrlService.RedirectToNewApp();
-            }
-
             List<Provider> suggestions = TempData.Get<List<Provider>>("Suggestions");
             if (suggestions == null)
             {
