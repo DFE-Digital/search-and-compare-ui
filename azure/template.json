@@ -94,7 +94,7 @@
                 "description": "Base URL of new FIND"
             }
         },
-        "featureRedirectToRails": {
+        "featureRedirectToRailsCourse": {
             "type": "bool",
             "defaultValue": false,
             "metadata": {
@@ -252,8 +252,8 @@
                                 "value": "[parameters('newAppUrl')]"
                             },
                             {
-                                "name": "FEATURE_REDIRECT_TO_RAILS",
-                                "value": "[parameters('featureRedirectToRails')]"
+                                "name": "FEATURE_REDIRECT_TO_RAILS_COURSE",
+                                "value": "[parameters('featureRedirectToRailsCourse')]"
                             }
                         ]
                     },
