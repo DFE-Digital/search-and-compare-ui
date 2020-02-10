@@ -220,7 +220,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [HttpGet("results/filter/funding")]
         public IActionResult Funding(ResultsFilter filter)
         {
-            if (_featureFlags?.RedirectToRails == true)
+            if (_featureFlags.RedirectToRailsPageFunding)
             {
                 return _redirectUrlService.RedirectToNewApp();
             }
@@ -265,7 +265,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("Qualification")]
         public IActionResult QualificationGet(ResultsFilter model)
         {
-            if (_featureFlags?.RedirectToRails == true)
+            if (_featureFlags.RedirectToRailsPageQualification)
             {
                 return _redirectUrlService.RedirectToNewApp();
             }
@@ -291,7 +291,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("StudyType")]
         public IActionResult StudyType(ResultsFilter model)
         {
-            if (_featureFlags?.RedirectToRails == true)
+            if (_featureFlags.RedirectToRailsPageStudyType)
             {
                 return _redirectUrlService.RedirectToNewApp();
             }
@@ -311,7 +311,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("Vacancy")]
         public IActionResult Vacancy(ResultsFilter model)
         {
-            if (_featureFlags?.RedirectToRails == true)
+            if (_featureFlags.RedirectToRailsPageVacancy)
             {
                 return _redirectUrlService.RedirectToNewApp();
             }

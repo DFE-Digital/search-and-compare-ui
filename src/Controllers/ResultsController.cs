@@ -6,6 +6,7 @@ using GovUk.Education.SearchAndCompare.Domain.Filters.Enums;
 using GovUk.Education.SearchAndCompare.Domain.Lists;
 using GovUk.Education.SearchAndCompare.Domain.Models;
 using GovUk.Education.SearchAndCompare.UI.Filters;
+using GovUk.Education.SearchAndCompare.UI.Services;
 using GovUk.Education.SearchAndCompare.UI.Services.Maps;
 using GovUk.Education.SearchAndCompare.UI.Services.Maps.Models;
 using GovUk.Education.SearchAndCompare.UI.Shared.Features;
@@ -20,11 +21,16 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
     {
         private readonly ISearchAndCompareApi _api;
         private readonly IFeatureFlags _featureFlags;
+        private readonly IRedirectUrlService _redirectUrlService;
 
-        public ResultsController(ISearchAndCompareApi api, IFeatureFlags featureFlags)
+        public ResultsController(
+            ISearchAndCompareApi api,
+            IFeatureFlags featureFlags,
+            IRedirectUrlService redirectUrlService)
         {
             _api = api;
             _featureFlags = featureFlags;
+            _redirectUrlService = redirectUrlService;
         }
 
         [HttpPost("results/map")]

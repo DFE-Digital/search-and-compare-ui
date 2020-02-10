@@ -67,7 +67,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Unit.Tests.Controllers
             mockApi.Setup(x => x.GetFeeCaps()).Returns(new List<FeeCaps> {new FeeCaps {UkFees = 123}}).Verifiable();
 
             var mockFlag = new Mock<IFeatureFlags>();
-            mockFlag.Setup(x => x.RedirectToRails).Returns(true);
+            mockFlag.Setup(x => x.RedirectToRailsPageCourse).Returns(true);
             var controller = new CourseController(mockApi.Object, redirectUrlMock.Object, mockFlag.Object);
 
             var res = controller.Index("abc", "def", new ResultsFilter());

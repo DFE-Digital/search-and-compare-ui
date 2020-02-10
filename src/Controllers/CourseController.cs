@@ -25,7 +25,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [HttpGet("course/{providerCode}/{courseCode}", Name = "Course")]
         public IActionResult Index(string providerCode, string courseCode, ResultsFilter filter)
         {
-            if (featureFlags.RedirectToRails)
+            if (featureFlags.RedirectToRailsPageCourse)
             {
                 return redirectUrlService.RedirectToNewApp("/course/" + $"{providerCode}" + "/" + $"{courseCode}");
             }

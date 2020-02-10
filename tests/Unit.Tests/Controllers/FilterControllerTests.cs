@@ -58,7 +58,7 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
         [Test]
         public void FundingRedirectsToNewApp()
         {
-            _mockFlag.Setup(x => x.RedirectToRails).Returns(true);
+            _mockFlag.Setup(x => x.RedirectToRailsPageFunding).Returns(true);
             string actualRedirectPath = "results/filter/funding?query";
 
             var redirectObject = new RedirectResult(actualRedirectPath);
@@ -70,7 +70,6 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
             _redirectUrlMock.Verify(x => x.RedirectToNewApp(), Times.AtLeastOnce);
             result.Url.Should().Be(actualRedirectPath);
         }
-
 
         [Test]
         public void StudyTypeHttpGetTest()
@@ -84,7 +83,7 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
         [Test]
         public void StudyTypeRedirectsToNewApp()
         {
-            _mockFlag.Setup(x => x.RedirectToRails).Returns(true);
+            _mockFlag.Setup(x => x.RedirectToRailsPageStudyType).Returns(true);
             string actualRedirectPath = "results/filter/studytype?query";
 
             var redirectObject = new RedirectResult(actualRedirectPath);
@@ -109,7 +108,7 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
         [Test]
         public void VacancyRedirectsToNewApp()
         {
-            _mockFlag.Setup(x => x.RedirectToRails).Returns(true);
+            _mockFlag.Setup(x => x.RedirectToRailsPageVacancy).Returns(true);
             string actualRedirectPath = "results/filter/vacancy?query";
 
             var redirectObject = new RedirectResult(actualRedirectPath);
@@ -134,7 +133,7 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
         [Test]
         public void QualificationGetRedirectsToNewApp()
         {
-            _mockFlag.Setup(x => x.RedirectToRails).Returns(true);
+            _mockFlag.Setup(x => x.RedirectToRailsPageQualification).Returns(true);
             string actualRedirectPath = "results/filter/qualification?query";
 
             var redirectObject = new RedirectResult(actualRedirectPath);

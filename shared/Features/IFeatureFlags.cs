@@ -7,6 +7,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.Features
     public interface IFeatureFlags
     {
         bool Maps { get; }
-        bool RedirectToRails { get; }
+
+        bool RedirectToRailsPageFunding { get; }
+        bool RedirectToRailsPageQualification { get; }
+        bool RedirectToRailsPageStudyType { get; }
+        bool RedirectToRailsPageVacancy { get; }
+        bool RedirectToRailsPageCourse { get; }
     }
 }
