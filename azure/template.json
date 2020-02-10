@@ -100,7 +100,35 @@
             "metadata": {
                 "description": "Feature flag to redirect to rails using the new FIND url"
             }
-        }
+        },
+        "featureRedirectToRailsFunding": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Funding feature flag to redirect to rails FIND"
+            }
+        },
+        "featureRedirectToRailsQualification": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Qaulification feature flag to redirect to rails FIND"
+            }
+        },
+        "featureRedirectToRailsStudyType": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Study type feature flag to redirect to rails FIND"
+            }
+        },
+        "featureRedirectToRailsVacancy": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Vacancy feature flag to redirect to rails FIND"
+            }
+        }        
     },
     "variables": {
         "deploymentUrlBase": "https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/templates/",
@@ -254,6 +282,22 @@
                             {
                                 "name": "FEATURE_REDIRECT_TO_RAILS_COURSE",
                                 "value": "[parameters('featureRedirectToRailsCourse')]"
+                            },
+                            {
+                                "name": "FEATURE_REDIRECT_TO_RAILS_FUNDING",
+                                "value": "[parameters('featureRedirectToRailsFunding')]"
+                            },
+                            {
+                                "name": "FEATURE_REDIRECT_TO_RAILS_QUALIFICATION",
+                                "value": "[parameters('featureRedirectToRailsQualification')]"
+                            },
+                            {
+                                "name": "FEATURE_REDIRECT_TO_RAILS_STUDYTYPE",
+                                "value": "[parameters('featureRedirectToRailsStudyType')]"
+                            },
+                            {
+                                "name": "FEATURE_REDIRECT_TO_RAILS_VACANCY",
+                                "value": "[parameters('featureRedirectToRailsVacancy')]"
                             }
                         ]
                     },
