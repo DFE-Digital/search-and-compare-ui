@@ -43,7 +43,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("Subject")]
         public IActionResult SubjectGet(ResultsFilter filter)
         {
-            if (_featureFlags?.RedirectToRails == true)
+            if (_featureFlags.RedirectToRailsPageSubject)
             {
                 return _redirectUrlService.RedirectToNewApp();
             }

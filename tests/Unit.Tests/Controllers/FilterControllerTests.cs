@@ -117,7 +117,7 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
         [Test]
         public void SubjectGetRedirectsToNewApp()
         {
-            _mockFlag.Setup(x => x.RedirectToRails).Returns(true);
+            _mockFlag.Setup(x => x.RedirectToRailsPageSubject).Returns(true);
             const string actualRedirectPath = "results/filter/subject?query";
 
             var redirectObject = new RedirectResult(actualRedirectPath);
