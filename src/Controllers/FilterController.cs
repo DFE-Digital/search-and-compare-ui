@@ -43,6 +43,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("Subject")]
         public IActionResult SubjectGet(ResultsFilter filter)
         {
+            if (_featureFlags.RedirectToRailsPageSubject)
+            {
+                return _redirectUrlService.RedirectToNewApp();
+            }
+
             var subjectAreas = _api.GetSubjectAreas();
 
             var viewModel = new SubjectFilterViewModel
@@ -76,6 +81,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("SubjectWizard")]
         public IActionResult SubjectWizardGet(ResultsFilter filter)
         {
+            if (_featureFlags.RedirectToRailsPageSubjectWizard)
+            {
+                return _redirectUrlService.RedirectToNewApp();
+            }
+
             ViewBag.IsInWizard = true;
             return SubjectGet(filter);
         }
@@ -126,6 +136,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("LocationGet")]
         public IActionResult LocationGet(ResultsFilter filter)
         {
+            if (_featureFlags.RedirectToRailsPageLocation)
+            {
+                return _redirectUrlService.RedirectToNewApp();
+            }
+
             var viewModel = new LocationFilterViewModel
             {
                 FilterModel = filter

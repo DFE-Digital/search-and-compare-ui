@@ -35,6 +35,47 @@ namespace SearchAndCompareUI.Tests.Unit.Tests
         [TestCase("False", false)]
         [TestCase("true", true)]
         [TestCase("True", true)]
+        public void RedirectToRailsPageSubjectWizard(string configValue, bool expected)
+        {
+            var featureFlag = GetFeatureFlags("SubjectWizard", configValue, expected);
+            featureFlag.RedirectToRailsPageSubjectWizard.Should().Be(expected);
+        }
+        [TestCase(null, false)]
+        [TestCase("", false)] // this one took down prod
+        [TestCase("   ", false)]
+        [TestCase(" false  ", false)]
+        [TestCase("false", false)]
+        [TestCase("False", false)]
+        [TestCase("true", true)]
+        [TestCase("True", true)]
+        public void RedirectToRailsPageSubject(string configValue, bool expected)
+        {
+            var featureFlag = GetFeatureFlags("Subject", configValue, expected);
+            featureFlag.RedirectToRailsPageSubject.Should().Be(expected);
+        }
+
+        [TestCase(null, false)]
+        [TestCase("", false)] // this one took down prod
+        [TestCase("   ", false)]
+        [TestCase(" false  ", false)]
+        [TestCase("false", false)]
+        [TestCase("False", false)]
+        [TestCase("true", true)]
+        [TestCase("True", true)]
+        public void RedirectToRailsPageLocation(string configValue, bool expected)
+        {
+            var featureFlag = GetFeatureFlags("Location", configValue, expected);
+            featureFlag.RedirectToRailsPageLocation.Should().Be(expected);
+        }
+
+        [TestCase(null, false)]
+        [TestCase("", false)] // this one took down prod
+        [TestCase("   ", false)]
+        [TestCase(" false  ", false)]
+        [TestCase("false", false)]
+        [TestCase("False", false)]
+        [TestCase("true", true)]
+        [TestCase("True", true)]
         public void RedirectToRailsPageFunding(string configValue, bool expected)
         {
             var featureFlag = GetFeatureFlags("Funding", configValue, expected);

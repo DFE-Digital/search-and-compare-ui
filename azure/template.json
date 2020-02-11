@@ -128,7 +128,28 @@
             "metadata": {
                 "description": "Vacancy feature flag to redirect to rails FIND"
             }
-        }        
+        },
+        "featureRedirectToRailsSubjectWizard": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Subject Wizard feature flag to redirect to rails FIND"
+            }
+        },
+        "featureRedirectToRailsLocation": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Location feature flag to redirect to rails FIND"
+            }
+        },
+        "featureRedirectToRailsSubject": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Subject feature flag to redirect to rails FIND"
+            }
+        }
     },
     "variables": {
         "deploymentUrlBase": "https://raw.githubusercontent.com/DFE-Digital/bat-platform-building-blocks/master/templates/",
@@ -298,6 +319,18 @@
                             {
                                 "name": "FEATURE_REDIRECT_TO_RAILS_VACANCY",
                                 "value": "[parameters('featureRedirectToRailsVacancy')]"
+                            },
+                            {
+                                "name": "FEATURE_REDIRECT_TO_RAILS_SUBJECTWIZARD",
+                                "value": "[parameters('featureRedirectToRailsSubjectWizard')]"
+                            },
+                            {
+                                "name": "FEATURE_REDIRECT_TO_RAILS_LOCATION",
+                                "value": "[parameters('featureRedirectToRailsLocation')]"
+                            },
+                            {
+                                "name": "FEATURE_REDIRECT_TO_RAILS_SUBJECT",
+                                "value": "[parameters('featureRedirectToRailsSubject')]"
                             }
                         ]
                     },
