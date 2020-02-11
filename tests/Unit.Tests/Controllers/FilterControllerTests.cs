@@ -24,7 +24,6 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
         private Mock<IFeatureFlags> _mockFlag;
         private Mock<ISearchAndCompareApi> _mockApi;
         private Mock<IRedirectUrlService> _redirectUrlMock;
-        private Mock<ISearchAndCompareApi> _mockApi;
 
         [SetUp]
         public void SetUp()
