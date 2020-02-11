@@ -27,6 +27,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.Features
         public bool RedirectToRailsPageStudyType => RedirectToRailsPage("STUDYTYPE");
         public bool RedirectToRailsPageVacancy => RedirectToRailsPage("VACANCY");
         public bool RedirectToRailsPageProvider => RedirectToRailsPage("PROVIDER");
+        public bool RedirectToRailsPageResults => RedirectToRailsPage("RESULTS");
         public bool RedirectToRailsPageCourse => RedirectToRailsPage("COURSE");
 
         public bool ShouldShow(string key)

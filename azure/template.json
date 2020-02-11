@@ -163,6 +163,13 @@
             "metadata": {
                 "description": "Provider feature flag to redirect to rails FIND"
             }
+        },
+        "featureRedirectToRailsResults": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Results feature flag to redirect to rails FIND"
+            }
         }
     },
     "variables": {
@@ -353,6 +360,10 @@
                             {
                                 "name": "FEATURE_REDIRECT_TO_RAILS_PROVIDER",
                                 "value": "[parameters('featureRedirectToRailsProvider')]"
+                            },
+                            {
+                                "name": "FEATURE_REDIRECT_TO_RAILS_RESULTS",
+                                "value": "[parameters('featureRedirectToRailsResults')]"
                             }
                         ]
                     },
