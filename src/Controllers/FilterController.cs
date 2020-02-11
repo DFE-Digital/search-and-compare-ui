@@ -352,6 +352,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("Provider")]
         public IActionResult Provider(ResultsFilter filter)
         {
+            if (_featureFlags.RedirectToRailsPageProvider)
+            {
+                return _redirectUrlService.RedirectToNewApp();
+            }
+
             List<Provider> suggestions = TempData.Get<List<Provider>>("Suggestions");
             if (suggestions == null)
             {
