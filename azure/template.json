@@ -135,6 +135,13 @@
             "metadata": {
                 "description": "Subject Wizard feature flag to redirect to rails FIND"
             }
+        },
+        "featureRedirectToRailsLocation": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Location feature flag to redirect to rails FIND"
+            }
         }
     },
     "variables": {
@@ -309,6 +316,10 @@
                             {
                                 "name": "FEATURE_REDIRECT_TO_RAILS_SUBJECTWIZARD",
                                 "value": "[parameters('featureRedirectToRailsSubjectWizard')]"
+                            },
+                            {
+                                "name": "FEATURE_REDIRECT_TO_RAILS_LOCATION",
+                                "value": "[parameters('featureRedirectToRailsLocation')]"
                             }
                         ]
                     },
