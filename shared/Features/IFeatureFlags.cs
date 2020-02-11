@@ -8,6 +8,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.Features
     {
         bool Maps { get; }
 
+        bool RedirectToRailsPageLocationWizard { get; }
         bool RedirectToRailsPageSubjectWizard { get; }
         bool RedirectToRailsPageSubject { get; }
         bool RedirectToRailsPageLocation { get; }

@@ -18,7 +18,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.Features
 
         public bool Maps => ShouldShow("FEATURE_MAPS");
 
-
+        public bool RedirectToRailsPageLocationWizard => RedirectToRailsPage("LOCATIONWIZARD");
         public bool RedirectToRailsPageSubjectWizard => RedirectToRailsPage("SUBJECTWIZARD");
         public bool RedirectToRailsPageSubject => RedirectToRailsPage("SUBJECT");
         public bool RedirectToRailsPageLocation => RedirectToRailsPage("LOCATION");
