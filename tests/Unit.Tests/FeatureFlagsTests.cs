@@ -49,6 +49,20 @@ namespace SearchAndCompareUI.Tests.Unit.Tests
         [TestCase("False", false)]
         [TestCase("true", true)]
         [TestCase("True", true)]
+        public void RedirectToRailsPageLocation(string configValue, bool expected)
+        {
+            var featureFlag = GetFeatureFlags("Location", configValue, expected);
+            featureFlag.RedirectToRailsPageLocation.Should().Be(expected);
+        }
+
+        [TestCase(null, false)]
+        [TestCase("", false)] // this one took down prod
+        [TestCase("   ", false)]
+        [TestCase(" false  ", false)]
+        [TestCase("false", false)]
+        [TestCase("False", false)]
+        [TestCase("true", true)]
+        [TestCase("True", true)]
         public void RedirectToRailsPageFunding(string configValue, bool expected)
         {
             var featureFlag = GetFeatureFlags("Funding", configValue, expected);

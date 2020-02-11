@@ -137,7 +137,7 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
         [Test]
         public void LocationGetRedirectsToNewApp()
         {
-            _mockFlag.Setup(x => x.RedirectToRails).Returns(true);
+            _mockFlag.Setup(x => x.RedirectToRailsPageLocation).Returns(true);
             string actualRedirectPath = "results/filter/location?query";
 
             var redirectObject = new RedirectResult(actualRedirectPath);
