@@ -217,6 +217,11 @@ namespace GovUk.Education.SearchAndCompare.UI.Controllers
         [ActionName("LocationWizard")]
         public IActionResult LocationWizardGet(ResultsFilter filter)
         {
+            if (_featureFlags.RedirectToRailsPageLocationWizard)
+            {
+                return _redirectUrlService.RedirectToNewApp();
+            }
+
             ViewBag.IsInWizard = true;
             //filter.qualification = filter.qualification.Any() ? filter.qualification : new List<QualificationOption> { QualificationOption.QtsOnly, QualificationOption.PgdePgceWithQts, QualificationOption.Other };
             filter.qualifications = !string.IsNullOrWhiteSpace(filter.qualifications) ? filter.qualifications : string.Join(",", Enum.GetNames(typeof(QualificationOption)));
