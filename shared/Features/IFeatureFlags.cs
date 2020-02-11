@@ -16,6 +16,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.Features
         bool RedirectToRailsPageQualification { get; }
         bool RedirectToRailsPageStudyType { get; }
         bool RedirectToRailsPageVacancy { get; }
+        bool RedirectToRailsPageProvider { get; }
         bool RedirectToRailsPageCourse { get; }
     }
 }

@@ -156,6 +156,13 @@
             "metadata": {
                 "description": "Location wizard feature flag to redirect to rails FIND"
             }
+        },
+        "featureRedirectToRailsProvider": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Provider feature flag to redirect to rails FIND"
+            }
         }
     },
     "variables": {
@@ -342,6 +349,10 @@
                             {
                                 "name": "FEATURE_REDIRECT_TO_RAILS_LOCATIONWIZARD",
                                 "value": "[parameters('featureRedirectToRailsLocationWizard')]"
+                            },
+                            {
+                                "name": "FEATURE_REDIRECT_TO_RAILS_PROVIDER",
+                                "value": "[parameters('featureRedirectToRailsProvider')]"
                             }
                         ]
                     },
