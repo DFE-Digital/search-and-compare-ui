@@ -142,6 +142,13 @@
             "metadata": {
                 "description": "Location feature flag to redirect to rails FIND"
             }
+        },
+        "featureRedirectToRailsSubject": {
+            "type": "bool",
+            "defaultValue": false,
+            "metadata": {
+                "description": "Subject feature flag to redirect to rails FIND"
+            }
         }
     },
     "variables": {
@@ -320,6 +327,10 @@
                             {
                                 "name": "FEATURE_REDIRECT_TO_RAILS_LOCATION",
                                 "value": "[parameters('featureRedirectToRailsLocation')]"
+                            },
+                            {
+                                "name": "FEATURE_REDIRECT_TO_RAILS_SUBJECT",
+                                "value": "[parameters('featureRedirectToRailsSubject')]"
                             }
                         ]
                     },
