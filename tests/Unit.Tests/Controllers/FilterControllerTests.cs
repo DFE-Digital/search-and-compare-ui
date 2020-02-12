@@ -233,5 +233,56 @@ namespace SearchAndCompareUI.Tests.Unit.Tests.Controllers
             _redirectUrlMock.Verify(x => x.RedirectToNewApp(), Times.Exactly(1));
             result.Url.Should().Be(actualRedirectPath);
         }
+
+        [Test]
+        public void LocationWizardGetHttpGetTest()
+        {
+            var result = _filterController.LocationWizardGet(_resultsFilter);
+            result.Should().BeOfType<ViewResult>();
+            var viewResult = result as ViewResult;
+            viewResult?.Model.Should().BeOfType(typeof(LocationFilterViewModel));
+            viewResult.ViewData["IsInWizard"].Should().Be(true);
+        }
+
+        [Test]
+        public void LocationWizardGetRedirectsToNewApp()
+        {
+            _mockFlag.Setup(x => x.RedirectToRailsPageLocationWizard).Returns(true);
+            string actualRedirectPath = "/?query";
+
+            var redirectObject = new RedirectResult(actualRedirectPath);
+            _redirectUrlMock.Setup(x => x.RedirectToNewApp())
+                .Returns(redirectObject);
+
+            var result = _filterController.LocationWizardGet(_resultsFilter) as RedirectResult;
+            result.Should().Be(redirectObject);
+            _redirectUrlMock.Verify(x => x.RedirectToNewApp(), Times.Exactly(1));
+            result.Url.Should().Be(actualRedirectPath);
+        }
+
+        [Test]
+        public void ProviderHttpGetTest()
+        {
+            var result = _filterController.Provider(_resultsFilter);
+            result.Should().BeOfType<ViewResult>();
+            var viewResult = result as ViewResult;
+            viewResult?.Model.Should().BeOfType(typeof(ResultsFilter));
+        }
+
+        [Test]
+        public void ProviderRedirectsToNewApp()
+        {
+            _mockFlag.Setup(x => x.RedirectToRailsPageProvider).Returns(true);
+            string actualRedirectPath = "results/filter/provider?query";
+
+            var redirectObject = new RedirectResult(actualRedirectPath);
+            _redirectUrlMock.Setup(x => x.RedirectToNewApp())
+                .Returns(redirectObject);
+
+            var result = _filterController.Provider(_resultsFilter) as RedirectResult;
+            result.Should().Be(redirectObject);
+            _redirectUrlMock.Verify(x => x.RedirectToNewApp(), Times.Exactly(1));
+            result.Url.Should().Be(actualRedirectPath);
+        }
     }
 }

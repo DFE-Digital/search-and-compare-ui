@@ -8,6 +8,7 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.Features
     {
         bool Maps { get; }
 
+        bool RedirectToRailsPageLocationWizard { get; }
         bool RedirectToRailsPageSubjectWizard { get; }
         bool RedirectToRailsPageSubject { get; }
         bool RedirectToRailsPageLocation { get; }
@@ -15,6 +16,8 @@ namespace GovUk.Education.SearchAndCompare.UI.Shared.Features
         bool RedirectToRailsPageQualification { get; }
         bool RedirectToRailsPageStudyType { get; }
         bool RedirectToRailsPageVacancy { get; }
+        bool RedirectToRailsPageProvider { get; }
+        bool RedirectToRailsPageResults { get; }
         bool RedirectToRailsPageCourse { get; }
     }
 }
